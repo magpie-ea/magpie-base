@@ -12,9 +12,14 @@
   },
   "author": "Xiang Ji <hi@xiangji.me>",
   "license": "ISC",
-  "keywords": ["interactive experiment"],
+  "keywords": ["web-based experiment"],
   "bugs": {
     "url": "https://github.com/magpie-ea/magpie-base/issues"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue": "^2.5.16"
   },
   "homepage": "https://github.com/magpie-ea/magpie-base#readme"
 }
