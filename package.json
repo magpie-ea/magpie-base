@@ -1,0 +1,20 @@
+{
+  "name": "magpie-base",
+  "version": "0.1.0",
+  "description": "Provides base components for _magpie frontend projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magpie-ea/magpie-base.git"
+  },
+  "author": "Xiang Ji <hi@xiangji.me>",
+  "license": "ISC",
+  "keywords": ["interactive experiment"],
+  "bugs": {
+    "url": "https://github.com/magpie-ea/magpie-base/issues"
+  },
+  "homepage": "https://github.com/magpie-ea/magpie-base#readme"
+}
