@@ -12,14 +12,22 @@
   },
   "author": "Xiang Ji <hi@xiangji.me>",
   "license": "ISC",
-  "keywords": ["web-based experiment"],
+  "keywords": [
+    "web-based experiment"
+  ],
   "bugs": {
     "url": "https://github.com/magpie-ea/magpie-base/issues"
   },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^5.1.0",
+    "fs-extra": "^9.0.1",
+    "validate-npm-package-name": "^3.0.0",
+    "vue": "^2.6.11"
+  },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "vue": "^2.5.16"
+    "eslint-plugin-vue": "^5.0.0"
   },
   "homepage": "https://github.com/magpie-ea/magpie-base#readme"
 }
