@@ -1,6 +1,6 @@
 {
   "name": "magpie-base",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Provides base components for _magpie frontend projects",
   "main": "src/index.js",
   "bin": {
@@ -38,6 +38,7 @@
   "homepage": "https://github.com/magpie-ea/magpie-base#readme",
   "keywords": [
     "magpie",
+    "vue",
     "web-based experiment"
   ],
   "dependencies": {
