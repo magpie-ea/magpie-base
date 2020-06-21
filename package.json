@@ -6,9 +6,6 @@
   "bin": {
     "magpie": "bin/magpie.js"
   },
-  "files": [
-    "src"
-  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
