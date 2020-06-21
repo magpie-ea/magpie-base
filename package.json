@@ -1,6 +1,6 @@
 {
   "name": "magpie-base",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provides base components for _magpie frontend projects",
   "main": "src/index.js",
   "bin": {
@@ -13,7 +13,24 @@
     "type": "git",
     "url": "git+https://github.com/magpie-ea/magpie-base.git"
   },
-  "author": "Xiang Ji <hi@xiangji.me>",
+  "author": "_magpie project",
+  "contributors": [
+    {
+      "name": "Xiang Ji",
+      "email": "hi@xiangji.me",
+      "url": "https://xiangji.me"
+    },
+    {
+      "name": "Marcel Klehr",
+      "email": "mklehr@gmx.net",
+      "url": "http://marcelklehr.de/"
+    },
+    {
+      "name": "Michael Franke",
+      "email": "mchfranke@gmail.com",
+      "url": "http://www.home.uni-osnabrueck.de/michfranke/index.html"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/magpie-ea/magpie-base/issues"
