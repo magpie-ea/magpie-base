@@ -17,7 +17,7 @@
     "url": "git+https://github.com/magpie-ea/magpie-base.git"
   },
   "author": "Xiang Ji <hi@xiangji.me>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/magpie-ea/magpie-base/issues"
   },
