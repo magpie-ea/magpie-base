@@ -47,10 +47,14 @@
     "fs-extra": "^9.0.1",
     "slash": "^3.0.0",
     "validate-npm-package-name": "^3.0.0",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-slider-component": "^3.2.4"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0"
+    "eslint-plugin-vue": "^5.0.0",
+    "eslint-plugin-prettier": "*",
+    "eslint-config-prettier": "*",
+    "prettier": "2.x"
   }
 }

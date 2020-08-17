@@ -22,7 +22,51 @@
       </AudioDiscriminationWithPriming>
     </template>
 
-    <template #3>
+    <template #3="{ nextScreen, addResults, trial }">
+      <Screen>
+        <ForcedChoiceInput
+          question="How did you like this?"
+          :options="[trial.options.option1, trial.options.option2]"
+          :answer.sync="answer"
+          @change:answer="
+            addResults({ answer, options: trial.options });
+            nextScreen();
+          "
+        />
+      </Screen>
+    </template>
+
+    <template #4="{ nextScreen, addResults, trial }">
+      <Screen>
+        <ImageSelectionInput
+          question="How did you like this?"
+          :options="[
+            { label: trial.options.option1, src: 'img/test.png' },
+            { label: trial.options.option2, src: 'img/test.png' }
+          ]"
+          :answer.sync="answer"
+          @change:answer="
+            addResults({ answer, options: trial.options });
+            nextScreen();
+          "
+        />
+      </Screen>
+    </template>
+
+    <template #5="{ nextScreen, addResults, trial }">
+      <Screen>
+        <TextareaInput
+          question="How did you like this?"
+          :answer.sync="answer"
+          @change:answer="
+            addResults({ answer });
+            nextScreen();
+          "
+        />
+      </Screen>
+    </template>
+
+    <template #5>
       <Screen :title="'Thanks!'">
         <template #0>
           Goodbye
@@ -38,10 +82,16 @@ import {
   Experiment,
   Screen
 } from 'magpie-base';
+import ForcedChoiceInput from '../../../src/components/inputs/ForcedChoiceInput';
+import ImageSelectionInput from '../../../src/components/inputs/ImageSelectionInput';
+import TextareaInput from '../../../src/components/inputs/TextareaInput';
 
 export default {
   name: 'App',
   components: {
+    ImageSelectionInput,
+    ForcedChoiceInput,
+    TextareaInput,
     AudioDiscriminationWithPriming,
     Screen,
     Experiment
