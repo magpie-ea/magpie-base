@@ -1,5 +1,5 @@
 <template>
-  <div class="textarea">
+  <div class="completion">
     <div class="question">
       <span v-for="(slice, i) in slices"
         >{{ slice }}

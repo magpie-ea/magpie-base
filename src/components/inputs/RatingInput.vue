@@ -1,11 +1,16 @@
 <template>
-  <div class="slider">
+  <div class="rating">
     <div class="question">{{ question }}</div>
     <form>
       <div class="options">
         <div class="left">{{ left }}</div>
         <label v-for="i in count"
-          ><input type="radio" v-model="answers[i]" name="rating" />
+          ><input
+            type="radio"
+            v-model="answers[i]"
+            name="rating"
+            @change="$emit('change:answer', i)"
+          />
           {{ i }}</label
         >
         <div class="right">{{ right }}</div>
@@ -15,12 +20,8 @@
 </template>
 
 <script>
-import Slider from 'vue-slider-component';
-import 'vue-slider-component/theme/default.css';
-
 export default {
   name: 'RatingInput',
-  components: { Slider },
   props: {
     question: {
       type: String,
