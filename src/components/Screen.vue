@@ -2,11 +2,7 @@
   <div class="screen">
     <h2 v-if="title">{{ title }}</h2>
     <slot name="default">
-      <slot
-        :name="currentSlide"
-        :nextScreen="nextScreen"
-        :nextSlide="nextSlide"
-      >
+      <slot :name="currentSlide" :nextSlide="nextSlide">
         Slide #{{ currentSlide }} could not be found
       </slot>
     </slot>
@@ -16,7 +12,6 @@
 <script>
 export default {
   name: 'Screen',
-  inject: ['nextScreen', 'getRootElement'],
   props: {
     title: {
       type: String,
@@ -42,10 +37,10 @@ export default {
     }
   },
   mounted() {
-    this.getRootElement().addEventListener('mousemove', this.onMouseMove);
+    this.$exp.$el.addEventListener('mousemove', this.onMouseMove);
   },
   beforeDestroy() {
-    this.getRootElement().removeEventListener('mousemove', this.onMouseMove);
+    this.$exp.$el.removeEventListener('mousemove', this.onMouseMove);
   }
 };
 </script>

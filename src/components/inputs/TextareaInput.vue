@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'ImageSelectionInput',
+  name: 'TextareaInput',
   props: {
     question: {
       type: String,

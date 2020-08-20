@@ -1,61 +1,53 @@
 <template>
   <Experiment id="app" :trials="{ audio, options }">
-    <div>Mouse tracking experiment</div>
-
-    <template #0="{ nextScreen }">
-      <Screen :title="'Welcome'">
-        <template #0>
-          Hello!
-          <button @click="nextScreen">Start</button>
-        </template>
-      </Screen>
+    <template #title>
+      <div>Mouse tracking experiment</div>
     </template>
 
-    <template #1="{ nextScreen, addResult, trial }">
+    <template #screens>
+      <Screen :title="'Welcome'">
+        Hello!
+        <button @click="$exp.nextScreen">Start</button>
+      </Screen>
+
       <Screen>
         <ForcedChoiceInput
           question="How did you like this?"
-          :options="[trial.options.option1, trial.options.option2]"
+          :options="[$exp.trial.options.option1, $exp.trial.options.option2]"
           :answer.sync="answer"
           @change:answer="
-            addResult({ answer, options: trial.options });
-            nextScreen();
+            $exp.addResult({ answer, options: $exp.trial.options });
+            $exp.nextScreen();
           "
         />
       </Screen>
-    </template>
 
-    <template #2="{ nextScreen, addResult, trial }">
       <Screen>
         <ImageSelectionInput
           question="How did you like this?"
           :options="[
-            { label: trial.options.option1, src: 'img/1.jpg' },
-            { label: trial.options.option2, src: 'img/2.jpg' }
+            { label: $exp.trial.options.option1, src: 'img/1.jpg' },
+            { label: $exp.trial.options.option2, src: 'img/2.jpg' }
           ]"
           :answer.sync="answer"
           @change:answer="
-            addResult({ answer, options: trial.options });
-            nextScreen();
+            $exp.addResult({ answer, options: $exp.trial.options });
+            $exp.nextScreen();
           "
         />
       </Screen>
-    </template>
 
-    <template #3="{ nextScreen, addResult, trial }">
       <Screen>
         <TextareaInput
           question="How did you like this?"
           :answer.sync="answer"
           @change:answer="
-            addResult({ answer });
-            nextScreen();
+            $exp.addResult({ answer });
+            $exp.nextScreen();
           "
         />
       </Screen>
-    </template>
 
-    <template #4="{ nextScreen, addResult, trial }">
       <Screen>
         <SliderInput
           question="How did you like this?"
@@ -65,16 +57,14 @@
         />
         <button
           @click="
-            addResult({ answer });
-            nextScreen();
+            $exp.addResult({ answer });
+            $exp.nextScreen();
           "
         >
           Next
         </button>
       </Screen>
-    </template>
 
-    <template #5="{ nextScreen, addResult, trial }">
       <Screen>
         <CompletionInput
           text="One %s fell over a %s."
@@ -86,16 +76,14 @@
         />
         <button
           @click="
-            addResult({ answer });
-            nextScreen();
+            $exp.addResult({ answer });
+            $exp.nextScreen();
           "
         >
           Next
         </button>
       </Screen>
-    </template>
 
-    <template #6="{ nextScreen, addResult, trial }">
       <Screen>
         <RatingInput
           question="How's the weather?"
@@ -106,16 +94,14 @@
         />
         <button
           @click="
-            addResult({ answer });
-            nextScreen();
+            $exp.addResult({ answer });
+            $exp.nextScreen();
           "
         >
           Next
         </button>
       </Screen>
-    </template>
 
-    <template #7="{ nextScreen, addResult, trial }">
       <Screen>
         <KeypressInput
           question="How's the weather?"
@@ -124,16 +110,14 @@
         />
         <button
           @click="
-            addResult({ answer });
-            nextScreen();
+            $exp.addResult({ answer });
+            $exp.nextScreen();
           "
         >
           Next
         </button>
       </Screen>
-    </template>
 
-    <template #8>
       <Screen :title="'Thanks!'">
         <template #0>
           Goodbye
@@ -144,31 +128,8 @@
 </template>
 
 <script>
-import {
-  Experiment,
-  Screen,
-  ImageSelectionInput,
-  ForcedChoiceInput,
-  TextareaInput,
-  SliderInput,
-  CompletionInput,
-  RatingInput,
-  KeypressInput
-} from 'magpie-base';
-
 export default {
   name: 'App',
-  components: {
-    ImageSelectionInput,
-    ForcedChoiceInput,
-    TextareaInput,
-    SliderInput,
-    CompletionInput,
-    RatingInput,
-    KeypressInput,
-    Screen,
-    Experiment
-  },
   data() {
     return {
       audioTrials: readAudioCsv(),
@@ -201,6 +162,46 @@ function readOptionsCsv() {
     {
       option1: 'Fish',
       option2: 'Mammal'
+    },
+    {
+      option1: 'Mammal',
+      option2: 'Bird'
+    },
+    {
+      option1: 'Fish',
+      option2: 'Mammal'
+    },
+    {
+      option1: 'Mammal',
+      option2: 'Bird'
+    },
+    {
+      option1: 'Mammal',
+      option2: 'Bird'
+    },
+    {
+      option1: 'Mammal',
+      option2: 'Bird'
+    },
+    {
+      option1: 'Mammal',
+      option2: 'Bird'
+    },
+    {
+      option1: 'Mammal',
+      option2: 'Bird'
+    },
+    {
+      option1: 'Mammal',
+      option2: 'Bird'
+    },
+    {
+      option1: 'Mammal',
+      option2: 'Bird'
+    },
+    {
+      option1: 'Mammal',
+      option2: 'Bird'
     },
     {
       option1: 'Mammal',

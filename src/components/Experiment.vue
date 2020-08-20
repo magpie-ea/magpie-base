@@ -1,22 +1,3 @@
-<template>
-  <div class="experiment">
-    <div class="header">
-      <div class="col title">
-        <slot name="default"></slot>
-      </div>
-      <div class="col">{{ currentScreen + 1 }}/{{ numScreens }}</div>
-    </div>
-    <slot
-      :name="currentScreen"
-      :nextScreen="nextScreen"
-      :addResult="addResult"
-      :trial="trial"
-    >
-      Screen #{{ currentScreen }} not found
-    </slot>
-  </div>
-</template>
-
 <script>
 export default {
   name: 'Experiment',
@@ -62,16 +43,16 @@ export default {
       trial
     };
   },
-  provide() {
-    return {
-      nextScreen: this.nextScreen,
-      addResult: this.addResult,
-      getRootElement: this.getRootElement
-    };
+  created() {
+    // globally expose this object
+    this.$exp = this;
   },
   computed: {
     numScreens() {
-      return Object.keys(this.$slots).length;
+      return this.$slots.screens.length;
+    },
+    screens() {
+      return this.$slots.screens;
     }
   },
   methods: {
@@ -88,10 +69,20 @@ export default {
         this.results[this.currentScreen] = [];
       }
       this.results[this.currentScreen].push(data);
-    },
-    getRootElement() {
-      return this.$el;
     }
+  },
+  render(h) {
+    return h('div', { class: 'experiment' }, [
+      h('div', { class: 'header' }, [
+        h('div', { class: 'col title' }, this.$slots.title),
+        h(
+          'div',
+          { class: 'col' },
+          '' + (this.currentScreen + 1) + '/' + this.numScreens
+        )
+      ]),
+      this.$slots.screens[this.currentScreen]
+    ]);
   }
 };
 </script>
