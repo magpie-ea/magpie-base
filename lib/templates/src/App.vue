@@ -74,7 +74,28 @@
       </Screen>
     </template>
 
-    <template #5>
+    <template #5="{ nextScreen, addResult, trial }">
+      <Screen>
+        <CompletionInput
+          text="One %s fell over a %s."
+          :options="[
+            ['horse', 'penguin'],
+            ['tree', 'icicle']
+          ]"
+          :answer.sync="answer"
+        />
+        <button
+          @click="
+            addResult({ answer });
+            nextScreen();
+          "
+        >
+          Next
+        </button>
+      </Screen>
+    </template>
+
+    <template #6>
       <Screen :title="'Thanks!'">
         <template #0>
           Goodbye
@@ -94,6 +115,7 @@ import ForcedChoiceInput from 'magpie-base/src/components/inputs/ForcedChoiceInp
 import ImageSelectionInput from 'magpie-base/src/components/inputs/ImageSelectionInput';
 import TextareaInput from 'magpie-base/src/components/inputs/TextareaInput';
 import SliderInput from 'magpie-base/src/components/inputs/SliderInput';
+import CompletionInput from 'magpie-base/src/components/inputs/CompletionInput';
 
 export default {
   name: 'App',
@@ -102,6 +124,7 @@ export default {
     ForcedChoiceInput,
     TextareaInput,
     SliderInput,
+    CompletionInput,
     AudioDiscriminationWithPriming,
     Screen,
     Experiment
