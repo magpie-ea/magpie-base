@@ -1,8 +1,14 @@
 <template>
   <div class="screen">
     <h2 v-if="title">{{ title }}</h2>
-    <slot :name="currentSlide" :nextScreen="nextScreen" :nextSlide="nextSlide">
-      Slide #{{ currentSlide }} could not be found
+    <slot name="default">
+      <slot
+        :name="currentSlide"
+        :nextScreen="nextScreen"
+        :nextSlide="nextSlide"
+      >
+        Slide #{{ currentSlide }} could not be found
+      </slot>
     </slot>
   </div>
 </template>

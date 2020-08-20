@@ -11,58 +11,66 @@
       </Screen>
     </template>
 
-    <template #[screen]="{ trial }" v-for="screen in 2">
-      <AudioDiscriminationWithPriming
-        :priming-audio="trial.audio.primingAudio"
-        :trial-audio="trial.audio.trialAudio"
-        :option1="trial.options.option1"
-        :option2="trial.options.option2"
-        :key="screen"
-      >
-      </AudioDiscriminationWithPriming>
-    </template>
-
-    <template #3="{ nextScreen, addResults, trial }">
+    <template #1="{ nextScreen, addResult, trial }">
       <Screen>
         <ForcedChoiceInput
           question="How did you like this?"
           :options="[trial.options.option1, trial.options.option2]"
           :answer.sync="answer"
           @change:answer="
-            addResults({ answer, options: trial.options });
+            addResult({ answer, options: trial.options });
             nextScreen();
           "
         />
       </Screen>
     </template>
 
-    <template #4="{ nextScreen, addResults, trial }">
+    <template #2="{ nextScreen, addResult, trial }">
       <Screen>
         <ImageSelectionInput
           question="How did you like this?"
           :options="[
-            { label: trial.options.option1, src: 'img/test.png' },
-            { label: trial.options.option2, src: 'img/test.png' }
+            { label: trial.options.option1, src: 'img/1.jpg' },
+            { label: trial.options.option2, src: 'img/2.jpg' }
           ]"
           :answer.sync="answer"
           @change:answer="
-            addResults({ answer, options: trial.options });
+            addResult({ answer, options: trial.options });
             nextScreen();
           "
         />
       </Screen>
     </template>
 
-    <template #5="{ nextScreen, addResults, trial }">
+    <template #3="{ nextScreen, addResult, trial }">
       <Screen>
         <TextareaInput
           question="How did you like this?"
           :answer.sync="answer"
           @change:answer="
-            addResults({ answer });
+            addResult({ answer });
             nextScreen();
           "
         />
+      </Screen>
+    </template>
+
+    <template #4="{ nextScreen, addResult, trial }">
+      <Screen>
+        <SliderInput
+          question="How did you like this?"
+          left="bad"
+          right="good"
+          :answer.sync="answer"
+        />
+        <button
+          @click="
+            addResult({ answer });
+            nextScreen();
+          "
+        >
+          Next
+        </button>
       </Screen>
     </template>
 
@@ -82,9 +90,10 @@ import {
   Experiment,
   Screen
 } from 'magpie-base';
-import ForcedChoiceInput from '../../../src/components/inputs/ForcedChoiceInput';
-import ImageSelectionInput from '../../../src/components/inputs/ImageSelectionInput';
-import TextareaInput from '../../../src/components/inputs/TextareaInput';
+import ForcedChoiceInput from 'magpie-base/src/components/inputs/ForcedChoiceInput';
+import ImageSelectionInput from 'magpie-base/src/components/inputs/ImageSelectionInput';
+import TextareaInput from 'magpie-base/src/components/inputs/TextareaInput';
+import SliderInput from 'magpie-base/src/components/inputs/SliderInput';
 
 export default {
   name: 'App',
@@ -92,6 +101,7 @@ export default {
     ImageSelectionInput,
     ForcedChoiceInput,
     TextareaInput,
+    SliderInput,
     AudioDiscriminationWithPriming,
     Screen,
     Experiment
@@ -99,7 +109,8 @@ export default {
   data() {
     return {
       audioTrials: readAudioCsv(),
-      options: readOptionsCsv()
+      options: readOptionsCsv(),
+      answer: ''
     };
   },
   methods: {

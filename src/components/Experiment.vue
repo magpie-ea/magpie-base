@@ -1,7 +1,7 @@
 <template>
   <div class="experiment">
     <div class="header">
-      <div class="col">
+      <div class="col title">
         <slot name="default"></slot>
       </div>
       <div class="col">{{ currentScreen + 1 }}/{{ numScreens }}</div>
@@ -96,7 +96,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .experiment {
   margin: 100px auto;
   width: 800px;
@@ -127,5 +127,50 @@ export default {
 }
 .header .col:last-child {
   text-align: right;
+}
+
+/**
+ Default styles
+ */
+
+h1,
+h2,
+h3,
+h4 {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: 'Playfair Display', 'Noto Serif', serif;
+  text-align: center;
+}
+
+h1 {
+  font-size: 34px;
+}
+
+.experiment {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 17px;
+  line-height: 27px;
+  font-family: 'Lato', 'Noto Sans', sans-serif;
+}
+
+button {
+  background-color: #5187ba;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  display: block;
+  font-family: 'Lato', 'Noto Sans', sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  margin: 40px auto 20px auto;
+  outline: none;
+  padding: 5px 10px;
+  text-transform: uppercase;
+}
+button:hover,
+button:focus {
+  background-color: #324d93;
 }
 </style>

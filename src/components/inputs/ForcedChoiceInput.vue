@@ -38,4 +38,26 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.option {
+  background-color: #5187ba;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Lato', 'Noto Sans', sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  margin: 0 5px 20px 5px;
+  outline: none;
+  padding: 5px 10px;
+  text-transform: uppercase;
+}
+
+.option:hover {
+  background-color: #324d93;
+}
+</style>

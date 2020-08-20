@@ -17,4 +17,14 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+textarea {
+  border: 2px solid #5187ba;
+  border-radius: 10px;
+  display: block;
+  font-size: 16px;
+  margin: 0 auto;
+  outline: none;
+  padding: 10px 20px;
+}
+</style>

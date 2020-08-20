@@ -10,7 +10,7 @@
         <img
           :src="option.src"
           @click="onOptionClick(option.label)"
-          alt="option.label"
+          :alt="option.label"
         />
       </div>
     </div>
@@ -42,4 +42,16 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.options {
+  display: flex;
+  justify-content: center;
+}
+
+.option img {
+  margin: 20px;
+  height: 100px;
+  width: auto;
+  cursor: pointer;
+}
+</style>
