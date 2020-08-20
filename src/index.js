@@ -1,7 +1,10 @@
-import _AudioDiscriminationWithPriming from './components/AudioDiscriminationWithPriming';
-import _Experiment from './components/Experiment';
-import _Screen from './components/Screen';
-
-export const AudioDiscriminationWithPriming = _AudioDiscriminationWithPriming;
-export const Experiment = _Experiment;
-export const Screen = _Screen;
+export { default as Experiment } from './components/Experiment';
+export { default as Screen } from './components/Screen';
+export { default as CompletionInput } from './components/inputs/CompletionInput';
+export { default as ForcedChoiceInput } from './components/inputs/ForcedChoiceInput';
+export { default as ImageSelectionInput } from './components/inputs/ImageSelectionInput';
+export { default as KeypressInput } from './components/inputs/KeypressInput';
+export { default as RatingInput } from './components/inputs/RatingInput';
+export { default as SliderInput } from './components/inputs/SliderInput';
+export { default as TextareaInput } from './components/inputs/TextareaInput';
+export { default as AudioDiscriminationWithPriming } from './components/AudioDiscriminationWithPriming';

@@ -115,7 +115,25 @@
       </Screen>
     </template>
 
-    <template #7>
+    <template #7="{ nextScreen, addResult, trial }">
+      <Screen>
+        <KeypressInput
+          question="How's the weather?"
+          :keys="{ a: 'bar', b: 'foo' }"
+          :answer.sync="answer"
+        />
+        <button
+          @click="
+            addResult({ answer });
+            nextScreen();
+          "
+        >
+          Next
+        </button>
+      </Screen>
+    </template>
+
+    <template #8>
       <Screen :title="'Thanks!'">
         <template #0>
           Goodbye
@@ -127,16 +145,16 @@
 
 <script>
 import {
-  AudioDiscriminationWithPriming,
   Experiment,
-  Screen
+  Screen,
+  ImageSelectionInput,
+  ForcedChoiceInput,
+  TextareaInput,
+  SliderInput,
+  CompletionInput,
+  RatingInput,
+  KeypressInput
 } from 'magpie-base';
-import ForcedChoiceInput from 'magpie-base/src/components/inputs/ForcedChoiceInput';
-import ImageSelectionInput from 'magpie-base/src/components/inputs/ImageSelectionInput';
-import TextareaInput from 'magpie-base/src/components/inputs/TextareaInput';
-import SliderInput from 'magpie-base/src/components/inputs/SliderInput';
-import CompletionInput from 'magpie-base/src/components/inputs/CompletionInput';
-import RatingInput from 'magpie-base/src/components/inputs/RatingInput';
 
 export default {
   name: 'App',
@@ -147,7 +165,7 @@ export default {
     SliderInput,
     CompletionInput,
     RatingInput,
-    AudioDiscriminationWithPriming,
+    KeypressInput,
     Screen,
     Experiment
   },
