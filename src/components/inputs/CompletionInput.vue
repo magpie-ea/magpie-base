@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'ImageSelectionInput',
+  name: 'CompletionInput',
   props: {
     text: {
       type: String,

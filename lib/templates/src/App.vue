@@ -95,7 +95,27 @@
       </Screen>
     </template>
 
-    <template #6>
+    <template #6="{ nextScreen, addResult, trial }">
+      <Screen>
+        <RatingInput
+          question="How's the weather?"
+          :count="7"
+          left="bad"
+          right="good"
+          :answer.sync="answer"
+        />
+        <button
+          @click="
+            addResult({ answer });
+            nextScreen();
+          "
+        >
+          Next
+        </button>
+      </Screen>
+    </template>
+
+    <template #7>
       <Screen :title="'Thanks!'">
         <template #0>
           Goodbye
@@ -116,6 +136,7 @@ import ImageSelectionInput from 'magpie-base/src/components/inputs/ImageSelectio
 import TextareaInput from 'magpie-base/src/components/inputs/TextareaInput';
 import SliderInput from 'magpie-base/src/components/inputs/SliderInput';
 import CompletionInput from 'magpie-base/src/components/inputs/CompletionInput';
+import RatingInput from 'magpie-base/src/components/inputs/RatingInput';
 
 export default {
   name: 'App',
@@ -125,6 +146,7 @@ export default {
     TextareaInput,
     SliderInput,
     CompletionInput,
+    RatingInput,
     AudioDiscriminationWithPriming,
     Screen,
     Experiment
