@@ -140,17 +140,18 @@ export default {
   render(h) {
     // HACKY-O
     this.$parent.$exp = this;
-    const screens = this.$slots.screens;
+    const children = this.$slots.screens;
+    const screens = children.filter((c) => !!c.componentOptions);
     return h('div', { class: 'experiment' }, [
       h('div', { class: 'header' }, [
         h('div', { class: 'col title' }, this.$slots.title),
         h(
           'div',
           { class: 'col' },
-          '' + (this.currentScreen + 1) + '/' + Math.round(screens.length / 2)
+          '' + (this.currentScreen + 1) + '/' + Math.round(screens.length)
         )
       ]),
-      screens[this.currentScreen * 2]
+      screens[this.currentScreen]
     ]);
   }
 };
