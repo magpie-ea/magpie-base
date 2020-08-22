@@ -1,3 +1,16 @@
+<docs>
+```vue
+<Experiment>
+  <template #screens>
+    <Screen>
+      <TextareaInput
+          question="Fries or soup?" />
+    </Screen>
+  </template>
+</Experiment>
+```
+</docs>
+
 <template>
   <div class="textarea">
     <div class="question">{{ question }}</div>
@@ -6,9 +19,15 @@
 </template>
 
 <script>
+/**
+ * Have your participants provide a text answer
+ */
 export default {
   name: 'TextareaInput',
   props: {
+    /**
+     * The question
+     */
     question: {
       type: String,
       required: true

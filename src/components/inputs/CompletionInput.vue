@@ -1,3 +1,21 @@
+<docs>
+
+```vue
+<Experiment>
+  <template #screens>
+    <Screen>
+      <CompletionInput
+          text="One %s fell over three %s."
+          :options="[
+              ['horse', 'penguin', 'bird'],
+              ['icicles', 'trees', 'bushes']
+              ]"
+          />
+    </Screen>
+  </template>
+</Experiment>
+```
+</docs>
 <template>
   <div class="completion">
     <div class="question">
@@ -7,7 +25,13 @@
           v-if="i !== slices.length - 1"
           v-model="answers[i]"
           @change="
+            /**
+             * Change event with the fully completed text. Useful for answer.sync
+             */
             $emit('change:answer', fullAnswer);
+            /**
+             * Change event as an array of completions. Useful for answers.sync
+             */
             $emit('change:answers', answers);
           "
           ><option
@@ -20,13 +44,22 @@
 </template>
 
 <script>
+/**
+ * Have the participant complete a text with various gaps.
+ */
 export default {
   name: 'CompletionInput',
   props: {
+    /**
+     * The text that is supposed to be completed. `%s` marks completions
+     */
     text: {
       type: String,
       required: true
     },
+    /**
+     * An array of arrays with possible completions per `%s`
+     */
     options: {
       type: Array,
       required: true

@@ -1,11 +1,71 @@
+<docs>
+
+### Populating trial data with an array
+
+```vue
+<Experiment :trials="{ color: ['blue', 'green', 'yellow'] }">
+  <template #screens>
+    <Screen>
+      {{ $exp.trial.color }}
+      <button @click="$exp.nextScreen()">next</button>
+    </Screen>
+    <Screen>
+      {{ $exp.trial.color }}
+      <button @click="$exp.nextScreen()">next</button>
+    </Screen>
+    <Screen>
+      {{ $exp.trial.color }}
+    </Screen>
+  </template>
+</Experiment>
+```
+
+### Populating trial data with a function
+
+```vue
+<Experiment :trials="{number: () => Math.random()}">
+  <template #screens>
+    <Screen>
+      {{ $exp.trial.number }}
+      <button @click="$exp.nextScreen()">next</button>
+    </Screen>
+    <Screen>
+      {{ $exp.trial.number }}
+      <button @click="$exp.nextScreen()">next</button>
+    </Screen>
+    <Screen>
+      {{ $exp.trial.number }}
+    </Screen>
+  </template>
+</Experiment>
+```
+
+
+</docs>
+
 <script>
+/**
+ * This is the main component for your online experiment. Put it at the root of your application.
+ * The experiment is available in all subcomponents and in the parent as `$exp`
+ * @property trial Per trial data supplied via the trials prop
+ */
 export default {
   name: 'Experiment',
   props: {
+    /**
+     * Any data that you want to use in your trials you can pass in via this prop.
+     * You can either provide an array of data or a function that returns one sample at a time.
+     * This data will be available at run time via `$exp.trial`
+     */
     trials: {
       type: Object,
-      required: true
+      default: () => ({})
     }
+  },
+  provide() {
+    return {
+      experiment: this
+    };
   },
   data() {
     // Setup magic "trial" slot property
@@ -43,19 +103,12 @@ export default {
       trial
     };
   },
-  created() {
-    // globally expose this object
-    this.$exp = this;
-  },
-  computed: {
-    numScreens() {
-      return this.$slots.screens.length;
-    },
-    screens() {
-      return this.$slots.screens;
-    }
-  },
   methods: {
+    /**
+     * Go to the next screen.
+     * @public
+     * @param index{int} the index of the screen to go to (optional; default is next screen)
+     */
     nextScreen(index) {
       this.currentTrial = {};
       if (typeof index === 'number') {
@@ -64,6 +117,11 @@ export default {
       }
       this.currentScreen += 1;
     },
+    /**
+     * Add a result set
+     * @public
+     * @param data{Object} a flat object whose data you want to add to the results
+     */
     addResult(data) {
       if (!this.results[this.currentScreen]) {
         this.results[this.currentScreen] = [];
@@ -71,17 +129,28 @@ export default {
       this.results[this.currentScreen].push(data);
     }
   },
+  /**
+   * The contents of this slot will be visible during the entire experiment
+   * @slot title
+   */
+  /**
+   * Place your screens inside this slot. They will be visible one after the other, like a slide show.
+   * @slot screens
+   */
   render(h) {
+    // HACKY-O
+    this.$parent.$exp = this;
+    const screens = this.$slots.screens;
     return h('div', { class: 'experiment' }, [
       h('div', { class: 'header' }, [
         h('div', { class: 'col title' }, this.$slots.title),
         h(
           'div',
           { class: 'col' },
-          '' + (this.currentScreen + 1) + '/' + this.numScreens
+          '' + (this.currentScreen + 1) + '/' + Math.round(screens.length / 2)
         )
       ]),
-      this.$slots.screens[this.currentScreen]
+      screens[this.currentScreen * 2]
     ]);
   }
 };

@@ -1,3 +1,19 @@
+<docs>
+```vue
+<Experiment>
+  <template #screens>
+    <Screen>
+      <ImageSelectionInput
+          question="Fries or soup?"
+          :options="[
+              {src: 'fries.jpg', label: 'fries'},
+              {src: 'soup.jpg', label: 'soup' }]" />
+    </Screen>
+  </template>
+</Experiment>
+```
+</docs>
+
 <template>
   <div class="image_selection">
     <div class="question">{{ question }}</div>
@@ -18,24 +34,32 @@
 </template>
 
 <script>
+/**
+ * Have the participant select an image
+ */
 export default {
   name: 'ImageSelectionInput',
   props: {
+    /**
+     * The question
+     */
     question: {
       type: String,
       required: true
     },
+    /**
+     * An array of option objects `{ src: '', label: '' }`
+     */
     options: {
       type: Array,
-      required: true
-    },
-    answer: {
-      type: String,
       required: true
     }
   },
   methods: {
     onOptionClick(option) {
+      /**
+       * Change event with the selected image label
+       */
       this.$emit('change:answer', option);
     }
   }

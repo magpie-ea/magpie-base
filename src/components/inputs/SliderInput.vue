@@ -1,3 +1,18 @@
+<docs>
+```vue
+<Experiment>
+  <template #screens>
+    <Screen>
+      <SliderInput
+          question="Fries or soup?"
+          left="Fries"
+          right="Soup" />
+    </Screen>
+  </template>
+</Experiment>
+```
+</docs>
+
 <template>
   <div class="slider">
     <div class="question">{{ question }}</div>
@@ -14,17 +29,29 @@ import Slider from 'vue-slider-component';
 import 'vue-slider-component/theme/default.css';
 
 export default {
+  /**
+   * Have your participants answer on a continuous slider scale
+   */
   name: 'SliderInput',
   components: { Slider },
   props: {
+    /**
+     * The question
+     */
     question: {
       type: String,
       required: true
     },
+    /**
+     * Text left of the slider
+     */
     left: {
       type: String,
       optional: true
     },
+    /**
+     * Text right of the slider
+     */
     right: {
       type: String,
       optional: true

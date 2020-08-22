@@ -1,3 +1,20 @@
+<docs>
+```vue
+<Experiment>
+  <template #screens>
+    <Screen>
+      <KeypressInput
+          question="Fries or soup?"
+          :keys="{
+            f: 'fries',
+            j: 'soup'
+          }" />
+    </Screen>
+  </template>
+</Experiment>
+```
+</docs>
+
 <template>
   <div class="keypress">
     <div class="question">{{ question }}</div>
@@ -10,13 +27,22 @@
 </template>
 
 <script>
+/**
+ * Have your participants react
+ */
 export default {
   name: 'KeypressInput',
   props: {
+    /**
+     * The question
+     */
     question: {
       type: String,
       required: true
     },
+    /**
+     * An object with keys mapped to option labels
+     */
     keys: {
       type: Object,
       required: true

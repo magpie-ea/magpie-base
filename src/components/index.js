@@ -7,4 +7,4 @@ export { default as KeypressInput } from './inputs/KeypressInput';
 export { default as RatingInput } from './inputs/RatingInput';
 export { default as SliderInput } from './inputs/SliderInput';
 export { default as TextareaInput } from './inputs/TextareaInput';
-export { default as AudioDiscriminationWithPriming } from './AudioDiscriminationWithPriming';
+export { default as CategorizationMousetracking } from './screens/CategorizationMousetracking';

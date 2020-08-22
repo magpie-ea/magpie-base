@@ -14,24 +14,32 @@
 </template>
 
 <script>
+/**
+ * Have the participant choose between multiple options.
+ */
 export default {
   name: 'ForcedChoiceInput',
   props: {
+    /**
+     * The question or task
+     */
     question: {
       type: String,
       required: true
     },
+    /**
+     * The possible options to choose from
+     */
     options: {
       type: Array,
-      required: true
-    },
-    answer: {
-      type: String,
       required: true
     }
   },
   methods: {
     onOptionClick(option) {
+      /**
+       * Change event with the chosen option. Useful in combination with `answer.sync`
+       */
       this.$emit('change:answer', option);
     }
   }

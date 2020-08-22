@@ -1,3 +1,32 @@
+<docs>
+```vue
+<Experiment>
+  <template #screens>
+    <Screen>
+      <RatingInput
+          question="Fries or soup?"
+          left="Fries"
+          right="Soup" />
+    </Screen>
+  </template>
+</Experiment>
+```
+
+```vue
+<Experiment>
+  <template #screens>
+    <Screen>
+      <RatingInput
+          question="Fries or soup?"
+          left="Fries"
+          right="Soup"
+          :count="11"/>
+    </Screen>
+  </template>
+</Experiment>
+```
+</docs>
+
 <template>
   <div class="rating">
     <div class="question">{{ question }}</div>
@@ -20,21 +49,36 @@
 </template>
 
 <script>
+/**
+ * Have your participants rate their answer on a rating scale
+ */
 export default {
   name: 'RatingInput',
   props: {
+    /**
+     * The question
+     */
     question: {
       type: String,
       required: true
     },
+    /**
+     * The langth of the rating scale
+     */
     count: {
       type: Number,
       default: 7
     },
+    /**
+     * Text left of the rating scale
+     */
     left: {
       type: String,
       optional: true
     },
+    /**
+     * Text right of the rating scale
+     */
     right: {
       type: String,
       optional: true
