@@ -38,7 +38,7 @@ export default {
      */
     question: {
       type: String,
-      required: true
+      default: ''
     },
     /**
      * An object with keys mapped to option labels
@@ -46,10 +46,6 @@ export default {
     keys: {
       type: Object,
       required: true
-    },
-    expected: {
-      type: String,
-      optional: true
     }
   },
   mounted() {
