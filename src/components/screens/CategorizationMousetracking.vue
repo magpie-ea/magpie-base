@@ -21,7 +21,6 @@
     </CategorizationMousetracking>
   </template>
 </Experiment>
-
 ```
 
 </docs>

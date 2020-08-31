@@ -1,3 +1,19 @@
+<docs>
+
+```vue
+<Experiment>
+  <template #screens>
+    <Screen>
+      <ForcedChoiceInput
+          question="What's on the bread?"
+          :options="['Ham', 'Jam']" />
+    </Screen>
+  </template>
+</Experiment>
+```
+
+</docs>
+
 <template>
   <div class="forced_choice">
     <div class="question">{{ question }}</div>

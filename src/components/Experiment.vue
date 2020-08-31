@@ -41,6 +41,28 @@
 ```
 
 
+### Providing a title
+
+```vue
+<Experiment :trials="{number: () => Math.random()}">
+  <template #title>
+    My experiment
+  </template>
+  <template #screens>
+    <Screen>
+      {{ $exp.trial.number }}
+      <button @click="$exp.nextScreen()">next</button>
+    </Screen>
+    <Screen>
+      {{ $exp.trial.number }}
+      <button @click="$exp.nextScreen()">next</button>
+    </Screen>
+    <Screen>
+      {{ $exp.trial.number }}
+    </Screen>
+  </template>
+</Experiment>
+```
 </docs>
 
 <script>
