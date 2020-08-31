@@ -4,8 +4,8 @@
   "description": "Provides base components for _magpie frontend projects",
   "author": "_magpie project",
   "scripts": {
-    "styleguide": "vue-cli-service styleguidist",
-    "styleguide:build": "vue-cli-service styleguidist:build",
+    "docs": "vue-cli-service styleguidist",
+    "docs:build": "vue-cli-service styleguidist:build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "main": "src/index.js",
