@@ -49,15 +49,17 @@
         ></span>
       </div>
       <!-- @slot task content, displayed after the whole text was read -->
-      <slot name="task" v-if="word >= splitters.length"></slot>
+      <slot name="task" v-if="word >= splitters.length">
+        <div v-wait:100="$exp.nextScreen()"></div>
+      </slot>
     </template>
   </Screen>
 </template>
 
 <script>
 import Screen from '../Screen';
-import KeypressInput from '@/components/inputs/KeypressInput';
-import RatingInput from '@/components/inputs/RatingInput';
+import KeypressInput from '../inputs/KeypressInput';
+import RatingInput from '../inputs/RatingInput';
 
 export default {
   name: 'SelfPacedReading',
