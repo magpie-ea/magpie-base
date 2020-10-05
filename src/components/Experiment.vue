@@ -132,12 +132,12 @@ export default {
      * @param index{int} the index of the screen to go to (optional; default is next screen)
      */
     nextScreen(index) {
-      this.currentTrial = {};
       if (typeof index === 'number') {
         this.currentScreen = index;
-        return;
+      } else {
+        this.currentScreen += 1;
       }
-      this.currentScreen += 1;
+      this.currentTrial = {};
     },
     /**
      * Add a result set
@@ -183,7 +183,7 @@ export default {
 .experiment {
   margin: 100px auto;
   width: 800px;
-  height: 600px;
+  min-height: 600px;
   border-radius: 10px;
   border: 1px solid #ababab;
   padding: 20px;
