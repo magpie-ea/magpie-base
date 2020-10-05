@@ -1,127 +1,86 @@
 <template>
-  <Experiment id="app" :trials="{ audio, options }">
+  <Experiment id="app" :trials="{ forced_choice, multi_dropdown }">
     <template #title>
-      <div>Mouse tracking experiment</div>
+      <div>The experiment</div>
     </template>
 
     <template #screens>
       <Screen :title="'Welcome'">
-        Hello!
-        <button @click="$exp.nextScreen">Start</button>
+        This is a sample introduction screen.
+        <br />
+        <br />
+        This screen welcomes the participant and gives general information about
+        the experiment.
+        <br />
+        <br />
+        This mock up experiment is a showcase of the functionality of magpie.
+        <button @click="$exp.nextScreen">Begin the experiment</button>
       </Screen>
 
-      <Screen>
-        <ForcedChoiceInput
-          question="How did you like this?"
-          :options="[$exp.trial.options.option1, $exp.trial.options.option2]"
-          :answer.sync="answer"
-          @change:answer="
-            $exp.addResult({ answer, options: $exp.trial.options });
-            $exp.nextScreen();
-          "
-        />
+      <Screen :title="'General Instructions'">
+        This is a sample instructions view.
+        <br />
+        <br />
+        First you will go through two practice trials. The practice trial view
+        uses magpie's forced choice trial input.
+        <button @click="$exp.nextScreen">to the practice trial</button>
       </Screen>
 
-      <Screen>
-        <ImageSelectionInput
-          question="How did you like this?"
-          :options="[
-            { label: $exp.trial.options.option1, src: 'img/1.jpg' },
-            { label: $exp.trial.options.option2, src: 'img/2.jpg' }
-          ]"
-          :answer.sync="answer"
-          @change:answer="
-            $exp.addResult({ answer, options: $exp.trial.options });
-            $exp.nextScreen();
-          "
-        />
-      </Screen>
+      <!-- Practice trials -->
+      <template v-for="i in forced_choice_length">
+        <Screen :key="'forcedchoice-' + i">
+          <template #0>
+            <img :src="$exp.trial.forced_choice.picture" alt="" />
+            <ForcedChoiceInput
+              :question="$exp.trial.forced_choice.question"
+              :options="[
+                $exp.trial.forced_choice.option1,
+                $exp.trial.forced_choice.option2
+              ]"
+              @change:answer="
+                $exp.addResult({ answer: $event });
+                $exp.nextScreen();
+              "
+            />
+          </template>
+        </Screen>
+      </template>
+      <template v-for="i in multi_dropdown_length">
+        <Screen :key="'multidropdown-' + i">
+          <template #0>
+            <CompletionInput
+              :text="
+                $exp.trial.multi_dropdown.sentence_chunk_1 +
+                ' %s ' +
+                $exp.trial.multi_dropdown.sentence_chunk_2 +
+                ' %s ' +
+                $exp.trial.multi_dropdown.sentence_chunk_3
+              "
+              :options="[
+                $exp.trial.multi_dropdown.choice_options_1,
+                $exp.trial.multi_dropdown.choice_options_2
+              ]"
+              @change:answer="answer = $event"
+            />
+            <button
+              @click="
+                $exp.addResult({ answer });
+                $exp.nextScreen();
+              "
+            >
+              Done
+            </button>
+          </template>
+        </Screen>
+      </template>
 
-      <Screen>
-        <TextareaInput
-          question="How did you like this?"
-          :answer.sync="answer"
-          @change:answer="
-            $exp.addResult({ answer });
-            $exp.nextScreen();
-          "
-        />
-      </Screen>
-
-      <Screen>
-        <SliderInput
-          question="How did you like this?"
-          left="bad"
-          right="good"
-          :answer.sync="answer"
-        />
-        <button
-          @click="
-            $exp.addResult({ answer });
-            $exp.nextScreen();
-          "
-        >
-          Next
-        </button>
-      </Screen>
-
-      <Screen>
-        <CompletionInput
-          text="One %s fell over a %s."
-          :options="[
-            ['horse', 'penguin'],
-            ['tree', 'icicle']
-          ]"
-          :answer.sync="answer"
-        />
-        <button
-          @click="
-            $exp.addResult({ answer });
-            $exp.nextScreen();
-          "
-        >
-          Next
-        </button>
-      </Screen>
-
-      <Screen>
-        <RatingInput
-          question="How's the weather?"
-          :count="7"
-          left="bad"
-          right="good"
-          :answer.sync="answer"
-        />
-        <button
-          @click="
-            $exp.addResult({ answer });
-            $exp.nextScreen();
-          "
-        >
-          Next
-        </button>
-      </Screen>
-
-      <Screen>
-        <KeypressInput
-          question="How's the weather?"
-          :keys="{ a: 'bar', b: 'foo' }"
-          :answer.sync="answer"
-        />
-        <button
-          @click="
-            $exp.addResult({ answer });
-            $exp.nextScreen();
-          "
-        >
-          Next
-        </button>
+      <Screen :title="'Data'">
+        This is the data you are submitting:
+        <pre>{{ JSON.stringify($exp.results, null, '\t') }}</pre>
       </Screen>
 
       <Screen :title="'Thanks!'">
-        <template #0>
-          Goodbye
-        </template>
+        Goodbye
       </Screen>
     </template>
   </Experiment>
@@ -131,84 +90,51 @@
 export default {
   name: 'App',
   data() {
+    const forced_choice = [
+      {
+        question: "What's on the bread?",
+        picture: 'images/wide.jpg',
+        option1: 'jam',
+        option2: 'ham'
+      },
+      {
+        question: "What's the weather like?",
+        picture: 'images/small.png',
+        option1: 'shiny',
+        option2: 'rainbow'
+      },
+      {
+        question: "What's the weather like today?",
+        picture: 'images/high.jpg',
+        option1: 'shiny',
+        option2: 'rainbow'
+      }
+    ];
+
+    const multi_dropdown = [
+      {
+        sentence_chunk_1: 'Some of the',
+        sentence_chunk_2: 'are',
+        sentence_chunk_3: 'today.',
+        choice_options_1: ['cats', 'dogs'],
+        choice_options_2: ['happy', 'hungry', 'sad']
+      },
+      {
+        sentence_chunk_1: 'All of the',
+        sentence_chunk_2: 'will be',
+        sentence_chunk_3: 'tomorrow.',
+        choice_options_1: ['cats', 'dogs'],
+        choice_options_2: ['happy', 'hungry', 'sad']
+      }
+    ];
+
     return {
-      audioTrials: readAudioCsv(),
-      options: readOptionsCsv(),
+      forced_choice,
+      forced_choice_length: forced_choice.length,
+      multi_dropdown,
+      multi_dropdown_length: multi_dropdown.length,
       answer: ''
     };
-  },
-  methods: {
-    audio() {
-      return this.audioTrials.pop();
-    }
   }
 };
-
-// Just a stub to take the place of a real magpie-supplied function
-function readAudioCsv() {
-  return [
-    {
-      primingAudio: 'audio/seashore.ogg',
-      trialAudio: 'audio/sealion.ogg'
-    },
-    {
-      primingAudio: 'audio/seashore.ogg',
-      trialAudio: 'audio/sealion.ogg'
-    }
-  ];
-}
-function readOptionsCsv() {
-  return [
-    {
-      option1: 'Fish',
-      option2: 'Mammal'
-    },
-    {
-      option1: 'Mammal',
-      option2: 'Bird'
-    },
-    {
-      option1: 'Fish',
-      option2: 'Mammal'
-    },
-    {
-      option1: 'Mammal',
-      option2: 'Bird'
-    },
-    {
-      option1: 'Mammal',
-      option2: 'Bird'
-    },
-    {
-      option1: 'Mammal',
-      option2: 'Bird'
-    },
-    {
-      option1: 'Mammal',
-      option2: 'Bird'
-    },
-    {
-      option1: 'Mammal',
-      option2: 'Bird'
-    },
-    {
-      option1: 'Mammal',
-      option2: 'Bird'
-    },
-    {
-      option1: 'Mammal',
-      option2: 'Bird'
-    },
-    {
-      option1: 'Mammal',
-      option2: 'Bird'
-    },
-    {
-      option1: 'Mammal',
-      option2: 'Bird'
-    }
-  ];
-}
 </script>
-
-<style></style>
