@@ -9,3 +9,4 @@ export { default as SliderInput } from './inputs/SliderInput';
 export { default as TextareaInput } from './inputs/TextareaInput';
 export { default as CategorizationMousetracking } from './screens/CategorizationMousetracking';
 export { default as SelfPacedReading } from './screens/SelfPacedReading';
+export { default as Wait } from './helpers/Wait';

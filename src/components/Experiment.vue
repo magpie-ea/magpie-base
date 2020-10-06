@@ -256,4 +256,9 @@ button:hover,
 button:focus {
   background-color: #324d93;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
 </style>

@@ -18,6 +18,10 @@ module.exports = {
     {
       name: 'Screens',
       components: 'src/components/screens/*.vue'
+    },
+    {
+      name: 'Helpers',
+      components: 'src/components/helpers/*.vue'
     }
   ],
   // webpackConfig: {

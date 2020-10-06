@@ -30,16 +30,17 @@
     <template #0="{ nextSlide }">
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->
       <slot name="prep" :done="nextSlide">
-        <div v-wait:1="nextSlide" />
+        <Wait :time="1" @done="nextSlide" />
       </slot>
     </template>
 
     <template #1="{ nextSlide }">
-      <div v-wait:500="nextSlide"></div>
+      <Wait :time="500" @done="nextSlide" />
     </template>
 
     <template #2="{ nextSlide }">
-      <div class="options" v-wait:500="nextSlide">
+      <Wait :time="500" @done="nextSlide" />
+      <div class="options">
         <!-- @slot provide content for categorization option one -->
         <div class="option1"><slot name="option1" /></div>
         <div class="space"></div>
@@ -66,17 +67,18 @@
     </template>
 
     <template #4>
-      <div v-wait:3000="$exp.nextScreen"></div>
+      <Wait :time="3000" @done="$exp.nextScreen" />
     </template>
   </Screen>
 </template>
 
 <script>
 import Screen from '../Screen';
+import Wait from '../helpers/Wait';
 
 export default {
   name: 'CategorizationMousetracking',
-  components: { Screen },
+  components: { Screen, Wait },
   props: {
     /**
      * Title of the screen

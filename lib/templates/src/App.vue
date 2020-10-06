@@ -1,5 +1,14 @@
 <template>
-  <Experiment id="app" :trials="{ forced_choice, multi_dropdown }">
+  <Experiment
+    id="app"
+    :trials="{
+      forced_choice,
+      multi_dropdown,
+      sentenceChoice,
+      imageSelection,
+      sliderRating
+    }"
+  >
     <template #title>
       <div>The experiment</div>
     </template>
@@ -38,13 +47,17 @@
                 $exp.trial.forced_choice.option2
               ]"
               @change:answer="
-                $exp.addResult({ answer: $event });
+                $exp.addResult({
+                  question: $exp.trial.forced_choice.question,
+                  answer: $event
+                });
                 $exp.nextScreen();
               "
             />
           </template>
         </Screen>
       </template>
+
       <template v-for="i in multi_dropdown_length">
         <Screen :key="'multidropdown-' + i">
           <template #0>
@@ -65,6 +78,89 @@
             <button
               @click="
                 $exp.addResult({ answer });
+                $exp.nextScreen();
+              "
+            >
+              Done
+            </button>
+          </template>
+        </Screen>
+      </template>
+
+      <!-- Main trials -->
+
+      <template v-for="i in sentenceChoice_length / 2">
+        <template v-for="j in 2">
+          <Screen :key="'sentenceChoice-' + i + '' + j">
+            <template #0>
+              <img :src="$exp.trial.sentenceChoice.picture" alt="" />
+              <ForcedChoiceInput
+                :question="$exp.trial.sentenceChoice.question"
+                :options="[
+                  $exp.trial.sentenceChoice.option1,
+                  $exp.trial.sentenceChoice.option2
+                ]"
+                @change:answer="
+                  $exp.addResult({
+                    question: $exp.trial.sentenceChoice.question,
+                    answer: $event
+                  });
+                  $exp.nextScreen();
+                "
+              />
+            </template>
+          </Screen>
+        </template>
+        <template v-for="j in 2">
+          <Screen :key="'sentenceChoice-' + i + '' + j">
+            <template #0>
+              <ImageSelectionInput
+                :question="$exp.trial.imageSelection.question || ''"
+                :options="[
+                  {
+                    label: $exp.trial.imageSelection.option1,
+                    src: $exp.trial.imageSelection.picture1
+                  },
+                  {
+                    label: $exp.trial.imageSelection.option2,
+                    src: $exp.trial.imageSelection.picture2
+                  }
+                ]"
+                @change:answer="
+                  $exp.addResult({
+                    question: $exp.trial.imageSelection.question || '',
+                    answer: $event
+                  });
+                  $exp.nextScreen();
+                "
+              />
+            </template>
+          </Screen>
+        </template>
+      </template>
+
+      <template v-for="i in sliderRating_length">
+        <Screen :key="'sliderRating-' + i">
+          <template #0="{nextSlide}">
+            <Wait :time="500" @done="nextSlide" />
+          </template>
+          <template #1="{nextSlide}">
+            <Wait :time="1500" @done="nextSlide" />
+            <img :src="$exp.trial.sliderRating.picture" alt="" />
+          </template>
+          <template #2>
+            <SliderInput
+              :question="$exp.trial.sliderRating.question"
+              :left="$exp.trial.sliderRating.optionLeft"
+              :right="$exp.trial.sliderRating.optionRight"
+              @update:answer="answer = $event"
+            />
+            <button
+              @click="
+                $exp.addResult({
+                  question: $exp.trial.sliderRating.question || '',
+                  answer: answer
+                });
                 $exp.nextScreen();
               "
             >
@@ -128,11 +224,102 @@ export default {
       }
     ];
 
+    const sentenceChoice = [
+      {
+        QUD: 'sentence selection - loop: 1, trial: 1',
+        picture: 'images/question_mark_02.png',
+        question: "What's on the bread?",
+        option1: 'ham',
+        option2: 'jam'
+      },
+      {
+        QUD: 'sentence selection - loop: 1, trial: 2',
+        question: "What's the weather like?",
+        option1: 'rainbow',
+        option2: 'shiny'
+      },
+      {
+        QUD: 'sentence selection - loop: 2, trial: 1',
+        picture: 'images/question_mark_01.png',
+        question: 'How are you today?',
+        option1: 'fine',
+        option2: 'great'
+      },
+      {
+        QUD: 'sentence selection - loop: 2, trial: 2',
+        question: 'Jam or Ham?',
+        option1: 'ham',
+        option2: 'jam'
+      }
+    ];
+
+    const imageSelection = [
+      {
+        QUD: 'image selection - loop: 1, trial: 1',
+        question: 'How are you today?',
+        option1: 'fine',
+        picture1: 'images/question_mark_02.png',
+        option2: 'great',
+        picture2: 'images/question_mark_01.png'
+      },
+      {
+        QUD: 'image selection - loop: 1, trial: 2',
+        option1: 'shiny',
+        picture1: 'images/question_mark_03.jpg',
+        option2: 'rainbow',
+        picture2: 'images/question_mark_04.png'
+      },
+      {
+        QUD: 'image selection - loop: 2, trial: 1',
+        question: 'How are you today?',
+        option1: 'fine',
+        picture1: 'images/question_mark_03.jpg',
+        option2: 'great',
+        picture2: 'images/question_mark_01.png'
+      },
+      {
+        QUD: 'image selection - loop: 2, trial: 2',
+        option1: 'shiny',
+        picture1: 'images/question_mark_02.png',
+        option2: 'rainbow',
+        picture2: 'images/question_mark_04.png'
+      }
+    ];
+
+    const sliderRating = [
+      {
+        picture: 'images/question_mark_02.png',
+        question: 'How are you today?',
+        optionLeft: 'fine',
+        optionRight: 'great'
+      },
+      {
+        picture: 'images/question_mark_01.png',
+        question: "What's the weather like?",
+        optionLeft: 'shiny',
+        optionRight: 'rainbow'
+      },
+      {
+        QUD:
+          'Here is a sentence that stays on the screen from the very beginning',
+        picture: 'images/question_mark_03.jpg',
+        question: "What's on the bread?",
+        optionLeft: 'ham',
+        optionRight: 'jam'
+      }
+    ];
+
     return {
       forced_choice,
       forced_choice_length: forced_choice.length,
       multi_dropdown,
       multi_dropdown_length: multi_dropdown.length,
+      sentenceChoice,
+      sentenceChoice_length: sentenceChoice.length,
+      imageSelection: imageSelection,
+      imageSelection_length: imageSelection.length,
+      sliderRating,
+      sliderRating_length: sliderRating.length,
       answer: ''
     };
   }

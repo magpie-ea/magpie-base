@@ -19,12 +19,12 @@
     <template #0="{ nextSlide }">
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->
       <slot name="prep" :done="nextSlide">
-        <div v-wait:1="nextSlide" />
+        <Wait :time="1" @done="nextSlide" />
       </slot>
     </template>
 
     <template #1="{ nextSlide }">
-      <div v-wait:500="nextSlide"></div>
+      <Wait :time="500" @done="nextSlide" />
     </template>
 
     <template #2="{ nextSlide }">
@@ -50,7 +50,7 @@
       </div>
       <!-- @slot task content, displayed after the whole text was read -->
       <slot name="task" v-if="word >= splitters.length">
-        <div v-wait:100="$exp.nextScreen()"></div>
+        <Wait :time="100" @done="$exp.nextScreen()" />
       </slot>
     </template>
   </Screen>
@@ -60,10 +60,11 @@
 import Screen from '../Screen';
 import KeypressInput from '../inputs/KeypressInput';
 import RatingInput from '../inputs/RatingInput';
+import Wait from '../helpers/Wait';
 
 export default {
   name: 'SelfPacedReading',
-  components: { RatingInput, KeypressInput, Screen },
+  components: { RatingInput, KeypressInput, Screen, Wait },
   props: {
     /**
      * Title of the screen

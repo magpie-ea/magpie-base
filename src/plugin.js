@@ -11,7 +11,4 @@ export default function (Vue, options) {
       }
     }
   });
-  Vue.directive('wait', (el, binding) => {
-    setTimeout(() => binding.value(), Number(binding.arg));
-  });
 }
