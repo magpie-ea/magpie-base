@@ -1,6 +1,6 @@
 <docs>
 ```vue
-<Experiment :trials="{ color: ['blue', 'green', 'yellow'] }">
+<Experiment>
   <template #screens>
     <Screen>
       <template #0="{nextSlide}">
@@ -9,14 +9,18 @@
       </template>
       <template #1="{nextSlide}">
         Slide 2
-        <Wait :time="500" @done="nextSlide" />
+        <Wait key="wait for slide 2" :time="500" @done="nextSlide" />
       </template>
       <template #2="{nextSlide}">
         Slide 3
-        <Wait :time="500" @done="nextSlide" />
+        <Wait key="wait for slide 3" :time="500" @done="nextSlide" />
       </template>
       <template #3="{nextSlide}">
         Slide 4
+        <Wait key="wait for slide 4" :time="500" @done="nextSlide" />
+      </template>
+      <template #4="{nextSlide}">
+        Slide 5
       </template>
     </Screen>
   </template>
@@ -34,6 +38,12 @@ export default {
     }
   },
   mounted() {
+    this.set();
+  },
+  updated() {
+    this.set();
+  },
+  activated() {
     this.set();
   },
   watch: {

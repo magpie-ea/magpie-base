@@ -35,11 +35,11 @@
     </template>
 
     <template #1="{ nextSlide }">
-      <Wait :time="500" @done="nextSlide" />
+      <Wait key="pause" :time="500" @done="nextSlide" />
     </template>
 
     <template #2="{ nextSlide }">
-      <Wait :time="500" @done="nextSlide" />
+      <Wait key="wait a bit" :time="500" @done="nextSlide" />
       <div class="options">
         <!-- @slot provide content for categorization option one -->
         <div class="option1"><slot name="option1" /></div>
