@@ -16,3 +16,5 @@ For more information, please visit [the project homepage](https://magpie-ea.gith
 In order to spin up a web server with the docs run `npm run docs`.
 
 In order to build the docs run `npm run docs:build`.
+
+The docs for the latest version are available at https://epic-bhabha-7e0966.netlify.app/
