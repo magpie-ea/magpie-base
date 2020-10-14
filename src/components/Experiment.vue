@@ -66,6 +66,7 @@
 </docs>
 
 <script>
+import _ from 'lodash';
 /**
  * This is the main component for your online experiment. Put it at the root of your application.
  * The experiment is available in all subcomponents and in the parent as `$exp`
@@ -82,6 +83,26 @@ export default {
     trials: {
       type: Object,
       default: () => ({})
+    },
+    /**
+     * The id of the experiment on the magpie server
+     */
+    id: {
+      type: String,
+      required: true
+    },
+    /**
+     * An email for participants to contact in case of problems
+     */
+    contactEmail: {
+      type: String,
+      required: true
+    },
+    /**
+     * The submission URL on the magpie server
+     */
+    submissionUrl: {
+      type: String
     }
   },
   provide() {
@@ -149,6 +170,55 @@ export default {
         this.results[this.currentScreen] = [];
       }
       this.results[this.currentScreen].push(data);
+    },
+    getResults() {
+      return flattenData({
+        experiment_id: this.id,
+        trials: addEmptyColumns(
+          _.flatten(Object.values(this.results)).map((o) =>
+            Object.assign({}, o)
+          )
+        ) // clone the data
+      });
+    },
+    submit() {
+      if (!this.submissionUrl) {
+        return;
+      }
+      return this.submitResults(
+        this.contactEmail,
+        this.submissionUrl,
+        this.getResults()
+      );
+    },
+    async submitResults(contactEmail, submissionURL, data) {
+      let resp;
+      try {
+        resp = await fetch({
+          method: 'POST',
+          url: submissionURL,
+          crossDomain: true,
+          contentType: 'application/json',
+          body: JSON.stringify(data)
+        });
+      } catch (e) {
+        alert(
+          'Oops, the submission failed. ' +
+            e.message +
+            '\nPlease try again. If the problem persists, please contact ' +
+            contactEmail +
+            'with this error message, including your ID'
+        );
+      }
+      if (resp.statusCode !== 200) {
+        alert(
+          'Oops, the submission failed. The server says: ' +
+            responseData.responseText +
+            '\nPlease try again. If the problem persists, please contact ' +
+            contactEmail +
+            'with this error message, including your ID'
+        );
+      }
     }
   },
   /**
@@ -176,6 +246,111 @@ export default {
       screens[this.currentScreen]
     ]);
   }
+};
+
+// adds columns with NA values
+const addEmptyColumns = function (trialData) {
+  var columns = [];
+
+  for (var i = 0; i < trialData.length; i++) {
+    for (var prop in trialData[i]) {
+      if (trialData[i].hasOwnProperty(prop) && columns.indexOf(prop) === -1) {
+        columns.push(prop);
+      }
+    }
+  }
+
+  for (var j = 0; j < trialData.length; j++) {
+    for (var k = 0; k < columns.length; k++) {
+      if (!trialData[j].hasOwnProperty(columns[k])) {
+        trialData[j][columns[k]] = 'NA';
+      }
+    }
+  }
+
+  return trialData;
+};
+
+const createCSVForDownload = function (flattenedData) {
+  var csvOutput = '';
+
+  var t = flattenedData[0];
+
+  for (var key in t) {
+    if (t.hasOwnProperty(key)) {
+      csvOutput += '"' + String(key) + '",';
+    }
+  }
+  csvOutput += '\n';
+  for (var i = 0; i < flattenedData.length; i++) {
+    var currentTrial = flattenedData[i];
+    for (var k in t) {
+      if (currentTrial.hasOwnProperty(k)) {
+        csvOutput += '"' + String(currentTrial[k]) + '",';
+      }
+    }
+    csvOutput += '\n';
+  }
+
+  var blob = new Blob([csvOutput], {
+    type: 'text/csv'
+  });
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveBlob(blob, 'results.csv');
+  } else {
+    jQuery('<a/>', {
+      class: 'magpie-view-button',
+      html: 'Download the results as CSV',
+      href: window.URL.createObjectURL(blob),
+      download: 'results.csv'
+    }).appendTo($('.magpie-thanks-view'));
+  }
+};
+
+const flattenData = function (data) {
+  var trials = data.trials;
+  delete data.trials;
+
+  // The easiest way to avoid name clash is just to check the keys one by one and rename them if necessary.
+  // Though I think it's also the user's responsibility to avoid such scenarios...
+  var sample_trial = trials[0];
+  for (var trial_key in sample_trial) {
+    if (sample_trial.hasOwnProperty(trial_key)) {
+      if (data.hasOwnProperty(trial_key)) {
+        // Much easier to just operate it once on the data, since if we also want to operate on the trials we'd need to loop through each one of them.
+        var new_data_key = 'glb_' + trial_key;
+        data[new_data_key] = data[trial_key];
+        delete data[trial_key];
+      }
+    }
+  }
+
+  var out = _.map(trials, function (t) {
+    // Here the data is the general informatoin besides the trials.
+    return _.merge(t, data);
+  });
+  return out;
+};
+
+// parses the url to get the assignmentId and workerId
+const getHITData = function () {
+  const url = window.location.href;
+  let qArray = url.split('?');
+  let HITData = {};
+
+  if (qArray[1] === undefined) {
+    throw new Error(
+      "Cannot get participant' s assignmentId from the URL (happens if the experiment does NOT run on MTurk or MTurkSandbox)."
+    );
+  } else {
+    qArray = qArray[1].split('&');
+
+    for (var i = 0; i < qArray.length; i++) {
+      HITData[qArray[i].split('=')[0]] = qArray[i].split('=')[1];
+    }
+  }
+
+  return HITData;
 };
 </script>
 

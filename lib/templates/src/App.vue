@@ -1,6 +1,6 @@
 <template>
   <Experiment
-    id="app"
+    id="test1234"
     :trials="{
       forced_choice,
       multi_dropdown,
@@ -153,7 +153,7 @@
               :question="$exp.trial.sliderRating.question"
               :left="$exp.trial.sliderRating.optionLeft"
               :right="$exp.trial.sliderRating.optionRight"
-              @update:answer="answer = $event"
+              @change:answer="answer = $event"
             />
             <button
               @click="
@@ -170,10 +170,7 @@
         </Screen>
       </template>
 
-      <Screen :title="'Data'">
-        This is the data you are submitting:
-        <pre>{{ JSON.stringify($exp.results, null, '\t') }}</pre>
-      </Screen>
+      <DebugResults />
 
       <Screen :title="'Thanks!'">
         Goodbye
