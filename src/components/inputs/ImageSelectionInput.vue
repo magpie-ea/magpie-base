@@ -19,14 +19,15 @@
     <div class="question">{{ question }}</div>
     <div class="options">
       <div
-        class="option"
         v-for="option in options"
+        :key="option"
+        class="option"
         @click="onOptionClick(option)"
       >
         <img
           :src="option.src"
-          @click="onOptionClick(option.label)"
           :alt="option.label"
+          @click="onOptionClick(option.label)"
         />
       </div>
     </div>

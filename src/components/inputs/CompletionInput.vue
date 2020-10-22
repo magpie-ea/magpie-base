@@ -19,7 +19,7 @@
 <template>
   <div class="completion">
     <div class="question">
-      <span v-for="(slice, i) in slices"
+      <span v-for="(slice, i) in slices" :key="i"
         >{{ slice }}
         <select
           v-if="i !== slices.length - 1"
@@ -36,6 +36,7 @@
           "
           ><option
             v-for="option in options[i]"
+            :key="option"
             v-text="option"
           ></option></select
       ></span>

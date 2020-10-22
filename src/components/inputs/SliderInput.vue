@@ -47,14 +47,16 @@ export default {
      */
     left: {
       type: String,
-      optional: true
+      optional: true,
+      default: ''
     },
     /**
      * Text right of the slider
      */
     right: {
       type: String,
-      optional: true
+      optional: true,
+      default: ''
     }
   }
 };
@@ -65,11 +67,13 @@ export default {
   display: flex;
   margin: 20px 0;
 }
+
 .slider-element .left,
 .slider-element .right {
   flex-grow: 0;
   padding: 0 20px;
 }
+
 .slider {
   flex-grow: 1;
 }

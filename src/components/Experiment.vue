@@ -102,7 +102,8 @@ export default {
      * The submission URL on the magpie server
      */
     submissionUrl: {
-      type: String
+      type: String,
+      default: ''
     }
   },
   provide() {
@@ -215,7 +216,7 @@ export default {
       if (resp.statusCode !== 200) {
         alert(
           'Oops, the submission failed. The server says: ' +
-            responseData.responseText +
+            (await resp.text()) +
             '\nPlease try again. If the problem persists, please contact ' +
             contactEmail +
             'with this error message, including your ID'
@@ -273,42 +274,6 @@ const addEmptyColumns = function (trialData) {
   return trialData;
 };
 
-const createCSVForDownload = function (flattenedData) {
-  var csvOutput = '';
-
-  var t = flattenedData[0];
-
-  for (var key in t) {
-    if (t.hasOwnProperty(key)) {
-      csvOutput += '"' + String(key) + '",';
-    }
-  }
-  csvOutput += '\n';
-  for (var i = 0; i < flattenedData.length; i++) {
-    var currentTrial = flattenedData[i];
-    for (var k in t) {
-      if (currentTrial.hasOwnProperty(k)) {
-        csvOutput += '"' + String(currentTrial[k]) + '",';
-      }
-    }
-    csvOutput += '\n';
-  }
-
-  var blob = new Blob([csvOutput], {
-    type: 'text/csv'
-  });
-  if (window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveBlob(blob, 'results.csv');
-  } else {
-    jQuery('<a/>', {
-      class: 'magpie-view-button',
-      html: 'Download the results as CSV',
-      href: window.URL.createObjectURL(blob),
-      download: 'results.csv'
-    }).appendTo($('.magpie-thanks-view'));
-  }
-};
-
 const flattenData = function (data) {
   var trials = data.trials;
   delete data.trials;
@@ -332,27 +297,6 @@ const flattenData = function (data) {
     return _.merge(t, data);
   });
   return out;
-};
-
-// parses the url to get the assignmentId and workerId
-const getHITData = function () {
-  const url = window.location.href;
-  let qArray = url.split('?');
-  let HITData = {};
-
-  if (qArray[1] === undefined) {
-    throw new Error(
-      "Cannot get participant' s assignmentId from the URL (happens if the experiment does NOT run on MTurk or MTurkSandbox)."
-    );
-  } else {
-    qArray = qArray[1].split('&');
-
-    for (var i = 0; i < qArray.length; i++) {
-      HITData[qArray[i].split('=')[0]] = qArray[i].split('=')[1];
-    }
-  }
-
-  return HITData;
 };
 </script>
 
@@ -385,6 +329,7 @@ const getHITData = function () {
   flex-shrink: 0;
   flex-grow: 1;
 }
+
 .header .col:last-child {
   text-align: right;
 }
@@ -429,6 +374,7 @@ button {
   padding: 5px 10px;
   text-transform: uppercase;
 }
+
 button:hover,
 button:focus {
   background-color: #324d93;

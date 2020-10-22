@@ -27,7 +27,7 @@
 </Experiment>
 ```
 </docs>
-<template> </template>
+<template><span /></template>
 <script>
 export default {
   name: 'Wait',
@@ -35,6 +35,11 @@ export default {
     time: {
       required: true,
       type: Number
+    }
+  },
+  watch: {
+    time() {
+      this.set();
     }
   },
   mounted() {
@@ -45,11 +50,6 @@ export default {
   },
   activated() {
     this.set();
-  },
-  watch: {
-    time() {
-      this.set();
-    }
   },
   methods: {
     set() {

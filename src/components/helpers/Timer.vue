@@ -21,6 +21,11 @@
 <script>
 export default {
   name: 'Timer',
+  data() {
+    return {
+      startTime: null
+    };
+  },
   mounted() {
     this.start();
   },
@@ -29,11 +34,6 @@ export default {
   },
   activated() {
     this.start();
-  },
-  data() {
-    return {
-      startTime: null
-    };
   },
   methods: {
     time() {

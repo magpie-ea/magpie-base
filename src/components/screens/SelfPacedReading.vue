@@ -44,12 +44,13 @@
       >
         <span
           v-for="(splitter, i) in splitters"
-          v-text="splitter"
+          :key="i"
           :class="{ current: i === word }"
+          v-text="splitter"
         ></span>
       </div>
       <!-- @slot task content, displayed after the whole text was read -->
-      <slot name="task" v-if="word >= splitters.length">
+      <slot v-if="word >= splitters.length" name="task">
         <Wait :time="100" @done="$exp.nextScreen()" />
       </slot>
     </template>
@@ -59,12 +60,11 @@
 <script>
 import Screen from '../Screen';
 import KeypressInput from '../inputs/KeypressInput';
-import RatingInput from '../inputs/RatingInput';
 import Wait from '../helpers/Wait';
 
 export default {
   name: 'SelfPacedReading',
-  components: { RatingInput, KeypressInput, Screen, Wait },
+  components: { KeypressInput, Screen, Wait },
   props: {
     /**
      * Title of the screen
@@ -135,24 +135,30 @@ export default {
 .text {
   margin: 30px auto;
 }
+
 .text * {
   margin-right: 5px;
 }
+
 .text.underline-sentence * {
   margin-right: 0;
   padding-right: 5px;
   border-bottom: 1px solid black;
 }
+
 .text.underline-words * {
   border-bottom: 1px solid black;
 }
+
 .text :not(.current) {
   display: none;
 }
+
 .text.show-all :not(.current) {
   color: transparent;
   display: inline;
 }
+
 .text .current {
   color: black;
   display: inline;
