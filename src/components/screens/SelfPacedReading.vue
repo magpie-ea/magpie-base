@@ -115,7 +115,9 @@ export default {
   },
   data() {
     return {
-      word: -1
+      word: -1,
+      responseTimes: [],
+      startTime: null
     };
   },
   computed: {
@@ -125,7 +127,14 @@ export default {
   },
   methods: {
     nextWord() {
+      if (this.word > -1) {
+        this.responseTimes.push(Date.now() - this.startTime);
+      }
       this.word++;
+      this.startTime = Date.now();
+      if (this.word === this.splitters.length) {
+        this.$emit('change:response-times', this.responseTimes);
+      }
     }
   }
 };
