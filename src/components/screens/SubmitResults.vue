@@ -17,7 +17,7 @@ You can provide the submission URL to the Experiment component.
 
 <script>
 import Screen from '../Screen';
-import Wait from '@/components/helpers/Wait';
+import Wait from '../helpers/Wait';
 export default {
   name: 'SubmitResults',
   components: { Wait, Screen },
