@@ -19,8 +19,9 @@
     <div class="question">{{ question }}</div>
     <div class="options">
       <div
-        class="option"
         v-for="option in options"
+        :key="option"
+        class="option"
         @click="onOptionClick(option)"
       >
         {{ option }}

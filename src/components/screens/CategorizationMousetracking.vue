@@ -60,9 +60,9 @@
         </div>
       </div>
       <div class="stimulus">
-        <button @click="onPressPlay" v-if="!playing">Go</button>
+        <button v-if="!playing" @click="onPressPlay">Go</button>
         <!-- @slot provide content for the main stimulus -->
-        <slot name="stimulus" v-if="playing" />
+        <slot v-if="playing" name="stimulus" />
       </div>
     </template>
 

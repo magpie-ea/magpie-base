@@ -33,10 +33,10 @@
     <form>
       <div class="options">
         <div class="left">{{ left }}</div>
-        <label v-for="i in count"
+        <label v-for="i in count" :key="i"
           ><input
-            type="radio"
             v-model="answers[i]"
+            type="radio"
             name="rating"
             @change="$emit('change:answer', i)"
           />
@@ -74,14 +74,16 @@ export default {
      */
     left: {
       type: String,
-      optional: true
+      optional: true,
+      default: ''
     },
     /**
      * Text right of the rating scale
      */
     right: {
       type: String,
-      optional: true
+      optional: true,
+      default: ''
     }
   },
   data() {
@@ -99,11 +101,13 @@ export default {
   gap: 15px;
   margin: 20px 0;
 }
+
 .options .left,
 .options .right {
   flex-grow: 0;
   padding: 0 15px;
 }
+
 .options label {
   flex-grow: 0;
 }

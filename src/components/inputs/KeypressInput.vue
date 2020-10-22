@@ -19,7 +19,7 @@
   <div class="keypress">
     <div class="question">{{ question }}</div>
     <div class="options">
-      <span v-for="(option, key) in keys"
+      <span v-for="(option, key) in keys" :key="key"
         ><strong v-text="key"></strong> = {{ option }}
       </span>
     </div>

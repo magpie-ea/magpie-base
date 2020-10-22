@@ -70,6 +70,12 @@ export default {
       currentSlide: 0
     };
   },
+  mounted() {
+    this.$exp.$el.addEventListener('mousemove', this.onMouseMove);
+  },
+  beforeDestroy() {
+    this.$exp.$el.removeEventListener('mousemove', this.onMouseMove);
+  },
   methods: {
     nextSlide(index) {
       if (typeof index === 'number') {
@@ -85,12 +91,6 @@ export default {
        */
       this.$emit('mousemove', { x: e.layerX, y: e.layerY });
     }
-  },
-  mounted() {
-    this.$exp.$el.addEventListener('mousemove', this.onMouseMove);
-  },
-  beforeDestroy() {
-    this.$exp.$el.removeEventListener('mousemove', this.onMouseMove);
   }
 };
 </script>

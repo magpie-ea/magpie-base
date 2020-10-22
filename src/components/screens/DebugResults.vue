@@ -10,12 +10,12 @@ Once you are gaoing live with your experiment, you can use the SubmitResults scr
       <table>
         <thead>
           <tr>
-            <th v-for="key in Object.keys(results[0])">{{ key }}</th>
+            <th v-for="key in Object.keys(results[0])" :key="key">{{ key }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="row in results">
-            <td v-for="entry in row">{{ String(entry) }}</td>
+          <tr v-for="row in results" :key="row">
+            <td v-for="entry in row" :key="entry">{{ String(entry) }}</td>
           </tr>
         </tbody>
       </table>
