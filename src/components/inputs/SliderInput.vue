@@ -18,7 +18,12 @@
     <div class="question">{{ question }}</div>
     <div class="slider-element">
       <div class="left">{{ left }}</div>
-      <Slider class="slider" @change="$emit('change:answer', $event)" />
+      <Slider
+        class="slider"
+        :value="initial"
+        :tooltip="tooltip ? 'always' : 'none'"
+        @change="$emit('change:answer', $event)"
+      />
       <div class="right">{{ right }}</div>
     </div>
   </div>
@@ -57,6 +62,22 @@ export default {
       type: String,
       optional: true,
       default: ''
+    },
+    /**
+     * Initial slider position
+     */
+    initial: {
+      type: Number,
+      optional: true,
+      default: 0
+    },
+    /**
+     * Whether to show the tooltip
+     */
+    tooltip: {
+      type: Boolean,
+      optional: true,
+      default: false
     }
   }
 };
