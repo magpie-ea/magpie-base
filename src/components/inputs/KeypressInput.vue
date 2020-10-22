@@ -57,6 +57,7 @@ export default {
   methods: {
     onKeyDown(e) {
       if ('undefined' !== typeof this.keys[e.key]) {
+        e.preventDefault();
         this.$emit('change:answer', this.keys[e.key]);
       }
     }
