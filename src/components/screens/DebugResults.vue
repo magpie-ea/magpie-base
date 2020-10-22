@@ -1,8 +1,8 @@
-<doc>
+<docs>
 This will display all data that has been entered into the experiment up to this point in a table.
 This is useful for debugging.
 Once you are gaoing live with your experiment, you can use the SubmitResults screen instead of this one to submit the data to the server and say thank you to the user.
-</doc>
+</docs>
 
 <template>
   <Screen title="Results">

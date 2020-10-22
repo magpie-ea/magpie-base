@@ -1,7 +1,7 @@
-<doc>
+<docs>
 Use this screen at the end of your experiment to submit the data to the server.
 You can provide the submission URL to the Experiment component.
-</doc>
+</docs>
 
 <template>
   <Screen title="Submitting">
