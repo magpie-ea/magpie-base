@@ -197,8 +197,10 @@ export default {
         resp = await fetch({
           method: 'POST',
           url: submissionURL,
-          crossDomain: true,
-          contentType: 'application/json',
+          mode: 'cors',
+          headers: {
+            'Content-type': 'application/json'
+          },
           body: JSON.stringify(data)
         });
       } catch (e) {

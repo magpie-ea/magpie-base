@@ -10,4 +10,5 @@ export { default as TextareaInput } from './inputs/TextareaInput';
 export { default as CategorizationMousetracking } from './screens/CategorizationMousetracking';
 export { default as SelfPacedReading } from './screens/SelfPacedReading';
 export { default as DebugResults } from './screens/DebugResults';
+export { default as SubmitResults } from './screens/SubmitResults';
 export { default as Wait } from './helpers/Wait';
