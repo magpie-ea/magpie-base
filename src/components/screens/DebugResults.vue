@@ -7,6 +7,7 @@ Once you are gaoing live with your experiment, you can use the SubmitResults scr
 <template>
   <Screen title="Results">
     <template #0>
+      <button @click="downloadCsv">Download all data as csv</button>
       <table>
         <thead>
           <tr>
@@ -25,14 +26,50 @@ Once you are gaoing live with your experiment, you can use the SubmitResults scr
 
 <script>
 import Screen from '../Screen';
+import stringify from 'csv-stringify/lib/sync';
+
 export default {
   name: 'DebugResults',
   components: { Screen },
   props: {},
   data() {
+    const results = this.$exp.getResults();
     return {
-      results: this.$exp.getResults()
+      results,
+      csv: stringify(results, { columns: Object.keys(results[0]) })
     };
+  },
+  methods: {
+    downloadCsv() {
+      let blob = new Blob([this.csv], {
+        type: 'text/plain',
+        endings: 'native'
+      });
+      this.download(
+        'magpie-' +
+          this.$exp.id +
+          '-' +
+          new Date().toISOString().slice(0, 10) +
+          '.csv',
+        blob
+      );
+    },
+
+    download(filename, blob) {
+      const element = document.createElement('a');
+
+      let objectUrl = URL.createObjectURL(blob);
+      element.setAttribute('href', objectUrl);
+      element.setAttribute('download', filename);
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      URL.revokeObjectURL(objectUrl);
+      document.body.removeChild(element);
+    }
   }
 };
 </script>
