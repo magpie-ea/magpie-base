@@ -71,6 +71,7 @@ export default {
     };
   },
   mounted() {
+    this.$exp.startMouseTracking();
     this.$exp.$el.addEventListener('mousemove', this.onMouseMove);
   },
   beforeDestroy() {
@@ -90,6 +91,7 @@ export default {
        * @property y{int} Y coordinate
        */
       this.$emit('mousemove', { x: e.layerX, y: e.layerY });
+      this.$exp.onMouseMove(e);
     }
   }
 };

@@ -19,6 +19,7 @@
         <span>{{ $exp.trial.categories.s }}</span>
       </template>
     </CategorizationMousetracking>
+    <DebugResults />
   </template>
 </Experiment>
 ```
@@ -26,7 +27,7 @@
 </docs>
 
 <template>
-  <Screen :title="title" @mousemove="onMouseMove">
+  <Screen :title="title">
     <template #0="{ nextSlide }">
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->
       <slot name="prep" :done="nextSlide">
@@ -90,31 +91,27 @@ export default {
   },
   data() {
     return {
-      playing: false,
-      mouseMovements: []
+      playing: false
     };
   },
   methods: {
     onPressPlay() {
       this.playing = true;
-    },
-    onMouseMove(coordinates) {
-      if (!this.playing) return;
-      this.mouseMovements.push(coordinates);
+      this.$exp.startMouseTracking();
     },
     onOption1(cb) {
       if (!this.playing) return;
-      this.submit(this.option1, cb);
+      this.submit('left', cb);
     },
     onOption2(cb) {
       if (!this.playing) return;
-      this.submit(this.option2, cb);
+      this.submit('right', cb);
     },
     submit(label, cb) {
       // todo: flatten these and interpolate as in old magpie!
       this.$exp.addResult({
         endLabel: label,
-        mouseMovements: this.mouseMovements
+        ...this.$exp.getMouseTrack()
       });
       cb();
     }

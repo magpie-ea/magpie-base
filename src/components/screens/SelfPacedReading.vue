@@ -3,11 +3,15 @@
 ```vue
 <Experiment>
   <template #screens>
-    <SelfPacedReading text="This|is|a|nice|text." word-pos="next" underline="sentence">
+    <SelfPacedReading text="This|is|a|nice|text." word-pos="next" underline="sentence" @change:response-times="responseTimes = $event">
       <template #task>
-        <RatingInput question="Is it?" left="No" right="Yes" />
+        <RatingInput question="Is it?" left="No" right="Yes" @change:answer="$exp.addResult({
+          rating: $event,
+          responseTimes,
+        })" />
       </template>
     </SelfPacedReading>
+    <DebugResults />
   </template>
 </Experiment>
 ```

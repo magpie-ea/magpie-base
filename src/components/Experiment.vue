@@ -144,7 +144,11 @@ export default {
       currentScreen: 0,
       results: {},
       currentTrial: {},
-      trial
+      trial,
+      mousetrackingTime: [0],
+      mousetrackingX: [0],
+      mousetrackingY: [0],
+      mousetrackingStartTime: 0
     };
   },
   methods: {
@@ -171,6 +175,54 @@ export default {
         this.results[this.currentScreen] = [];
       }
       this.results[this.currentScreen].push(data);
+    },
+    onMouseMove(e) {
+      this.mousetrackingTime.push(Date.now() - this.mousetrackingStartTime);
+      this.mousetrackingX.push(e.layerX);
+      this.mousetrackingY.push(e.layerY);
+    },
+    /**
+     * (re)start mouse tracking for the current screen
+     * @public
+     */
+    startMouseTracking() {
+      this.mousetrackingTime = [0];
+      this.mousetrackingX = [0];
+      this.mousetrackingY = [0];
+      this.mousetrackingStartTime = Date.now();
+    },
+    /**
+     * Get the mouse track since the appearance of the current screen
+     * @public
+     * @param rate{int} Time resolution in ms (optional; defaults to 15ms)
+     * @returns {{x: [], y: [], time: []}}
+     */
+    getMouseTrack(rate) {
+      const interpolated = { time: [], x: [], y: [] };
+      for (let i = 0; i < this.mousetrackingTime.length; i++) {
+        interpolated.time.push(this.mousetrackingTime[i]);
+        interpolated.x.push(this.mousetrackingX[i]);
+        interpolated.y.push(this.mousetrackingY[i]);
+        if (
+          i < this.mousetrackingTime.length - 1 &&
+          this.mousetrackingTime[i + 1] - this.mousetrackingTime[i] > rate
+        ) {
+          const steps =
+            (this.mousetrackingTime[i + 1] - this.mousetrackingTime[i]) / rate -
+            1;
+          const xDelta =
+            (this.mousetrackingX[i + 1] - this.mousetrackingX[i]) / (steps + 1);
+          const yDelta =
+            (this.mousetrackingY[i + 1] - this.mousetrackingY[i]) / (steps + 1);
+          const index = interpolated.time.length - 1;
+          for (let j = 0; j < steps; j++) {
+            interpolated.time.push(interpolated.time[index + j] + this);
+            interpolated.x.push(Math.round(interpolated.x[index + j] + xDelta));
+            interpolated.y.push(Math.round(interpolated.y[index + j] + yDelta));
+          }
+        }
+      }
+      return interpolated;
     },
     getResults() {
       return flattenData({
