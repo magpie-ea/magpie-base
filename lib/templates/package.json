@@ -10,6 +10,7 @@
   "devDependencies": {
     "@vue/cli-service": "~4.3.0",
     "babel-eslint": "^10.1.0",
+    "csv-loader": "^3.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "stylelint": "^13.7.2",

@@ -70,8 +70,8 @@
                 $exp.trial.multi_dropdown.sentence_chunk_3
               "
               :options="[
-                $exp.trial.multi_dropdown.choice_options_1,
-                $exp.trial.multi_dropdown.choice_options_2
+                $exp.trial.multi_dropdown.choice_options_1.split('|'),
+                $exp.trial.multi_dropdown.choice_options_2.split('|')
               ]"
               @change:answer="answer = $event"
             />
@@ -183,76 +183,13 @@
 </template>
 
 <script>
+import forced_choice from '../trials/forced_choice.csv';
+import multi_dropdown from '../trials/multi_dropdown.csv';
+import sentenceChoice from '../trials/sentence_choice.csv';
+
 export default {
   name: 'App',
   data() {
-    const forced_choice = [
-      {
-        question: "What's on the bread?",
-        picture: 'images/wide.jpg',
-        option1: 'jam',
-        option2: 'ham'
-      },
-      {
-        question: "What's the weather like?",
-        picture: 'images/small.png',
-        option1: 'shiny',
-        option2: 'rainbow'
-      },
-      {
-        question: "What's the weather like today?",
-        picture: 'images/high.jpg',
-        option1: 'shiny',
-        option2: 'rainbow'
-      }
-    ];
-
-    const multi_dropdown = [
-      {
-        sentence_chunk_1: 'Some of the',
-        sentence_chunk_2: 'are',
-        sentence_chunk_3: 'today.',
-        choice_options_1: ['cats', 'dogs'],
-        choice_options_2: ['happy', 'hungry', 'sad']
-      },
-      {
-        sentence_chunk_1: 'All of the',
-        sentence_chunk_2: 'will be',
-        sentence_chunk_3: 'tomorrow.',
-        choice_options_1: ['cats', 'dogs'],
-        choice_options_2: ['happy', 'hungry', 'sad']
-      }
-    ];
-
-    const sentenceChoice = [
-      {
-        QUD: 'sentence selection - loop: 1, trial: 1',
-        picture: 'images/question_mark_02.png',
-        question: "What's on the bread?",
-        option1: 'ham',
-        option2: 'jam'
-      },
-      {
-        QUD: 'sentence selection - loop: 1, trial: 2',
-        question: "What's the weather like?",
-        option1: 'rainbow',
-        option2: 'shiny'
-      },
-      {
-        QUD: 'sentence selection - loop: 2, trial: 1',
-        picture: 'images/question_mark_01.png',
-        question: 'How are you today?',
-        option1: 'fine',
-        option2: 'great'
-      },
-      {
-        QUD: 'sentence selection - loop: 2, trial: 2',
-        question: 'Jam or Ham?',
-        option1: 'ham',
-        option2: 'jam'
-      }
-    ];
-
     const imageSelection = [
       {
         QUD: 'image selection - loop: 1, trial: 1',
@@ -320,6 +257,8 @@ export default {
       imageSelection_length: imageSelection.length,
       sliderRating,
       sliderRating_length: sliderRating.length,
+
+      // this field is used to temporarily store answers
       answer: ''
     };
   }
