@@ -73,3 +73,10 @@ export default {
   }
 };
 </script>
+<style scoped>
+td {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
