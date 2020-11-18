@@ -32,13 +32,6 @@
         <button @click="$exp.nextScreen">Begin the experiment</button>
       </Screen>
 
-      <Screen :title="'Welcome to the Interactive Experiment'">
-        <template #0>
-          <InteractiveWelcome></InteractiveWelcome>
-          <button @click="$exp.nextScreen">Continue to the lobby</button>
-        </template>
-      </Screen>
-
       <Screen :title="'General Instructions'">
         This is a sample instructions view.
         <br />
@@ -205,17 +198,9 @@ import forced_choice from '../trials/forced_choice.csv';
 import multi_dropdown from '../trials/multi_dropdown.csv';
 import sentenceChoice from '../trials/sentence_choice.csv';
 import _ from 'lodash';
-import InteractiveWelcome from './components/InteractiveWelcome';
-import Lobby from './components/Lobby';
-import Chat from './components/Chat';
 
 export default {
   name: 'App',
-  components: {
-    InteractiveWelcome,
-    Lobby,
-    Chat
-  },
   data() {
     const imageSelection = [
       {

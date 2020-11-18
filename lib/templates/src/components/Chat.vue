@@ -1,20 +1,15 @@
 <template>
-  <div class="magpie-view">
-    <section class="magpie-text-container">
-      <p id="game-instructions" class="magpie-view-text"></p>
-    </section>
-    <br />
-    <br />
-    <div id="chat-box"></div>
-
+  <div>
+    <div id="chat-box">
+      <p v-for="message in messages" :key="message" v-text="message"></p>
+    </div>
     <div class="magpie-view-answer-container">
       <textarea
+        ref="text"
         cols="50"
-        class="magpie-response-text"
         placeholder="Type your message to the other participant here."
-        id="participant-msg"
       ></textarea>
-      <button class="magpie-view-button" @click.stop="broadcastMsg()">
+      <button @click.stop="send()">
         Send
       </button>
     </div>
@@ -22,34 +17,25 @@
 </template>
 
 <script>
-import {
-  // variant,
-  // broadcastInitializeGameEvent,
-  broadcastNewMessageEvent
-  // broadcastNextRoundEvent
-  // broadcastEndGameEvent
-} from '@/socket.js';
+const EVENT_CHAT_MESSAGE = 'chat_message';
 
 export default {
   name: 'Chat',
   data() {
     return {
-      title: 'Chat'
+      messages: []
     };
   },
-  watch: {
-    '$store.state.interactiveExperiment.newMessagePayload': function (payload) {
-      let chatBox = document.querySelector('#chat-box');
-      let msgBlock = document.createElement('p');
-      msgBlock.classList.add('magpie-view-text');
-      msgBlock.insertAdjacentHTML('beforeend', `${payload.message}`);
-      chatBox.appendChild(msgBlock);
+  socket: {
+    [EVENT_CHAT_MESSAGE](payload) {
+      this.messages.push(payload);
     }
   },
+  EVENT_CHAT_MESSAGE,
   methods: {
-    broadcastMsg() {
-      const msg = document.querySelector('#participant-msg').value;
-      broadcastNewMessageEvent({ message: msg });
+    send() {
+      const msg = this.$refs.text.value;
+      this.$exp.socket.broadcast(EVENT_CHAT_MESSAGE, msg);
     }
   }
 };

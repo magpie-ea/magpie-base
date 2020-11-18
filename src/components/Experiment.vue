@@ -67,6 +67,7 @@
 
 <script>
 import _ from 'lodash';
+import Socket from '@/Socket';
 /**
  * This is the main component for your online experiment. Put it at the root of your application.
  * The experiment is available in all subcomponents and in the parent as `$exp`
@@ -83,27 +84,6 @@ export default {
     trials: {
       type: Object,
       default: () => ({})
-    },
-    /**
-     * The id of the experiment on the magpie server
-     */
-    id: {
-      type: String,
-      required: true
-    },
-    /**
-     * An email for participants to contact in case of problems
-     */
-    contactEmail: {
-      type: String,
-      required: true
-    },
-    /**
-     * The submission URL on the magpie server
-     */
-    submissionUrl: {
-      type: String,
-      default: ''
     }
   },
   provide() {
@@ -141,6 +121,10 @@ export default {
     }
 
     return {
+      // config
+      ...this.$options.magpie,
+      id: this.$options.magpie.experimentId,
+
       currentScreen: 0,
       results: {},
       currentTrial: {},
@@ -148,7 +132,12 @@ export default {
       mousetrackingTime: [0],
       mousetrackingX: [0],
       mousetrackingY: [0],
-      mousetrackingStartTime: 0
+      mousetrackingStartTime: 0,
+      socket: new Socket(
+        this,
+        this.$options.magpie.socketUrl,
+        this.onSocketError
+      )
     };
   },
   methods: {
