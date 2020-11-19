@@ -3,8 +3,8 @@ import { Socket as PhoenixSocket } from 'phoenix';
 export const states = {
   CONNECTING: 'CONNECTING',
   CONNECTED: 'CONNECTED',
-  JOINING: 'JOINING',
-  JOINED: 'JOINED',
+  WAITING: 'WAITING',
+  READY: 'READY',
   ERROR: 'ERROR'
 };
 
@@ -24,6 +24,7 @@ export default class Socket {
       }
     });
     this.phoenix.onError(this.errorHandler);
+    this.phoenix.connect();
     this.state = states.CONNECTING;
   }
 
@@ -34,15 +35,9 @@ export default class Socket {
     );
 
     this.participantChannel.on('experiment_available', (payload) => {
-      // Need to use a commit to perform a mutation since we're modifying the state
       this.variant = payload.variant;
       this.chain = payload.chain;
       this.realization = payload.realization;
-      console.log({
-        variant: payload.variant,
-        chain: payload.chain,
-        realization: payload.realization
-      });
       this.state = states.CONNECTED;
     });
 
@@ -65,13 +60,13 @@ export default class Socket {
     this.roomChannel
       .join()
       .receive('ok', () => {
-        this.state = states.JOINING;
+        this.state = states.WAITING;
       })
       .receive('error', this.errorHandler)
       .receive('timeout', this.errorHandler);
 
     this.roomChannel.on('start_game', () => {
-      this.state = states.JOINED;
+      this.state = states.READY;
     });
 
     this.setUpSubscriptions();

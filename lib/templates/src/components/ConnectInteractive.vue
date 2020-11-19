@@ -20,7 +20,7 @@ export default {
   },
   watch: {
     '$exp.socket.state': function (state) {
-      if (state === states.JOINED) {
+      if (state === states.READY) {
         this.$exp.nextScreen();
       }
     }

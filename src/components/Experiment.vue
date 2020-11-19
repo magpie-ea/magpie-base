@@ -128,16 +128,22 @@ export default {
       currentScreen: 0,
       results: {},
       currentTrial: {},
+      /**
+       * Magic object that gives access to trial data
+       * @public
+       */
       trial,
       mousetrackingTime: [0],
       mousetrackingX: [0],
       mousetrackingY: [0],
       mousetrackingStartTime: 0,
-      socket: new Socket(
-        this,
-        this.$options.magpie.socketUrl,
-        this.onSocketError
-      )
+      /**
+       * The socket interface for interactive experiments
+       * @public
+       */
+      socket:
+        this.$options.magpie.socketUrl &&
+        new Socket(this, this.$options.magpie.socketUrl, this.onSocketError)
     };
   },
   methods: {
@@ -264,6 +270,9 @@ export default {
         );
       }
     }
+  },
+  onSocketError() {
+    window.alert('There was an error in communicating with the server');
   },
   /**
    * The contents of this slot will be visible during the entire experiment
