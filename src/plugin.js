@@ -18,7 +18,7 @@ export default function (Vue, config) {
      */
     mounted() {
       if (this.$options.socket) {
-        this.$exp.setUpSubscriptions(this.$options.socket);
+        this.$exp.socket.setUpSubscriptions(this.$options.socket);
       }
     },
 

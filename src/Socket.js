@@ -68,8 +68,6 @@ export default class Socket {
     this.roomChannel.on('start_game', () => {
       this.state = states.READY;
     });
-
-    this.setUpSubscriptions();
   }
 
   setUpSubscriptions(subscriptions) {
