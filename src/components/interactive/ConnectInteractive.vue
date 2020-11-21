@@ -10,8 +10,10 @@
 
 <script>
 import states from '@/Socket';
+import Screen from '@/components/Screen';
 export default {
   name: 'ConnectInteractive',
+  components: { Screen },
   props: {
     title: {
       type: String,
