@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="chat-box">
-      <p v-for="message in messages" :key="message" v-text="message"></p>
+      <p v-for="(message, i) in messages" :key="i" v-text="message"></p>
     </div>
     <div class="magpie-view-answer-container">
       <textarea

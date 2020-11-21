@@ -1,4 +1,6 @@
 import { Socket as PhoenixSocket } from 'phoenix';
+import EventEmitter from 'events';
+import Vue from 'vue';
 
 export const states = {
   CONNECTING: 'CONNECTING',
@@ -8,8 +10,10 @@ export const states = {
   ERROR: 'ERROR'
 };
 
-export default class Socket {
+export default class Socket extends EventEmitter {
   constructor($exp, socketURL, errorhandler) {
+    super();
+    Vue.observable(this);
     this.$exp = $exp;
     this.errorHandler = (er) => {
       this.state = states.ERROR;
@@ -20,7 +24,7 @@ export default class Socket {
     this.phoenix = new PhoenixSocket(socketURL, {
       params: {
         participant_id: this.participantId,
-        experiment_id: this.$exp.id
+        experiment_id: this.$exp.experimentId
       }
     });
     this.phoenix.onError(this.errorHandler);
@@ -68,22 +72,28 @@ export default class Socket {
     this.roomChannel.on('start_game', () => {
       this.state = states.READY;
     });
+
+    this.roomChannel.on('new_msg', (msg) => {
+      this.emit(msg.event, msg.payload);
+    });
   }
 
-  setUpSubscriptions(subscriptions) {
+  setUpSubscriptions(subscriptions, thisArg) {
     for (const event of Object.keys(subscriptions)) {
-      this.roomChannel.on(event, subscriptions[event]);
+      subscriptions[event].listener = (payload) =>
+        subscriptions[event].call(thisArg, payload);
+      this.on(event, subscriptions[event].listener);
     }
   }
 
   tearDownSubscriptions(subscriptions) {
     for (const event of Object.keys(subscriptions)) {
-      this.roomChannel.off(event, subscriptions[event]);
+      this.off(event, subscriptions[event].listener);
     }
   }
 
   broadcast(event, payload) {
-    this.roomChannel.push(event, payload);
+    this.roomChannel.push('new_msg', { event, payload });
   }
 }
 

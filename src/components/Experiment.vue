@@ -67,7 +67,7 @@
 
 <script>
 import _ from 'lodash';
-import Socket from '@/Socket';
+import Socket from '../Socket';
 /**
  * This is the main component for your online experiment. Put it at the root of your application.
  * The experiment is available in all subcomponents and in the parent as `$exp`
@@ -141,10 +141,12 @@ export default {
        * The socket interface for interactive experiments
        * @public
        */
-      socket:
-        this.$options.magpie.socketUrl &&
-        new Socket(this, this.$options.magpie.socketUrl, this.onSocketError)
+      socket: !!this.$options.magpie.socketUrl
     };
+  },
+  mounted() {
+    this.socket = new Socket(this, this.socketUrl, this.onSocketError);
+    this.socket.initialize();
   },
   methods: {
     /**
@@ -218,6 +220,9 @@ export default {
         }
       }
       return interpolated;
+    },
+    onSocketError(er) {
+      console.error(er);
     },
     getResults() {
       return flattenData({

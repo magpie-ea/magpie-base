@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import states from '@/Socket';
-import Screen from '@/components/Screen';
+import { states } from '../../Socket';
+import Screen from '../Screen';
 export default {
   name: 'ConnectInteractive',
   components: { Screen },
