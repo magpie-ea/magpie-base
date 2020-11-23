@@ -46,19 +46,19 @@
       <template v-for="i in forced_choice_length">
         <Screen :key="'forcedchoice-' + i">
           <template #0>
-            <!-- We automatically retrieve trial data from our data sources using $magpie.trial.<data-source>
+            <!-- We automatically retrieve trial data from our data sources using $magpie.currentTrial.<data-source>
             Once the participant has made a choice, the change:answer event fires and we save the answer and progress to the next screeen.
             -->
-            <img :src="$magpie.trial.forced_choice.picture" alt="" />
+            <img :src="$magpie.currentTrial.forced_choice.picture" alt="" />
             <ForcedChoiceInput
-              :question="$magpie.trial.forced_choice.question"
+              :question="$magpie.currentTrial.forced_choice.question"
               :options="[
-                $magpie.trial.forced_choice.option1,
-                $magpie.trial.forced_choice.option2
+                $magpie.currentTrial.forced_choice.option1,
+                $magpie.currentTrial.forced_choice.option2
               ]"
               @change:answer="
                 $magpie.addResult({
-                  question: $magpie.trial.forced_choice.question,
+                  question: $magpie.currentTrial.forced_choice.question,
                   answer: $event
                 });
                 $magpie.nextScreen();
@@ -80,15 +80,15 @@
           <template #0>
             <CompletionInput
               :text="
-                $magpie.trial.multi_dropdown.sentence_chunk_1 +
+                $magpie.currentTrial.multi_dropdown.sentence_chunk_1 +
                 ' %s ' +
-                $magpie.trial.multi_dropdown.sentence_chunk_2 +
+                $magpie.currentTrial.multi_dropdown.sentence_chunk_2 +
                 ' %s ' +
-                $magpie.trial.multi_dropdown.sentence_chunk_3
+                $magpie.currentTrial.multi_dropdown.sentence_chunk_3
               "
               :options="[
-                $magpie.trial.multi_dropdown.choice_options_1.split('|'),
-                $magpie.trial.multi_dropdown.choice_options_2.split('|')
+                $magpie.currentTrial.multi_dropdown.choice_options_1.split('|'),
+                $magpie.currentTrial.multi_dropdown.choice_options_2.split('|')
               ]"
               @change:answer="answer = $event"
             />
@@ -110,16 +110,16 @@
         <template v-for="j in 2">
           <Screen :key="'sentenceChoice-' + i + '' + j">
             <template #0>
-              <img :src="$magpie.trial.sentenceChoice.picture" alt="" />
+              <img :src="$magpie.currentTrial.sentenceChoice.picture" alt="" />
               <ForcedChoiceInput
-                :question="$magpie.trial.sentenceChoice.question"
+                :question="$magpie.currentTrial.sentenceChoice.question"
                 :options="[
-                  $magpie.trial.sentenceChoice.option1,
-                  $magpie.trial.sentenceChoice.option2
+                  $magpie.currentTrial.sentenceChoice.option1,
+                  $magpie.currentTrial.sentenceChoice.option2
                 ]"
                 @change:answer="
                   $magpie.addResult({
-                    question: $magpie.trial.sentenceChoice.question,
+                    question: $magpie.currentTrial.sentenceChoice.question,
                     answer: $event
                   });
                   $magpie.nextScreen();
@@ -132,20 +132,21 @@
           <Screen :key="'sentenceChoice-' + i + '' + j">
             <template #0>
               <ImageSelectionInput
-                :question="$magpie.trial.imageSelection.question || ''"
+                :question="$magpie.currentTrial.imageSelection.question || ''"
                 :options="[
                   {
-                    label: $magpie.trial.imageSelection.option1,
-                    src: $magpie.trial.imageSelection.picture1
+                    label: $magpie.currentTrial.imageSelection.option1,
+                    src: $magpie.currentTrial.imageSelection.picture1
                   },
                   {
-                    label: $magpie.trial.imageSelection.option2,
-                    src: $magpie.trial.imageSelection.picture2
+                    label: $magpie.currentTrial.imageSelection.option2,
+                    src: $magpie.currentTrial.imageSelection.picture2
                   }
                 ]"
                 @change:answer="
                   $magpie.addResult({
-                    question: $magpie.trial.imageSelection.question || '',
+                    question:
+                      $magpie.currentTrial.imageSelection.question || '',
                     answer: $event
                   });
                   $magpie.nextScreen();
@@ -163,19 +164,19 @@
           </template>
           <template #1="{nextSlide}">
             <Wait :time="1500" @done="nextSlide" />
-            <img :src="$magpie.trial.sliderRating.picture" alt="" />
+            <img :src="$magpie.currentTrial.sliderRating.picture" alt="" />
           </template>
           <template #2>
             <SliderInput
-              :question="$magpie.trial.sliderRating.question"
-              :left="$magpie.trial.sliderRating.optionLeft"
-              :right="$magpie.trial.sliderRating.optionRight"
+              :question="$magpie.currentTrial.sliderRating.question"
+              :left="$magpie.currentTrial.sliderRating.optionLeft"
+              :right="$magpie.currentTrial.sliderRating.optionRight"
               @change:answer="answer = $event"
             />
             <button
               @click="
                 $magpie.addResult({
-                  question: $magpie.trial.sliderRating.question || '',
+                  question: $magpie.currentTrial.sliderRating.question || '',
                   answer: answer
                 });
                 $magpie.nextScreen();

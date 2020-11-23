@@ -10,13 +10,13 @@
   <template #screens>
     <CategorizationMousetracking :key="i" v-for="i in 4">
       <template #option1>
-        {{ $magpie.trial.categories.o1 }}
+        {{ $magpie.currentTrial.categories.o1 }}
       </template>
       <template #option2>
-        {{ $magpie.trial.categories.o2 }}
+        {{ $magpie.currentTrial.categories.o2 }}
       </template>
       <template #stimulus>
-        <span>{{ $magpie.trial.categories.s }}</span>
+        <span>{{ $magpie.currentTrial.categories.s }}</span>
       </template>
     </CategorizationMousetracking>
     <DebugResults />

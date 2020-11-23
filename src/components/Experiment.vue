@@ -3,7 +3,7 @@
 
 * `id`
   * The ID of the experiment
-* `trial`
+* `currentTrial`
   * an object with a single data point of each array in the trial data supplied to the experiment
 * `socket` object, only defined when socketURL is set in the config
   * `participantId`
@@ -25,15 +25,15 @@
 <Experiment :trials="{ color: ['blue', 'green', 'yellow'] }">
   <template #screens>
     <Screen>
-      {{ $magpie.trial.color }}
+      {{ $magpie.currentTrial.color }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.trial.color }}
+      {{ $magpie.currentTrial.color }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.trial.color }}
+      {{ $magpie.currentTrial.color }}
     </Screen>
   </template>
 </Experiment>
@@ -45,15 +45,15 @@
 <Experiment :trials="{number: () => Math.random()}">
   <template #screens>
     <Screen>
-      {{ $magpie.trial.number }}
+      {{ $magpie.currentTrial.number }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.trial.number }}
+      {{ $magpie.currentTrial.number }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.trial.number }}
+      {{ $magpie.currentTrial.number }}
     </Screen>
   </template>
 </Experiment>
@@ -69,15 +69,15 @@
   </template>
   <template #screens>
     <Screen>
-      {{ $magpie.trial.number }}
+      {{ $magpie.currentTrial.number }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.trial.number }}
+      {{ $magpie.currentTrial.number }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.trial.number }}
+      {{ $magpie.currentTrial.number }}
     </Screen>
   </template>
 </Experiment>
@@ -98,7 +98,7 @@ export default {
     /**
      * Any data that you want to use in your trials you can pass in via this prop.
      * You can either provide an array of data or a function that returns one sample at a time.
-     * This data will be available at run time via `$magpie.trial`
+     * This data will be available at run time via `$magpie.currentTrial`
      */
     trials: {
       type: Object,
@@ -112,23 +112,23 @@ export default {
   },
   data() {
     // Setup magic "trial" slot property
-    const trial = {};
+    const currentTrial = {};
     for (const type of Object.keys(this.trials)) {
       if (Array.isArray(this.trials[type])) {
-        trial.__defineGetter__(type, () => {
-          if (this.currentTrial[type]) {
-            return this.currentTrial[type];
+        currentTrial.__defineGetter__(type, () => {
+          if (this.currentTrialData[type]) {
+            return this.currentTrialData[type];
           }
-          this.currentTrial[type] = this.trials[type].shift();
-          return this.currentTrial[type];
+          this.currentTrialData[type] = this.trials[type].shift();
+          return this.currentTrialData[type];
         });
       } else if ('function' === typeof this.trials[type]) {
-        trial.__defineGetter__(type, () => {
-          if (this.currentTrial[type]) {
-            return this.currentTrial[type];
+        currentTrial.__defineGetter__(type, () => {
+          if (this.currentTrialData[type]) {
+            return this.currentTrialData[type];
           }
-          this.currentTrial[type] = this.trials[type](this.currentScreen);
-          return this.currentTrial[type];
+          this.currentTrialData[type] = this.trials[type](this.currentScreen);
+          return this.currentTrialData[type];
         });
       } else {
         throw new Error(
@@ -146,8 +146,8 @@ export default {
       id: this.$options.magpie.experimentId,
       currentScreen: 0,
       results: {},
-      currentTrial: {},
-      trial,
+      currentTrialData: {},
+      currentTrial,
       mousetrackingTime: [0],
       mousetrackingX: [0],
       mousetrackingY: [0],
