@@ -68,6 +68,13 @@
         </Screen>
       </template>
 
+      <ConnectInteractive />
+
+      <Screen>
+        <Chat></Chat>
+        <button @click="$exp.nextScreen">Next</button>
+      </Screen>
+
       <template v-for="i in multi_dropdown_length">
         <Screen :key="'multidropdown-' + i">
           <template #0>

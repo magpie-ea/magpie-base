@@ -1,4 +1,23 @@
 <docs>
+### Instance properties
+
+* `id`
+  * The ID of the experiment
+* `trial`
+  * an object with a single data point of each array in the trial data supplied to the experiment
+* `socket` object, only defined when socketURL is set in the config
+  * `participantId`
+    * the random ID of the current participant
+  * `state`
+    * string, reactive, one of `CONNECTING`, `CONNECTED`, `WAITING`, `JOINED`, `ERROR`
+  * `broadcast(event:string, payload:any)`
+    * sends an event to all participants in the current room
+  * `on(event:string, listener:function)`
+    * listen to socket events
+  * `off(event:string, listener:function)`
+    * remove a listener
+  * `once(event:string, listener:function)`
+    * listen to a socket event once
 
 ### Populating trial data with an array
 
@@ -67,6 +86,7 @@
 
 <script>
 import _ from 'lodash';
+import Socket from '../Socket';
 /**
  * This is the main component for your online experiment. Put it at the root of your application.
  * The experiment is available in all subcomponents and in the parent as `$exp`
@@ -83,27 +103,6 @@ export default {
     trials: {
       type: Object,
       default: () => ({})
-    },
-    /**
-     * The id of the experiment on the magpie server
-     */
-    id: {
-      type: String,
-      required: true
-    },
-    /**
-     * An email for participants to contact in case of problems
-     */
-    contactEmail: {
-      type: String,
-      required: true
-    },
-    /**
-     * The submission URL on the magpie server
-     */
-    submissionUrl: {
-      type: String,
-      default: ''
     }
   },
   provide() {
@@ -141,6 +140,10 @@ export default {
     }
 
     return {
+      // config
+      ...this.$options.magpie,
+
+      id: this.$options.magpie.experimentId,
       currentScreen: 0,
       results: {},
       currentTrial: {},
@@ -148,8 +151,13 @@ export default {
       mousetrackingTime: [0],
       mousetrackingX: [0],
       mousetrackingY: [0],
-      mousetrackingStartTime: 0
+      mousetrackingStartTime: 0,
+      socket: !!this.$options.magpie.socketUrl
     };
+  },
+  mounted() {
+    this.socket = new Socket(this, this.socketUrl, this.onSocketError);
+    this.socket.initialize();
   },
   methods: {
     /**
@@ -224,6 +232,9 @@ export default {
       }
       return interpolated;
     },
+    onSocketError(er) {
+      console.error(er);
+    },
     getResults() {
       return flattenData({
         experiment_id: this.id,
@@ -275,6 +286,9 @@ export default {
         );
       }
     }
+  },
+  onSocketError() {
+    window.alert('There was an error in communicating with the server');
   },
   /**
    * The contents of this slot will be visible during the entire experiment
