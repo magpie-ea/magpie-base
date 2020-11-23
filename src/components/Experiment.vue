@@ -1,4 +1,23 @@
 <docs>
+### Instance properties
+
+* `id`
+  * The ID of the experiment
+* `trial`
+  * an object with a single data point of each array in the trial data supplied to the experiment
+* `socket` object, only defined when socketURL is set in the config
+  * `participantId`
+    * the random ID of the current participant
+  * `state`
+    * string, reactive, one of `CONNECTING`, `CONNECTED`, `WAITING`, `JOINED`, `ERROR`
+  * `broadcast(event:string, payload:any)`
+    * sends an event to all participants in the current room
+  * `on(event:string, listener:function)`
+    * listen to socket events
+  * `off(event:string, listener:function)`
+    * remove a listener
+  * `once(event:string, listener:function)`
+    * listen to a socket event once
 
 ### Populating trial data with an array
 
@@ -123,24 +142,16 @@ export default {
     return {
       // config
       ...this.$options.magpie,
-      id: this.$options.magpie.experimentId,
 
+      id: this.$options.magpie.experimentId,
       currentScreen: 0,
       results: {},
       currentTrial: {},
-      /**
-       * Magic object that gives access to trial data
-       * @public
-       */
       trial,
       mousetrackingTime: [0],
       mousetrackingX: [0],
       mousetrackingY: [0],
       mousetrackingStartTime: 0,
-      /**
-       * The socket interface for interactive experiments
-       * @public
-       */
       socket: !!this.$options.magpie.socketUrl
     };
   },

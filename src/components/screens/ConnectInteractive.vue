@@ -1,3 +1,20 @@
+<docs>
+Use this screen to initiate the interactive socket connection. Once the connection is set up and
+enough users have joined, this screen will automatically go to the next screen.
+
+You can customize the content of this screen by adding new content inside it.
+By default it looks like this:
+
+```vue
+<Experiment>
+  <template #screens>
+    <ConnectInteractive :title="'Connecting...'"></ConnectInteractive>
+    <Screen>Connected.</Screen>
+  </template>
+</Experiment>
+```
+
+</docs>
 <template>
   <Screen :title="title">
     <slot>
@@ -28,6 +45,9 @@ export default {
     }
   },
   mounted() {
+    if (this.$exp.socket.state === states.READY) {
+      this.$exp.nextScreen();
+    }
     this.$exp.socket.join();
   }
 };

@@ -1,3 +1,18 @@
+<docs>
+This interactive component provides participants the opportunity to chat with each other, if they are in the same room.
+
+```vue
+<Experiment>
+  <template #screens>
+    <Screen>
+      <Chat></Chat>
+    </Screen>
+  </template>
+</Experiment>
+```
+
+
+</docs>
 <template>
   <div class="chat">
     <div ref="box" class="chat-box">

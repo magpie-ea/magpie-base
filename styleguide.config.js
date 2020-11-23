@@ -8,16 +8,27 @@ module.exports = {
   // defaultExample: true,
   sections: [
     {
+      name: 'Magpie',
+      content: 'src/docs.md'
+    },
+    {
       name: 'Base Components',
       components: 'src/components/*.vue'
     },
     {
       name: 'Inputs',
+      content: 'src/components/inputs/docs.md',
       components: 'src/components/inputs/*.vue'
     },
     {
       name: 'Screens',
+      content: 'src/components/screens/docs.md',
       components: 'src/components/screens/*.vue'
+    },
+    {
+      name: 'Interactive',
+      content: 'src/components/interactive/docs.md',
+      components: 'src/components/interactive/*.vue'
     },
     {
       name: 'Helpers',
@@ -27,5 +38,6 @@ module.exports = {
   // webpackConfig: {
   //   // custom config goes here
   // },
-  exampleMode: 'expand'
+  exampleMode: 'expand',
+  usageMode: 'expand'
 };

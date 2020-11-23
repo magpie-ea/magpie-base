@@ -7,7 +7,7 @@ export { default as KeypressInput } from './inputs/KeypressInput';
 export { default as RatingInput } from './inputs/RatingInput';
 export { default as SliderInput } from './inputs/SliderInput';
 export { default as TextareaInput } from './inputs/TextareaInput';
-export { default as ConnectInteractive } from './interactive/ConnectInteractive';
+export { default as ConnectInteractive } from './screens/ConnectInteractive';
 export { default as Chat } from './interactive/Chat';
 export { default as CategorizationMousetracking } from './screens/CategorizationMousetracking';
 export { default as SelfPacedReading } from './screens/SelfPacedReading';
