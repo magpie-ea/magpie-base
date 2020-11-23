@@ -71,11 +71,11 @@ export default {
     };
   },
   mounted() {
-    this.$exp.startMouseTracking();
-    this.$exp.$el.addEventListener('mousemove', this.onMouseMove);
+    this.$magpie.startMouseTracking();
+    this.$magpie.$el.addEventListener('mousemove', this.onMouseMove);
   },
   beforeDestroy() {
-    this.$exp.$el.removeEventListener('mousemove', this.onMouseMove);
+    this.$magpie.$el.removeEventListener('mousemove', this.onMouseMove);
   },
   methods: {
     nextSlide(index) {
@@ -91,7 +91,7 @@ export default {
        * @property y{int} Y coordinate
        */
       this.$emit('mousemove', { x: e.layerX, y: e.layerY });
-      this.$exp.onMouseMove(e);
+      this.$magpie.onMouseMove(e);
     }
   }
 };

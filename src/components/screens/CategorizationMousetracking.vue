@@ -10,13 +10,13 @@
   <template #screens>
     <CategorizationMousetracking :key="i" v-for="i in 4">
       <template #option1>
-        {{ $exp.trial.categories.o1 }}
+        {{ $magpie.trial.categories.o1 }}
       </template>
       <template #option2>
-        {{ $exp.trial.categories.o2 }}
+        {{ $magpie.trial.categories.o2 }}
       </template>
       <template #stimulus>
-        <span>{{ $exp.trial.categories.s }}</span>
+        <span>{{ $magpie.trial.categories.s }}</span>
       </template>
     </CategorizationMousetracking>
     <DebugResults />
@@ -68,7 +68,7 @@
     </template>
 
     <template #4>
-      <Wait :time="3000" @done="$exp.nextScreen" />
+      <Wait :time="3000" @done="$magpie.nextScreen" />
     </template>
   </Screen>
 </template>
@@ -97,7 +97,7 @@ export default {
   methods: {
     onPressPlay() {
       this.playing = true;
-      this.$exp.startMouseTracking();
+      this.$magpie.startMouseTracking();
     },
     onOption1(cb) {
       if (!this.playing) return;
@@ -109,9 +109,9 @@ export default {
     },
     submit(label, cb) {
       // todo: flatten these and interpolate as in old magpie!
-      this.$exp.addResult({
+      this.$magpie.addResult({
         endLabel: label,
-        ...this.$exp.getMouseTrack()
+        ...this.$magpie.getMouseTrack()
       });
       cb();
     }

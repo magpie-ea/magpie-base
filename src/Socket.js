@@ -11,10 +11,10 @@ export const states = {
 };
 
 export default class Socket extends EventEmitter {
-  constructor($exp, socketURL, errorhandler) {
+  constructor($magpie, socketURL, errorhandler) {
     super();
     Vue.observable(this);
-    this.$exp = $exp;
+    this.$magpie = $magpie;
     this.errorHandler = (er) => {
       this.state = states.ERROR;
       errorhandler(er);
@@ -24,7 +24,7 @@ export default class Socket extends EventEmitter {
     this.phoenix = new PhoenixSocket(socketURL, {
       params: {
         participant_id: this.participantId,
-        experiment_id: this.$exp.experimentId
+        experiment_id: this.$magpie.experimentId
       }
     });
     this.phoenix.onError(this.errorHandler);
@@ -57,7 +57,7 @@ export default class Socket extends EventEmitter {
 
   join() {
     this.roomChannel = this.phoenix.channel(
-      `interactive_room:${this.$exp.id}:${this.chain}:${this.realization}`,
+      `interactive_room:${this.$magpie.id}:${this.chain}:${this.realization}`,
       { participant_id: this.participantId }
     );
 

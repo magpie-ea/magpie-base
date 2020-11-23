@@ -21,7 +21,7 @@ This interactive component provides participants the opportunity to chat with ea
         :key="i"
         :class="{
           message: true,
-          me: message.participantId === $exp.socket.participantId
+          me: message.participantId === $magpie.socket.participantId
         }"
         v-text="message.message"
       ></p>
@@ -66,9 +66,9 @@ export default {
       if (!message) {
         return;
       }
-      this.$exp.socket.broadcast(EVENT_CHAT_MESSAGE, {
+      this.$magpie.socket.broadcast(EVENT_CHAT_MESSAGE, {
         message,
-        participantId: this.$exp.socket.participantId
+        participantId: this.$magpie.socket.participantId
       });
       this.$refs.text.value = '';
       this.$refs.text.focus();

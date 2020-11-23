@@ -46,9 +46,9 @@ export default {
       // Here we get the current message from the textarea using the Vue ref we set above
       const message = this.$refs.text.value;
       // If the experiment was setup with a socketURL config setting,
-      // the socket will be available as part of the magic $exp property
+      // the socket will be available as part of the magic $magpie property
       // allowing us to broadcast this message to the fellow participants in the current room (including ourself)
-      this.$exp.socket.broadcast('chat_message', message);
+      this.$magpie.socket.broadcast('chat_message', message);
     }
   }
 };

@@ -5,7 +5,7 @@ export default function (Vue, config) {
   Vue.mixin({
     components: { ...components }, // casting Module to Object
     inject: {
-      $exp: {
+      $magpie: {
         from: 'experiment',
         default: () => ({})
       }
@@ -18,7 +18,7 @@ export default function (Vue, config) {
      */
     mounted() {
       if (this.$options.socket) {
-        this.$exp.socket.setUpSubscriptions(this.$options.socket, this);
+        this.$magpie.socket.setUpSubscriptions(this.$options.socket, this);
       }
     },
 
@@ -27,7 +27,7 @@ export default function (Vue, config) {
      */
     beforeDestroy() {
       if (this.$options.socket) {
-        this.$exp.tearDownSubscriptions(this.$options.socket);
+        this.$magpie.tearDownSubscriptions(this.$options.socket);
       }
     }
   });

@@ -7,7 +7,7 @@ You can provide the submission URL to the Experiment component.
   <Screen title="Submitting">
     <template #0="{ nextSlide }">
       <p>Hold on, while we submit your data.</p>
-      <Wait :time="0" @done="$exp.submit().then(nextSlide)" />
+      <Wait :time="0" @done="$magpie.submit().then(nextSlide)" />
     </template>
     <template #1>
       <p>All done. Thank you!</p>
@@ -24,7 +24,7 @@ export default {
   props: {},
   data() {
     return {
-      results: this.$exp.getResults()
+      results: this.$magpie.getResults()
     };
   }
 };

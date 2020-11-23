@@ -5,7 +5,7 @@
   <template #screens>
     <SelfPacedReading text="This|is|a|nice|text." word-pos="next" underline="sentence" @change:response-times="responseTimes = $event">
       <template #task>
-        <RatingInput question="Is it?" left="No" right="Yes" @change:answer="$exp.addResult({
+        <RatingInput question="Is it?" left="No" right="Yes" @change:answer="$magpie.addResult({
           rating: $event,
           responseTimes,
         })" />
@@ -55,7 +55,7 @@
       </div>
       <!-- @slot task content, displayed after the whole text was read -->
       <slot v-if="word >= splitters.length" name="task">
-        <Wait :time="100" @done="$exp.nextScreen()" />
+        <Wait :time="100" @done="$magpie.nextScreen()" />
       </slot>
     </template>
   </Screen>

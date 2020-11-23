@@ -38,17 +38,17 @@ export default {
     }
   },
   watch: {
-    '$exp.socket.state': function (state) {
+    '$magpie.socket.state': function (state) {
       if (state === states.READY) {
-        this.$exp.nextScreen();
+        this.$magpie.nextScreen();
       }
     }
   },
   mounted() {
-    if (this.$exp.socket.state === states.READY) {
-      this.$exp.nextScreen();
+    if (this.$magpie.socket.state === states.READY) {
+      this.$magpie.nextScreen();
     }
-    this.$exp.socket.join();
+    this.$magpie.socket.join();
   }
 };
 </script>

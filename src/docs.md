@@ -51,5 +51,5 @@ Each experiment is composed of a series of screens.
 Each screen in turn is composed of multiple slides. Often you will probably only use one slide per screen, however.
 
 #### Interface
-Magpie adds a special magic property to all vue components that are descendants of `<Experiment>`: `$exp`
-`$exp` allows you to access data you want to use in your trials, allows you to add results for submission, and gives you access to mouse tracking as well as control over which screen is displayed.
+Magpie adds a special magic property to all vue components that are descendants of `<Experiment>`: `$magpie`
+`$magpie` allows you to access data you want to use in your trials, allows you to add results for submission, and gives you access to mouse tracking as well as control over which screen is displayed.

@@ -25,15 +25,15 @@
 <Experiment :trials="{ color: ['blue', 'green', 'yellow'] }">
   <template #screens>
     <Screen>
-      {{ $exp.trial.color }}
-      <button @click="$exp.nextScreen()">next</button>
+      {{ $magpie.trial.color }}
+      <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $exp.trial.color }}
-      <button @click="$exp.nextScreen()">next</button>
+      {{ $magpie.trial.color }}
+      <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $exp.trial.color }}
+      {{ $magpie.trial.color }}
     </Screen>
   </template>
 </Experiment>
@@ -45,15 +45,15 @@
 <Experiment :trials="{number: () => Math.random()}">
   <template #screens>
     <Screen>
-      {{ $exp.trial.number }}
-      <button @click="$exp.nextScreen()">next</button>
+      {{ $magpie.trial.number }}
+      <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $exp.trial.number }}
-      <button @click="$exp.nextScreen()">next</button>
+      {{ $magpie.trial.number }}
+      <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $exp.trial.number }}
+      {{ $magpie.trial.number }}
     </Screen>
   </template>
 </Experiment>
@@ -69,15 +69,15 @@
   </template>
   <template #screens>
     <Screen>
-      {{ $exp.trial.number }}
-      <button @click="$exp.nextScreen()">next</button>
+      {{ $magpie.trial.number }}
+      <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $exp.trial.number }}
-      <button @click="$exp.nextScreen()">next</button>
+      {{ $magpie.trial.number }}
+      <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $exp.trial.number }}
+      {{ $magpie.trial.number }}
     </Screen>
   </template>
 </Experiment>
@@ -89,7 +89,7 @@ import _ from 'lodash';
 import Socket from '../Socket';
 /**
  * This is the main component for your online experiment. Put it at the root of your application.
- * The experiment is available in all subcomponents and in the parent as `$exp`
+ * The experiment is available in all subcomponents and in the parent as `$magpie`
  * @property trial Per trial data supplied via the trials prop
  */
 export default {
@@ -98,7 +98,7 @@ export default {
     /**
      * Any data that you want to use in your trials you can pass in via this prop.
      * You can either provide an array of data or a function that returns one sample at a time.
-     * This data will be available at run time via `$exp.trial`
+     * This data will be available at run time via `$magpie.trial`
      */
     trials: {
       type: Object,
@@ -300,7 +300,7 @@ export default {
    */
   render(h) {
     // HACKY-O
-    this.$parent.$exp = this;
+    this.$parent.$magpie = this;
     const children = this.$slots.screens;
     const screens = children.filter((c) => !!c.componentOptions);
     return h('div', { class: 'experiment' }, [

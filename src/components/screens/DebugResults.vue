@@ -33,7 +33,7 @@ export default {
   components: { Screen },
   props: {},
   data() {
-    const results = this.$exp.getResults();
+    const results = this.$magpie.getResults();
     return {
       results,
       csv: stringify(results, { columns: Object.keys(results[0]) })
@@ -47,7 +47,7 @@ export default {
       });
       this.download(
         'magpie-' +
-          this.$exp.id +
+          this.$magpie.id +
           '-' +
           new Date().toISOString().slice(0, 10) +
           '.csv',
