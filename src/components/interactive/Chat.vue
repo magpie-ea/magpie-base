@@ -80,10 +80,12 @@ export default {
 .chat {
   width: 450px;
 }
+
 .chat-box {
   overflow: auto;
   height: 400px;
 }
+
 .message {
   width: 55%;
   float: left;
@@ -93,17 +95,21 @@ export default {
   padding: 4px;
   margin: 5px 0;
 }
+
 .message.me {
   float: right;
   background: #70ba517a;
 }
+
 .chat-input {
   display: flex;
 }
+
 .chat-input textarea {
   flex-grow: 1;
   height: 32px;
 }
+
 .chat-input button {
   margin: 0;
 }
