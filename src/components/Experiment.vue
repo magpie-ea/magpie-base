@@ -159,7 +159,7 @@ export default {
   mounted() {
     this.socket = new Socket(this, this.socketUrl, this.onSocketError);
     this.socket.initialize();
-    this.responseTimeStart = Date.now()
+    this.responseTimeStart = Date.now();
   },
   methods: {
     /**
@@ -174,7 +174,7 @@ export default {
         this.currentScreen += 1;
       }
       this.currentTrial = {};
-      this.responseTimeStart = Date.now()
+      this.responseTimeStart = Date.now();
     },
     /**
      * Add a result set
@@ -191,7 +191,6 @@ export default {
         ...data,
         response_time: Date.now() - this.responseTimeStart
       });
-    }
     },
     onMouseMove(e) {
       this.mousetrackingTime.push(Date.now() - this.mousetrackingStartTime);
