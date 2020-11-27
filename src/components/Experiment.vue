@@ -152,12 +152,14 @@ export default {
       mousetrackingX: [0],
       mousetrackingY: [0],
       mousetrackingStartTime: 0,
-      socket: !!this.$options.magpie.socketUrl
+      socket: !!this.$options.magpie.socketUrl,
+      responseTimeStart: 0
     };
   },
   mounted() {
     this.socket = new Socket(this, this.socketUrl, this.onSocketError);
     this.socket.initialize();
+    this.responseTimeStart = Date.now()
   },
   methods: {
     /**
@@ -172,9 +174,12 @@ export default {
         this.currentScreen += 1;
       }
       this.currentTrial = {};
+      this.responseTimeStart = Date.now()
     },
     /**
      * Add a result set
+     * This method will automatically add a response_time key to your data with time measured from the start of the current screen
+     *
      * @public
      * @param data{Object} a flat object whose data you want to add to the results
      */
@@ -182,7 +187,11 @@ export default {
       if (!this.results[this.currentScreen]) {
         this.results[this.currentScreen] = [];
       }
-      this.results[this.currentScreen].push(data);
+      this.results[this.currentScreen].push({
+        ...data,
+        response_time: Date.now() - this.responseTimeStart
+      });
+    }
     },
     onMouseMove(e) {
       this.mousetrackingTime.push(Date.now() - this.mousetrackingStartTime);
