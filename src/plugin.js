@@ -18,7 +18,9 @@ export default function (Vue, config) {
      */
     mounted() {
       if (this.$options.socket) {
-        this.$magpie.socket.setUpSubscriptions(this.$options.socket, this);
+        if (this.$magpie.socket) {
+          this.$magpie.socket.setUpSubscriptions(this.$options.socket, this);
+        }
       }
     },
 
@@ -27,7 +29,9 @@ export default function (Vue, config) {
      */
     beforeDestroy() {
       if (this.$options.socket) {
-        this.$magpie.tearDownSubscriptions(this.$options.socket);
+        if (this.$magpie.socket) {
+          this.$magpie.socket.tearDownSubscriptions(this.$options.socket);
+        }
       }
     }
   });
