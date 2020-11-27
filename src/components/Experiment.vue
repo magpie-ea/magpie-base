@@ -173,7 +173,7 @@ export default {
       } else {
         this.currentScreen += 1;
       }
-      this.currentTrial = {};
+      this.currentTrialData = {};
       this.responseTimeStart = Date.now();
     },
     /**
