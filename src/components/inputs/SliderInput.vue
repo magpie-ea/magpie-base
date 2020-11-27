@@ -22,7 +22,7 @@
         class="slider"
         :value="initial"
         :tooltip="tooltip ? 'always' : 'none'"
-        @change="$emit('change:answer', $event)"
+        @change="$emit('update:response', $event)"
       />
       <div class="right">{{ right }}</div>
     </div>

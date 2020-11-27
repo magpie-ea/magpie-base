@@ -61,7 +61,7 @@ export default {
       /**
        * Change event with the selected image label
        */
-      this.$emit('change:answer', option);
+      this.$emit('update:response', option);
     }
   }
 };

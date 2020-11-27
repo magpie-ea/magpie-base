@@ -28,11 +28,11 @@
             /**
              * Change event with the fully completed text. Useful for answer.sync
              */
-            $emit('change:answer', fullAnswer);
+            $emit('update:response', fullAnswer);
             /**
              * Change event as an array of completions. Useful for answers.sync
              */
-            $emit('change:answers', answers);
+            $emit('update:responses', answers);
           "
           ><option
             v-for="option in options[i]"

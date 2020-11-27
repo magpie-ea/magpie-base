@@ -38,7 +38,7 @@
             v-model="answers[i]"
             type="radio"
             name="rating"
-            @change="$emit('change:answer', i)"
+            @change="$emit('update:response', i)"
           />
           {{ i }}</label
         >

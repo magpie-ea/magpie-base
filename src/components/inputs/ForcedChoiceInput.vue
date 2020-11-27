@@ -57,7 +57,7 @@ export default {
       /**
        * Change event with the chosen option. Useful in combination with `answer.sync`
        */
-      this.$emit('change:answer', option);
+      this.$emit('update:response', option);
     }
   }
 };

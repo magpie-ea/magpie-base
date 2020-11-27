@@ -47,7 +47,7 @@
         <Screen :key="'forcedchoice-' + i">
           <template #0>
             <!-- We automatically retrieve trial data from our data sources using $magpie.currentTrial.<data-source>
-            Once the participant has made a choice, the change:answer event fires and we save the answer and progress to the next screeen.
+            Once the participant has made a choice, the update:response event fires and we save the answer and progress to the next screeen.
             -->
             <img :src="$magpie.currentTrial.forced_choice.picture" alt="" />
             <ForcedChoiceInput
@@ -56,7 +56,7 @@
                 $magpie.currentTrial.forced_choice.option1,
                 $magpie.currentTrial.forced_choice.option2
               ]"
-              @change:answer="
+              @update:response="
                 $magpie.addResult({
                   question: $magpie.currentTrial.forced_choice.question,
                   answer: $event
@@ -77,7 +77,7 @@
 
       <template v-for="i in multi_dropdown_length">
         <Screen :key="'multidropdown-' + i">
-          <template #0>
+          <template #0="{responses}">
             <CompletionInput
               :text="
                 $magpie.currentTrial.multi_dropdown.sentence_chunk_1 +
@@ -90,11 +90,12 @@
                 $magpie.currentTrial.multi_dropdown.choice_options_1.split('|'),
                 $magpie.currentTrial.multi_dropdown.choice_options_2.split('|')
               ]"
-              @change:answer="answer = $event"
+              @change:response="responses.completion = $event"
             />
             <button
+              v-if="responses.completion"
               @click="
-                $magpie.addResult({ answer });
+                $magpie.addResult({ response: responses.completion });
                 $magpie.nextScreen();
               "
             >
@@ -117,7 +118,7 @@
                   $magpie.currentTrial.sentenceChoice.option1,
                   $magpie.currentTrial.sentenceChoice.option2
                 ]"
-                @change:answer="
+                @update:response="
                   $magpie.addResult({
                     question: $magpie.currentTrial.sentenceChoice.question,
                     answer: $event
@@ -143,7 +144,7 @@
                     src: $magpie.currentTrial.imageSelection.picture2
                   }
                 ]"
-                @change:answer="
+                @update:response="
                   $magpie.addResult({
                     question:
                       $magpie.currentTrial.imageSelection.question || '',
@@ -171,7 +172,7 @@
               :question="$magpie.currentTrial.sliderRating.question"
               :left="$magpie.currentTrial.sliderRating.optionLeft"
               :right="$magpie.currentTrial.sliderRating.optionRight"
-              @change:answer="answer = $event"
+              @update:response="answer = $event"
             />
             <button
               @click="

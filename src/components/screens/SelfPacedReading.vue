@@ -5,7 +5,7 @@
   <template #screens>
     <SelfPacedReading text="This|is|a|nice|text." word-pos="next" underline="sentence" @change:response-times="responseTimes = $event">
       <template #task>
-        <RatingInput question="Is it?" left="No" right="Yes" @change:answer="$magpie.addResult({
+        <RatingInput question="Is it?" left="No" right="Yes" @update:response="$magpie.addResult({
           rating: $event,
           responseTimes,
         })" />
@@ -36,7 +36,7 @@
       <slot name="stimulus"></slot>
       <KeypressInput
         :keys="{ [trigger]: instructions }"
-        @change:answer="nextWord"
+        @update:response="nextWord"
       />
       <div
         :class="{

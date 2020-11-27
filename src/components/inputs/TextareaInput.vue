@@ -14,7 +14,7 @@
 <template>
   <div class="textarea">
     <div class="question">{{ question }}</div>
-    <textarea @change="$emit('change:answer', $event)"></textarea>
+    <textarea @change="$emit('update:response', $event)"></textarea>
   </div>
 </template>
 
