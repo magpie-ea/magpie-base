@@ -31,17 +31,37 @@
   </template>
 </Experiment>
 ```
+
+### Store responses
+
+```vue
+<Experiment>
+  <template #screens>
+    <Screen title="Wow.">
+      <template #0="{nextSlide, responses}">
+        Hello
+        <TextareaInput @update:response="$set(responses, 'text', $event)" />
+        {{ responses.text }}?
+        <button v-if="responses.text" @click="nextSlide">Done</button>
+      </template>
+      <template #1="{responses}">
+        {{ responses.text }}!
+      </template>
+    </Screen>
+  </template>
+</Experiment>
+```
 </docs>
 
 <template>
   <div class="screen">
     <h2 v-if="title">{{ title }}</h2>
-    <!--
-    @slot the screen content
-    -->
     <slot name="default">
-      <!-- @ignore -->
-      <slot :name="currentSlide" :nextSlide="nextSlide">
+      <!-- @slot Multi-slot with slide number as name to maintain different slides
+           @binding {function} nextSlide Jump to the next slide
+           @binding {object} responses a temporary object to store your responses before adding them to the results
+      -->
+      <slot :name="currentSlide" :nextSlide="nextSlide" :responses="responses">
         Slide #{{ currentSlide }} could not be found
       </slot>
     </slot>
@@ -67,7 +87,8 @@ export default {
   },
   data() {
     return {
-      currentSlide: 0
+      currentSlide: 0,
+      responses: {}
     };
   },
   mounted() {

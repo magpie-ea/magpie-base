@@ -68,16 +68,10 @@
         </Screen>
       </template>
 
-      <ConnectInteractive />
-
-      <Screen>
-        <Chat></Chat>
-        <button @click="$magpie.nextScreen">Next</button>
-      </Screen>
-
       <template v-for="i in multi_dropdown_length">
         <Screen :key="'multidropdown-' + i">
           <template #0="{responses}">
+            <!-- Use $set for setting new properties to existing objects -->
             <CompletionInput
               :text="
                 $magpie.currentTrial.multi_dropdown.sentence_chunk_1 +
@@ -90,10 +84,14 @@
                 $magpie.currentTrial.multi_dropdown.choice_options_1.split('|'),
                 $magpie.currentTrial.multi_dropdown.choice_options_2.split('|')
               ]"
-              @change:response="responses.completion = $event"
+              @update:responses="$set(responses, 'completion', $event)"
             />
+            <!-- Only show button when both responses are given -->
             <button
-              v-if="responses.completion"
+              v-if="
+                responses.completion &&
+                responses.completion.filter(Boolean).length === 2
+              "
               @click="
                 $magpie.addResult({ response: responses.completion });
                 $magpie.nextScreen();
@@ -188,6 +186,13 @@
           </template>
         </Screen>
       </template>
+
+      <ConnectInteractive />
+
+      <Screen>
+        <Chat></Chat>
+        <button @click="$magpie.nextScreen">Next</button>
+      </Screen>
 
       <DebugResults />
 

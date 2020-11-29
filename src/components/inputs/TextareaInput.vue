@@ -14,7 +14,10 @@
 <template>
   <div class="textarea">
     <div class="question">{{ question }}</div>
-    <textarea @change="$emit('update:response', $event)"></textarea>
+    <textarea
+      ref="text"
+      @input="$emit('update:response', $refs.text.value)"
+    ></textarea>
   </div>
 </template>
 
@@ -30,7 +33,8 @@ export default {
      */
     question: {
       type: String,
-      required: true
+      required: false,
+      default: ''
     }
   }
 };
