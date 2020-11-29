@@ -59,7 +59,7 @@ export default {
   methods: {
     onOptionClick(option) {
       /**
-       * Change event with the chosen option. Useful in combination with `answer.sync`
+       * Change event with the chosen option. Useful in combination with `response.sync`
        */
       this.$emit('update:response', option);
     }

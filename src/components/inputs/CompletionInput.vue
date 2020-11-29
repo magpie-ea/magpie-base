@@ -30,11 +30,11 @@
           v-model="answers[i]"
           @change="
             /**
-             * Change event with the fully completed text. Useful for answer.sync
+             * Change event with the fully completed text. Useful for response.sync
              */
             $emit('update:response', fullAnswer);
             /**
-             * Change event as an array of completions. Useful for answers.sync
+             * Change event as an array of completions. Useful for responses.sync
              */
             $emit('update:responses', answers);
           "
