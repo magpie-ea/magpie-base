@@ -4,8 +4,8 @@
   <template #screens>
     <Screen>
       <template #0="{responses}">
+        <p>Fries or soup?</p>
       <RatingInput
-          question="Fries or soup?"
           left="Fries"
           :response.sync="responses.lunch"
           right="Soup" />
@@ -20,8 +20,8 @@
 <Experiment>
   <template #screens>
     <Screen>
+      <p>Fries or soup?</p>
       <RatingInput
-          question="Fries or soup?"
           left="Fries"
           right="Soup"
           :count="11"/>
@@ -33,7 +33,6 @@
 
 <template>
   <div class="rating">
-    <div class="question">{{ question }}</div>
     <form>
       <div class="options">
         <div class="left">{{ left }}</div>
@@ -59,13 +58,6 @@
 export default {
   name: 'RatingInput',
   props: {
-    /**
-     * The question
-     */
-    question: {
-      type: String,
-      required: true
-    },
     /**
      * The langth of the rating scale
      */

@@ -3,8 +3,8 @@
 <Experiment>
   <template #screens>
     <Screen>
+      <p>Fries or soup?</p>
       <ImageSelectionInput
-          question="Fries or soup?"
           :options="[
               {src: 'fries.jpg', label: 'fries'},
               {src: 'soup.jpg', label: 'soup' }]" />
@@ -16,7 +16,6 @@
 
 <template>
   <div class="image_selection">
-    <div class="question">{{ question }}</div>
     <div class="options">
       <div
         v-for="option in options"
@@ -41,13 +40,6 @@
 export default {
   name: 'ImageSelectionInput',
   props: {
-    /**
-     * The question
-     */
-    question: {
-      type: String,
-      required: true
-    },
     /**
      * An array of option objects `{ src: '', label: '' }`
      */

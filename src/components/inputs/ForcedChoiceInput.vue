@@ -5,11 +5,11 @@
   <template #screens>
     <Screen>
       <template #0="{responses}">
-      <ForcedChoiceInput
-          question="What's on the bread?"
-          :response.sync="responses.bread"
-          :options="['Ham', 'Jam']" />
-        <p v-if="responses.bread === 'Jam'">A sweet tooth, eh!?</p>
+        <p>What's on the bread?</p>
+        <ForcedChoiceInput
+            :response.sync="responses.bread"
+            :options="['Ham', 'Jam']" />
+          <p v-if="responses.bread === 'Jam'">A sweet tooth, eh!?</p>
       </template>
     </Screen>
   </template>
@@ -20,7 +20,6 @@
 
 <template>
   <div class="forced_choice">
-    <div class="question">{{ question }}</div>
     <div class="options">
       <div
         v-for="option in options"
@@ -41,13 +40,6 @@
 export default {
   name: 'ForcedChoiceInput',
   props: {
-    /**
-     * The question or task
-     */
-    question: {
-      type: String,
-      required: true
-    },
     /**
      * The possible options to choose from
      */

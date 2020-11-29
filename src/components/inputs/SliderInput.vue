@@ -4,12 +4,12 @@
   <template #screens>
     <Screen>
       <template #0="{responses}">
+        <p>Fries or soup?</p>
         <SliderInput
-            question="Fries or soup?"
             left="Fries"
             right="Soup"
             :response.sync="responses.lunch" />
-        Lunch: {{responses.lunch}}
+        Lunch: {{responses.lunch}}% Soup
       </template>
     </Screen>
   </template>
@@ -19,7 +19,6 @@
 
 <template>
   <div class="slider">
-    <div class="question">{{ question }}</div>
     <div class="slider-element">
       <div class="left">{{ left }}</div>
       <Slider
@@ -44,13 +43,6 @@ export default {
   name: 'SliderInput',
   components: { Slider },
   props: {
-    /**
-     * The question
-     */
-    question: {
-      type: String,
-      required: true
-    },
     /**
      * Text left of the slider
      */

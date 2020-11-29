@@ -50,8 +50,8 @@
             Once the participant has made a choice, the update:response event fires and we save the answer and progress to the next screeen.
             -->
             <img :src="$magpie.currentTrial.forced_choice.picture" alt="" />
+            <p v-text="$magpie.currentTrial.forced_choice.question"></p>
             <ForcedChoiceInput
-              :question="$magpie.currentTrial.forced_choice.question"
               :options="[
                 $magpie.currentTrial.forced_choice.option1,
                 $magpie.currentTrial.forced_choice.option2
@@ -110,8 +110,8 @@
           <Screen :key="'sentenceChoice-' + i + '' + j">
             <template #0>
               <img :src="$magpie.currentTrial.sentenceChoice.picture" alt="" />
+              <p v-text="$magpie.currentTrial.sentenceChoice.question"></p>
               <ForcedChoiceInput
-                :question="$magpie.currentTrial.sentenceChoice.question"
                 :options="[
                   $magpie.currentTrial.sentenceChoice.option1,
                   $magpie.currentTrial.sentenceChoice.option2
@@ -130,8 +130,8 @@
         <template v-for="j in 2">
           <Screen :key="'sentenceChoice-' + i + '' + j">
             <template #0>
+              <p>{{ $magpie.currentTrial.imageSelection.question }}</p>
               <ImageSelectionInput
-                :question="$magpie.currentTrial.imageSelection.question || ''"
                 :options="[
                   {
                     label: $magpie.currentTrial.imageSelection.option1,
@@ -166,8 +166,8 @@
             <img :src="$magpie.currentTrial.sliderRating.picture" alt="" />
           </template>
           <template #2="{responses}">
+            <p>{{ $magpie.currentTrial.sliderRating.question }}</p>
             <SliderInput
-              :question="$magpie.currentTrial.sliderRating.question"
               :left="$magpie.currentTrial.sliderRating.optionLeft"
               :right="$magpie.currentTrial.sliderRating.optionRight"
               :response.sync="responses.slider"

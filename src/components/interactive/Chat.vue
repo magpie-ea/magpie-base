@@ -5,7 +5,7 @@ This interactive component provides participants the opportunity to chat with ea
 <Experiment>
   <template #screens>
     <Screen>
-      <Chat></Chat>
+      <Chat />
     </Screen>
   </template>
 </Experiment>

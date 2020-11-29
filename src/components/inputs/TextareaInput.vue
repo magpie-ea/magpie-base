@@ -4,10 +4,10 @@
   <template #screens>
     <Screen>
       <template #0="{responses}">
-      <TextareaInput
-          question="Fries or soup?"
-          :response.sync="responses.lunch"
-        />
+        <p>Fries or soup?</p>
+        <TextareaInput
+            :response.sync="responses.lunch"
+          />
         <p v-if="responses.lunch && responses.lunch > 3">I disagree!</p>
       </template>
     </Screen>
@@ -18,7 +18,6 @@
 
 <template>
   <div class="textarea">
-    <div class="question">{{ question }}</div>
     <textarea
       ref="text"
       @input="$emit('update:response', $refs.text.value)"
@@ -31,17 +30,7 @@
  * Have your participants provide a text answer
  */
 export default {
-  name: 'TextareaInput',
-  props: {
-    /**
-     * The question
-     */
-    question: {
-      type: String,
-      required: false,
-      default: ''
-    }
-  }
+  name: 'TextareaInput'
 };
 </script>
 

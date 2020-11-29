@@ -4,14 +4,14 @@
   <template #screens>
     <Screen>
       <template #0="{responses}">
-      <KeypressInput
-          question="Fries or soup?"
-          :response.sync="responses.lunch"
-          :keys="{
-            f: 'fries',
-            j: 'soup'
-          }" />
-        <p v-if="responses.lunch === 'fries'">Don't forget the ketchup!</p>
+        <p>Fries or soup?</p>
+        <KeypressInput
+            :response.sync="responses.lunch"
+            :keys="{
+              f: 'fries',
+              j: 'soup'
+            }" />
+          <p v-if="responses.lunch === 'fries'">Don't forget the ketchup!</p>
       </template>
     </Screen>
   </template>
@@ -21,7 +21,6 @@
 
 <template>
   <div class="keypress">
-    <div class="question">{{ question }}</div>
     <div class="options">
       <span v-for="(option, key) in keys" :key="key"
         ><strong v-text="key"></strong> = {{ option }}
@@ -37,13 +36,6 @@
 export default {
   name: 'KeypressInput',
   props: {
-    /**
-     * The question
-     */
-    question: {
-      type: String,
-      default: ''
-    },
     /**
      * An object with keys mapped to option labels
      */
