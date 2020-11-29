@@ -457,5 +457,7 @@ button:focus {
 img {
   max-width: 100%;
   height: auto;
+  max-height: 400px;
+  width: auto;
 }
 </style>
