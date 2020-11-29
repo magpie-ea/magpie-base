@@ -7,9 +7,3 @@ Vue.use(MagpieVue, {
   socketUrl: 'wss://magpie-demo.herokuapp.com/socket',
   contactEmail: 'test@random.com'
 });
-Vue.mixin({
-  data() {
-    // For the timer docs
-    return { timer: null };
-  }
-});

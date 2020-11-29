@@ -3,14 +3,14 @@
 <Experiment>
   <template #screens>
     <Screen>
-      <template #0="{nextSlide}">
+      <template #0="{nextSlide, responses}">
         Slide 1<br />
-        <Timer v-model="timer"></Timer>
+        <Timer v-model="responses.timer"></Timer>
         <button @click="nextSlide">Next slide</button>
       </template>
-      <template #1="{nextSlide}">
+      <template #1="{nextSlide, responses}">
         Slide 2<br />
-        Time until click: {{timer()/1000}} seconds
+        Time until click: {{responses.timer()/1000}} seconds
       </template>
     </Screen>
   </template>

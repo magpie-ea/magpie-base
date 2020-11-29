@@ -4,13 +4,17 @@
 <Experiment>
   <template #screens>
     <Screen>
-      <CompletionInput
+      <template #0="{responses}">
+        <CompletionInput
           text="One %s fell over three %s."
+          :responses.sync="responses.words"
           :options="[
               ['horse', 'penguin', 'bird'],
               ['icicles', 'trees', 'bushes']
               ]"
           />
+        <p v-if="responses.words[0] === 'horse'">A horse would never fall over {{responses.words[1]}}</p>
+      </template>
     </Screen>
   </template>
 </Experiment>

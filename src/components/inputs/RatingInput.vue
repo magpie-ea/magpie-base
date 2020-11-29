@@ -3,10 +3,14 @@
 <Experiment>
   <template #screens>
     <Screen>
+      <template #0="{responses}">
       <RatingInput
           question="Fries or soup?"
           left="Fries"
+          :response.sync="responses.lunch"
           right="Soup" />
+        <p v-if="responses.lunch > 4">I concur!</p>
+      </template>
     </Screen>
   </template>
 </Experiment>

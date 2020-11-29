@@ -3,8 +3,13 @@
 <Experiment>
   <template #screens>
     <Screen>
+      <template #0="{responses}">
       <TextareaInput
-          question="Fries or soup?" />
+          question="Fries or soup?"
+          :response.sync="responses.lunch"
+        />
+        <p v-if="responses.lunch && responses.lunch > 3">I disagree!</p>
+      </template>
     </Screen>
   </template>
 </Experiment>

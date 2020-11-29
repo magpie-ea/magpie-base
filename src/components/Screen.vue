@@ -12,6 +12,8 @@
 ```
 
 ### Multiple slides
+One screen may consist of multiple slides that are numbered incrementally and displayed one after another.
+You can go to the next slide with the `nextSlide` function that is exposed by the Screen component.
 
 ```vue
 <Experiment>
@@ -33,6 +35,7 @@
 ```
 
 ### Store responses
+The screen component also conveniently exposes an object for you to store in the responses of the current screen, so you can later submit them using `$magpie.addResult`.
 
 ```vue
 <Experiment>
@@ -40,7 +43,7 @@
     <Screen title="Wow.">
       <template #0="{nextSlide, responses}">
         Hello
-        <TextareaInput @update:response="$set(responses, 'text', $event)" />
+        <TextareaInput :response.sync="responses.text" />
         {{ responses.text }}?
         <button v-if="responses.text" @click="nextSlide">Done</button>
       </template>

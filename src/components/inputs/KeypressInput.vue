@@ -3,12 +3,16 @@
 <Experiment>
   <template #screens>
     <Screen>
+      <template #0="{responses}">
       <KeypressInput
           question="Fries or soup?"
+          :response.sync="responses.lunch"
           :keys="{
             f: 'fries',
             j: 'soup'
           }" />
+        <p v-if="responses.lunch === 'fries'">Don't forget the ketchup!</p>
+      </template>
     </Screen>
   </template>
 </Experiment>

@@ -4,9 +4,13 @@
 <Experiment>
   <template #screens>
     <Screen>
+      <template #0="{responses}">
       <ForcedChoiceInput
           question="What's on the bread?"
+          :response.sync="responses.bread"
           :options="['Ham', 'Jam']" />
+        <p v-if="responses.bread === 'Jam'">A sweet tooth, eh!?</p>
+      </template>
     </Screen>
   </template>
 </Experiment>

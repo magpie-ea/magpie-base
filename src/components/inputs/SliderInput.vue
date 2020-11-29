@@ -3,10 +3,14 @@
 <Experiment>
   <template #screens>
     <Screen>
-      <SliderInput
-          question="Fries or soup?"
-          left="Fries"
-          right="Soup" />
+      <template #0="{responses}">
+        <SliderInput
+            question="Fries or soup?"
+            left="Fries"
+            right="Soup"
+            :response.sync="responses.lunch" />
+        Lunch: {{responses.lunch}}
+      </template>
     </Screen>
   </template>
 </Experiment>

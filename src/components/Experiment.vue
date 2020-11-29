@@ -1,5 +1,6 @@
 <docs>
-### Instance properties
+### Instance properties ($magpie)
+The Experiment component, and thus the following properties of it, are also available in all components as the special $magpie property. 
 
 * `id`
   * The ID of the experiment
@@ -21,6 +22,9 @@
 
 ### Populating trial data with an array
 
+The Experiment component allows you to define trial data to make it conveniently accessible during your experiment.
+For every source of trial data you can provide a label and an array. Later you will be able to automatically iterate over that array by accessing the label as a subproperty of `$magpie.currentTrial`.
+
 ```vue
 <Experiment :trials="{ color: ['blue', 'green', 'yellow'] }">
   <template #screens>
@@ -40,6 +44,7 @@
 ```
 
 ### Populating trial data with a function
+In case you want to generate data on the fly or have a more sophisticated data selection mechanism in mind, you can also specify a getter function which will return the next item.
 
 ```vue
 <Experiment :trials="{number: () => Math.random()}">
@@ -61,6 +66,7 @@
 
 
 ### Providing a title
+Besides the `screens` slot, the Experiment component also provides an optional `title` slot that allows you to display header information on all screens of your experiment.
 
 ```vue
 <Experiment :trials="{number: () => Math.random()}">
