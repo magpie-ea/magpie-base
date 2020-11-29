@@ -84,7 +84,7 @@
                 $magpie.currentTrial.multi_dropdown.choice_options_1.split('|'),
                 $magpie.currentTrial.multi_dropdown.choice_options_2.split('|')
               ]"
-              @update:responses="$set(responses, 'completion', $event)"
+              :responses.sync="responses.completion"
             />
             <!-- Only show button when both responses are given -->
             <button
@@ -165,18 +165,18 @@
             <Wait :time="1500" @done="nextSlide" />
             <img :src="$magpie.currentTrial.sliderRating.picture" alt="" />
           </template>
-          <template #2>
+          <template #2="{responses}">
             <SliderInput
               :question="$magpie.currentTrial.sliderRating.question"
               :left="$magpie.currentTrial.sliderRating.optionLeft"
               :right="$magpie.currentTrial.sliderRating.optionRight"
-              @update:response="answer = $event"
+              :response.sync="responses.slider"
             />
             <button
               @click="
                 $magpie.addResult({
                   question: $magpie.currentTrial.sliderRating.question || '',
-                  answer: answer
+                  answer: responses.slider
                 });
                 $magpie.nextScreen();
               "
