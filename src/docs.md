@@ -275,6 +275,9 @@ export default {
 </script>
 ```
 
+#### More
+There's much more to learn about Vue.js. If you are curious, head over to [the official guide](https://vuejs.org/v2/guide/syntax.html).
+
 ### Getting started with Magpie
 
 #### Structure
