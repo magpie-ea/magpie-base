@@ -21,6 +21,11 @@ module.exports = {
       components: 'src/components/inputs/*.vue'
     },
     {
+      name: 'Stimuli',
+      content: 'src/components/stimuli/docs.md',
+      components: 'src/components/stimuli/*.vue'
+    },
+    {
       name: 'Screens',
       content: 'src/components/screens/docs.md',
       components: 'src/components/screens/*.vue'
