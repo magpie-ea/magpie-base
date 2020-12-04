@@ -71,7 +71,7 @@ The Rsvp component allows you to define the presentation of the chunks you provi
 import Wait from '../helpers/Wait';
 
 export default {
-  name: 'TextRsvp',
+  name: 'Rsvp',
   components: { Wait },
   props: {
     /**
