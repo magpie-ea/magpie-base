@@ -154,17 +154,27 @@ export default {
       results: {},
       currentTrialData: {},
       currentTrial,
+      socket: !!this.$options.magpie.socketUrl,
       mousetrackingTime: [0],
       mousetrackingX: [0],
       mousetrackingY: [0],
       mousetrackingStartTime: 0,
-      socket: !!this.$options.magpie.socketUrl,
       responseTimeStart: 0
     };
   },
+  beforeMount() {
+    if (this.socket) {
+      this.socket = new Socket(
+        this,
+        this.$options.magpie.socketUrl,
+        this.onSocketError
+      );
+    }
+  },
   mounted() {
-    this.socket = new Socket(this, this.socketUrl, this.onSocketError);
-    this.socket.initialize();
+    if (this.socket) {
+      this.socket.initialize();
+    }
     this.responseTimeStart = Date.now();
   },
   methods: {

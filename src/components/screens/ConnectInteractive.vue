@@ -48,7 +48,6 @@ export default {
     if (this.$magpie.socket.state === states.READY) {
       this.$magpie.nextScreen();
     }
-    this.$magpie.socket.join();
   }
 };
 </script>

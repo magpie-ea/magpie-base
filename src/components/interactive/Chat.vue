@@ -4,6 +4,7 @@ This interactive component provides participants the opportunity to chat with ea
 ```vue
 <Experiment>
   <template #screens>
+    <ConnectInteractive />
     <Screen>
       <Chat />
     </Screen>
