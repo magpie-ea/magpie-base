@@ -61,14 +61,25 @@
         </div>
       </div>
       <div class="stimulus">
-        <button v-if="!playing" @click="onPressPlay">Go</button>
         <!-- @slot provide content for the main stimulus -->
         <slot v-if="playing" name="stimulus" />
       </div>
+      <button v-if="!playing" @click="onPressPlay">Go</button>
     </template>
 
     <template #4>
-      <Wait :time="3000" @done="$magpie.nextScreen" />
+      <div class="stimulus">
+        <!-- @slot optionally provide feedback and add result -->
+        <slot name="feedback" :label="label" :mouseTrack="track">
+          <Wait
+            :time="500"
+            @done="
+              $magpie.addResult({ endLabel: label, ...track });
+              $magpie.nextScreen();
+            "
+          />
+        </slot>
+      </div>
     </template>
   </Screen>
 </template>
@@ -91,7 +102,9 @@ export default {
   },
   data() {
     return {
-      playing: false
+      playing: false,
+      label: null,
+      track: null
     };
   },
   methods: {
@@ -108,11 +121,7 @@ export default {
       this.submit('right', cb);
     },
     submit(label, cb) {
-      // todo: flatten these and interpolate as in old magpie!
-      this.$magpie.addResult({
-        endLabel: label,
-        ...this.$magpie.getMouseTrack()
-      });
+      (this.label = label), (this.track = this.$magpie.getMouseTrack());
       cb();
     }
   }
@@ -138,8 +147,13 @@ export default {
 }
 
 .stimulus {
-  bottom: 20px;
+  bottom: 200px;
   position: absolute;
   width: 100%;
+}
+button {
+  bottom: 20px;
+  left: 50%;
+  position: absolute;
 }
 </style>
