@@ -15,8 +15,8 @@ Once you are gaoing live with your experiment, you can use the SubmitResults scr
           </tr>
         </thead>
         <tbody>
-          <tr v-for="row in results" :key="row">
-            <td v-for="entry in row" :key="entry">{{ String(entry) }}</td>
+          <tr v-for="(row,i) in results" :key="i">
+            <td v-for="(key,j) in Object.keys(results[0])" :key="j">{{ String(row[key]) }}</td>
           </tr>
         </tbody>
       </table>
