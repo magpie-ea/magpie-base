@@ -59,7 +59,7 @@ export default class Socket extends EventEmitter {
 
   join() {
     if (!this.chain || !this.realization) {
-      return
+      return;
     }
     this.roomChannel = this.phoenix.channel(
       `interactive_room:${this.$magpie.id}:${this.chain}:${this.realization}`,

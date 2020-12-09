@@ -271,7 +271,7 @@ export default {
     },
     submit() {
       if (!this.submissionUrl) {
-        return throw new Error('No submission URL set');
+        throw new Error('No submission URL set');
       }
       return this.submitResults(
         this.submissionUrl,
@@ -280,7 +280,7 @@ export default {
     },
     submitIntermediateResults() {
       if (!this.submissionUrl) {
-        return throw new Error('No submission URL set');
+        throw new Error('No submission URL set');
       }
       return this.submitResults(
         this.submissionUrl,

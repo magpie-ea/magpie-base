@@ -7,15 +7,15 @@ You can provide the submission URL to the Experiment component.
   <Screen title="Submitting">
     <template #0="{ nextSlide }">
       <p>Hold on, while we submit your data.</p>
-      <Wait :time="0" @done="submit(cb)" />
+      <Wait :time="0" @done="submit(nextSlide)" />
     </template>
     <template #1>
       <p v-if="!error">All done. Thank you!</p>
       <div v-else>
         <p>Oh, no. There was a problem submitting your results.</p>
         <p>Please contact <a :href="'mailto:'+$magpie.contactEmail">the author of this experiment</a>.</p>
-        <p v-text="error">
-      <div>
+        <p v-text="error" />
+      </div>
     </template>
   </Screen>
 </template>
