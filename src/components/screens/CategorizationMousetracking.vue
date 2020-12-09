@@ -104,7 +104,7 @@ export default {
      */
     selectEvent: {
       type: String,
-      default: 'mouseover',
+      default: 'mouseover'
     }
   },
   data() {

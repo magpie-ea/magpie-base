@@ -273,44 +273,39 @@ export default {
       if (!this.submissionUrl) {
         throw new Error('No submission URL set');
       }
-      return this.submitResults(
-        this.submissionUrl,
-        this.getResults()
-      );
+      return this.submitResults(this.submissionUrl, this.getResults());
     },
     submitIntermediateResults() {
       if (!this.submissionUrl) {
         throw new Error('No submission URL set');
       }
-      return this.submitResults(
-        this.submissionUrl,
-        this.getResults(),
-        true
-      );
+      return this.submitResults(this.submissionUrl, this.getResults(), true);
     },
     async submitResults(submissionURL, data, intermediate) {
       if (this.socket) {
-        const submissionType = intermediate? "save_intermediate_results" : "submit_results" 
-        
-        return new Promise((resolve, reject) => 
+        const submissionType = intermediate
+          ? 'save_intermediate_results'
+          : 'submit_results';
+
+        return new Promise((resolve, reject) =>
           this.socket.participantChannel
-				  .push(submissionType, {
-			  			results: data
-			  	})
-				  .receive("ok", resolve)
-				  .receive("error", reject)
+            .push(submissionType, {
+              results: data
+            })
+            .receive('ok', resolve)
+            .receive('error', reject)
         );
       }
-      const resp = await fetch(submissionURL,{
-				method: 'POST',
-				mode: 'cors',
-				headers: {
-					'Content-type': 'application/json'
-				},
-				body: JSON.stringify(data)
-			});
+      const resp = await fetch(submissionURL, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
       if (resp.statusCode !== 200) {
-        throw new Error('The server says: ' +(await resp.text()) );
+        throw new Error('The server says: ' + (await resp.text()));
       }
     }
   },
@@ -389,7 +384,7 @@ const flattenData = function (data) {
     for (const key in t) {
       if (Array.isArray(t[key])) {
         // Turn arrays into strings
-        t[key] = t[key].join('|')
+        t[key] = t[key].join('|');
       }
     }
     // Here the data is the general informatoin besides the trials.

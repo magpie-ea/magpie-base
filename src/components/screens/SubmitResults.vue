@@ -13,7 +13,12 @@ You can provide the submission URL to the Experiment component.
       <p v-if="!error">All done. Thank you!</p>
       <div v-else>
         <p>Oh, no. There was a problem submitting your results.</p>
-        <p>Please contact <a :href="'mailto:'+$magpie.contactEmail">the author of this experiment</a>.</p>
+        <p>
+          Please contact
+          <a :href="'mailto:' + $magpie.contactEmail"
+            >the author of this experiment</a
+          >.
+        </p>
         <p v-text="error" />
       </div>
     </template>
@@ -30,17 +35,17 @@ export default {
   data() {
     return {
       results: this.$magpie.getResults(),
-      error: null,
+      error: null
     };
   },
   methods: {
     async submit(cb) {
       try {
-        await this.$magpie.submit()
-        cb()
-      }catch(err) {
-        this.error = err.message
-        cb()
+        await this.$magpie.submit();
+        cb();
+      } catch (err) {
+        this.error = err.message;
+        cb();
       }
     }
   }

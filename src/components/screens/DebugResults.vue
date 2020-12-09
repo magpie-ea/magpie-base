@@ -15,8 +15,10 @@ Once you are gaoing live with your experiment, you can use the SubmitResults scr
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row,i) in results" :key="i">
-            <td v-for="(key,j) in Object.keys(results[0])" :key="j">{{ String(row[key]) }}</td>
+          <tr v-for="(row, i) in results" :key="i">
+            <td v-for="(key, j) in Object.keys(results[0])" :key="j">
+              {{ String(row[key]) }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -36,7 +38,10 @@ export default {
     const results = this.$magpie.getResults();
     return {
       results,
-      csv: stringify(results, { columns: Object.keys(results[0]), header: true })
+      csv: stringify(results, {
+        columns: Object.keys(results[0]),
+        header: true
+      })
     };
   },
   methods: {
