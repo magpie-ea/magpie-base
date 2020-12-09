@@ -52,11 +52,11 @@
 
     <template #3="{ nextSlide }">
       <div class="options">
-        <div class="option1" @mouseover="onOption1(nextSlide)">
+        <div class="option1" @[selectEvent]="onOption1(nextSlide)">
           <slot name="option1" />
         </div>
         <div class="space"></div>
-        <div class="option2" @mouseover="onOption2(nextSlide)">
+        <div class="option2" @[selectEvent]="onOption2(nextSlide)">
           <slot name="option2" />
         </div>
       </div>
@@ -98,6 +98,13 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    /**
+     * The event that causes the response to be selected, e.g. `click`, `mouseover`, etc.
+     */
+    selectEvent: {
+      type: String,
+      default: 'mouseover',
     }
   },
   data() {
