@@ -36,7 +36,7 @@ export default {
     const results = this.$magpie.getResults();
     return {
       results,
-      csv: stringify(results, { columns: Object.keys(results[0]) })
+      csv: stringify(results, { columns: Object.keys(results[0]), header: true })
     };
   },
   methods: {
