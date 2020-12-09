@@ -147,14 +147,14 @@ export default {
 
     return {
       // config
-      ...this.$options.magpie,
-
       id: this.$options.magpie.experimentId,
+      socket: !!this.$options.magpie.socketUrl,
+      submissionUrl: this.$options.magpie.submissionUrl,
+      contactEmail: this.$options.magpie.contactEmail,
       currentScreen: 0,
       results: {},
       currentTrialData: {},
       currentTrial,
-      socket: !!this.$options.magpie.socketUrl,
       mousetrackingTime: [0],
       mousetrackingX: [0],
       mousetrackingY: [0],
@@ -271,43 +271,46 @@ export default {
     },
     submit() {
       if (!this.submissionUrl) {
-        return;
+        return throw new Error('No submission URL set');
       }
       return this.submitResults(
-        this.contactEmail,
         this.submissionUrl,
         this.getResults()
       );
     },
-    async submitResults(contactEmail, submissionURL, data) {
-      let resp;
-      try {
-        resp = await fetch({
-          method: 'POST',
-          url: submissionURL,
-          mode: 'cors',
-          headers: {
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        });
-      } catch (e) {
-        alert(
-          'Oops, the submission failed. ' +
-            e.message +
-            '\nPlease try again. If the problem persists, please contact ' +
-            contactEmail +
-            'with this error message, including your ID'
+    submitIntermediateResults() {
+      if (!this.submissionUrl) {
+        return throw new Error('No submission URL set');
+      }
+      return this.submitResults(
+        this.submissionUrl,
+        this.getResults(),
+        true
+      );
+    },
+    async submitResults(submissionURL, data, intermediate) {
+      if (this.socket) {
+        const submissionType = intermediate? "save_intermediate_results" : "submit_results" 
+        
+        return new Promise((resolve, reject) => 
+          this.socket.participantChannel
+				  .push(submissionType, {
+			  			results: data
+			  	})
+				  .receive("ok", resolve)
+				  .receive("error", reject)
         );
       }
+      const resp = await fetch(submissionURL,{
+				method: 'POST',
+				mode: 'cors',
+				headers: {
+					'Content-type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
       if (resp.statusCode !== 200) {
-        alert(
-          'Oops, the submission failed. The server says: ' +
-            (await resp.text()) +
-            '\nPlease try again. If the problem persists, please contact ' +
-            contactEmail +
-            'with this error message, including your ID'
-        );
+        throw new Error('The server says: ' +(await resp.text()) );
       }
     }
   },
@@ -383,6 +386,12 @@ const flattenData = function (data) {
   }
 
   var out = _.map(trials, function (t) {
+    for (const key in t) {
+      if (Array.isArray(t[key])) {
+        // Turn arrays into strings
+        t[key] = t[key].join('|')
+      }
+    }
     // Here the data is the general informatoin besides the trials.
     return _.merge(t, data);
   });
