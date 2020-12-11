@@ -109,7 +109,14 @@ export default {
     trials: {
       type: Object,
       default: () => ({})
-    }
+    },
+    /**
+     * Whether to display the experiment in wide format-filling mode
+     */
+    wide: {
+      type: Boolean,
+      default: false,
+    },
   },
   provide() {
     return {
@@ -325,7 +332,7 @@ export default {
     this.$parent.$magpie = this;
     const children = this.$slots.screens;
     const screens = children.filter((c) => !!c.componentOptions);
-    return h('div', { class: 'experiment' }, [
+    return h('div', { class: 'experiment'+(this.wide? ' wide' : '') }, [
       h('div', { class: 'header' }, [
         h('div', { class: 'col title' }, this.$slots.title),
         h(
@@ -396,8 +403,9 @@ const flattenData = function (data) {
 
 <style>
 .experiment {
-  margin: 100px auto;
-  width: 800px;
+  box-sizing: border-box;
+  margin: 3% auto;
+  width: 900px;
   min-height: 600px;
   border-radius: 10px;
   border: 1px solid #ababab;
@@ -410,6 +418,11 @@ const flattenData = function (data) {
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+.experiment.wide {
+  width: 100%;
+  margin: 0;
 }
 
 .header {
