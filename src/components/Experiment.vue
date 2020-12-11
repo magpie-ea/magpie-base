@@ -186,7 +186,7 @@ export default {
   },
   methods: {
     /**
-     * Go to the next screen.
+     * Go to the next screen. (Will also reset scroll position.)
      * @public
      * @param index{int} the index of the screen to go to (optional; default is next screen)
      */
@@ -198,6 +198,7 @@ export default {
       }
       this.currentTrialData = {};
       this.responseTimeStart = Date.now();
+      window.scrollTo(0,0)
     },
     /**
      * Add a result set
