@@ -312,7 +312,7 @@ export default {
         },
         body: JSON.stringify(data)
       });
-      if (resp.statusCode !== 200) {
+      if (!resp.ok) {
         throw new Error('The server says: ' + (await resp.text()));
       }
     }
