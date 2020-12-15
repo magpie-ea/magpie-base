@@ -10,10 +10,14 @@
   <template #screens>
     <CategorizationMousetracking :key="i" v-for="i in 4">
       <template #option1>
+        <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
         {{ $magpie.currentTrial.categories.o1 }}
+        </div>
       </template>
       <template #option2>
+        <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
         {{ $magpie.currentTrial.categories.o2 }}
+        </div>
       </template>
       <template #stimulus>
         <span>{{ $magpie.currentTrial.categories.s }}</span>
@@ -105,7 +109,7 @@ export default {
     selectEvent: {
       type: String,
       default: 'mouseover'
-    }
+    },
   },
   data() {
     return {
@@ -148,9 +152,6 @@ export default {
 .options .option1,
 .options .option2 {
   flex: 0;
-  padding: 70px;
-  width: 100px;
-  background: lightyellow;
 }
 
 .stimulus {
