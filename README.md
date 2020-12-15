@@ -17,6 +17,10 @@ The docs for the latest version are available at https://epic-bhabha-7e0966.netl
 
 ## Core Development
 
+## Development principles
+ * Components should not expose CSS classes for manipulation but instead offer customization either via unstyled slots or via props.
+ * Pre-packaged screens are more of a convenience should be rather easy to replicate with normal userland code
+
 ### Docs
 In order to spin up a local web server with the docs run `npm run docs`.
 
