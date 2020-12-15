@@ -11,19 +11,19 @@ export const states = {
 };
 
 export default class Socket extends EventEmitter {
-  constructor($magpie, socketURL, errorhandler) {
+  constructor(experimentId, socketURL, errorhandler) {
     super();
-    this.$magpie = $magpie;
     this.errorHandler = (er) => {
       this.state = states.ERROR;
       errorhandler(er);
     };
 
     this.participantId = generateId(40);
+    this.experimentId = experimentId;
     this.phoenix = new PhoenixSocket(socketURL, {
       params: {
         participant_id: this.participantId,
-        experiment_id: this.$magpie.experimentId
+        experiment_id: experimentId
       }
     });
     this.phoenix.onError(this.errorHandler);
@@ -62,7 +62,7 @@ export default class Socket extends EventEmitter {
       return;
     }
     this.roomChannel = this.phoenix.channel(
-      `interactive_room:${this.$magpie.id}:${this.chain}:${this.realization}`,
+      `interactive_room:${this.experimentId}:${this.chain}:${this.realization}`,
       { participant_id: this.participantId }
     );
 

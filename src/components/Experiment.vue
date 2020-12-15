@@ -172,7 +172,7 @@ export default {
   beforeMount() {
     if (this.socket) {
       this.socket = new Socket(
-        this,
+        this.$options.magpie.experimentId,
         this.$options.magpie.socketUrl,
         this.onSocketError
       );
