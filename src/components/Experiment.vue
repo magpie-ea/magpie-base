@@ -269,7 +269,6 @@ export default {
     },
     getResults() {
       return flattenData({
-        experiment_id: this.id,
         trials: addEmptyColumns(
           _.flatten(Object.values(this.results)).map((o) =>
             Object.assign({}, o)
