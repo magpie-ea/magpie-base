@@ -196,9 +196,13 @@ export default {
       } else {
         this.currentScreen += 1;
       }
+      // Start new trial data and restart response timer
       this.currentTrialData = {};
       this.responseTimeStart = Date.now();
-      window.scrollTo(0,0)
+
+      // Scroll to top of experiment element
+      const expPos = this.$el.getBoundingClientRect()
+      window.scrollTo(0,window.scrollY+expPos.top)
     },
     /**
      * Add a result set
