@@ -79,7 +79,6 @@ export default {
 };
 </script>
 <style scoped>
-
 td {
   max-width: 150px;
   overflow: hidden;

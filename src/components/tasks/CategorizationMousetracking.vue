@@ -94,12 +94,11 @@
 </template>
 
 <script>
-import Screen from '../Screen';
 import Wait from '../helpers/Wait';
 
 export default {
   name: 'CategorizationMousetracking',
-  components: { Screen, Wait },
+  components: { Wait },
   props: {
     /**
      * Title of the screen
@@ -114,7 +113,7 @@ export default {
     selectEvent: {
       type: String,
       default: 'mouseover'
-    },
+    }
   },
   data() {
     return {
@@ -126,7 +125,7 @@ export default {
   },
   methods: {
     nextSlide() {
-      this.slide++
+      this.slide++;
     },
     onPressPlay() {
       this.playing = true;
@@ -144,7 +143,7 @@ export default {
       this.label = label;
       this.track = this.$magpie.getMouseTrack();
       this.$emit('update:response', this.label);
-      this.$emit('update:mouseTrack', this.track)
+      this.$emit('update:mouseTrack', this.track);
       cb();
     }
   }
@@ -171,6 +170,7 @@ export default {
   position: absolute;
   width: 100%;
 }
+
 button {
   bottom: 20px;
   left: 50%;

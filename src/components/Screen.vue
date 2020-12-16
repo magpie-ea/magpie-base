@@ -106,7 +106,7 @@ export default {
     progress: {
       type: Number,
       default: -1
-    },
+    }
   },
   data() {
     return {
@@ -117,7 +117,7 @@ export default {
   mounted() {
     this.$magpie.startMouseTracking();
     this.$magpie.$el.addEventListener('mousemove', this.onMouseMove);
-    this.$magpie.setProgress(this.progress) 
+    this.$magpie.setProgress(this.progress);
   },
   beforeDestroy() {
     this.$magpie.$el.removeEventListener('mousemove', this.onMouseMove);

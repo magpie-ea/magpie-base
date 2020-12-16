@@ -128,12 +128,12 @@ export default {
       word: -1,
       responseTimes: [],
       startTime: null,
-      slide: 0,
+      slide: 0
     };
   },
   methods: {
     nextSlide() {
-      this.slide++
+      this.slide++;
     },
     nextWord() {
       if (this.word > -1) {

@@ -117,8 +117,8 @@ export default {
      */
     wide: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   provide() {
     return {
@@ -204,8 +204,8 @@ export default {
       this.responseTimeStart = Date.now();
 
       // Scroll to top of experiment element
-      const expPos = this.$el.getBoundingClientRect()
-      window.scrollTo(0,window.scrollY+expPos.top)
+      const expPos = this.$el.getBoundingClientRect();
+      window.scrollTo(0, window.scrollY + expPos.top);
     },
     /**
      * Add a result set
@@ -322,9 +322,6 @@ export default {
         throw new Error('The server says: ' + (await resp.text()));
       }
     },
-    onSocketError() {
-      window.alert('There was an error in communicating with the server');
-    },
     /**
      * Set progress bar percentage
      * Will display a progress bar if it's not visible, yet.
@@ -332,8 +329,8 @@ export default {
      * @param percentage{float} the percentage to display as a number between 0 and 1
      */
     setProgress(progress) {
-      this.progress = progress
-    },
+      this.progress = progress;
+    }
   },
   /**
    * The contents of this slot will be visible during the entire experiment
@@ -348,15 +345,20 @@ export default {
     this.$parent.$magpie = this;
     const children = this.$slots.screens;
     const screens = children.filter((c) => !!c.componentOptions);
-    return h('div', { class: 'experiment'+(this.wide? ' wide' : '') }, [
+    return h('div', { class: 'experiment' + (this.wide ? ' wide' : '') }, [
       h('div', { class: 'header' }, [
         h('div', { class: 'col title' }, this.$slots.title),
-        h(
-          'div',
-          { class: 'col status' },[
+        h('div', { class: 'col status' }, [
           this.progress !== -1
-           ?  h(kProgress, {props: {percent: this.progress*100, showText: false, lineHeight: 10}, style: {width: '150px'}})
-           : null
+            ? h(kProgress, {
+                props: {
+                  percent: this.progress * 100,
+                  showText: false,
+                  lineHeight: 10
+                },
+                style: { width: '150px' }
+              })
+            : null
         ])
       ]),
       screens[this.currentScreen]
