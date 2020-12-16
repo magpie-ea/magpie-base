@@ -3,14 +3,21 @@
 ```vue
 <Experiment>
   <template #screens>
-    <SelfPacedReading text="This|is|a|nice|text." word-pos="next" underline="sentence" @change:response-times="responseTimes = $event">
-      <template #task>
-        <RatingInput question="Is it?" left="No" right="Yes" @update:response="$magpie.addResult({
-          rating: $event,
-          responseTimes,
-        })" />
+    <Screen>
+      <template #0="{responses}">
+        <SelfPacedReading :chunks="'This is a nice text.'.split(' ')" word-pos="next" underline="sentence" :response-times.sync="responses.times">
+          <template #task>
+            <p>Is it?</p>
+            <RatingInput left="No" right="Yes" @update:response="
+              $magpie.addResult({
+                rating: $event,
+                responseTimes: responses.times,
+              });
+              $magpie.nextScreen()" />
+          </template>
+        </SelfPacedReading>
       </template>
-    </SelfPacedReading>
+    </Screen>
     <DebugResults />
   </template>
 </Experiment>
@@ -19,19 +26,19 @@
 </docs>
 
 <template>
-  <Screen :title="title">
-    <template #0="{ nextSlide }">
+  <div>
+    <div v-if="slide === 0">
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->
       <slot name="prep" :done="nextSlide">
         <Wait :time="1" @done="nextSlide" />
       </slot>
-    </template>
+    </div>
 
-    <template #1="{ nextSlide }">
+    <div v-if="slide === 1">
       <Wait :time="500" @done="nextSlide" />
-    </template>
+    </div>
 
-    <template #2="{ nextSlide }">
+    <div v-if="slide === 2">
       <!-- @slot optional stimulus content -->
       <slot name="stimulus"></slot>
       <KeypressInput
@@ -47,28 +54,27 @@
         }"
       >
         <span
-          v-for="(splitter, i) in splitters"
+          v-for="(chunk, i) in chunks"
           :key="i"
           :class="{ current: i === word }"
-          v-text="splitter"
+          v-text="chunk"
         ></span>
       </div>
       <!-- @slot task content, displayed after the whole text was read -->
-      <slot v-if="word >= splitters.length" name="task">
-        <Wait :time="100" @done="$magpie.nextScreen()" />
+      <slot v-if="word >= chunks.length" name="task">
+        <Wait :time="0" @done="$emit('end')" />
       </slot>
-    </template>
-  </Screen>
+    </div>
+  </div>
 </template>
 
 <script>
-import Screen from '../Screen';
 import KeypressInput from '../inputs/KeypressInput';
 import Wait from '../helpers/Wait';
 
 export default {
   name: 'SelfPacedReading',
-  components: { KeypressInput, Screen, Wait },
+  components: { KeypressInput, Wait },
   props: {
     /**
      * Title of the screen
@@ -78,10 +84,10 @@ export default {
       default: ''
     },
     /**
-     * Self-paced reading text
+     * Self-paced reading text chunks
      */
-    text: {
-      type: String,
+    chunks: {
+      type: Array,
       required: true
     },
     /**
@@ -121,23 +127,22 @@ export default {
     return {
       word: -1,
       responseTimes: [],
-      startTime: null
+      startTime: null,
+      slide: 0,
     };
   },
-  computed: {
-    splitters() {
-      return this.text.split('|');
-    }
-  },
   methods: {
+    nextSlide() {
+      this.slide++
+    },
     nextWord() {
       if (this.word > -1) {
         this.responseTimes.push(Date.now() - this.startTime);
       }
       this.word++;
       this.startTime = Date.now();
-      if (this.word === this.splitters.length) {
-        this.$emit('change:response-times', this.responseTimes);
+      if (this.word === this.chunks.length) {
+        this.$emit('update:response-times', this.responseTimes);
       }
     }
   }

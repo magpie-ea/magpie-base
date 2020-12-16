@@ -8,21 +8,34 @@
     {o1: 'Fish', o2: 'Bird', s: 'Penguin'}
     ]}">
   <template #screens>
-    <CategorizationMousetracking :key="i" v-for="i in 4">
-      <template #option1>
-        <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
-        {{ $magpie.currentTrial.categories.o1 }}
-        </div>
+    <Screen :key="i" v-for="i in 4">
+      <template #0="{ responses }"> 
+        <CategorizationMousetracking :response.sync="responses.option" :mouseTrack.sync="responses.mouseTrack">
+          <template #option1>
+            <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
+            {{ $magpie.currentTrial.categories.o1 }}
+            </div>
+          </template>
+          <template #option2>
+            <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
+            {{ $magpie.currentTrial.categories.o2 }}
+            </div>
+          </template>
+          <template #stimulus>
+            <span>{{ $magpie.currentTrial.categories.s }}</span>
+          </template>
+          <template #feedback>
+            <Wait :time="1" @done="
+              $magpie.addResult({
+                response: responses.response,
+                ...responses.mouseTrack,
+                ...$magpie.currentTrial.categories,
+              });
+              $magpie.nextScreen()" />
+          </template>
+        </CategorizationMousetracking>
       </template>
-      <template #option2>
-        <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
-        {{ $magpie.currentTrial.categories.o2 }}
-        </div>
-      </template>
-      <template #stimulus>
-        <span>{{ $magpie.currentTrial.categories.s }}</span>
-      </template>
-    </CategorizationMousetracking>
+    </Screen>
     <DebugResults />
   </template>
 </Experiment>
@@ -31,19 +44,19 @@
 </docs>
 
 <template>
-  <Screen :title="title">
-    <template #0="{ nextSlide }">
+  <div>
+    <div v-if="slide === 0">
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->
       <slot name="prep" :done="nextSlide">
         <Wait :time="1" @done="nextSlide" />
       </slot>
-    </template>
+    </div>
 
-    <template #1="{ nextSlide }">
+    <div v-if="slide === 1">
       <Wait key="pause" :time="500" @done="nextSlide" />
-    </template>
+    </div>
 
-    <template #2="{ nextSlide }">
+    <div v-if="slide === 2">
       <Wait key="wait a bit" :time="500" @done="nextSlide" />
       <div class="options">
         <!-- @slot provide content for categorization option one -->
@@ -52,9 +65,9 @@
         <!-- @slot provide content for categorization option two -->
         <div class="option2"><slot name="option2" /></div>
       </div>
-    </template>
+    </div>
 
-    <template #3="{ nextSlide }">
+    <div v-if="slide === 3">
       <div class="options">
         <div class="option1" @[selectEvent]="onOption1(nextSlide)">
           <slot name="option1" />
@@ -69,23 +82,15 @@
         <slot v-if="playing" name="stimulus" />
       </div>
       <button v-if="!playing" @click="onPressPlay">Go</button>
-    </template>
+    </div>
 
-    <template #4>
+    <div v-if="slide === 4">
       <div class="stimulus">
-        <!-- @slot optionally provide feedback and add result -->
-        <slot name="feedback" :label="label" :mouseTrack="track">
-          <Wait
-            :time="500"
-            @done="
-              $magpie.addResult({ endLabel: label, ...track });
-              $magpie.nextScreen();
-            "
-          />
-        </slot>
+        <!-- @slot optionally provide feedback -->
+        <slot name="feedback" />
       </div>
-    </template>
-  </Screen>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -115,10 +120,14 @@ export default {
     return {
       playing: false,
       label: null,
-      track: null
+      track: null,
+      slide: 0
     };
   },
   methods: {
+    nextSlide() {
+      this.slide++
+    },
     onPressPlay() {
       this.playing = true;
       this.$magpie.startMouseTracking();
@@ -132,7 +141,10 @@ export default {
       this.submit('right', cb);
     },
     submit(label, cb) {
-      (this.label = label), (this.track = this.$magpie.getMouseTrack());
+      this.label = label;
+      this.track = this.$magpie.getMouseTrack();
+      this.$emit('update:response', this.label);
+      this.$emit('update:mouseTrack', this.track)
       cb();
     }
   }

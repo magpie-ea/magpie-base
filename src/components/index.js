@@ -1,5 +1,6 @@
 export { default as Experiment } from './Experiment';
 export { default as Screen } from './Screen';
+
 export { default as CompletionInput } from './inputs/CompletionInput';
 export { default as ForcedChoiceInput } from './inputs/ForcedChoiceInput';
 export { default as ImageSelectionInput } from './inputs/ImageSelectionInput';
@@ -7,11 +8,16 @@ export { default as KeypressInput } from './inputs/KeypressInput';
 export { default as RatingInput } from './inputs/RatingInput';
 export { default as SliderInput } from './inputs/SliderInput';
 export { default as TextareaInput } from './inputs/TextareaInput';
+
+export { default as CategorizationMousetracking } from './tasks/CategorizationMousetracking';
+export { default as SelfPacedReading } from './tasks/SelfPacedReading';
+
 export { default as Rsvp } from './stimuli/Rsvp';
+
 export { default as ConnectInteractive } from './screens/ConnectInteractive';
 export { default as Chat } from './interactive/Chat';
-export { default as CategorizationMousetracking } from './screens/CategorizationMousetracking';
-export { default as SelfPacedReading } from './screens/SelfPacedReading';
 export { default as DebugResults } from './screens/DebugResults';
 export { default as SubmitResults } from './screens/SubmitResults';
+
 export { default as Wait } from './helpers/Wait';
+export { default as Timer } from './helpers/Timer';

@@ -26,6 +26,11 @@ module.exports = {
       components: 'src/components/stimuli/*.vue'
     },
     {
+      name: 'Tasks',
+      content: 'src/components/tasks/docs.md',
+      components: 'src/components/tasks/*.vue'
+    },
+    {
       name: 'Screens',
       content: 'src/components/screens/docs.md',
       components: 'src/components/screens/*.vue'
