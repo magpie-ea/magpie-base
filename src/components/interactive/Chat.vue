@@ -4,6 +4,9 @@ This interactive component provides participants the opportunity to chat with ea
 ```vue
 <Experiment>
   <template #screens>
+    <Screen>
+      <button @click="$magpie.nextScreen()">Start</button>
+    </Screen>
     <ConnectInteractive />
     <Screen>
       <Chat />

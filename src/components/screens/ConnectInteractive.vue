@@ -8,6 +8,9 @@ By default it looks like this:
 ```vue
 <Experiment>
   <template #screens>
+    <Screen>
+       <button @click="$magpie.nextScreen()">Connect</button>
+    </Screen>
     <ConnectInteractive :title="'Connecting...'"></ConnectInteractive>
     <Screen>Connected.</Screen>
   </template>
