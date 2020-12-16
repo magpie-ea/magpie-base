@@ -5,7 +5,7 @@ Once you are gaoing live with your experiment, you can use the SubmitResults scr
 </docs>
 
 <template>
-  <Screen title="Results">
+  <Screen title="Results" class="debugResults">
     <template #0>
       <button @click="downloadCsv">Download all data as csv</button>
       <table>
@@ -79,9 +79,14 @@ export default {
 };
 </script>
 <style scoped>
+
 td {
   max-width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.debugResults {
+  overflow-x: scroll;
 }
 </style>
