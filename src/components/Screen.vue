@@ -11,6 +11,19 @@
 </Experiment>
 ```
 
+### Show progress
+
+```vue
+<Experiment>
+  <template #screens>
+    <Screen v-for="i in 10" :key="i" :progress="i/10">
+      Hello World.
+      <button @click="$magpie.nextScreen()">Next</button>
+    </Screen>
+  </template>
+</Experiment>
+```
+
 ### Multiple slides
 One screen may consist of multiple slides that are numbered incrementally and displayed one after another.
 You can go to the next slide with the `nextSlide` function that is exposed by the Screen component.
@@ -86,7 +99,14 @@ export default {
       type: String,
       required: false,
       default: ''
-    }
+    },
+    /**
+     * If you want to show a progress bar, set this to a value between 0 and 1
+     */
+    progress: {
+      type: Number,
+      default: -1
+    },
   },
   data() {
     return {
@@ -97,6 +117,7 @@ export default {
   mounted() {
     this.$magpie.startMouseTracking();
     this.$magpie.$el.addEventListener('mousemove', this.onMouseMove);
+    this.$magpie.setProgress(this.progress) 
   },
   beforeDestroy() {
     this.$magpie.$el.removeEventListener('mousemove', this.onMouseMove);

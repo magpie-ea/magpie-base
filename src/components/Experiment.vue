@@ -93,6 +93,8 @@ Besides the `screens` slot, the Experiment component also provides an optional `
 <script>
 import _ from 'lodash';
 import Socket from '../Socket';
+import kProgress from 'k-progress';
+
 /**
  * This is the main component for your online experiment. Put it at the root of your application.
  * The experiment is available in all subcomponents and in the parent as `$magpie`
@@ -166,7 +168,8 @@ export default {
       mousetrackingX: [0],
       mousetrackingY: [0],
       mousetrackingStartTime: 0,
-      responseTimeStart: 0
+      responseTimeStart: 0,
+      progress: -1
     };
   },
   beforeMount() {
@@ -318,10 +321,13 @@ export default {
       if (!resp.ok) {
         throw new Error('The server says: ' + (await resp.text()));
       }
-    }
-  },
-  onSocketError() {
-    window.alert('There was an error in communicating with the server');
+    },
+    onSocketError() {
+      window.alert('There was an error in communicating with the server');
+    },
+    setProgress(progress) {
+      this.progress = progress
+    },
   },
   /**
    * The contents of this slot will be visible during the entire experiment
@@ -341,9 +347,11 @@ export default {
         h('div', { class: 'col title' }, this.$slots.title),
         h(
           'div',
-          { class: 'col' },
-          '' + (this.currentScreen + 1) + '/' + Math.round(screens.length)
-        )
+          { class: 'col status' },[
+          this.progress !== -1
+           ?  h(kProgress, {props: {percent: this.progress*100, showText: false, lineHeight: 10}, style: {width: '150px'}})
+           : null
+        ])
       ]),
       screens[this.currentScreen]
     ]);
@@ -442,7 +450,8 @@ const flattenData = function (data) {
 }
 
 .header .col:last-child {
-  text-align: right;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 /**
