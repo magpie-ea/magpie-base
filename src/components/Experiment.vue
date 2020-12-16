@@ -325,6 +325,12 @@ export default {
     onSocketError() {
       window.alert('There was an error in communicating with the server');
     },
+    /**
+     * Set progress bar percentage
+     * Will display a progress bar if it's not visible, yet.
+     * @public
+     * @param percentage{float} the percentage to display as a number between 0 and 1
+     */
     setProgress(progress) {
       this.progress = progress
     },
