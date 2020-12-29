@@ -1,6 +1,6 @@
 <docs>
 ### Instance properties ($magpie)
-The Experiment component, and thus the following properties of it, are also available in all components as the special $magpie property. 
+The Experiment component, and thus the following properties of it, are also available in all components as the special $magpie property.
 
 * `id`
   * The ID of the experiment
@@ -443,6 +443,7 @@ const flattenData = function (data) {
 .experiment.wide {
   width: 100%;
   margin: 0;
+  min-height: 98vh; /* 98% of viewport height */
 }
 
 .header {
