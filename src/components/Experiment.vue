@@ -118,6 +118,13 @@ export default {
     wide: {
       type: Boolean,
       default: false
+    },
+    /**
+     * Optionally specify a title for your experiment which will be displayed in the browser title bar (or in the browser tab)
+     */
+    title: {
+      type: String,
+      default: ''
     }
   },
   provide() {
@@ -186,6 +193,9 @@ export default {
       this.socket.initialize();
     }
     this.responseTimeStart = Date.now();
+    if (this.title) {
+      document.title = this.title;
+    }
   },
   methods: {
     /**
@@ -461,6 +471,10 @@ const flattenData = function (data) {
 .header .col:last-child {
   display: flex;
   flex-direction: row-reverse;
+}
+
+.header .k-progress-outer {
+  padding-right: 0; /* hacky stylefix for progress bar */
 }
 
 /**
