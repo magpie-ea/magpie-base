@@ -246,8 +246,12 @@ export default {
      */
     startMouseTracking(x, y) {
       this.mousetrackingTime = [0];
-      this.mousetrackingX = [x || 0];
-      this.mousetrackingY = [y || 0];
+      this.mousetrackingX = [
+        x || this.mousetrackingX[this.mousetrackingX.length - 1] || 0
+      ];
+      this.mousetrackingY = [
+        y || this.mousetrackingY[this.mousetrackingY.length - 1] || 0
+      ];
       this.mousetrackingStartTime = Date.now();
     },
     /**
