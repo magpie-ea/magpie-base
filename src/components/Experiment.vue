@@ -247,10 +247,10 @@ export default {
     startMouseTracking(x, y) {
       this.mousetrackingTime = [0];
       this.mousetrackingX = [
-        x || this.mousetrackingX[this.mousetrackingX.length - 1] || 0
+        x || this.mousetrackingX[this.mousetrackingX.length - 1]
       ];
       this.mousetrackingY = [
-        y || this.mousetrackingY[this.mousetrackingY.length - 1] || 0
+        y || this.mousetrackingY[this.mousetrackingY.length - 1]
       ];
       this.mousetrackingStartTime = Date.now();
     },
@@ -284,7 +284,7 @@ export default {
             (this.mousetrackingY[i + 1] - this.mousetrackingY[i]) / (steps + 1);
           const index = interpolated.mt_time.length - 1;
           for (let j = 0; j < steps; j++) {
-            interpolated.mt_time.push(interpolated.mt_time[index + j] + this);
+            interpolated.mt_time.push(interpolated.mt_time[index + j] + rate);
             interpolated.mt_x.push(
               Math.round(interpolated.mt_x[index + j] + xDelta)
             );
