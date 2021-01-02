@@ -240,26 +240,33 @@ export default {
     },
     /**
      * (re)start mouse tracking for the current screen
+     * @param x{Number} Initial x coordinate
+     * @param y{Number} Initial y coordinate
      * @public
      */
-    startMouseTracking() {
+    startMouseTracking(x, y) {
       this.mousetrackingTime = [0];
-      this.mousetrackingX = [0];
-      this.mousetrackingY = [0];
+      this.mousetrackingX = [x || 0];
+      this.mousetrackingY = [y || 0];
       this.mousetrackingStartTime = Date.now();
     },
     /**
      * Get the mouse track since the appearance of the current screen
      * @public
      * @param rate{int} Time resolution in ms (optional; defaults to 15ms)
-     * @returns {{x: [], y: [], time: []}}
+     * @returns {{mt_x: [], mt_y: [], mt_time: []}}
      */
-    getMouseTrack(rate) {
-      const interpolated = { time: [], x: [], y: [] };
+    getMouseTrack(rate = 15) {
+      const interpolated = {
+        mt_time: [],
+        mt_x: [],
+        mt_y: [],
+        mt_start_time: this.mousetrackingStartTime
+      };
       for (let i = 0; i < this.mousetrackingTime.length; i++) {
-        interpolated.time.push(this.mousetrackingTime[i]);
-        interpolated.x.push(this.mousetrackingX[i]);
-        interpolated.y.push(this.mousetrackingY[i]);
+        interpolated.mt_time.push(this.mousetrackingTime[i]);
+        interpolated.mt_x.push(this.mousetrackingX[i]);
+        interpolated.mt_y.push(this.mousetrackingY[i]);
         if (
           i < this.mousetrackingTime.length - 1 &&
           this.mousetrackingTime[i + 1] - this.mousetrackingTime[i] > rate
@@ -273,9 +280,13 @@ export default {
             (this.mousetrackingY[i + 1] - this.mousetrackingY[i]) / (steps + 1);
           const index = interpolated.time.length - 1;
           for (let j = 0; j < steps; j++) {
-            interpolated.time.push(interpolated.time[index + j] + this);
-            interpolated.x.push(Math.round(interpolated.x[index + j] + xDelta));
-            interpolated.y.push(Math.round(interpolated.y[index + j] + yDelta));
+            interpolated.mt_time.push(interpolated.time[index + j] + this);
+            interpolated.mt_x.push(
+              Math.round(interpolated.mt_x[index + j] + xDelta)
+            );
+            interpolated.mt_y.push(
+              Math.round(interpolated.mt_y[index + j] + yDelta)
+            );
           }
         }
       }
