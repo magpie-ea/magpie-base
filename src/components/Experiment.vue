@@ -166,6 +166,7 @@ export default {
       id: this.$options.magpie.experimentId,
       socket: !!this.$options.magpie.socketUrl,
       submissionUrl: this.$options.magpie.submissionUrl,
+      completionUrl: this.$options.magpie.completionUrl,
       contactEmail: this.$options.magpie.contactEmail,
       currentScreen: 0,
       results: {},

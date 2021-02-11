@@ -10,7 +10,10 @@ You can provide the submission URL to the Experiment component.
       <Wait :time="0" @done="submit(nextSlide)" />
     </template>
     <template #1>
-      <p v-if="!error">All done. Thank you!</p>
+      <p v-if="!error">
+        All done. Thank you!
+        <Wait :time="3000" @done="redirectToCompletionUrl" />
+      </p>
       <div v-else>
         <p>Oh, no. There was a problem submitting your results.</p>
         <p>
@@ -46,6 +49,11 @@ export default {
       } catch (err) {
         this.error = err.message;
         cb();
+      }
+    },
+    redirectToCompletionUrl() {
+      if (this.$magpie.completionUrl) {
+        window.location = this.$magpie.completionUrl;
       }
     }
   }
