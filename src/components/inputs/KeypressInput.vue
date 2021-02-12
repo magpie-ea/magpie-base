@@ -10,8 +10,8 @@
             :keys="{
               f: 'fries',
               j: 'soup'
-            }" />
-          <p v-if="responses.lunch === 'fries'">Don't forget the ketchup!</p>
+            }"
+            @update:response="$magpie.addResult(responses); $magpie.nextScreen();" />
       </template>
     </Screen>
   </template>

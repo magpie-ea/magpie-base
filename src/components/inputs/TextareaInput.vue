@@ -4,11 +4,12 @@
   <template #screens>
     <Screen>
       <template #0="{responses}">
-        <p>Fries or soup?</p>
+        <p>Fries or soup? Discuss.</p>
         <TextareaInput
             :response.sync="responses.lunch"
           />
-        <p v-if="responses.lunch && responses.lunch > 3">I disagree!</p>
+        <p v-if="responses.lunch && responses.lunch.length > 32">I disagree!</p>
+        <button @click="$magpie.addResult(responses); $magpie.nextScreen();">Submit</button>
       </template>
     </Screen>
   </template>

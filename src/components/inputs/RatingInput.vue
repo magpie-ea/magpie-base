@@ -10,6 +10,7 @@
           :response.sync="responses.lunch"
           right="Soup" />
         <p v-if="responses.lunch > 4">I concur!</p>
+        <button @click="$magpie.addResult(responses); $magpie.nextScreen();">Submit</button>
       </template>
     </Screen>
   </template>

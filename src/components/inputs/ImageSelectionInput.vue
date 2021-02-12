@@ -3,12 +3,15 @@
 <Experiment>
   <template #screens>
     <Screen>
+      <template #0="{responses}">
       <p>Fries or soup?</p>
       <ImageSelectionInput
           :options="[
               {src: 'fries.jpg', label: 'fries'},
-              {src: 'soup.jpg', label: 'soup' }]" />
-    </Screen>
+              {src: 'soup.jpg', label: 'soup' }]"
+          @update:response="$magpie.addResult({image_choice: $event}); $magpie.nextScreen()"
+      />
+      </template>
   </template>
 </Experiment>
 ```
