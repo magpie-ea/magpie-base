@@ -19,6 +19,8 @@ export default class Magpie extends EventEmitter {
     this.submissionUrl = options.magpie.submissionUrl;
     this.completionUrl = options.magpie.completionUrl;
     this.contactEmail = options.magpie.contactEmail;
+    this.mode = options.magpie.mode;
+    this.debug = options.magpie.mode === 'debug';
     this.socket = options.magpie.socketUrl
       ? new Socket(
           options.magpie.experimentId,
@@ -63,6 +65,10 @@ export default class Magpie extends EventEmitter {
             '. Expected either Array or Function'
         );
       }
+    }
+
+    if (this.mode === 'prolific') {
+      this.extractProlificFacts();
     }
   }
 
@@ -169,6 +175,15 @@ export default class Magpie extends EventEmitter {
    */
   setProgress(percentage) {
     this.progress = percentage;
+  }
+
+  extractProlificFacts() {
+    const url = new URL(window.location);
+    this.addFacts({
+      prolific_pid: url.searchParams.get('PROLIFIC_PID'),
+      prolific_study_id: url.searchParams.get('STUDY_ID'),
+      prolific_session_id: url.searchParams.get('SESSION_ID')
+    });
   }
 }
 

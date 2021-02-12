@@ -4,7 +4,7 @@ You can provide the submission URL to the Experiment component.
 </docs>
 
 <template>
-  <Screen title="Submitting">
+  <Screen v-if="!$magpie.debug" title="Submitting">
     <template #0="{ nextSlide }">
       <p>Hold on, while we submit your data.</p>
       <Wait :time="0" @done="submit(nextSlide)" />
@@ -26,14 +26,16 @@ You can provide the submission URL to the Experiment component.
       </div>
     </template>
   </Screen>
+  <DebugResults v-else />
 </template>
 
 <script>
 import Screen from '../Screen';
 import Wait from '../helpers/Wait';
+import DebugResults from './DebugResults';
 export default {
   name: 'SubmitResults',
-  components: { Wait, Screen },
+  components: { DebugResults, Wait, Screen },
   props: {},
   data() {
     return {
@@ -52,7 +54,7 @@ export default {
       }
     },
     redirectToCompletionUrl() {
-      if (this.$magpie.completionUrl) {
+      if (this.$magpie.completionUrl && this.$magpie.mode === 'prolific') {
         window.location = this.$magpie.completionUrl;
       }
     }
