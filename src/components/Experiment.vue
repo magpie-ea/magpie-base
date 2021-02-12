@@ -5,7 +5,22 @@ The Experiment component, and thus the following properties of it, are also avai
 * `id`
   * The ID of the experiment
 * `currentTrial`
-  * an object with a single data point of each array in the trial data supplied to the experiment
+  * an object with a single data point of each array in the trial data supplied to the experiment component
+* `addResult(data:object)`
+  * add a result for the current screen
+* `getResults()`
+  * returns all results that have been added thus far
+* `submit()`
+  * submit all results that have been added thus far to the magpie server
+* `submitIntermediateResults()`
+  * submit all results that have been added thus far as intermediate results to the magpie server
+* `setProgress(percentage:float)`
+  * set the progress that will be displayed in the progress bar, pass `-1` for no progress bar
+* `mousetracking` object
+  * `start(x:int, y:int)`
+    * (Re)start mouse tracking with origin set to the given coordinates
+  * `getMouseTrack(rate:int = 15)`
+    * returns an object with mouse tacking data `{mt_x, mt_y, mt_time, mt_start_time}` at the resolution of `rate`
 * `socket` object, only defined when socketURL is set in the config
   * `participantId`
     * the random ID of the current participant
@@ -91,9 +106,8 @@ Besides the `screens` slot, the Experiment component also provides an optional `
 </docs>
 
 <script>
-import _ from 'lodash';
-import Socket from '../Socket';
 import kProgress from 'k-progress';
+import Magpie from '../Magpie';
 
 /**
  * This is the main component for your online experiment. Put it at the root of your application.
@@ -129,70 +143,17 @@ export default {
   },
   provide() {
     return {
-      experiment: this
+      experiment: this.magpie
     };
   },
   data() {
-    // Setup magic "trial" slot property
-    const currentTrial = {};
-    for (const type of Object.keys(this.trials)) {
-      if (Array.isArray(this.trials[type])) {
-        currentTrial.__defineGetter__(type, () => {
-          if (this.currentTrialData[type]) {
-            return this.currentTrialData[type];
-          }
-          this.currentTrialData[type] = this.trials[type].shift();
-          return this.currentTrialData[type];
-        });
-      } else if ('function' === typeof this.trials[type]) {
-        currentTrial.__defineGetter__(type, () => {
-          if (this.currentTrialData[type]) {
-            return this.currentTrialData[type];
-          }
-          this.currentTrialData[type] = this.trials[type](this.currentScreen);
-          return this.currentTrialData[type];
-        });
-      } else {
-        throw new Error(
-          'Unsupported type of trial type definition for trial type ' +
-            type +
-            '. Expected either Array or Function'
-        );
-      }
-    }
-
     return {
-      // config
-      id: this.$options.magpie.experimentId,
-      socket: !!this.$options.magpie.socketUrl,
-      submissionUrl: this.$options.magpie.submissionUrl,
-      completionUrl: this.$options.magpie.completionUrl,
-      contactEmail: this.$options.magpie.contactEmail,
       currentScreen: 0,
-      results: {},
-      currentTrialData: {},
-      currentTrial,
-      mousetrackingTime: [0],
-      mousetrackingX: [0],
-      mousetrackingY: [0],
-      mousetrackingStartTime: 0,
       responseTimeStart: 0,
-      progress: -1
+      magpie: new Magpie(this, this.trials, this.$options)
     };
   },
-  beforeMount() {
-    if (this.socket) {
-      this.socket = new Socket(
-        this.$options.magpie.experimentId,
-        this.$options.magpie.socketUrl,
-        this.onSocketError
-      );
-    }
-  },
   mounted() {
-    if (this.socket) {
-      this.socket.initialize();
-    }
     this.responseTimeStart = Date.now();
     if (this.title) {
       document.title = this.title;
@@ -211,151 +172,12 @@ export default {
         this.currentScreen += 1;
       }
       // Start new trial data and restart response timer
-      this.currentTrialData = {};
       this.responseTimeStart = Date.now();
+      this.magpie.currentTrialData = {};
 
       // Scroll to top of experiment element
       const expPos = this.$el.getBoundingClientRect();
       window.scrollTo(0, window.scrollY + expPos.top);
-    },
-    /**
-     * Add a result set
-     * This method will automatically add a response_time key to your data with time measured from the start of the current screen
-     *
-     * @public
-     * @param data{Object} a flat object whose data you want to add to the results
-     */
-    addResult(data) {
-      if (!this.results[this.currentScreen]) {
-        this.results[this.currentScreen] = [];
-      }
-      this.results[this.currentScreen].push({
-        ...data,
-        response_time: Date.now() - this.responseTimeStart
-      });
-    },
-    onMouseMove(e) {
-      this.mousetrackingTime.push(Date.now() - this.mousetrackingStartTime);
-      this.mousetrackingX.push(e.layerX);
-      this.mousetrackingY.push(e.layerY);
-    },
-    /**
-     * (re)start mouse tracking for the current screen
-     * @param x{Number} Initial x coordinate
-     * @param y{Number} Initial y coordinate
-     * @public
-     */
-    startMouseTracking(x, y) {
-      this.mousetrackingTime = [0];
-      this.mousetrackingX = [
-        x || this.mousetrackingX[this.mousetrackingX.length - 1]
-      ];
-      this.mousetrackingY = [
-        y || this.mousetrackingY[this.mousetrackingY.length - 1]
-      ];
-      this.mousetrackingStartTime = Date.now();
-    },
-    /**
-     * Get the mouse track since the appearance of the current screen
-     * @public
-     * @param rate{int} Time resolution in ms (optional; defaults to 15ms)
-     * @returns {{mt_x: [], mt_y: [], mt_time: []}}
-     */
-    getMouseTrack(rate = 15) {
-      const interpolated = {
-        mt_time: [],
-        mt_x: [],
-        mt_y: [],
-        mt_start_time: this.mousetrackingStartTime
-      };
-      for (let i = 0; i < this.mousetrackingTime.length; i++) {
-        interpolated.mt_time.push(this.mousetrackingTime[i]);
-        interpolated.mt_x.push(this.mousetrackingX[i]);
-        interpolated.mt_y.push(this.mousetrackingY[i]);
-        if (
-          i < this.mousetrackingTime.length - 1 &&
-          this.mousetrackingTime[i + 1] - this.mousetrackingTime[i] > rate
-        ) {
-          const steps =
-            (this.mousetrackingTime[i + 1] - this.mousetrackingTime[i]) / rate -
-            1;
-          const xDelta =
-            (this.mousetrackingX[i + 1] - this.mousetrackingX[i]) / (steps + 1);
-          const yDelta =
-            (this.mousetrackingY[i + 1] - this.mousetrackingY[i]) / (steps + 1);
-          const index = interpolated.mt_time.length - 1;
-          for (let j = 0; j < steps; j++) {
-            interpolated.mt_time.push(interpolated.mt_time[index + j] + rate);
-            interpolated.mt_x.push(
-              Math.round(interpolated.mt_x[index + j] + xDelta)
-            );
-            interpolated.mt_y.push(
-              Math.round(interpolated.mt_y[index + j] + yDelta)
-            );
-          }
-        }
-      }
-      return interpolated;
-    },
-    onSocketError(er) {
-      console.error(er);
-    },
-    getResults() {
-      return flattenData({
-        trials: addEmptyColumns(
-          _.flatten(Object.values(this.results)).map((o) =>
-            Object.assign({}, o)
-          )
-        ) // clone the data
-      });
-    },
-    submit() {
-      if (!this.submissionUrl) {
-        throw new Error('No submission URL set');
-      }
-      return this.submitResults(this.submissionUrl, this.getResults());
-    },
-    submitIntermediateResults() {
-      if (!this.submissionUrl) {
-        throw new Error('No submission URL set');
-      }
-      return this.submitResults(this.submissionUrl, this.getResults(), true);
-    },
-    async submitResults(submissionURL, data, intermediate) {
-      if (this.socket) {
-        const submissionType = intermediate
-          ? 'save_intermediate_results'
-          : 'submit_results';
-
-        return new Promise((resolve, reject) =>
-          this.socket.participantChannel
-            .push(submissionType, {
-              results: data
-            })
-            .receive('ok', resolve)
-            .receive('error', reject)
-        );
-      }
-      const resp = await fetch(submissionURL, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-      if (!resp.ok) {
-        throw new Error('The server says: ' + (await resp.text()));
-      }
-    },
-    /**
-     * Set progress bar percentage
-     * Will display a progress bar if it's not visible, yet.
-     * @public
-     * @param percentage{float} the percentage to display as a number between 0 and 1
-     */
-    setProgress(progress) {
-      this.progress = progress;
     }
   },
   /**
@@ -368,17 +190,17 @@ export default {
    */
   render(h) {
     // HACKY-O
-    this.$parent.$magpie = this;
+    this.$parent.$magpie = this.magpie;
     const children = this.$slots.screens;
     const screens = children.filter((c) => !!c.componentOptions);
     return h('div', { class: 'experiment' + (this.wide ? ' wide' : '') }, [
       h('div', { class: 'header' }, [
         h('div', { class: 'col title' }, this.$slots.title),
         h('div', { class: 'col status' }, [
-          this.progress !== -1
+          this.magpie.progress !== -1
             ? h(kProgress, {
                 props: {
-                  percent: this.progress * 100,
+                  percent: this.magpie.progress * 100,
                   showText: false,
                   lineHeight: 10
                 },
@@ -390,60 +212,6 @@ export default {
       screens[this.currentScreen]
     ]);
   }
-};
-
-// adds columns with NA values
-const addEmptyColumns = function (trialData) {
-  var columns = [];
-
-  for (var i = 0; i < trialData.length; i++) {
-    for (var prop in trialData[i]) {
-      if (trialData[i].hasOwnProperty(prop) && columns.indexOf(prop) === -1) {
-        columns.push(prop);
-      }
-    }
-  }
-
-  for (var j = 0; j < trialData.length; j++) {
-    for (var k = 0; k < columns.length; k++) {
-      if (!trialData[j].hasOwnProperty(columns[k])) {
-        trialData[j][columns[k]] = 'NA';
-      }
-    }
-  }
-
-  return trialData;
-};
-
-const flattenData = function (data) {
-  var trials = data.trials;
-  delete data.trials;
-
-  // The easiest way to avoid name clash is just to check the keys one by one and rename them if necessary.
-  // Though I think it's also the user's responsibility to avoid such scenarios...
-  var sample_trial = trials[0];
-  for (var trial_key in sample_trial) {
-    if (sample_trial.hasOwnProperty(trial_key)) {
-      if (data.hasOwnProperty(trial_key)) {
-        // Much easier to just operate it once on the data, since if we also want to operate on the trials we'd need to loop through each one of them.
-        var new_data_key = 'glb_' + trial_key;
-        data[new_data_key] = data[trial_key];
-        delete data[trial_key];
-      }
-    }
-  }
-
-  var out = _.map(trials, function (t) {
-    for (const key in t) {
-      if (Array.isArray(t[key])) {
-        // Turn arrays into strings
-        t[key] = t[key].join('|');
-      }
-    }
-    // Here the data is the general informatoin besides the trials.
-    return _.merge(t, data);
-  });
-  return out;
 };
 </script>
 

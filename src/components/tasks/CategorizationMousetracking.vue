@@ -9,7 +9,7 @@
     ]}">
   <template #screens>
     <Screen :key="i" v-for="i in 4">
-      <template #0="{ responses }"> 
+      <template #0="{ responses }">
         <CategorizationMousetracking :response.sync="responses.option" :mouseTrack.sync="responses.mouseTrack">
           <template #option1>
             <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
@@ -129,7 +129,7 @@ export default {
     },
     onPressPlay() {
       this.playing = true;
-      this.$magpie.startMouseTracking();
+      this.$magpie.mousetracking.start();
     },
     onOption1(cb) {
       if (!this.playing) return;
@@ -141,7 +141,7 @@ export default {
     },
     submit(label, cb) {
       this.label = label;
-      this.track = this.$magpie.getMouseTrack();
+      this.track = this.$magpie.mousetracking.getMouseTrack();
       this.$emit('update:response', this.label);
       this.$emit('update:mouseTrack', this.track);
       cb();

@@ -115,7 +115,7 @@ export default {
     };
   },
   mounted() {
-    this.$magpie.startMouseTracking();
+    this.$magpie.mousetracking.start();
     this.$magpie.$el.addEventListener('mousemove', this.onMouseMove);
     this.$magpie.setProgress(this.progress);
   },
@@ -136,7 +136,7 @@ export default {
        * @property y{int} Y coordinate
        */
       this.$emit('mousemove', { x: e.layerX, y: e.layerY });
-      this.$magpie.onMouseMove(e);
+      this.$magpie.mousetracking.onMouseMove(e);
     }
   }
 };

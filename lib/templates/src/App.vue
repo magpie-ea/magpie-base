@@ -29,7 +29,7 @@
         <br />
         This mock up experiment is a showcase of the functionality of magpie.
         <!-- The $magpie field gives you access to magpie-specific functionality -->
-        <button @click="$magpie.nextScreen">Begin the experiment</button>
+        <button @click="$magpie.nextScreen()">Begin the experiment</button>
       </Screen>
 
       <Screen :title="'General Instructions'">
@@ -38,7 +38,7 @@
         <br />
         First you will go through two practice trials. The practice trial view
         uses magpie's forced choice trial input.
-        <button @click="$magpie.nextScreen">to the practice trial</button>
+        <button @click="$magpie.nextScreen()">to the practice trial</button>
       </Screen>
 
       <!-- Practice trials -->
