@@ -107,6 +107,10 @@ export default class Magpie extends EventEmitter {
   }
 
   getResults() {
+    this.addFacts({
+      experiment_end_time: Date.now(),
+      experiment_duration: Date.now() - this.facts.experiment_start_time
+    });
     return flattenData({
       ...this.facts,
       trials: addEmptyColumns(

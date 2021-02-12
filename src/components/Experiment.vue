@@ -8,6 +8,10 @@ The Experiment component, and thus the following properties of it, are also avai
   * an object with a single data point of each array in the trial data supplied to the experiment component
 * `addResult(data:object)`
   * add a result for the current screen
+  * will automatically add `response_time
+* `addFacts(data:object)`
+  * add global variables that will be added to all result sets
+  * built-in facts are `experiment_start_time`, `experiment_end_time`, `experiment_duration`
 * `getResults()`
   * returns all results that have been added thus far
 * `submit()`
@@ -154,6 +158,7 @@ export default {
     };
   },
   mounted() {
+    this.magpie.addFacts({ experiment_start_time: Date.now() });
     this.responseTimeStart = Date.now();
     if (this.title) {
       document.title = this.title;
