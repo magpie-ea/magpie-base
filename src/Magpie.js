@@ -28,6 +28,7 @@ export default class Magpie extends EventEmitter {
       : false;
 
     this.results = {};
+    this.facts = {};
     this.progress = -1;
     this.mousetracking = new Mousetracking();
 
@@ -91,12 +92,23 @@ export default class Magpie extends EventEmitter {
     });
   }
 
+  /**
+   * Add global facts that will be added to each result set
+
+   * @public
+   * @param data{Object} a flat object whose data you want to add to the facts
+   */
+  addFacts(data) {
+    this.facts = { ...this.facts, ...data };
+  }
+
   onSocketError(er) {
     console.error(er);
   }
 
   getResults() {
     return flattenData({
+      ...this.facts,
       trials: addEmptyColumns(
         _.flatten(Object.values(this.results)).map((o) => Object.assign({}, o))
       ) // clone the data
