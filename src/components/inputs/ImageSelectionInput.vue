@@ -12,6 +12,7 @@
           @update:response="$magpie.addResult({image_choice: $event}); $magpie.nextScreen()"
       />
       </template>
+    </Screen>
   </template>
 </Experiment>
 ```

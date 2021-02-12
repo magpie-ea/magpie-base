@@ -13,7 +13,7 @@
               ['icicles', 'trees', 'bushes']
               ]"
           />
-        <p v-if="responses.words[0] === 'horse'">A horse would never fall over {{responses.words[1]}}</p>
+        <p v-if="responses.words">A {{responses.words[0]}} would never fall over {{responses.words[1]}}</p>
         <button @click="$magpie.addResult(responses); $magpie.nextScreen();">Done</button>
       </template>
     </Screen>
