@@ -190,8 +190,17 @@
       <ConnectInteractive />
 
       <Screen>
-        <Chat></Chat>
-        <button @click="$magpie.nextScreen">Next</button>
+        <template #0="{responses}">
+          <Chat :messages.sync="responses.messages"></Chat>
+          <button
+            @click="
+              $magpie.addTrialData(responses);
+              $magpie.nextScreen();
+            "
+          >
+            Next
+          </button>
+        </template>
       </Screen>
 
       <Screen key="additional-information" title="Additional information">

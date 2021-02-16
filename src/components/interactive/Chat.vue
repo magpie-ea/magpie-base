@@ -61,6 +61,7 @@ export default {
       Vue.nextTick(() => {
         this.$refs.box.scrollTop = this.$refs.box.scrollHeight;
       });
+      this.$emit('update:messages', this.messages);
     }
   },
   EVENT_CHAT_MESSAGE,
