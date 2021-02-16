@@ -243,6 +243,7 @@ export default {
   width: 100%;
   margin: 0;
   min-height: 98vh; /* 98% of viewport height */
+  border: none;
 }
 
 .header {
@@ -260,6 +261,10 @@ export default {
 .header .col:last-child {
   display: flex;
   flex-direction: row-reverse;
+}
+
+.experiment.wide .header .col:last-child {
+  flex-direction: row;
 }
 
 .header .k-progress-outer {
