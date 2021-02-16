@@ -35,10 +35,20 @@ export default class Magpie extends EventEmitter {
         )
       : false;
 
-    this.results = {};
-    this.facts = {};
+    this.results = window.magpie_results = {};
+    this.facts = window.magpie_facts = {};
     this.progress = -1;
     this.mousetracking = new Mousetracking();
+
+    // Provide debug info
+    console.log('_magpie ' + packageJSON.version);
+    console.log('Experiment id: ' + this.id);
+    console.log('Server: ' + this.serverUrl);
+    console.log('Submission URL: ' + this.submissionUrl);
+    console.log('Mode: ' + this.mode);
+    console.log('Completion URL: ' + this.completionUrl);
+    console.log('magpie_results = ', this.results);
+    console.log('magpie_facts = ', this.facts);
 
     Vue.observable(this);
 
