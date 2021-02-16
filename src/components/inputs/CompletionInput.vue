@@ -14,7 +14,7 @@
               ]"
           />
         <p v-if="responses.words">A {{responses.words[0]}} would never fall over {{responses.words[1]}}</p>
-        <button @click="$magpie.addResult(responses); $magpie.nextScreen();">Done</button>
+        <button @click="$magpie.addTrialData(responses); $magpie.nextScreen();">Done</button>
       </template>
     </Screen>
   </template>

@@ -6,7 +6,7 @@ The Experiment component, and thus the following properties of it, are also avai
   * The ID of the experiment
 * `currentTrial`
   * an object with a single data point of each array in the trial data supplied to the experiment component
-* `addResult(data:object)`
+* `addTrialData(data:object)`
   * add a result for the current screen
   * will automatically add `response_time
 * `addFacts(data:object)`
@@ -158,7 +158,7 @@ export default {
     };
   },
   mounted() {
-    this.magpie.addFacts({ experiment_start_time: Date.now() });
+    this.magpie.addExpData({ experiment_start_time: Date.now() });
     this.responseTimeStart = Date.now();
     if (this.title) {
       document.title = this.title;

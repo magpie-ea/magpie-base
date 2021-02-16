@@ -35,7 +35,7 @@ export default {
   components: { Screen },
   props: {},
   data() {
-    const results = this.$magpie.getResults();
+    const results = this.$magpie.getData();
     return {
       results,
       csv: stringify(results, {

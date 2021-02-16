@@ -57,7 +57,7 @@
                 $magpie.currentTrial.forced_choice.option2
               ]"
               @update:response="
-                $magpie.addResult({
+                $magpie.addTrialData({
                   question: $magpie.currentTrial.forced_choice.question,
                   answer: $event
                 });
@@ -93,7 +93,7 @@
                 responses.completion.filter(Boolean).length === 2
               "
               @click="
-                $magpie.addResult({ response: responses.completion });
+                $magpie.addTrialData({ response: responses.completion });
                 $magpie.nextScreen();
               "
             >
@@ -117,7 +117,7 @@
                   $magpie.currentTrial.sentenceChoice.option2
                 ]"
                 @update:response="
-                  $magpie.addResult({
+                  $magpie.addTrialData({
                     question: $magpie.currentTrial.sentenceChoice.question,
                     answer: $event
                   });
@@ -143,7 +143,7 @@
                   }
                 ]"
                 @update:response="
-                  $magpie.addResult({
+                  $magpie.addTrialData({
                     question:
                       $magpie.currentTrial.imageSelection.question || '',
                     answer: $event
@@ -174,7 +174,7 @@
             />
             <button
               @click="
-                $magpie.addResult({
+                $magpie.addTrialData({
                   question: $magpie.currentTrial.sliderRating.question || '',
                   answer: responses.slider
                 });
@@ -244,7 +244,7 @@
 
           <button
             @click="
-              $magpie.addResult(responses);
+              $magpie.addTrialData(responses);
               $magpie.nextScreen();
             "
           >

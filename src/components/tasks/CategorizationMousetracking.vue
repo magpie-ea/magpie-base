@@ -26,7 +26,7 @@
           </template>
           <template #feedback>
             <Wait :time="1" @done="
-              $magpie.addResult({
+              $magpie.addTrialData({
                 response: responses.response,
                 ...responses.mouseTrack,
                 ...$magpie.currentTrial.categories,

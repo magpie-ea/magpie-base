@@ -11,7 +11,7 @@
               f: 'fries',
               j: 'soup'
             }"
-            @update:response="$magpie.addResult(responses); $magpie.nextScreen();" />
+            @update:response="$magpie.addTrialData(responses); $magpie.nextScreen();" />
       </template>
     </Screen>
   </template>

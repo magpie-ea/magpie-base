@@ -39,7 +39,7 @@ export default {
   props: {},
   data() {
     return {
-      results: this.$magpie.getResults(),
+      results: this.$magpie.getData(),
       error: null
     };
   },

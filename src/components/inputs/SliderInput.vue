@@ -10,7 +10,7 @@
             right="Soup"
             :response.sync="responses.lunch" />
         Lunch: {{responses.lunch}}% Soup
-        <button @click="$magpie.addResult(responses); $magpie.nextScreen();">Submit</button>
+        <button @click="$magpie.addTrialData(responses); $magpie.nextScreen();">Submit</button>
       </template>
     </Screen>
   </template>

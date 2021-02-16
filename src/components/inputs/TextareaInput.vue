@@ -9,7 +9,7 @@
             :response.sync="responses.lunch"
           />
         <p v-if="responses.lunch && responses.lunch.length > 32">I disagree!</p>
-        <button @click="$magpie.addResult(responses); $magpie.nextScreen();">Submit</button>
+        <button @click="$magpie.addTrialData(responses); $magpie.nextScreen();">Submit</button>
       </template>
     </Screen>
   </template>

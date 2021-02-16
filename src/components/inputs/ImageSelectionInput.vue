@@ -9,7 +9,7 @@
           :options="[
               {src: 'fries.jpg', label: 'fries'},
               {src: 'soup.jpg', label: 'soup' }]"
-          @update:response="$magpie.addResult({image_choice: $event}); $magpie.nextScreen()"
+          @update:response="$magpie.addTrialData({image_choice: $event}); $magpie.nextScreen()"
       />
       </template>
     </Screen>

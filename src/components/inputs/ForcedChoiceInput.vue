@@ -10,7 +10,7 @@
             :response.sync="responses.bread"
             :options="['Ham', 'Jam']" />
           <p v-if="responses.bread === 'Jam'">A sweet tooth, eh!?</p>
-        <button @click="$magpie.addResult(responses); $magpie.nextScreen();">Submit</button>
+        <button @click="$magpie.addTrialData(responses); $magpie.nextScreen();">Submit</button>
       </template>
     </Screen>
   </template>
@@ -28,7 +28,7 @@ The following example will submit the response directly on clicking it.
         <ForcedChoiceInput
             :response.sync="responses.bread"
             :options="['Ham', 'Jam']"
-            @update:response="$magpie.addResult(responses); $magpie.nextScreen();"/>
+            @update:response="$magpie.addTrialData(responses); $magpie.nextScreen();"/>
       </template>
     </Screen>
   </template>

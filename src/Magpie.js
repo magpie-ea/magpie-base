@@ -35,8 +35,8 @@ export default class Magpie extends EventEmitter {
         )
       : false;
 
-    this.results = window.magpie_results = {};
-    this.facts = window.magpie_facts = {};
+    this.trialData = window.magpie_trial_data = {};
+    this.expData = window.magpie_exp_data = {};
     this.progress = -1;
     this.mousetracking = new Mousetracking();
 
@@ -47,8 +47,8 @@ export default class Magpie extends EventEmitter {
     console.log('Submission URL: ' + this.submissionUrl);
     console.log('Mode: ' + this.mode);
     console.log('Completion URL: ' + this.completionUrl);
-    console.log('magpie_results = ', this.results);
-    console.log('magpie_facts = ', this.facts);
+    console.log('magpie_trial_data = ', this.trialData);
+    console.log('magpie_exp_data = ', this.expData);
 
     Vue.observable(this);
 
@@ -84,7 +84,7 @@ export default class Magpie extends EventEmitter {
     }
 
     if (this.mode === 'prolific') {
-      this.extractProlificFacts();
+      this.extractProlificData();
     }
   }
 
@@ -104,11 +104,11 @@ export default class Magpie extends EventEmitter {
    * @public
    * @param data{Object} a flat object whose data you want to add to the results
    */
-  addResult(data) {
-    if (!this.results[this.experiment.currentScreen]) {
-      this.results[this.experiment.currentScreen] = [];
+  addTrialData(data) {
+    if (!this.trialData[this.experiment.currentScreen]) {
+      this.trialData[this.experiment.currentScreen] = [];
     }
-    this.results[this.experiment.currentScreen].push({
+    this.trialData[this.experiment.currentScreen].push({
       ...data,
       response_time: Date.now() - this.experiment.responseTimeStart
     });
@@ -120,23 +120,25 @@ export default class Magpie extends EventEmitter {
    * @public
    * @param data{Object} a flat object whose data you want to add to the facts
    */
-  addFacts(data) {
-    this.facts = { ...this.facts, ...data };
+  addExpData(data) {
+    this.expData = { ...this.expData, ...data };
   }
 
   onSocketError(er) {
     console.error(er);
   }
 
-  getResults() {
-    this.addFacts({
+  getData() {
+    this.addExpData({
       experiment_end_time: Date.now(),
-      experiment_duration: Date.now() - this.facts.experiment_start_time
+      experiment_duration: Date.now() - this.expData.experiment_start_time
     });
     return flattenData({
-      ...this.facts,
+      ...this.expData,
       trials: addEmptyColumns(
-        _.flatten(Object.values(this.results)).map((o) => Object.assign({}, o))
+        _.flatten(Object.values(this.trialData)).map((o) =>
+          Object.assign({}, o)
+        )
       ) // clone the data
     });
   }
@@ -145,14 +147,14 @@ export default class Magpie extends EventEmitter {
     if (!this.submissionUrl) {
       throw new Error('No submission URL set');
     }
-    return this.submitResults(this.submissionUrl, this.getResults());
+    return this.submitResults(this.submissionUrl, this.getData());
   }
 
   submitIntermediateResults() {
     if (!this.submissionUrl) {
       throw new Error('No submission URL set');
     }
-    return this.submitResults(this.submissionUrl, this.getResults(), true);
+    return this.submitResults(this.submissionUrl, this.getData(), true);
   }
 
   async submitResults(submissionURL, data, intermediate) {
@@ -193,9 +195,9 @@ export default class Magpie extends EventEmitter {
     this.progress = percentage;
   }
 
-  extractProlificFacts() {
+  extractProlificData() {
     const url = new URL(window.location);
-    this.addFacts({
+    this.addExpData({
       prolific_pid: url.searchParams.get('PROLIFIC_PID'),
       prolific_study_id: url.searchParams.get('STUDY_ID'),
       prolific_session_id: url.searchParams.get('SESSION_ID')

@@ -9,7 +9,7 @@
           <template #task>
             <p>Is it?</p>
             <RatingInput left="No" right="Yes" @update:response="
-              $magpie.addResult({
+              $magpie.addTrialData({
                 rating: $event,
                 responseTimes: responses.times,
               });
