@@ -3,6 +3,7 @@ import Vue from 'vue';
 import Socket from './Socket';
 import _ from 'lodash';
 import Mousetracking from './Mousetracking';
+import packageJSON from '../package.json';
 
 export default class Magpie extends EventEmitter {
   get $el() {
@@ -16,7 +17,12 @@ export default class Magpie extends EventEmitter {
 
     // options
     this.id = options.magpie.experimentId;
-    this.submissionUrl = options.magpie.submissionUrl;
+    this.serverUrl = options.magpie.serverUrl;
+    this.submissionUrl =
+      this.serverUrl +
+      (this.serverUrl[this.serverUrl.length - 1] === '/' ? '' : '/') +
+      'api/submit_experiment/' +
+      this.id;
     this.completionUrl = options.magpie.completionUrl;
     this.contactEmail = options.magpie.contactEmail;
     this.mode = options.magpie.mode;
