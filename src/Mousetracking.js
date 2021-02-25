@@ -9,26 +9,32 @@ export default class Mousetracking extends EventEmitter {
     this.x = [0];
     this.y = [0];
     this.startTime = 0;
+    this.originX = 0;
+    this.originY = 0;
 
     Vue.observable(this);
   }
 
   onMouseMove(e) {
     this.time.push(Date.now() - this.startTime);
-    this.x.push(e.layerX);
-    this.y.push(e.layerY);
+    this.x.push(e.layerX - this.originX);
+    this.y.push(e.layerY - this.originY);
   }
 
   /**
    * (re)start mouse tracking for the current screen
-   * @param x{Number} Initial x coordinate
-   * @param y{Number} Initial y coordinate
+   * @param x{Number} Relative Origin x coordinate
+   * @param y{Number} Relative Origin y coordinate
    * @public
    */
   start(x, y) {
-    this.time = [0];
-    this.x = [x || this.x[this.x.length - 1]];
-    this.y = [y || this.y[this.y.length - 1]];
+    if (x && y) {
+      this.originX = x;
+      this.originY = y;
+    }
+    this.time = [];
+    this.x = [];
+    this.y = [];
     this.startTime = Date.now();
   }
 
