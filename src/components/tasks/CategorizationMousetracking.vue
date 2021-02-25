@@ -78,10 +78,12 @@
         </div>
       </div>
       <div class="stimulus">
-        <!-- @slot provide content for the main stimulus -->
-        <slot v-if="playing" name="stimulus" />
+        <!-- @slot provide content for the main stimulus
+         @binding {object} coordinates The coordinates of the Start button on the page (`{x: number, y: number})
+         -->
+        <slot v-if="playing" name="stimulus" :coordinates="buttonCoordinates" />
       </div>
-      <button v-if="!playing" @click="onPressPlay">Go</button>
+      <button v-if="!playing" ref="button" @click="onPressPlay">Go</button>
     </div>
 
     <div v-if="slide === 4">
@@ -123,13 +125,24 @@ export default {
       slide: 0
     };
   },
+  computed: {
+    buttonCoordinates() {
+      return {
+        x: this.$refs.button.getBoundingClientRect().x,
+        y: this.$refs.button.getBoundingClientRect().y
+      };
+    }
+  },
   methods: {
     nextSlide() {
       this.slide++;
     },
     onPressPlay() {
       this.playing = true;
-      this.$magpie.mousetracking.start();
+      this.$magpie.mousetracking.start(
+        this.buttonCoordinates.x,
+        this.buttonCoordinates.y
+      );
     },
     onOption1(cb) {
       if (!this.playing) return;
