@@ -17,8 +17,8 @@ export default class Mousetracking extends EventEmitter {
 
   onMouseMove(e) {
     this.time.push(Date.now() - this.startTime);
-    this.x.push(e.layerX - this.originX);
-    this.y.push(e.layerY - this.originY);
+    this.x.push(e.clientX - this.originX);
+    this.y.push(e.clientY - this.originY);
   }
 
   /**
