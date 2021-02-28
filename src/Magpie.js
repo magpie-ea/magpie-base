@@ -121,7 +121,7 @@ export default class Magpie extends EventEmitter {
    * @param data{Object} a flat object whose data you want to add to the facts
    */
   addExpData(data) {
-    this.expData = { ...this.expData, ...data };
+    Object.assign(this.expData, data);
   }
 
   onSocketError(er) {
