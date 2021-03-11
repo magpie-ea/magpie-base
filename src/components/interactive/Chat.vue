@@ -9,7 +9,10 @@ This interactive component provides participants the opportunity to chat with ea
     </Screen>
     <ConnectInteractive />
     <Screen>
-      <Chat />
+      <template #0="{responses}">
+      <Chat :data.sync="responses.data" />
+      <p>{{responses.data? responses.data.chatMessage.length : 0}} messages sent so far.</p>
+      </template>
     </Screen>
   </template>
 </Experiment>
@@ -61,7 +64,14 @@ export default {
       Vue.nextTick(() => {
         this.$refs.box.scrollTop = this.$refs.box.scrollHeight;
       });
+      /**
+       * Messages contains all chat messages as objects: `[{message: '', participantId: '', time: 2345678765}, ...]`
+       */
       this.$emit('update:messages', this.messages);
+      /**
+       * Data contains all chat messages in tabular form: `{chatMessage: [], chatParticipantId: [], chatTime: []}`
+       */
+      this.$emit('update:data', this.flattenData(this.messages));
     }
   },
   EVENT_CHAT_MESSAGE,
@@ -73,10 +83,18 @@ export default {
       }
       this.$magpie.socket.broadcast(EVENT_CHAT_MESSAGE, {
         message,
-        participantId: this.$magpie.socket.participantId
+        participantId: this.$magpie.socket.participantId,
+        time: Date.now()
       });
       this.$refs.text.value = '';
       this.$refs.text.focus();
+    },
+    flattenData(messages) {
+      return {
+        chatMessage: messages.map((m) => m.message),
+        chatParticipantId: messages.map((m) => m.participantId),
+        chatTime: messages.map((m) => m.time)
+      };
     }
   }
 };
