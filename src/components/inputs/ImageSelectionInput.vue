@@ -23,7 +23,7 @@
     <div class="options">
       <div
         v-for="option in options"
-        :key="option"
+        :key="option.label"
         class="option"
         @click="onOptionClick(option)"
       >
