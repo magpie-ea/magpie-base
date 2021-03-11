@@ -30,6 +30,8 @@ The Experiment component, and thus the following properties of it, are also avai
     * the random ID of the current participant
   * `state`
     * string, reactive, one of `CONNECTING`, `CONNECTED`, `WAITING`, `JOINED`, `ERROR`
+  * `participants
+    * array, reactive, an array of IDs of participants that are currently online in the same experiment room
   * `broadcast(event:string, payload:any)`
     * sends an event to all participants in the current room
   * `on(event:string, listener:function)`

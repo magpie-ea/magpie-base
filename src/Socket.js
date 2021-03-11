@@ -29,6 +29,7 @@ export default class Socket extends EventEmitter {
     this.phoenix.onError(this.errorHandler);
     this.phoenix.connect();
     this.state = states.CONNECTING;
+    this.participants = [];
 
     Vue.observable(this);
   }
@@ -80,6 +81,13 @@ export default class Socket extends EventEmitter {
 
     this.roomChannel.on('new_msg', (msg) => {
       this.emit(msg.event, msg.payload);
+    });
+
+    this.roomChannel.on('presence_diff', (diff) => {
+      Object.keys(diff.joins).forEach((id) => this.participants.push(id));
+      Object.keys(diff.leaves).forEach((id) =>
+        this.participants.splice(this.participants.indexOf(id), 1)
+      );
     });
   }
 

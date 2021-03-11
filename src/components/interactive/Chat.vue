@@ -10,8 +10,9 @@ This interactive component provides participants the opportunity to chat with ea
     <ConnectInteractive />
     <Screen>
       <template #0="{responses}">
-      <Chat :data.sync="responses.data" />
+      <Chat :data.sync="responses.data" :participants.sync="responses.participants" />
       <p>{{responses.data? responses.data.chatMessage.length : 0}} messages sent so far.</p>
+      <p>{{ responses.participants? responses.participants.length : 0 }} participants chatting.</p>
       </template>
     </Screen>
   </template>
@@ -50,12 +51,20 @@ This interactive component provides participants the opportunity to chat with ea
 <script>
 import Vue from 'vue';
 const EVENT_CHAT_MESSAGE = 'chat_message';
+const EVENT_CHAT_PRESENCE = 'chat_presence';
+const PRESENCE_TIMEOUT = 10000;
+const PRESENCE_INTERVAL = 3000;
 
 export default {
   name: 'Chat',
   data() {
     return {
-      messages: []
+      messages: [],
+      presence: {
+        // Add the current participant already to not show 0 participants
+        [this.$magpie.socket.participantId]: true
+      },
+      interval: null
     };
   },
   socket: {
@@ -72,7 +81,34 @@ export default {
        * Data contains all chat messages in tabular form: `{chatMessage: [], chatParticipantId: [], chatTime: []}`
        */
       this.$emit('update:data', this.flattenData(this.messages));
+    },
+    [EVENT_CHAT_PRESENCE](participantId) {
+      clearTimeout(this.presence[participantId]);
+      Vue.set(
+        this.presence,
+        participantId,
+        setTimeout(() => {
+          Vue.delete(this.presence, participantId);
+        }, PRESENCE_TIMEOUT)
+      );
     }
+  },
+  watch: {
+    presence() {
+      /**
+       * Participants contains an array of participant IDs currently viewing the chat in the current room
+       */
+      this.$emit('update:participants', Object.keys(this.presence));
+    }
+  },
+  mounted() {
+    setInterval(() => {
+      this.$magpie.socket.broadcast(
+        EVENT_CHAT_PRESENCE,
+        this.$magpie.socket.participantId
+      );
+    }, PRESENCE_INTERVAL);
+    this.$emit('update:participants', Object.keys(this.presence));
   },
   EVENT_CHAT_MESSAGE,
   methods: {
