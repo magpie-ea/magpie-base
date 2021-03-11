@@ -158,6 +158,9 @@ export default {
     };
   },
   mounted() {
+    if (this.magpie.socket) {
+      this.magpie.socket.initialize();
+    }
     this.magpie.addExpData({ experiment_start_time: Date.now() });
     this.responseTimeStart = Date.now();
     if (this.title) {

@@ -3,7 +3,7 @@ import MagpieVue from '../src/index';
 
 Vue.use(MagpieVue, {
   experimentId: '171',
-  submissionUrl: 'https://magpie-demo.herokuapp.com/api/submit_experiment/',
+  serverUrl: 'https://magpie-demo.herokuapp.com/',
   socketUrl: 'wss://magpie-demo.herokuapp.com/socket',
   contactEmail: 'test@random.com'
 });
