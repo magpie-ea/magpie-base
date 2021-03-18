@@ -10,6 +10,9 @@ export const states = {
   ERROR: 'ERROR'
 };
 
+/**
+ * @class Socket
+ */
 export default class Socket extends EventEmitter {
   constructor(experimentId, socketURL, errorhandler) {
     super();
@@ -18,7 +21,20 @@ export default class Socket extends EventEmitter {
       errorhandler(er);
     };
 
+    /**
+     * @instance
+     * @member participantId
+     * @memberOf Socket
+     * @type {string}
+     */
     this.participantId = generateId(40);
+
+    /**
+     * @instance
+     * @member experimentId
+     * @memberOf Socket
+     * @type {string}
+     */
     this.experimentId = experimentId;
     this.phoenix = new PhoenixSocket(socketURL, {
       params: {
@@ -28,12 +44,33 @@ export default class Socket extends EventEmitter {
     });
     this.phoenix.onError(this.errorHandler);
     this.phoenix.connect();
+
+    /**
+     * A reactive property with the state of the socket
+     * @instance
+     * @member participantId
+     * @memberOf Socket
+     * @type {'CONNECTING'|'CONNECTED'|'WAITING'|'READY'|'ERROR'}
+     */
     this.state = states.CONNECTING;
+
+    /**
+     * A reactive list of online participants
+     * @instance
+     * @member participants
+     * @memberOf Socket
+     * @type {string[]}
+     */
     this.participants = [];
 
     Vue.observable(this);
   }
 
+  /**
+   * Initialize the socket
+   * @instance
+   * @memberOf Socket
+   */
   initialize() {
     this.participantChannel = this.phoenix.channel(
       `participant:${this.participantId}`,
@@ -105,6 +142,12 @@ export default class Socket extends EventEmitter {
     }
   }
 
+  /**
+   * @instance
+   * @memberOf Socket
+   * @param event{string}
+   * @param payload
+   */
   broadcast(event, payload) {
     this.roomChannel.push('new_msg', { event, payload });
   }

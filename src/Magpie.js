@@ -5,6 +5,10 @@ import _ from 'lodash';
 import Mousetracking from './Mousetracking';
 import packageJSON from '../package.json';
 
+/**
+ * Magpie specific vue tools exposed as $magpie
+ * @class Magpie
+ */
 export default class Magpie extends EventEmitter {
   get $el() {
     return this.experiment.$el;
@@ -16,17 +20,73 @@ export default class Magpie extends EventEmitter {
     this.experiment = experiment;
 
     // options
+
+    /**
+     * The ID of the experiment
+     *
+     * @instance
+     * @member id
+     * @memberOf Magpie
+     * @type {string}
+     */
     this.id = options.magpie.experimentId;
+
+    /**
+     * @instance
+     * @member serverUrl
+     * @memberOf Magpie
+     * @type {string}
+     */
     this.serverUrl = options.magpie.serverUrl;
+
+    /**
+     * @instance
+     * @member submissionUrl
+     * @memberOf Magpie
+     * @type {string}
+     */
     this.submissionUrl =
       this.serverUrl +
       (this.serverUrl[this.serverUrl.length - 1] === '/' ? '' : '/') +
       'api/submit_experiment/' +
       this.id;
+
+    /**
+     * @instance
+     * @member submissionUrl
+     * @memberOf Magpie
+     * @type {string}
+     */
     this.completionUrl = options.magpie.completionUrl;
+
+    /**
+     * @instance
+     * @member contactEmail
+     * @memberOf Magpie
+     * @type {string}
+     */
     this.contactEmail = options.magpie.contactEmail;
+    /**
+     * @instance
+     * @member mode
+     * @memberOf Magpie
+     * @type {string}
+     */
     this.mode = options.magpie.mode;
+    /**
+     * @instance
+     * @member contactEmail
+     * @memberOf Magpie
+     * @type {boolean}
+     */
     this.debug = options.magpie.mode === 'debug';
+
+    /**
+     * @instance
+     * @member socket
+     * @memberOf Magpie
+     * @type {Socket}
+     */
     this.socket = options.magpie.socketUrl
       ? new Socket(
           options.magpie.experimentId,
@@ -38,6 +98,13 @@ export default class Magpie extends EventEmitter {
     this.trialData = window.magpie_trial_data = {};
     this.expData = window.magpie_exp_data = {};
     this.progress = -1;
+
+    /**
+     * @instance
+     * @member mousetracking
+     * @memberOf Magpie
+     * @type {Mousetracking}
+     */
     this.mousetracking = new Mousetracking();
 
     // Provide debug info
@@ -56,6 +123,14 @@ export default class Magpie extends EventEmitter {
     const currentTrial = {};
     this.trials = trials;
     this.currentTrialData = {};
+
+    /**
+     * an object with a single data point of each array in the trial data supplied to the experiment component
+     * @instance
+     * @member currentTrial
+     * @memberOf Magpie
+     * @type {Object}
+     */
     this.currentTrial = currentTrial;
     for (const type of Object.keys(this.trials)) {
       if (Array.isArray(this.trials[type])) {
@@ -90,6 +165,8 @@ export default class Magpie extends EventEmitter {
 
   /**
    * Go to the next screen. (Will also reset scroll position.)
+   * @instance
+   * @memberOf Magpie
    * @public
    * @param index{int} the index of the screen to go to (optional; default is next screen)
    */
@@ -100,7 +177,8 @@ export default class Magpie extends EventEmitter {
   /**
    * Add a result set
    * This method will automatically add a response_time key to your data with time measured from the start of the current screen
-   *
+   * @instance
+   * @memberOf Magpie
    * @public
    * @param data{Object} a flat object whose data you want to add to the results
    */
@@ -116,7 +194,8 @@ export default class Magpie extends EventEmitter {
 
   /**
    * Add global facts that will be added to each result set
-
+   * @instance
+   * @memberOf Magpie
    * @public
    * @param data{Object} a flat object whose data you want to add to the facts
    */
@@ -143,6 +222,12 @@ export default class Magpie extends EventEmitter {
     });
   }
 
+  /**
+   * Submit all data collected so far
+   * @instance
+   * @memberOf Magpie
+   * @returns {Promise<void>}
+   */
   submit() {
     if (!this.submissionUrl) {
       throw new Error('No submission URL set');
@@ -150,6 +235,12 @@ export default class Magpie extends EventEmitter {
     return this.submitResults(this.submissionUrl, this.getData());
   }
 
+  /**
+   * Submit all data collected so far as intermediate results
+   * @instance
+   * @memberOf Magpie
+   * @returns {Promise<void>}
+   */
   submitIntermediateResults() {
     if (!this.submissionUrl) {
       throw new Error('No submission URL set');
@@ -189,6 +280,8 @@ export default class Magpie extends EventEmitter {
    * Set progress bar percentage
    * Will display a progress bar if it's not visible, yet.
    * @public
+   * @instance
+   * @memberOf Magpie
    * @param percentage{float} the percentage to display as a number between 0 and 1
    */
   setProgress(percentage) {

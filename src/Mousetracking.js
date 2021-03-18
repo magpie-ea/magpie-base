@@ -1,6 +1,9 @@
 import EventEmitter from 'events';
 import Vue from 'vue';
 
+/**
+ * @class Mousetracking
+ */
 export default class Mousetracking extends EventEmitter {
   constructor() {
     super();
@@ -23,6 +26,8 @@ export default class Mousetracking extends EventEmitter {
 
   /**
    * (re)start mouse tracking for the current screen
+   * @instance
+   * @memberOf Mousetracking
    * @param x{Number} Relative Origin x coordinate
    * @param y{Number} Relative Origin y coordinate
    * @public
@@ -41,8 +46,10 @@ export default class Mousetracking extends EventEmitter {
   /**
    * Get the mouse track since the appearance of the current screen
    * @public
+   * @instance
+   * @memberOf Mousetracking
    * @param rate{int} Time resolution in ms (optional; defaults to 15ms)
-   * @returns {{mt_x: [], mt_y: [], mt_time: []}}
+   * @returns {{mt_x: array, mt_y: array, mt_time: array}}
    */
   getMouseTrack(rate = 15) {
     const interpolated = {
