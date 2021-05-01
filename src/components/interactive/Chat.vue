@@ -4,17 +4,23 @@ This interactive component provides participants the opportunity to chat with ea
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
       <button @click="$magpie.nextScreen()">Start</button>
     </Screen>
+
     <ConnectInteractive />
+
     <Screen>
+
       <template #0="{measurements}">
-      <Chat :data.sync="measurements.data" :participants.sync="measurements.participants" />
-      <p>{{measurements.data? measurements.data.chatMessage.length : 0}} messages sent so far.</p>
-      <p>{{ measurements.participants? measurements.participants.length : 0 }} participants chatting.</p>
+        <Chat :data.sync="measurements.data" :participants.sync="measurements.participants" />
+        <p>{{measurements.data? measurements.data.chatMessage.length : 0}} messages sent so far.</p>
+        <p>{{ measurements.participants? measurements.participants.length : 0 }} participants chatting.</p>
       </template>
+
     </Screen>
+
   </template>
 </Experiment>
 ```

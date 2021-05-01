@@ -5,18 +5,24 @@ This component allows you to display textual or other content in a rapid serial 
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
+
       <template #0="{nextSlide}">
         <button @click="nextSlide">Start</button>
       </template>
+
       <template #1="{nextSlide}">
         <Rsvp :chunks="'I wonder if you can read this, as it is a rapid serial visual presentation of a long text.'.split(' ')"
               @end="nextSlide" />
       </template>
+
       <template #2>
         That's what I thought.
       </template>
+
     </Screen>
+
   </template>
 </Experiment>
 ```

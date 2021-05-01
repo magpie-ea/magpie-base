@@ -53,6 +53,7 @@ The screen component also conveniently exposes an object for you to store in the
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen title="Wow.">
       <template #0="{measurements, saveAndNextScreen}">
         Hello
@@ -61,7 +62,9 @@ The screen component also conveniently exposes an object for you to store in the
         <button v-if="measurements.text" @click="saveAndNextScreen()">Done</button>
       </template>
     </Screen>
+
     <DebugResults />
+
   </template>
 </Experiment>
 ```

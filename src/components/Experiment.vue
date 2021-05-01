@@ -7,17 +7,21 @@ For every source of trial data you can provide a label and an array. Later you w
 ```vue
 <Experiment variables="{ color: ['blue', 'green', 'yellow'] }">
   <template #screens>
+
     <Screen>
       {{ $magpie.currentVars.color }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
+
     <Screen>
       {{ $magpie.currentVars.color }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
+
     <Screen>
       {{ $magpie.currentVars.color }}
     </Screen>
+
   </template>
 </Experiment>
 ```
@@ -28,14 +32,17 @@ In case you want to generate data on the fly or have a more sophisticated data s
 ```vue
 <Experiment variables="{number: () => Math.random()}">
   <template #screens>
+
     <Screen>
       {{ $magpie.currentVars.number }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
+
     <Screen>
       {{ $magpie.currentVars.number }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
+
     <Screen>
       {{ $magpie.currentVars.number }}
     </Screen>
@@ -49,23 +56,27 @@ There's also a shorthand for fetching variables in a screen.
 ```vue
 <Experiment variables="{ color: ['blue', 'green', 'yellow'] }">
   <template #screens>
+
     <Screen>
       <template #0="{variables: {color}, nextScreen}">
         {{ color }}
         <button @click="nextScreen()">next</button>
       </template>
     </Screen>
+
     <Screen>
       <template #0="{variables: {color}, nextScreen}">
         {{ color }}
         <button @click="nextScreen()">next</button>
       </template>
     </Screen>
+
     <Screen>
       <template #0="{variables: {color}}">
         {{ color }}
       </template>
     </Screen>
+
   </template>
 </Experiment>
 ```

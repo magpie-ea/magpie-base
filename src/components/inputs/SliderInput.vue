@@ -2,7 +2,9 @@
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
+
       <template #0="{measurements}">
         <p>Fries or soup?</p>
         <SliderInput
@@ -12,7 +14,9 @@
         Lunch: {{measurements.lunch}}% Soup
         <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
       </template>
+
     </Screen>
+
   </template>
 </Experiment>
 ```

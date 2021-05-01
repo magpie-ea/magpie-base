@@ -5,14 +5,18 @@ For more details see [HTML Audio Element docs on MDN](https://developer.mozilla.
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
+
       <template #0>
         This is a dog.<br/>
         <button @click="$refs.audio.play()">Start</button>
         <button @click="$refs.audio.pause()">Stop</button>
         <audio ref="audio" src="public/audio/dog_bark.ogg" loop />
       </template>
+
     </Screen>
+
   </template>
 </Experiment>
 ```

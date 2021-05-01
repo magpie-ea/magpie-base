@@ -1,15 +1,16 @@
 <docs>
 
 ```vue
-<Experiment :trials="{categories: [
+<Experiment :variables="{categories: [
     {o1: 'Mammal', o2: 'Bird', s: 'Bat'},
     {o1: 'Bird', o2: 'Insect', s: 'Kolibri'},
     {o1: 'Fish', o2: 'Mammal', s: 'Whale'},
     {o1: 'Fish', o2: 'Bird', s: 'Penguin'}
     ]}">
   <template #screens>
+
     <Screen :key="i" v-for="i in 4">
-      <template #0="{ measurements }">
+      <template #0="{ measurements, saveAndNextScreen }">
         <CategorizationMousetracking :response.sync="measurements.option" :mouseTrack.sync="measurements.mouseTrack">
           <template #option1>
             <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
@@ -25,18 +26,14 @@
             <span>{{ $magpie.currentVars.categories.s }}</span>
           </template>
           <template #feedback>
-            <Wait :time="1" @done="
-              $magpie.addTrialData({
-                response: measurements.response,
-                ...measurements.mouseTrack,
-                ...$magpie.currentVars.categories,
-              });
-              $magpie.nextScreen()" />
+            <Wait :time="1" @done="saveAndNextScreen" />
           </template>
         </CategorizationMousetracking>
       </template>
     </Screen>
+
     <DebugResults />
+
   </template>
 </Experiment>
 ```

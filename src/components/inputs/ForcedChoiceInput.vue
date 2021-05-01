@@ -3,7 +3,9 @@
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
+
       <template #0="{measurements}">
         <p>What's on the bread?</p>
         <ForcedChoiceInput
@@ -12,7 +14,9 @@
           <p v-if="measurements.bread === 'Jam'">A sweet tooth, eh!?</p>
         <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
       </template>
+
     </Screen>
+
   </template>
 </Experiment>
 ```
@@ -22,7 +26,9 @@ The following example will submit the response directly on clicking it.
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
+
       <template #0="{measurements}">
         <p>What's on the bread?</p>
         <ForcedChoiceInput
@@ -30,7 +36,9 @@ The following example will submit the response directly on clicking it.
             :options="['Ham', 'Jam']"
             @update:response="$magpie.addTrialData(measurements); $magpie.nextScreen();"/>
       </template>
+
     </Screen>
+
   </template>
 </Experiment>
 ```

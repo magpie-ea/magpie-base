@@ -3,22 +3,26 @@
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
-      <template #0="{measurements}">
+
+      <template #0="{measurements, saveAndNextScreen}">
         <SelfPacedReading :chunks="'This is a nice text.'.split(' ')" word-pos="next" underline="sentence" :response-times.sync="measurements.times">
           <template #task>
             <p>Is it?</p>
-            <RatingInput left="No" right="Yes" @update:response="
-              $magpie.addTrialData({
-                rating: $event,
-                responseTimes: measurements.times,
-              });
-              $magpie.nextScreen()" />
+            <RatingInput
+                left="No"
+                right="Yes"
+                :response.sync="measurements.rating"
+                @update:response="saveAndNextScreen" />
           </template>
         </SelfPacedReading>
       </template>
+
     </Screen>
+
     <DebugResults />
+
   </template>
 </Experiment>
 ```

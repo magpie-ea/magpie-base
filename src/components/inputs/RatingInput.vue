@@ -2,17 +2,21 @@
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
+
       <template #0="{measurements}">
         <p>Fries or soup?</p>
-      <RatingInput
+        <RatingInput
           left="Fries"
           :response.sync="measurements.lunch"
           right="Soup" />
         <p v-if="measurements.lunch > 4">I concur!</p>
         <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
       </template>
+
     </Screen>
+
   </template>
 </Experiment>
 ```
@@ -20,6 +24,7 @@
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
       <p>Fries or soup?</p>
       <RatingInput
@@ -27,6 +32,7 @@
           right="Soup"
           :count="11"/>
     </Screen>
+
   </template>
 </Experiment>
 ```

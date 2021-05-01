@@ -2,7 +2,9 @@
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
+
       <template #0="{measurements}">
         <p>Fries or soup?</p>
         <KeypressInput
@@ -13,7 +15,9 @@
             }"
             @update:response="$magpie.addTrialData(measurements); $magpie.nextScreen();" />
       </template>
+
     </Screen>
+
   </template>
 </Experiment>
 ```

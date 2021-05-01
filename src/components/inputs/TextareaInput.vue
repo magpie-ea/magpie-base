@@ -2,7 +2,9 @@
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen>
+
       <template #0="{measurements}">
         <p>Fries or soup? Discuss.</p>
         <TextareaInput
@@ -11,7 +13,9 @@
         <p v-if="measurements.lunch && measurements.lunch.length > 32">I disagree!</p>
         <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
       </template>
+
     </Screen>
+
   </template>
 </Experiment>
 ```

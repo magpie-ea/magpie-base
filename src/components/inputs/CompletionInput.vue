@@ -4,6 +4,7 @@
 <Experiment>
   <template #screens>
     <Screen>
+
       <template #0="{measurements}">
         <CompletionInput
           text="One %s fell over three %s."
@@ -16,7 +17,9 @@
         <p v-if="measurements.words">A {{measurements.words[0]}} would never fall over {{measurements.words[1]}}</p>
         <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Done</button>
       </template>
+
     </Screen>
+
   </template>
 </Experiment>
 ```

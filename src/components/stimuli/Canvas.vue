@@ -7,6 +7,7 @@ Konva Components are prefixed with `Canvas`, so `Konva.Circle` becomes `CanvasCi
 ```vue
 <Experiment>
   <template #screens>
+
     <Screen title="Some drawing exercises">
       <CanvasStage :config="{width: 700, height: 500}">
         <CanvasLayer>
@@ -39,6 +40,7 @@ Konva Components are prefixed with `Canvas`, so `Konva.Circle` becomes `CanvasCi
         </CanvasLayer>
       </CanvasStage>
     </Screen>
+
   </template>
 </Experiment>
 ```
