@@ -4,14 +4,14 @@
 <Experiment>
   <template #screens>
     <Screen>
-      <template #0="{responses}">
-        <SelfPacedReading :chunks="'This is a nice text.'.split(' ')" word-pos="next" underline="sentence" :response-times.sync="responses.times">
+      <template #0="{measurements}">
+        <SelfPacedReading :chunks="'This is a nice text.'.split(' ')" word-pos="next" underline="sentence" :response-times.sync="measurements.times">
           <template #task>
             <p>Is it?</p>
             <RatingInput left="No" right="Yes" @update:response="
               $magpie.addTrialData({
                 rating: $event,
-                responseTimes: responses.times,
+                responseTimes: measurements.times,
               });
               $magpie.nextScreen()" />
           </template>

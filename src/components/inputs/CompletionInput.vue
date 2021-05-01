@@ -4,17 +4,17 @@
 <Experiment>
   <template #screens>
     <Screen>
-      <template #0="{responses}">
+      <template #0="{measurements}">
         <CompletionInput
           text="One %s fell over three %s."
-          :responses.sync="responses.words"
+          :responses.sync="measurements.words"
           :options="[
               ['horse', 'penguin', 'bird'],
               ['icicles', 'trees', 'bushes']
               ]"
           />
-        <p v-if="responses.words">A {{responses.words[0]}} would never fall over {{responses.words[1]}}</p>
-        <button @click="$magpie.addTrialData(responses); $magpie.nextScreen();">Done</button>
+        <p v-if="measurements.words">A {{measurements.words[0]}} would never fall over {{measurements.words[1]}}</p>
+        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Done</button>
       </template>
     </Screen>
   </template>

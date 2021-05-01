@@ -3,15 +3,15 @@
 <Experiment>
   <template #screens>
     <Screen>
-      <template #0="{responses}">
+      <template #0="{measurements}">
         <p>Fries or soup?</p>
         <KeypressInput
-            :response.sync="responses.lunch"
+            :response.sync="measurements.lunch"
             :keys="{
               f: 'fries',
               j: 'soup'
             }"
-            @update:response="$magpie.addTrialData(responses); $magpie.nextScreen();" />
+            @update:response="$magpie.addTrialData(measurements); $magpie.nextScreen();" />
       </template>
     </Screen>
   </template>

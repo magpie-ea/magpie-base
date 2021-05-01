@@ -48,7 +48,7 @@ You can go to the next slide with the `nextSlide` function that is exposed by th
 ```
 
 ### Store measurements
-The screen component also conveniently exposes an object for you to store in the responses of the current screen, so you can later save them.
+The screen component also conveniently exposes an object for you to store in the measurements of the current screen, so you can later save them.
 
 ```vue
 <Experiment>

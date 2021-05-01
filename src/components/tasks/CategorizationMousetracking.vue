@@ -9,8 +9,8 @@
     ]}">
   <template #screens>
     <Screen :key="i" v-for="i in 4">
-      <template #0="{ responses }">
-        <CategorizationMousetracking :response.sync="responses.option" :mouseTrack.sync="responses.mouseTrack">
+      <template #0="{ measurements }">
+        <CategorizationMousetracking :response.sync="measurements.option" :mouseTrack.sync="measurements.mouseTrack">
           <template #option1>
             <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
               {{ $magpie.currentVars.categories.o1 }}
@@ -27,8 +27,8 @@
           <template #feedback>
             <Wait :time="1" @done="
               $magpie.addTrialData({
-                response: responses.response,
-                ...responses.mouseTrack,
+                response: measurements.response,
+                ...measurements.mouseTrack,
                 ...$magpie.currentVars.categories,
               });
               $magpie.nextScreen()" />

@@ -3,7 +3,7 @@
 <Experiment>
   <template #screens>
     <Screen>
-      <template #0="{responses}">
+      <template #0="{measurements}">
       <p>Fries or soup?</p>
       <ImageSelectionInput
           :options="[

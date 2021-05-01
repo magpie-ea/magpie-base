@@ -3,14 +3,14 @@
 <Experiment>
   <template #screens>
     <Screen>
-      <template #0="{responses}">
+      <template #0="{measurements}">
         <p>Fries or soup?</p>
       <RatingInput
           left="Fries"
-          :response.sync="responses.lunch"
+          :response.sync="measurements.lunch"
           right="Soup" />
-        <p v-if="responses.lunch > 4">I concur!</p>
-        <button @click="$magpie.addTrialData(responses); $magpie.nextScreen();">Submit</button>
+        <p v-if="measurements.lunch > 4">I concur!</p>
+        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
       </template>
     </Screen>
   </template>

@@ -4,13 +4,13 @@
 <Experiment>
   <template #screens>
     <Screen>
-      <template #0="{responses}">
+      <template #0="{measurements}">
         <p>What's on the bread?</p>
         <ForcedChoiceInput
-            :response.sync="responses.bread"
+            :response.sync="measurements.bread"
             :options="['Ham', 'Jam']" />
-          <p v-if="responses.bread === 'Jam'">A sweet tooth, eh!?</p>
-        <button @click="$magpie.addTrialData(responses); $magpie.nextScreen();">Submit</button>
+          <p v-if="measurements.bread === 'Jam'">A sweet tooth, eh!?</p>
+        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
       </template>
     </Screen>
   </template>
@@ -23,12 +23,12 @@ The following example will submit the response directly on clicking it.
 <Experiment>
   <template #screens>
     <Screen>
-      <template #0="{responses}">
+      <template #0="{measurements}">
         <p>What's on the bread?</p>
         <ForcedChoiceInput
-            :response.sync="responses.bread"
+            :response.sync="measurements.bread"
             :options="['Ham', 'Jam']"
-            @update:response="$magpie.addTrialData(responses); $magpie.nextScreen();"/>
+            @update:response="$magpie.addTrialData(measurements); $magpie.nextScreen();"/>
       </template>
     </Screen>
   </template>

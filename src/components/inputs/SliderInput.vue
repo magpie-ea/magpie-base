@@ -3,14 +3,14 @@
 <Experiment>
   <template #screens>
     <Screen>
-      <template #0="{responses}">
+      <template #0="{measurements}">
         <p>Fries or soup?</p>
         <SliderInput
             left="Fries"
             right="Soup"
-            :response.sync="responses.lunch" />
-        Lunch: {{responses.lunch}}% Soup
-        <button @click="$magpie.addTrialData(responses); $magpie.nextScreen();">Submit</button>
+            :response.sync="measurements.lunch" />
+        Lunch: {{measurements.lunch}}% Soup
+        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
       </template>
     </Screen>
   </template>
