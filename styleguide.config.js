@@ -12,6 +12,10 @@ module.exports = {
       content: 'src/docs.md'
     },
     {
+      name: 'API',
+      content: 'src/API.md'
+    },
+    {
       name: 'Base Components',
       components: 'src/components/*.vue'
     },

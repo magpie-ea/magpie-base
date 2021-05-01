@@ -1,85 +1,70 @@
 <docs>
-### Instance properties ($magpie)
-The Experiment component, and thus the following properties of it, are also available in all components as the special $magpie property.
-
-* `id`
-  * The ID of the experiment
-* `currentTrial`
-  * an object with a single data point of each array in the trial data supplied to the experiment component
-* `addTrialData(data:object)`
-  * add a result for the current screen
-  * will automatically add `response_time
-* `addFacts(data:object)`
-  * add global variables that will be added to all result sets
-  * built-in facts are `experiment_start_time`, `experiment_end_time`, `experiment_duration`
-* `getResults()`
-  * returns all results that have been added thus far
-* `submit()`
-  * submit all results that have been added thus far to the magpie server
-* `submitIntermediateResults()`
-  * submit all results that have been added thus far as intermediate results to the magpie server
-* `setProgress(percentage:float)`
-  * set the progress that will be displayed in the progress bar, pass `-1` for no progress bar
-* `mousetracking` object
-  * `start(x:int, y:int)`
-    * (Re)start mouse tracking with origin set to the given coordinates
-  * `getMouseTrack(rate:int = 15)`
-    * returns an object with mouse tacking data `{mt_x, mt_y, mt_time, mt_start_time}` at the resolution of `rate`
-* `socket` object, only defined when socketURL is set in the config
-  * `participantId`
-    * the random ID of the current participant
-  * `state`
-    * string, reactive, one of `CONNECTING`, `CONNECTED`, `WAITING`, `JOINED`, `ERROR`
-  * `participants
-    * array, reactive, an array of IDs of participants that are currently online in the same experiment room
-  * `broadcast(event:string, payload:any)`
-    * sends an event to all participants in the current room
-  * `on(event:string, listener:function)`
-    * listen to socket events
-  * `off(event:string, listener:function)`
-    * remove a listener
-  * `once(event:string, listener:function)`
-    * listen to a socket event once
-
-### Populating trial data with an array
+### Using a arrays for specifying independent variables
 
 The Experiment component allows you to define trial data to make it conveniently accessible during your experiment.
 For every source of trial data you can provide a label and an array. Later you will be able to automatically iterate over that array by accessing the label as a subproperty of `$magpie.currentTrial`.
 
 ```vue
-<Experiment :trials="{ color: ['blue', 'green', 'yellow'] }">
+<Experiment variables="{ color: ['blue', 'green', 'yellow'] }">
   <template #screens>
     <Screen>
-      {{ $magpie.currentTrial.color }}
+      {{ $magpie.currentVars.color }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.currentTrial.color }}
+      {{ $magpie.currentVars.color }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.currentTrial.color }}
+      {{ $magpie.currentVars.color }}
     </Screen>
   </template>
 </Experiment>
 ```
 
-### Populating trial data with a function
+### Using a function as a variable source
 In case you want to generate data on the fly or have a more sophisticated data selection mechanism in mind, you can also specify a getter function which will return the next item.
 
 ```vue
-<Experiment :trials="{number: () => Math.random()}">
+<Experiment variables="{number: () => Math.random()}">
   <template #screens>
     <Screen>
-      {{ $magpie.currentTrial.number }}
+      {{ $magpie.currentVars.number }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.currentTrial.number }}
+      {{ $magpie.currentVars.number }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.currentTrial.number }}
+      {{ $magpie.currentVars.number }}
+    </Screen>
+  </template>
+</Experiment>
+```
+
+### Variables shorthand
+There's also a shorthand for fetching variables in a screen.
+
+```vue
+<Experiment variables="{ color: ['blue', 'green', 'yellow'] }">
+  <template #screens>
+    <Screen>
+      <template #0="{variables: {color}, nextScreen}">
+        {{ color }}
+        <button @click="nextScreen()">next</button>
+      </template>
+    </Screen>
+    <Screen>
+      <template #0="{variables: {color}, nextScreen}">
+        {{ color }}
+        <button @click="nextScreen()">next</button>
+      </template>
+    </Screen>
+    <Screen>
+      <template #0="{variables: {color}}">
+        {{ color }}
+      </template>
     </Screen>
   </template>
 </Experiment>
@@ -90,21 +75,21 @@ In case you want to generate data on the fly or have a more sophisticated data s
 Besides the `screens` slot, the Experiment component also provides an optional `title` slot that allows you to display header information on all screens of your experiment.
 
 ```vue
-<Experiment :trials="{number: () => Math.random()}">
+<Experiment variables="{number: () => Math.random()}">
   <template #title>
     My experiment
   </template>
   <template #screens>
     <Screen>
-      {{ $magpie.currentTrial.number }}
+      {{ $magpie.currentVars.number }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.currentTrial.number }}
+      {{ $magpie.currentVars.number }}
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.currentTrial.number }}
+      {{ $magpie.currentVars.number }}
     </Screen>
   </template>
 </Experiment>
@@ -128,7 +113,7 @@ export default {
      * You can either provide an array of data or a function that returns one sample at a time.
      * This data will be available at run time via `$magpie.currentTrial`
      */
-    trials: {
+    variables: {
       type: Object,
       default: () => ({})
     },
@@ -156,7 +141,7 @@ export default {
     return {
       currentScreen: 0,
       responseTimeStart: 0,
-      magpie: new Magpie(this, this.trials, this.$options)
+      magpie: new Magpie(this, this.variables, this.$options)
     };
   },
   mounted() {
@@ -183,7 +168,7 @@ export default {
       }
       // Start new trial data and restart response timer
       this.responseTimeStart = Date.now();
-      this.magpie.currentTrialData = {};
+      this.magpie.currentVarsData = {};
 
       // Scroll to top of experiment element
       const expPos = this.$el.getBoundingClientRect();

@@ -1,10 +1,8 @@
 <template>
   <!--
-  Set your experiment id here and
   Define your data sources with the trials attribute -->
   <Experiment
-    id="test1234"
-    :trials="{
+    :variables="{
       forced_choice,
       multi_dropdown,
       sentenceChoice,
@@ -45,24 +43,18 @@
       <!-- Here we create screens in a loop for every entry in forced_choice -->
       <template v-for="i in forced_choice_length">
         <Screen :key="'forcedchoice-' + i">
-          <template #0>
+          <template
+            #0="{measurements, variables: {forced_choice}, nextScreenAndSave}"
+          >
             <!-- We automatically retrieve trial data from our data sources using $magpie.currentTrial.<data-source>
             Once the participant has made a choice, the update:response event fires and we save the answer and progress to the next screeen.
             -->
-            <img :src="$magpie.currentTrial.forced_choice.picture" alt="" />
-            <p v-text="$magpie.currentTrial.forced_choice.question"></p>
+            <img :src="forced_choice.picture" alt="" />
+            <p v-text="forced_choice.question"></p>
             <ForcedChoiceInput
-              :options="[
-                $magpie.currentTrial.forced_choice.option1,
-                $magpie.currentTrial.forced_choice.option2
-              ]"
-              @update:response="
-                $magpie.addTrialData({
-                  question: $magpie.currentTrial.forced_choice.question,
-                  answer: $event
-                });
-                $magpie.nextScreen();
-              "
+              :options="[forced_choice.option1, forced_choice.option2]"
+              :response.sync="measurements.response"
+              @update:response="nextScreenAndSave()"
             />
           </template>
         </Screen>
@@ -70,32 +62,29 @@
 
       <template v-for="i in multi_dropdown_length">
         <Screen :key="'multidropdown-' + i">
-          <template #0="{responses}">
+          <template #0="{measurements, variables: {multi_dropdown}}">
             <!-- Use $set for setting new properties to existing objects -->
             <CompletionInput
               :text="
-                $magpie.currentTrial.multi_dropdown.sentence_chunk_1 +
+                multi_dropdown.sentence_chunk_1 +
                 ' %s ' +
-                $magpie.currentTrial.multi_dropdown.sentence_chunk_2 +
+                multi_dropdown.sentence_chunk_2 +
                 ' %s ' +
-                $magpie.currentTrial.multi_dropdown.sentence_chunk_3
+                multi_dropdown.sentence_chunk_3
               "
               :options="[
-                $magpie.currentTrial.multi_dropdown.choice_options_1.split('|'),
-                $magpie.currentTrial.multi_dropdown.choice_options_2.split('|')
+                multi_dropdown.choice_options_1.split('|'),
+                multi_dropdown.choice_options_2.split('|')
               ]"
-              :responses.sync="responses.completion"
+              :responses.sync="measurements.completion"
             />
             <!-- Only show button when both responses are given -->
             <button
               v-if="
-                responses.completion &&
-                responses.completion.filter(Boolean).length === 2
+                measurements.completion &&
+                measurements.completion.filter(Boolean).length === 2
               "
-              @click="
-                $magpie.addTrialData({ response: responses.completion });
-                $magpie.nextScreen();
-              "
+              @click="$magpie.saveAndNextScreen()"
             >
               Done
             </button>
@@ -108,48 +97,38 @@
       <template v-for="i in sentenceChoice_length / 2">
         <template v-for="j in 2">
           <Screen :key="'sentenceChoice-' + i + '' + j">
-            <template #0>
-              <img :src="$magpie.currentTrial.sentenceChoice.picture" alt="" />
-              <p v-text="$magpie.currentTrial.sentenceChoice.question"></p>
+            <template
+              #0="{variables: {sentenceChoice}, measurements, saveAndNextScreen}"
+            >
+              <img :src="sentenceChoice.picture" alt="" />
+              <p v-text="sentenceChoice.question"></p>
               <ForcedChoiceInput
-                :options="[
-                  $magpie.currentTrial.sentenceChoice.option1,
-                  $magpie.currentTrial.sentenceChoice.option2
-                ]"
-                @update:response="
-                  $magpie.addTrialData({
-                    question: $magpie.currentTrial.sentenceChoice.question,
-                    answer: $event
-                  });
-                  $magpie.nextScreen();
-                "
+                :options="[sentenceChoice.option1, sentenceChoice.option2]"
+                :response.sync="measurements.response"
+                @update:response="saveAndNextScreen()"
               />
             </template>
           </Screen>
         </template>
         <template v-for="j in 2">
           <Screen :key="'sentenceChoice-' + i + '' + j">
-            <template #0>
-              <p>{{ $magpie.currentTrial.imageSelection.question }}</p>
+            <template
+              #0="{measurements, variables: {imageSelection}, saveAndNextScreen}"
+            >
+              <p>{{ imageSelection.question }}</p>
               <ImageSelectionInput
                 :options="[
                   {
-                    label: $magpie.currentTrial.imageSelection.option1,
-                    src: $magpie.currentTrial.imageSelection.picture1
+                    label: imageSelection.option1,
+                    src: imageSelection.picture1
                   },
                   {
-                    label: $magpie.currentTrial.imageSelection.option2,
-                    src: $magpie.currentTrial.imageSelection.picture2
+                    label: imageSelection.option2,
+                    src: imageSelection.picture2
                   }
                 ]"
-                @update:response="
-                  $magpie.addTrialData({
-                    question:
-                      $magpie.currentTrial.imageSelection.question || '',
-                    answer: $event
-                  });
-                  $magpie.nextScreen();
-                "
+                :response.sync="measurements.response"
+                @update:response="saveAndNextScreen()"
               />
             </template>
           </Screen>
@@ -161,26 +140,22 @@
           <template #0="{nextSlide}">
             <Wait :time="500" @done="nextSlide" />
           </template>
-          <template #1="{nextSlide}">
+
+          <template #1="{nextSlide, variables: {sliderRating}}">
             <Wait :time="1500" @done="nextSlide" />
-            <img :src="$magpie.currentTrial.sliderRating.picture" alt="" />
+            <img :src="sliderRating.picture" alt="" />
           </template>
-          <template #2="{responses}">
-            <p>{{ $magpie.currentTrial.sliderRating.question }}</p>
+
+          <template
+            #2="{measurements, variables: {sliderRating}, saveAndNextScreen}"
+          >
+            <p>{{ sliderRating.question }}</p>
             <SliderInput
-              :left="$magpie.currentTrial.sliderRating.optionLeft"
-              :right="$magpie.currentTrial.sliderRating.optionRight"
-              :response.sync="responses.slider"
+              :left="sliderRating.optionLeft"
+              :right="sliderRating.optionRight"
+              :response.sync="measurements.slider"
             />
-            <button
-              @click="
-                $magpie.addTrialData({
-                  question: $magpie.currentTrial.sliderRating.question || '',
-                  answer: responses.slider
-                });
-                $magpie.nextScreen();
-              "
-            >
+            <button @click="saveAndNextScreen()">
               Done
             </button>
           </template>
@@ -190,21 +165,16 @@
       <ConnectInteractive />
 
       <Screen>
-        <template #0="{responses}">
-          <Chat :messages.sync="responses.messages"></Chat>
-          <button
-            @click="
-              $magpie.addTrialData(responses);
-              $magpie.nextScreen();
-            "
-          >
+        <template #0="{measurements, saveAndNextScreen}">
+          <Chat :messages.sync="measurements.messages"></Chat>
+          <button @click="saveAndNextScreen()">
             Next
           </button>
         </template>
       </Screen>
 
       <Screen key="additional-information" title="Additional information">
-        <template #0="{responses}">
+        <template #0="{measurements, saveAndNextScreen}">
           <p>
             Answering the following questions is optional, but your answers will
             help us analyze our results.
@@ -213,13 +183,17 @@
             <p>
               <label
                 >Age
-                <input v-model="responses.age" type="number" max="110" min="18"
+                <input
+                  v-model="measurements.age"
+                  type="number"
+                  max="110"
+                  min="18"
               /></label>
             </p>
             <p>
               <label
                 >Gender
-                <select v-model="responses.gender"
+                <select v-model="measurements.gender"
                   ><option value="male">male</option>
                   <option value="female">female</option>
                   <option value="other">other</option></select
@@ -229,7 +203,7 @@
             <p>
               <label
                 >Level of Eduction
-                <select v-model="responses.education"
+                <select v-model="measurements.education"
                   ><option value="Graduated Highschool"
                     >Graduated Highschool</option
                   >
@@ -242,21 +216,18 @@
               <label
                 >Native langauges
                 <input
-                  v-model="responses.languages"
+                  v-model="measurements.languages"
                   type="text"
                   placeholder="the langauge(s) spoken at home when you were a child"
               /></label>
             </p>
             Further comments
-            <TextareaInput :response.sync="responses.education"></TextareaInput>
+            <TextareaInput
+              :response.sync="measurements.education"
+            ></TextareaInput>
           </div>
 
-          <button
-            @click="
-              $magpie.addTrialData(responses);
-              $magpie.nextScreen();
-            "
-          >
+          <button @click="saveAndNextScreen()">
             Next
           </button>
         </template>

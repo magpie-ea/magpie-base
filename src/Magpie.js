@@ -14,7 +14,7 @@ export default class Magpie extends EventEmitter {
     return this.experiment.$el;
   }
 
-  constructor(experiment, trials, options) {
+  constructor(experiment, variables, options) {
     super();
 
     this.experiment = experiment;
@@ -119,35 +119,36 @@ export default class Magpie extends EventEmitter {
 
     Vue.observable(this);
 
-    // Setup magic "trial" slot property
-    const currentTrial = {};
-    this.trials = trials;
-    this.currentTrialData = {};
-
     /**
      * an object with a single data point of each array in the trial data supplied to the experiment component
      * @instance
-     * @member currentTrial
+     * @member currentVars
      * @memberOf Magpie
      * @type {Object}
      */
-    this.currentTrial = currentTrial;
-    for (const type of Object.keys(this.trials)) {
-      if (Array.isArray(this.trials[type])) {
-        currentTrial.__defineGetter__(type, () => {
-          if (this.currentTrialData[type]) {
-            return this.currentTrialData[type];
+    this.currentVars = {};
+
+    this.variables = variables;
+    this.currentVarsData = {};
+
+    for (const type of Object.keys(this.variables)) {
+      if (Array.isArray(this.variables[type])) {
+        this.currentVars.__defineGetter__(type, () => {
+          if (this.currentVarsData[type]) {
+            return this.currentVarsData[type];
           }
-          this.currentTrialData[type] = this.trials[type].shift();
-          return this.currentTrialData[type];
+          this.currentVarsData[type] = this.variables[type].shift();
+          return this.currentVarsData[type];
         });
-      } else if ('function' === typeof this.trials[type]) {
-        currentTrial.__defineGetter__(type, () => {
-          if (this.currentTrialData[type]) {
-            return this.currentTrialData[type];
+      } else if ('function' === typeof this.variables[type]) {
+        this.currentVars.__defineGetter__(type, () => {
+          if (this.currentVarsData[type]) {
+            return this.currentVarsData[type];
           }
-          this.currentTrialData[type] = this.trials[type](this.currentScreen);
-          return this.currentTrialData[type];
+          this.currentVarsData[type] = this.variables[type](
+            this.experiment.currentScreen
+          );
+          return this.currentVarsData[type];
         });
       } else {
         throw new Error(

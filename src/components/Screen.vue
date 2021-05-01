@@ -47,23 +47,21 @@ You can go to the next slide with the `nextSlide` function that is exposed by th
 </Experiment>
 ```
 
-### Store responses
-The screen component also conveniently exposes an object for you to store in the responses of the current screen, so you can later submit them using `$magpie.addResult`.
+### Store measurements
+The screen component also conveniently exposes an object for you to store in the responses of the current screen, so you can later save them.
 
 ```vue
 <Experiment>
   <template #screens>
     <Screen title="Wow.">
-      <template #0="{nextSlide, responses}">
+      <template #0="{measurements, saveAndNextScreen}">
         Hello
-        <TextareaInput :response.sync="responses.text" />
-        {{ responses.text }}?
-        <button v-if="responses.text" @click="nextSlide">Done</button>
-      </template>
-      <template #1="{responses}">
-        {{ responses.text }}!
+        <TextareaInput :response.sync="measurements.text" />
+        {{ measurements.text }}?
+        <button v-if="measurements.text" @click="saveAndNextScreen()">Done</button>
       </template>
     </Screen>
+    <DebugResults />
   </template>
 </Experiment>
 ```
@@ -75,9 +73,20 @@ The screen component also conveniently exposes an object for you to store in the
     <slot name="default">
       <!-- @slot Multi-slot with slide number as name to maintain different slides
            @binding {function} nextSlide Jump to the next slide
-           @binding {object} responses a temporary object to store your responses before adding them to the results
+           @binding {object} measurements a temporary object to store your responses before adding them to the results
+           @binding {function} nextScreen Jump to the next screen
+           @binding {function} saveAndNextScreen Jump to the next screen, saving currently recorded measurements
+           @binding {function} save save currently recorded measurements
       -->
-      <slot :name="currentSlide" :nextSlide="nextSlide" :responses="responses">
+      <slot
+        :name="currentSlide"
+        :nextSlide="nextSlide"
+        :measurements="measurements"
+        :nextScreen="$magpie.nextScreen"
+        :saveAndNextScreen="saveAndNextScreen"
+        :save="save"
+        :variables="$magpie.currentVars"
+      >
         Slide #{{ currentSlide }} could not be found
       </slot>
     </slot>
@@ -111,7 +120,7 @@ export default {
   data() {
     return {
       currentSlide: 0,
-      responses: {}
+      measurements: {}
     };
   },
   mounted() {
@@ -137,6 +146,17 @@ export default {
        */
       this.$emit('mousemove', { x: e.layerX, y: e.layerY });
       this.$magpie.mousetracking.onMouseMove(e);
+    },
+    save() {
+      const variables = Object.assign(
+        {},
+        ...Object.values(this.$magpie.currentVarsData)
+      );
+      this.$magpie.addTrialData({ ...variables, ...this.measurements });
+    },
+    saveAndNextScreen(index) {
+      this.save();
+      this.$magpie.nextScreen(index);
     }
   }
 };

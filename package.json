@@ -4,8 +4,8 @@
   "description": "Provides base components for _magpie frontend projects",
   "author": "_magpie project",
   "scripts": {
-    "docs": "vue-cli-service styleguidist",
-    "docs:build": "vue-cli-service styleguidist:build",
+    "docs": "jsdoc2md src/Magpie.js src/Socket.js src/Mousetracking.js > src/API.md; vue-cli-service styleguidist",
+    "docs:build": "jsdoc2md src/Magpie.js src/Socket.js src/Mousetracking.js > src/API.md; vue-cli-service styleguidist:build",
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "stylelint": "stylelint src",
@@ -32,6 +32,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^5.0.0",
+    "jsdoc-to-markdown": "^7.0.1",
     "prettier": "2.x",
     "stylelint": "^13.7.2",
     "vue-cli-plugin-styleguidist": "~4.31.1",
