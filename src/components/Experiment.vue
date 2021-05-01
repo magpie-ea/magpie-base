@@ -5,7 +5,7 @@ The Experiment component allows you to define trial data to make it conveniently
 For every source of trial data you can provide a label and an array. Later you will be able to automatically iterate over that array by accessing the label as a subproperty of `$magpie.currentTrial`.
 
 ```vue
-<Experiment variables="{ color: ['blue', 'green', 'yellow'] }">
+<Experiment :variables="{ color: ['blue', 'green', 'yellow'] }">
   <template #screens>
 
     <Screen>
@@ -30,7 +30,7 @@ For every source of trial data you can provide a label and an array. Later you w
 In case you want to generate data on the fly or have a more sophisticated data selection mechanism in mind, you can also specify a getter function which will return the next item.
 
 ```vue
-<Experiment variables="{number: () => Math.random()}">
+<Experiment :variables="{number: () => Math.random()}">
   <template #screens>
 
     <Screen>
@@ -54,7 +54,7 @@ In case you want to generate data on the fly or have a more sophisticated data s
 There's also a shorthand for fetching variables in a screen.
 
 ```vue
-<Experiment variables="{ color: ['blue', 'green', 'yellow'] }">
+<Experiment :variables="{ color: ['blue', 'green', 'yellow'] }">
   <template #screens>
 
     <Screen>
@@ -86,7 +86,7 @@ There's also a shorthand for fetching variables in a screen.
 Besides the `screens` slot, the Experiment component also provides an optional `title` slot that allows you to display header information on all screens of your experiment.
 
 ```vue
-<Experiment variables="{number: () => Math.random()}">
+<Experiment :variables="{number: () => Math.random()}">
   <template #title>
     My experiment
   </template>
