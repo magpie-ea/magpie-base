@@ -5,7 +5,8 @@
   "author": "_magpie project",
   "scripts": {
     "docs": "jsdoc2md src/Magpie.js src/Socket.js src/Mousetracking.js > src/API.md; vue-cli-service styleguidist",
-    "docs:build": "jsdoc2md src/Magpie.js src/Socket.js src/Mousetracking.js > src/API.md; vue-cli-service styleguidist:build",
+    "docs:build": "vue-cli-service styleguidist:build",
+    "jsdoc": "jsdoc2md src/Magpie.js src/Socket.js src/Mousetracking.js > src/API.md",
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "stylelint": "stylelint src",
