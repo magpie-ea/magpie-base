@@ -1,5 +1,5 @@
 <docs>
-You can use HTML's `<video>` tag to play video footage.
+You can use HTML's video tag to play video footage.
 
 For more details see [HTML Video Element docs on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video).
 ```vue

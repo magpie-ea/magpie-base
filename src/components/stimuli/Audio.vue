@@ -1,5 +1,5 @@
 <docs>
-You can use HTML's `<audio>` tag to play audio.
+You can use HTML's audio tag to play audio.
 
 For more details see [HTML Audio Element docs on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio).
 ```vue
