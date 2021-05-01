@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import MagpieVue from '../src/index';
+import VueKonva from 'vue-konva';
+
+Vue.use(VueKonva, { prefix: 'Canvas' });
 
 Vue.use(MagpieVue, {
   experimentId: '171',

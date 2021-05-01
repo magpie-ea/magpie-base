@@ -19,9 +19,11 @@
     "eslint-plugin-prettier": "^3.1.4"
   },
   "dependencies": {
+    "konva": "^7.2.5",
     "lodash": "^4.17.20",
     "magpie-base": "^0.3.0",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-konva": "^2.1.7"
   },
   "browserslist": [
     "> 1%",

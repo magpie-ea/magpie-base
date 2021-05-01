@@ -33,9 +33,11 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^5.0.0",
     "jsdoc-to-markdown": "^7.0.1",
+    "konva": "^7.2.5",
     "prettier": "2.x",
     "stylelint": "^13.7.2",
     "vue-cli-plugin-styleguidist": "~4.31.1",
+    "vue-konva": "^2.1.7",
     "vue-template-compiler": "^2.6.12"
   },
   "bin": {

@@ -307,7 +307,8 @@ button:focus {
   background-color: #324d93;
 }
 
-img {
+img,
+video {
   max-width: 100%;
   height: auto;
   max-height: 400px;
