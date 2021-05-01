@@ -1,8 +1,7 @@
 <docs>
-
-```vue
 The Synth component is a basic sound Synthesizer based on [Tone.js](https://tonejs.github.io/).
 
+```vue
 <Experiment>
   <template #screens>
     <Screen title="Click to beep.">
