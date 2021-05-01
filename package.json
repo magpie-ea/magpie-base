@@ -36,6 +36,7 @@
     "konva": "^7.2.5",
     "prettier": "2.x",
     "stylelint": "^13.7.2",
+    "tone": "^14.7.77",
     "vue-cli-plugin-styleguidist": "~4.31.1",
     "vue-konva": "^2.1.7",
     "vue-template-compiler": "^2.6.12"
