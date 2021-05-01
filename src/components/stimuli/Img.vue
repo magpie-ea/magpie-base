@@ -10,7 +10,7 @@ For more details see [HTML img Element docs on MDN](https://developer.mozilla.or
 
       <template #0>
         This is a sealion.<br/>
-        <img src="public/img/sea_lion.jpg" />
+        <img src="img/sea_lion.jpg" />
       </template>
 
     </Screen>

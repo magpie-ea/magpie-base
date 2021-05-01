@@ -12,7 +12,7 @@ For more details see [HTML Audio Element docs on MDN](https://developer.mozilla.
         This is a dog.<br/>
         <button @click="$refs.audio.play()">Start</button>
         <button @click="$refs.audio.pause()">Stop</button>
-        <audio ref="audio" src="public/audio/dog_bark.ogg" loop />
+        <audio ref="audio" src="audio/dog_bark.ogg" loop />
       </template>
 
     </Screen>

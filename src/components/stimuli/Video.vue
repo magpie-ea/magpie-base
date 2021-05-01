@@ -12,7 +12,7 @@ For more details see [HTML Video Element docs on MDN](https://developer.mozilla.
         This is a sealion.<br/>
         <button @click="$refs.video.play()">Start</button>
         <button @click="$refs.video.pause()">Stop</button>
-        <video ref="video" src="public/video/sea_lions.webm" loop />
+        <video ref="video" src="video/sea_lions.webm" loop />
       </template>
 
     </Screen>
