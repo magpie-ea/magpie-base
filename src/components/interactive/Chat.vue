@@ -47,9 +47,7 @@ This interactive component provides participants the opportunity to chat with ea
         placeholder="Type your message to the other participant here."
         @keydown.enter="send"
       ></textarea>
-      <button @click.stop="send()">
-        Send
-      </button>
+      <button @click.stop="send()">Send</button>
     </div>
   </div>
 </template>

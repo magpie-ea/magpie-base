@@ -42,7 +42,8 @@
              */
             $emit('update:responses', answers);
           "
-          ><option
+        >
+          <option
             v-for="option in options[i]"
             :key="option"
             v-text="option"
