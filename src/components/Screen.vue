@@ -68,6 +68,41 @@ The screen component also conveniently exposes an object for you to store in the
   </template>
 </Experiment>
 ```
+
+### Validate measurements
+The screen can also be used to validate observations.
+
+```vue
+<Experiment>
+  <template #screens>
+
+    <Screen :validations="{
+      text: {
+        minLength: $magpie.v.minLength(4),
+        alpha: $magpie.v.alpha
+      }
+    }">
+
+      <template #0="{measurements, saveAndNextScreen, validations}">
+        Hello
+        <TextareaInput :response.sync="measurements.text" />
+
+        {{ measurements.text }}?
+
+        <button v-if="!validations.text.$error" @click="saveAndNextScreen()">Done</button>
+
+        <p v-else>At least 4 characters required and only alphabetic characters, please.</p>
+
+      </template>
+
+    </Screen>
+
+    <DebugResults />
+
+  </template>
+</Experiment>
+```
+
 </docs>
 
 <template>
@@ -75,11 +110,13 @@ The screen component also conveniently exposes an object for you to store in the
     <h2 v-if="title">{{ title }}</h2>
     <slot name="default">
       <!-- @slot Multi-slot with slide number as name to maintain different slides
-           @binding {function} nextSlide Jump to the next slide
+           @binding {object} variables An object that exposes the same variables as $magpie.currentVars
            @binding {object} measurements a temporary object to store your responses before adding them to the results
+           @binding {object} validations an object that exposes validation results as defined by Screen's validation property
            @binding {function} nextScreen Jump to the next screen
            @binding {function} saveAndNextScreen Jump to the next screen, saving currently recorded measurements
            @binding {function} save save currently recorded measurements
+           @binding {function} nextSlide Jump to the next slide
       -->
       <slot
         :name="currentSlide"
@@ -89,6 +126,7 @@ The screen component also conveniently exposes an object for you to store in the
         :saveAndNextScreen="saveAndNextScreen"
         :save="save"
         :variables="$magpie.currentVars"
+        :validations="$v.measurements"
       >
         Slide #{{ currentSlide }} could not be found
       </slot>
@@ -97,12 +135,15 @@ The screen component also conveniently exposes an object for you to store in the
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate';
+
 /**
  * This component lets you create experiment sections that appear one after the other like a slideshow.
  * Trial data
  */
 export default {
   name: 'Screen',
+  mixins: [validationMixin],
   props: {
     /**
      * The title of this screen
@@ -118,13 +159,30 @@ export default {
     progress: {
       type: Number,
       default: -1
+    },
+    /**
+     * Define validators for measurements
+     */
+    validations: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
     return {
       currentSlide: -1,
-      measurements: {}
+      measurements: Object.fromEntries(
+        Object.entries(this.validations).map(([field]) => [field, null])
+      )
     };
+  },
+  watch: {
+    measurements: {
+      handler() {
+        this.$v.measurements.$touch();
+      },
+      deep: true
+    }
   },
   mounted() {
     this.currentSlide = 0;
@@ -134,6 +192,11 @@ export default {
   },
   beforeDestroy() {
     this.$magpie.$el.removeEventListener('mousemove', this.onMouseMove);
+  },
+  validations() {
+    return {
+      measurements: this.validations
+    };
   },
   methods: {
     nextSlide(index) {

@@ -1,6 +1,7 @@
 import EventEmitter from 'events';
 import Vue from 'vue';
 import Socket from './Socket';
+import * as validators from '../src/validators';
 import _ from 'lodash';
 import Mousetracking from './Mousetracking';
 import packageJSON from '../package.json';
@@ -12,6 +13,28 @@ import packageJSON from '../package.json';
 export default class Magpie extends EventEmitter {
   get $el() {
     return this.experiment.$el;
+  }
+
+  /**
+   * Gives easy access to validators. Validation is based on [vuelidate](https://vuelidate.js.org). These are [the built-in validators](https://vuelidate.js.org/#sub-builtin-validators)
+   * @instance
+   * @member validators
+   * @memberOf Magpie
+   * @type {object}
+   */
+  get validators() {
+    return validators;
+  }
+
+  /**
+   * Shorthand for $magpie.validators
+   * @instance
+   * @member v
+   * @memberOf Magpie
+   * @type {object}
+   */
+  get v() {
+    return validators;
   }
 
   constructor(experiment, variables, options) {
