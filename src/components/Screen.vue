@@ -165,7 +165,9 @@ export default {
      */
     validations: {
       type: Object,
-      default: () => {}
+      default() {
+        return {};
+      }
     }
   },
   data() {
