@@ -51,29 +51,16 @@ In case you want to generate data on the fly or have a more sophisticated data s
 ```
 
 ### Variables shorthand
-There's also a shorthand for fetching variables in a screen.
+There's also a shorthand for fetching variables in a screen. Here we use a for-loop for a change, to illustrate how to iterate.
 
 ```vue
 <Experiment :variables="{ color: ['blue', 'green', 'yellow'] }">
   <template #screens>
 
-    <Screen>
+    <Screen v-for="i in 3" :key="i">
       <template #0="{variables: {color}, nextScreen}">
-        {{ color }}
+        Screen {{i}}: {{ color }}
         <button @click="nextScreen()">next</button>
-      </template>
-    </Screen>
-
-    <Screen>
-      <template #0="{variables: {color}, nextScreen}">
-        {{ color }}
-        <button @click="nextScreen()">next</button>
-      </template>
-    </Screen>
-
-    <Screen>
-      <template #0="{variables: {color}}">
-        {{ color }}
       </template>
     </Screen>
 
@@ -156,6 +143,7 @@ export default {
     };
   },
   mounted() {
+    window.$magpie = this.magpie;
     if (this.magpie.socket) {
       this.magpie.socket.initialize();
     }
