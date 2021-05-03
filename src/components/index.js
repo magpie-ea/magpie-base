@@ -2,6 +2,7 @@ export { default as Experiment } from './Experiment';
 export { default as Screen } from './Screen';
 
 export { default as CompletionInput } from './inputs/CompletionInput';
+export { default as DropdownInput } from './inputs/DropdownInput';
 export { default as ForcedChoiceInput } from './inputs/ForcedChoiceInput';
 export { default as ImageSelectionInput } from './inputs/ImageSelectionInput';
 export { default as KeypressInput } from './inputs/KeypressInput';
