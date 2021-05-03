@@ -44,7 +44,11 @@
       <template v-for="i in forced_choice_length">
         <Screen :key="'forcedchoice-' + i">
           <template
-            #0="{measurements, variables: {forced_choice}, nextScreenAndSave}"
+            #0="{
+              measurements,
+              variables: { forced_choice },
+              saveAndNextScreen
+            }"
           >
             <!-- We automatically retrieve trial data from our data sources using $magpie.currentTrial.<data-source>
             Once the participant has made a choice, the update:response event fires and we save the answer and progress to the next screeen.
@@ -54,7 +58,7 @@
             <ForcedChoiceInput
               :options="[forced_choice.option1, forced_choice.option2]"
               :response.sync="measurements.response"
-              @update:response="nextScreenAndSave()"
+              @update:response="saveAndNextScreen()"
             />
           </template>
         </Screen>
@@ -62,7 +66,13 @@
 
       <template v-for="i in multi_dropdown_length">
         <Screen :key="'multidropdown-' + i">
-          <template #0="{measurements, variables: {multi_dropdown}}">
+          <template
+            #0="{
+              measurements,
+              variables: { multi_dropdown },
+              saveAndNextScreen
+            }"
+          >
             <!-- Use $set for setting new properties to existing objects -->
             <CompletionInput
               :text="
@@ -84,7 +94,7 @@
                 measurements.completion &&
                 measurements.completion.filter(Boolean).length === 2
               "
-              @click="$magpie.saveAndNextScreen()"
+              @click="saveAndNextScreen()"
             >
               Done
             </button>
@@ -98,7 +108,11 @@
         <template v-for="j in 2">
           <Screen :key="'sentenceChoice-' + i + '' + j">
             <template
-              #0="{variables: {sentenceChoice}, measurements, saveAndNextScreen}"
+              #0="{
+                variables: { sentenceChoice },
+                measurements,
+                saveAndNextScreen
+              }"
             >
               <img :src="sentenceChoice.picture" alt="" />
               <p v-text="sentenceChoice.question"></p>
@@ -113,7 +127,11 @@
         <template v-for="j in 2">
           <Screen :key="'sentenceChoice-' + i + '' + j">
             <template
-              #0="{measurements, variables: {imageSelection}, saveAndNextScreen}"
+              #0="{
+                measurements,
+                variables: { imageSelection },
+                saveAndNextScreen
+              }"
             >
               <p>{{ imageSelection.question }}</p>
               <ImageSelectionInput
@@ -137,17 +155,21 @@
 
       <template v-for="i in sliderRating_length">
         <Screen :key="'sliderRating-' + i">
-          <template #0="{nextSlide}">
+          <template #0="{ nextSlide }">
             <Wait :time="500" @done="nextSlide" />
           </template>
 
-          <template #1="{nextSlide, variables: {sliderRating}}">
+          <template #1="{ nextSlide, variables: { sliderRating } }">
             <Wait :time="1500" @done="nextSlide" />
             <img :src="sliderRating.picture" alt="" />
           </template>
 
           <template
-            #2="{measurements, variables: {sliderRating}, saveAndNextScreen}"
+            #2="{
+              measurements,
+              variables: { sliderRating },
+              saveAndNextScreen
+            }"
           >
             <p>{{ sliderRating.question }}</p>
             <SliderInput
@@ -155,9 +177,7 @@
               :right="sliderRating.optionRight"
               :response.sync="measurements.slider"
             />
-            <button @click="saveAndNextScreen()">
-              Done
-            </button>
+            <button @click="saveAndNextScreen()">Done</button>
           </template>
         </Screen>
       </template>
@@ -165,21 +185,19 @@
       <ConnectInteractive />
 
       <Screen>
-        <template #0="{measurements, saveAndNextScreen}">
+        <template #0="{ measurements, saveAndNextScreen }">
           <Chat :messages.sync="measurements.messages"></Chat>
-          <button @click="saveAndNextScreen()">
-            Next
-          </button>
+          <button @click="saveAndNextScreen()">Next</button>
         </template>
       </Screen>
 
       <Screen key="additional-information" title="Additional information">
-        <template #0="{measurements, saveAndNextScreen}">
+        <template #0="{ measurements, saveAndNextScreen }">
           <p>
             Answering the following questions is optional, but your answers will
             help us analyze our results.
           </p>
-          <div style="text-align: left; width: 200px; margin: 0 auto;">
+          <div style="text-align: left; width: 200px; margin: 0 auto">
             <p>
               <label
                 >Age
@@ -193,24 +211,24 @@
             <p>
               <label
                 >Gender
-                <select v-model="measurements.gender"
-                  ><option value="male">male</option>
-                  <option value="female">female</option>
-                  <option value="other">other</option></select
-                ></label
-              >
+                <DropdownInput
+                  :options="['male', 'female', 'other']"
+                  :response.sync="measurements.education"
+                />
+              </label>
             </p>
             <p>
               <label
                 >Level of Eduction
-                <select v-model="measurements.education"
-                  ><option value="Graduated Highschool"
-                    >Graduated Highschool</option
-                  >
-                  <option value="Graduated College">Graduated College</option>
-                  <option value="Higher degree">Higher degree</option></select
-                ></label
-              >
+                <DropdownInput
+                  :options="[
+                    'Graduated Highschool',
+                    'Graduated Collage',
+                    'Higher degree'
+                  ]"
+                  :response.sync="measurements.education"
+                />
+              </label>
             </p>
             <p>
               <label
@@ -227,9 +245,7 @@
             ></TextareaInput>
           </div>
 
-          <button @click="saveAndNextScreen()">
-            Next
-          </button>
+          <button @click="saveAndNextScreen()">Next</button>
         </template>
       </Screen>
 
@@ -238,9 +254,7 @@
       <!-- While developing your experiment, using the DebugResults screen is fine,
       once you're going live, you can use the <SubmitResults> screen to automatically send your experimental data to the server. -->
 
-      <Screen :title="'Thanks!'">
-        Goodbye
-      </Screen>
+      <Screen :title="'Thanks!'"> Goodbye </Screen>
     </template>
   </Experiment>
 </template>
