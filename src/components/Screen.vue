@@ -85,7 +85,7 @@ The screen component also conveniently exposes an object for you to store in the
         :name="currentSlide"
         :nextSlide="nextSlide"
         :measurements="measurements"
-        :nextScreen="$magpie.nextScreen"
+        :nextScreen="(...args) => $magpie.nextScreen(...args)"
         :saveAndNextScreen="saveAndNextScreen"
         :save="save"
         :variables="$magpie.currentVars"
@@ -122,11 +122,12 @@ export default {
   },
   data() {
     return {
-      currentSlide: 0,
+      currentSlide: -1,
       measurements: {}
     };
   },
   mounted() {
+    this.currentSlide = 0;
     this.$magpie.mousetracking.start();
     this.$magpie.$el.addEventListener('mousemove', this.onMouseMove);
     this.$magpie.setProgress(this.progress);
