@@ -21,7 +21,7 @@
 
     </Screen>
 
-    <DebugResults />
+    <DebugResultsScreen />
 
   </template>
 </Experiment>
@@ -75,18 +75,12 @@
 <script>
 import KeypressInput from '../inputs/KeypressInput';
 import Wait from '../helpers/Wait';
+import DebugResultsScreen from '@/components/screens/DebugResultsScreen';
 
 export default {
   name: 'SelfPacedReading',
-  components: { KeypressInput, Wait },
+  components: { DebugResultsScreen, KeypressInput, Wait },
   props: {
-    /**
-     * Title of the screen
-     */
-    title: {
-      type: String,
-      default: ''
-    },
     /**
      * Self-paced reading text chunks
      */
