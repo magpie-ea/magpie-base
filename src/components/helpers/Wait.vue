@@ -45,9 +45,16 @@ export default {
       type: Number
     }
   },
+  data() {
+    return {
+      timeout: null
+    };
+  },
   watch: {
     time() {
-      this.set();
+      if (this.$el) {
+        this.set();
+      }
     }
   },
   mounted() {
@@ -59,9 +66,22 @@ export default {
   activated() {
     this.set();
   },
+  deactivated() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  },
+  beforeDestroy() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  },
   methods: {
     set() {
-      setTimeout(() => this.$emit('done'), this.time);
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+      this.timeout = setTimeout(() => this.$emit('done'), this.time);
     }
   }
 };
