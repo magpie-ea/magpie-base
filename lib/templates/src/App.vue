@@ -1,15 +1,7 @@
 <template>
   <!--
   Define your data sources with the trials attribute -->
-  <Experiment
-    :variables="{
-      forced_choice,
-      multi_dropdown,
-      sentenceChoice,
-      imageSelection,
-      sliderRating
-    }"
-  >
+  <Experiment title="_magpie demo">
     <!-- The contents of the #title template slot will be displayed in the upper left corner of the experiment -->
     <template #title>
       <div>The experiment</div>
@@ -41,22 +33,19 @@
 
       <!-- Practice trials -->
       <!-- Here we create screens in a loop for every entry in forced_choice -->
-      <template v-for="i in forced_choice_length">
-        <Screen :key="'forcedchoice-' + i">
-          <template
-            #0="{
-              measurements,
-              variables: { forced_choice },
-              saveAndNextScreen
-            }"
-          >
+      <template v-for="(forced_choice_task, i) of forced_choice">
+        <Screen :key="'forcedchoice-' + i" :progress="i / forced_choice.length">
+          <template #0="{ measurements, saveAndNextScreen }">
             <!-- We automatically retrieve trial data from our data sources using $magpie.currentTrial.<data-source>
             Once the participant has made a choice, the update:response event fires and we save the answer and progress to the next screeen.
             -->
-            <img :src="forced_choice.picture" alt="" />
-            <p v-text="forced_choice.question"></p>
+            <img :src="forced_choice_task.picture" alt="" />
+            <p v-text="forced_choice_task.question"></p>
             <ForcedChoiceInput
-              :options="[forced_choice.option1, forced_choice.option2]"
+              :options="[
+                forced_choice_task.option1,
+                forced_choice_task.option2
+              ]"
               :response.sync="measurements.response"
               @update:response="saveAndNextScreen()"
             />
@@ -64,27 +53,24 @@
         </Screen>
       </template>
 
-      <template v-for="i in multi_dropdown_length">
-        <Screen :key="'multidropdown-' + i">
-          <template
-            #0="{
-              measurements,
-              variables: { multi_dropdown },
-              saveAndNextScreen
-            }"
-          >
+      <template v-for="(dropdown_task, i) in multi_dropdown">
+        <Screen
+          :key="'multidropdown-' + i"
+          :progress="i / multi_dropdown.length"
+        >
+          <template #0="{ measurements, saveAndNextScreen }">
             <!-- Use $set for setting new properties to existing objects -->
             <CompletionInput
               :text="
-                multi_dropdown.sentence_chunk_1 +
+                dropdown_task.sentence_chunk_1 +
                 ' %s ' +
-                multi_dropdown.sentence_chunk_2 +
+                dropdown_task.sentence_chunk_2 +
                 ' %s ' +
-                multi_dropdown.sentence_chunk_3
+                dropdown_task.sentence_chunk_3
               "
               :options="[
-                multi_dropdown.choice_options_1.split('|'),
-                multi_dropdown.choice_options_2.split('|')
+                dropdown_task.choice_options_1.split('|'),
+                dropdown_task.choice_options_2.split('|')
               ]"
               :responses.sync="measurements.completion"
             />
@@ -104,45 +90,40 @@
 
       <!-- Main trials -->
 
-      <template v-for="i in sentenceChoice_length / 2">
-        <template v-for="j in 2">
+      <template v-for="i in range(0, sentenceChoice.length, 2)">
+        <template
+          v-for="(sentenceChoice_task, j) in sentenceChoice.slice(i, 2)"
+        >
           <Screen :key="'sentenceChoice-' + i + '' + j">
-            <template
-              #0="{
-                variables: { sentenceChoice },
-                measurements,
-                saveAndNextScreen
-              }"
-            >
-              <img :src="sentenceChoice.picture" alt="" />
-              <p v-text="sentenceChoice.question"></p>
+            <template #0="{ measurements, saveAndNextScreen }">
+              <img :src="sentenceChoice_task.picture" alt="" />
+              <p v-text="sentenceChoice_task.question"></p>
               <ForcedChoiceInput
-                :options="[sentenceChoice.option1, sentenceChoice.option2]"
+                :options="[
+                  sentenceChoice_task.option1,
+                  sentenceChoice_task.option2
+                ]"
                 :response.sync="measurements.response"
                 @update:response="saveAndNextScreen()"
               />
             </template>
           </Screen>
         </template>
-        <template v-for="j in 2">
+        <template
+          v-for="(imageSelection_task, j) in imageSelection.slice(i, 2)"
+        >
           <Screen :key="'sentenceChoice-' + i + '' + j">
-            <template
-              #0="{
-                measurements,
-                variables: { imageSelection },
-                saveAndNextScreen
-              }"
-            >
-              <p>{{ imageSelection.question }}</p>
+            <template #0="{ measurements, saveAndNextScreen }">
+              <p>{{ imageSelection_task.question }}</p>
               <ImageSelectionInput
                 :options="[
                   {
-                    label: imageSelection.option1,
-                    src: imageSelection.picture1
+                    label: imageSelection_task.option1,
+                    src: imageSelection_task.picture1
                   },
                   {
-                    label: imageSelection.option2,
-                    src: imageSelection.picture2
+                    label: imageSelection_task.option2,
+                    src: imageSelection_task.picture2
                   }
                 ]"
                 :response.sync="measurements.response"
@@ -153,34 +134,32 @@
         </template>
       </template>
 
-      <template v-for="i in sliderRating_length">
+      <template v-for="(rating_task, i) in sliderRating">
         <Screen :key="'sliderRating-' + i">
           <template #0="{ nextSlide }">
             <Wait :time="500" @done="nextSlide" />
           </template>
 
-          <template #1="{ nextSlide, variables: { sliderRating } }">
+          <template #1="{ nextSlide }">
             <Wait :time="1500" @done="nextSlide" />
-            <img :src="sliderRating.picture" alt="" />
+            <img :src="rating_task.picture" alt="" />
           </template>
 
-          <template
-            #2="{
-              measurements,
-              variables: { sliderRating },
-              saveAndNextScreen
-            }"
-          >
-            <p>{{ sliderRating.question }}</p>
+          <template #2="{ measurements, saveAndNextScreen }">
+            <p>{{ rating_task.question }}</p>
             <SliderInput
-              :left="sliderRating.optionLeft"
-              :right="sliderRating.optionRight"
+              :left="rating_task.optionLeft"
+              :right="rating_task.optionRight"
               :response.sync="measurements.slider"
             />
             <button @click="saveAndNextScreen()">Done</button>
           </template>
         </Screen>
       </template>
+
+      <!--
+
+      Comment this in, to try out interactive components like the Chat component.
 
       <ConnectInteractive />
 
@@ -190,6 +169,8 @@
           <button @click="saveAndNextScreen()">Next</button>
         </template>
       </Screen>
+
+      -->
 
       <Screen key="additional-information" title="Additional information">
         <template #0="{ measurements, saveAndNextScreen }">
@@ -269,77 +250,71 @@ import _ from 'lodash';
 export default {
   name: 'App',
   data() {
-    const imageSelection = [
-      {
-        QUD: 'image selection - loop: 1, trial: 1',
-        question: 'How are you today?',
-        option1: 'fine',
-        picture1: 'images/question_mark_02.png',
-        option2: 'great',
-        picture2: 'images/question_mark_01.png'
-      },
-      {
-        QUD: 'image selection - loop: 1, trial: 2',
-        option1: 'shiny',
-        picture1: 'images/question_mark_03.jpg',
-        option2: 'rainbow',
-        picture2: 'images/question_mark_04.png'
-      },
-      {
-        QUD: 'image selection - loop: 2, trial: 1',
-        question: 'How are you today?',
-        option1: 'fine',
-        picture1: 'images/question_mark_03.jpg',
-        option2: 'great',
-        picture2: 'images/question_mark_01.png'
-      },
-      {
-        QUD: 'image selection - loop: 2, trial: 2',
-        option1: 'shiny',
-        picture1: 'images/question_mark_02.png',
-        option2: 'rainbow',
-        picture2: 'images/question_mark_04.png'
-      }
-    ];
-
-    const sliderRating = [
-      {
-        picture: 'images/question_mark_02.png',
-        question: 'How are you today?',
-        optionLeft: 'fine',
-        optionRight: 'great'
-      },
-      {
-        picture: 'images/question_mark_01.png',
-        question: "What's the weather like?",
-        optionLeft: 'shiny',
-        optionRight: 'rainbow'
-      },
-      {
-        QUD:
-          'Here is a sentence that stays on the screen from the very beginning',
-        picture: 'images/question_mark_03.jpg',
-        question: "What's on the bread?",
-        optionLeft: 'ham',
-        optionRight: 'jam'
-      }
-    ];
-
     return {
       forced_choice,
-      forced_choice_length: forced_choice.length,
       multi_dropdown,
-      multi_dropdown_length: multi_dropdown.length,
       sentenceChoice,
-      sentenceChoice_length: sentenceChoice.length,
       imageSelection: _.shuffle(imageSelection),
-      imageSelection_length: imageSelection.length,
       sliderRating,
-      sliderRating_length: sliderRating.length,
 
-      // this field is used to temporarily store answers
-      answer: ''
+      // Expose lodash.range to template above
+      range: _.range
     };
   }
 };
+
+const imageSelection = [
+  {
+    QUD: 'image selection - loop: 1, trial: 1',
+    question: 'How are you today?',
+    option1: 'fine',
+    picture1: 'images/question_mark_02.png',
+    option2: 'great',
+    picture2: 'images/question_mark_01.png'
+  },
+  {
+    QUD: 'image selection - loop: 1, trial: 2',
+    option1: 'shiny',
+    picture1: 'images/question_mark_03.jpg',
+    option2: 'rainbow',
+    picture2: 'images/question_mark_04.png'
+  },
+  {
+    QUD: 'image selection - loop: 2, trial: 1',
+    question: 'How are you today?',
+    option1: 'fine',
+    picture1: 'images/question_mark_03.jpg',
+    option2: 'great',
+    picture2: 'images/question_mark_01.png'
+  },
+  {
+    QUD: 'image selection - loop: 2, trial: 2',
+    option1: 'shiny',
+    picture1: 'images/question_mark_02.png',
+    option2: 'rainbow',
+    picture2: 'images/question_mark_04.png'
+  }
+];
+
+const sliderRating = [
+  {
+    picture: 'images/question_mark_02.png',
+    question: 'How are you today?',
+    optionLeft: 'fine',
+    optionRight: 'great'
+  },
+  {
+    picture: 'images/question_mark_01.png',
+    question: "What's the weather like?",
+    optionLeft: 'shiny',
+    optionRight: 'rainbow'
+  },
+  {
+    QUD: 'Here is a sentence that stays on the screen from the very beginning',
+    picture: 'images/question_mark_03.jpg',
+    question: "What's on the bread?",
+    optionLeft: 'ham',
+    optionRight: 'jam'
+  }
+];
 </script>

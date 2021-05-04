@@ -110,7 +110,6 @@ The screen can also be used to validate observations.
     <h2 v-if="title">{{ title }}</h2>
     <slot name="default">
       <!-- @slot Multi-slot with slide number as name to maintain different slides
-           @binding {object} variables An object that exposes the same variables as $magpie.currentVars
            @binding {object} measurements a temporary object to store your responses before adding them to the results
            @binding {object} validations an object that exposes validation results as defined by Screen's validation property
            @binding {function} nextScreen Jump to the next screen
@@ -125,7 +124,6 @@ The screen can also be used to validate observations.
         :nextScreen="(...args) => $magpie.nextScreen(...args)"
         :saveAndNextScreen="saveAndNextScreen"
         :save="save"
-        :variables="$magpie.currentVars"
         :validations="$v.measurements"
       >
         Slide #{{ currentSlide }} could not be found
@@ -172,7 +170,7 @@ export default {
   },
   data() {
     return {
-      currentSlide: -1,
+      currentSlide: 0,
       measurements: Object.fromEntries(
         Object.entries(this.validations).map(([field]) => [field, null])
       )
@@ -217,11 +215,7 @@ export default {
       this.$magpie.mousetracking.onMouseMove(e);
     },
     save() {
-      const variables = Object.assign(
-        {},
-        ...Object.values(this.$magpie.currentVarsData)
-      );
-      this.$magpie.addTrialData({ ...variables, ...this.measurements });
+      this.$magpie.addTrialData({ ...this.measurements });
     },
     saveAndNextScreen(index) {
       this.save();

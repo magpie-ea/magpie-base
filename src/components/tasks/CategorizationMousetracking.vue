@@ -1,31 +1,33 @@
 <docs>
 
 ```vue
-<Experiment :variables="{categories: [
+<Experiment>
+  <template #screens>
+
+    <Screen :key="i" v-for="(task, i) in [
     {o1: 'Mammal', o2: 'Bird', s: 'Bat'},
     {o1: 'Bird', o2: 'Insect', s: 'Kolibri'},
     {o1: 'Fish', o2: 'Mammal', s: 'Whale'},
     {o1: 'Fish', o2: 'Bird', s: 'Penguin'}
-    ]}">
-  <template #screens>
-
-    <Screen :key="i" v-for="i in 4">
+    ]">
       <template #0="{ measurements, saveAndNextScreen }">
         <CategorizationMousetracking :response.sync="measurements.option" :mouseTrack.sync="measurements.mouseTrack">
           <template #option1>
             <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
-              {{ $magpie.currentVars.categories.o1 }}
+              {{ task.o1 }}
             </div>
           </template>
           <template #option2>
             <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
-              {{ $magpie.currentVars.categories.o2 }}
+              {{ task.o2 }}
             </div>
           </template>
           <template #stimulus>
-            <span>{{ $magpie.currentVars.categories.s }}</span>
+            <span>{{ task.s }}</span>
           </template>
           <template #feedback>
+            <!-- add values in `task` to measurements -->
+            <Record :data="task" />
             <Wait :time="1" @done="saveAndNextScreen" />
           </template>
         </CategorizationMousetracking>

@@ -16,6 +16,8 @@
 
 * [Magpie](#Magpie)
     * [new Magpie()](#new_Magpie_new)
+    * [.validators](#Magpie+validators) : <code>object</code>
+    * [.v](#Magpie+v) : <code>object</code>
     * [.id](#Magpie+id) : <code>string</code>
     * [.serverUrl](#Magpie+serverUrl) : <code>string</code>
     * [.submissionUrl](#Magpie+submissionUrl) : <code>string</code>
@@ -25,7 +27,6 @@
     * [.contactEmail](#Magpie+contactEmail) : <code>boolean</code>
     * [.socket](#Magpie+socket) : [<code>Socket</code>](#Socket)
     * [.mousetracking](#Magpie+mousetracking) : [<code>Mousetracking</code>](#Mousetracking)
-    * [.currentVars](#Magpie+currentVars) : <code>Object</code>
     * [.nextScreen(index)](#Magpie+nextScreen)
     * [.addTrialData(data)](#Magpie+addTrialData)
     * [.addExpData(data)](#Magpie+addExpData)
@@ -38,6 +39,18 @@
 ### new Magpie()
 Magpie specific vue tools exposed as $magpie
 
+<a name="Magpie+validators"></a>
+
+### magpie.validators : <code>object</code>
+Gives easy access to validators. Validation is based on [vuelidate](https://vuelidate.js.org). These are [the built-in validators](https://vuelidate.js.org/#sub-builtin-validators)
+
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+v"></a>
+
+### magpie.v : <code>object</code>
+Shorthand for $magpie.validators
+
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
 <a name="Magpie+id"></a>
 
 ### magpie.id : <code>string</code>
@@ -75,12 +88,6 @@ The ID of the experiment
 <a name="Magpie+mousetracking"></a>
 
 ### magpie.mousetracking : [<code>Mousetracking</code>](#Mousetracking)
-**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
-<a name="Magpie+currentVars"></a>
-
-### magpie.currentVars : <code>Object</code>
-an object with a single data point of each array in the trial data supplied to the experiment component
-
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
 <a name="Magpie+nextScreen"></a>
 

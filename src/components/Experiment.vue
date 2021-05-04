@@ -1,64 +1,39 @@
 <docs>
-### Using a arrays for specifying independent variables
+### A simple experiment with 3 screens
 
 The Experiment component allows you to define trial data to make it conveniently accessible during your experiment.
 For every source of trial data you can provide a label and an array. Later you will be able to automatically iterate over that array by accessing the label as a subproperty of `$magpie.currentTrial`.
 
 ```vue
-<Experiment :variables="{ color: ['blue', 'green', 'yellow'] }">
+<Experiment>
   <template #screens>
 
     <Screen>
-      {{ $magpie.currentVars.color }}
+      blue
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
 
     <Screen>
-      {{ $magpie.currentVars.color }}
+      green
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
 
     <Screen>
-      {{ $magpie.currentVars.color }}
+      yellow
     </Screen>
 
   </template>
 </Experiment>
 ```
 
-### Using a function as a variable source
-In case you want to generate data on the fly or have a more sophisticated data selection mechanism in mind, you can also specify a getter function which will return the next item.
+### Using a loop to create screens
 
 ```vue
-<Experiment :variables="{number: () => Math.random()}">
+<Experiment>
   <template #screens>
 
-    <Screen>
-      {{ $magpie.currentVars.number }}
-      <button @click="$magpie.nextScreen()">next</button>
-    </Screen>
-
-    <Screen>
-      {{ $magpie.currentVars.number }}
-      <button @click="$magpie.nextScreen()">next</button>
-    </Screen>
-
-    <Screen>
-      {{ $magpie.currentVars.number }}
-    </Screen>
-  </template>
-</Experiment>
-```
-
-### Variables shorthand
-There's also a shorthand for fetching variables in a screen. Here we use a for-loop for a change, to illustrate how to iterate.
-
-```vue
-<Experiment :variables="{ color: ['blue', 'green', 'yellow'] }">
-  <template #screens>
-
-    <Screen v-for="i in 3" :key="i">
-      <template #0="{variables: {color}, nextScreen}">
+    <Screen v-for="(color, i) in ['blue', 'green', 'yellow']" :key="i">
+      <template #0="{nextScreen}">
         Screen {{i}}: {{ color }}
         <button @click="nextScreen()">next</button>
       </template>
@@ -73,21 +48,21 @@ There's also a shorthand for fetching variables in a screen. Here we use a for-l
 Besides the `screens` slot, the Experiment component also provides an optional `title` slot that allows you to display header information on all screens of your experiment.
 
 ```vue
-<Experiment :variables="{number: () => Math.random()}">
+<Experiment>
   <template #title>
     My experiment
   </template>
   <template #screens>
     <Screen>
-      {{ $magpie.currentVars.number }}
+      blue
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.currentVars.number }}
+      green
       <button @click="$magpie.nextScreen()">next</button>
     </Screen>
     <Screen>
-      {{ $magpie.currentVars.number }}
+      yellow
     </Screen>
   </template>
 </Experiment>
@@ -106,15 +81,6 @@ import Magpie from '../Magpie';
 export default {
   name: 'Experiment',
   props: {
-    /**
-     * Any data that you want to use in your trials you can pass in via this prop.
-     * You can either provide an array of data or a function that returns one sample at a time.
-     * This data will be available at run time via `$magpie.currentTrial`
-     */
-    variables: {
-      type: Object,
-      default: () => ({})
-    },
     /**
      * Whether to display the experiment in wide format-filling mode
      */
@@ -139,7 +105,7 @@ export default {
     return {
       currentScreen: 0,
       responseTimeStart: 0,
-      magpie: new Magpie(this, this.variables, this.$options)
+      magpie: new Magpie(this, this.$options)
     };
   },
   mounted() {

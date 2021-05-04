@@ -37,7 +37,7 @@ export default class Magpie extends EventEmitter {
     return validators;
   }
 
-  constructor(experiment, variables, options) {
+  constructor(experiment, options) {
     super();
 
     this.experiment = experiment;
@@ -142,46 +142,6 @@ export default class Magpie extends EventEmitter {
 
     Vue.observable(this);
 
-    /**
-     * an object with a single data point of each array in the trial data supplied to the experiment component
-     * @instance
-     * @member currentVars
-     * @memberOf Magpie
-     * @type {Object}
-     */
-    this.currentVars = {};
-
-    this.variables = variables;
-    this.currentVarsData = {};
-
-    for (const type of Object.keys(this.variables)) {
-      if (Array.isArray(this.variables[type])) {
-        this.currentVars.__defineGetter__(type, () => {
-          if (this.currentVarsData[type]) {
-            return this.currentVarsData[type];
-          }
-          this.currentVarsData[type] = this.variables[type].shift();
-          return this.currentVarsData[type];
-        });
-      } else if ('function' === typeof this.variables[type]) {
-        this.currentVars.__defineGetter__(type, () => {
-          if (this.currentVarsData[type]) {
-            return this.currentVarsData[type];
-          }
-          this.currentVarsData[type] = this.variables[type](
-            this.experiment.currentScreen
-          );
-          return this.currentVarsData[type];
-        });
-      } else {
-        throw new Error(
-          'Unsupported type of trial type definition for trial type ' +
-            type +
-            '. Expected either Array or Function'
-        );
-      }
-    }
-
     if (this.mode === 'prolific') {
       this.extractProlificData();
     }
@@ -240,7 +200,14 @@ export default class Magpie extends EventEmitter {
       ...this.expData,
       trials: addEmptyColumns(
         _.flatten(Object.values(this.trialData)).map((o) =>
-          Object.assign({}, o)
+          Object.assign(
+            {},
+            Object.fromEntries(
+              Object.entries(o).filter(
+                ([_, value]) => typeof value !== 'function'
+              )
+            )
+          )
         )
       ) // clone the data
     });
