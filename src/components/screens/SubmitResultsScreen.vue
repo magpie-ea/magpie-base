@@ -26,16 +26,16 @@ You can provide the submission URL to the Experiment component.
       </div>
     </template>
   </Screen>
-  <DebugResults v-else />
+  <DebugResultsScreen v-else />
 </template>
 
 <script>
 import Screen from '../Screen';
 import Wait from '../helpers/Wait';
-import DebugResults from './DebugResults';
+import DebugResultsScreen from './DebugResultsScreen';
 export default {
-  name: 'SubmitResults',
-  components: { DebugResults, Wait, Screen },
+  name: 'SubmitResultsScreen',
+  components: { DebugResultsScreen, Wait, Screen },
   props: {},
   data() {
     return {

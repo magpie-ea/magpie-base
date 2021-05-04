@@ -9,7 +9,7 @@ This interactive component provides participants the opportunity to chat with ea
       <button @click="$magpie.nextScreen()">Start</button>
     </Screen>
 
-    <ConnectInteractive />
+    <ConnectInteractiveScreen />
 
     <Screen>
 

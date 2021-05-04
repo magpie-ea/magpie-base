@@ -161,7 +161,7 @@
 
       Comment this in, to try out interactive components like the Chat component.
 
-      <ConnectInteractive />
+      <ConnectInteractiveScreen />
 
       <Screen>
         <template #0="{ measurements, saveAndNextScreen }">

@@ -13,7 +13,7 @@ By default it looks like this:
        <button @click="$magpie.nextScreen()">Connect</button>
     </Screen>
 
-    <ConnectInteractive :title="'Connecting...'"></ConnectInteractive>
+    <ConnectInteractiveScreen :title="'Connecting...'"></ConnectInteractiveScreen>
 
     <Screen>Connected.</Screen>
 
@@ -36,7 +36,7 @@ By default it looks like this:
 import { states } from '../../Socket';
 import Screen from '../Screen';
 export default {
-  name: 'ConnectInteractive',
+  name: 'ConnectInteractiveScreen',
   components: { Screen },
   props: {
     title: {

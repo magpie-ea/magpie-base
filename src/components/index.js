@@ -15,10 +15,10 @@ export { default as SelfPacedReading } from './tasks/SelfPacedReading';
 
 export { default as Rsvp } from './stimuli/Rsvp';
 
-export { default as ConnectInteractive } from './screens/ConnectInteractive';
+export { default as ConnectInteractiveScreen } from './screens/ConnectInteractiveScreen';
 export { default as Chat } from './interactive/Chat';
-export { default as DebugResults } from './screens/DebugResults';
-export { default as SubmitResults } from './screens/SubmitResults';
+export { default as DebugResults } from './screens/DebugResultsScreen';
+export { default as SubmitResultsScreen } from './screens/SubmitResultsScreen';
 
 export { default as Wait } from './helpers/Wait';
 export { default as Timer } from './helpers/Timer';

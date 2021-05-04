@@ -63,7 +63,7 @@ The screen component also conveniently exposes an object for you to store in the
       </template>
     </Screen>
 
-    <DebugResults />
+    <DebugResultsScreen />
 
   </template>
 </Experiment>
