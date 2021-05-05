@@ -55,8 +55,8 @@ This is a pre-built completion screen, with limited functionality, but simpler t
 
 <script>
 import Screen from '../Screen';
-import Record from '@/components/helpers/Record';
-import CompletionInput from '@/components/inputs/CompletionInput';
+import Record from '..//helpers/Record';
+import CompletionInput from '..//inputs/CompletionInput';
 
 export default {
   name: 'CompletionScreen',

@@ -44,8 +44,8 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
 
 <script>
 import Screen from '../Screen';
-import Record from '@/components/helpers/Record';
-import RatingInput from '@/components/inputs/RatingInput';
+import Record from '..//helpers/Record';
+import RatingInput from '..//inputs/RatingInput';
 
 export default {
   name: 'RatingScreen',

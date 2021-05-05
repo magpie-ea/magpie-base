@@ -38,8 +38,8 @@ This is a pre-built forced choice screen, with limited functionality, but simple
 
 <script>
 import Screen from '../Screen';
-import ForcedChoiceInput from '@/components/inputs/ForcedChoiceInput';
-import Record from '@/components/helpers/Record';
+import ForcedChoiceInput from '..//inputs/ForcedChoiceInput';
+import Record from '..//helpers/Record';
 
 export default {
   name: 'ForcedChoiceScreen',

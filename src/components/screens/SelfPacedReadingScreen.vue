@@ -94,11 +94,11 @@ This is a pre-built self-paced reading screen, with limited functionality, but s
 
 <script>
 import Screen from '../Screen';
-import SelfPacedReading from '@/components/tasks/SelfPacedReading';
-import ForcedChoiceInput from '@/components/inputs/ForcedChoiceInput';
-import RatingInput from '@/components/inputs/RatingInput';
-import Wait from '@/components/helpers/Wait';
-import Record from '@/components/helpers/Record';
+import SelfPacedReading from '..//tasks/SelfPacedReading';
+import ForcedChoiceInput from '..//inputs/ForcedChoiceInput';
+import RatingInput from '..//inputs/RatingInput';
+import Wait from '..//helpers/Wait';
+import Record from '..//helpers/Record';
 
 export default {
   name: 'SelfPacedReadingScreen',
