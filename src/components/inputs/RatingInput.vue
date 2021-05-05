@@ -48,7 +48,7 @@
             v-model="answers[i]"
             type="radio"
             name="rating"
-            @change="$emit('update:response', i)"
+            @input="$emit('update:response', i)"
           />
           {{ i }}</label
         >
@@ -90,8 +90,13 @@ export default {
     }
   },
   data() {
+    const answers = {};
+    for (let i = 1; i < this.count; i++) {
+      answers[i] = false;
+    }
+
     return {
-      answers: {}
+      answers
     };
   }
 };

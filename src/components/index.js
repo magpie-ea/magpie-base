@@ -19,6 +19,14 @@ export { default as ConnectInteractiveScreen } from './screens/ConnectInteractiv
 export { default as Chat } from './interactive/Chat';
 export { default as DebugResults } from './screens/DebugResultsScreen';
 export { default as SubmitResultsScreen } from './screens/SubmitResultsScreen';
+export { default as SelfPacedReadingScreen } from './screens/SelfPacedReadingScreen';
+export { default as ForcedChoiceScreen } from './screens/ForcedChoiceScreen';
+export { default as ImageSelectionScreen } from './screens/ImageSelectionScreen';
+export { default as TextareaScreen } from './screens/TextareaScreen';
+export { default as SliderScreen } from './screens/SliderScreen';
+export { default as RatingScreen } from './screens/RatingScreen';
+export { default as CompletionScreen } from './screens/CompletionScreen';
+export { default as KeypressScreen } from './screens/KeypressScreen';
 
 export { default as Wait } from './helpers/Wait';
 export { default as Timer } from './helpers/Timer';

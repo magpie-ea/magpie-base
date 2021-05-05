@@ -1,5 +1,5 @@
 <docs>
-This is a pre-built self-paced reading screen, with fewer options, but simpler to use.
+This is a pre-built self-paced reading screen, with limited functionality, but simpler to use.
 
 ```vue
 <Experiment>
@@ -98,10 +98,12 @@ import SelfPacedReading from '@/components/tasks/SelfPacedReading';
 import ForcedChoiceInput from '@/components/inputs/ForcedChoiceInput';
 import RatingInput from '@/components/inputs/RatingInput';
 import Wait from '@/components/helpers/Wait';
+import Record from '@/components/helpers/Record';
 
 export default {
   name: 'SelfPacedReadingScreen',
   components: {
+    Record,
     Wait,
     RatingInput,
     ForcedChoiceInput,

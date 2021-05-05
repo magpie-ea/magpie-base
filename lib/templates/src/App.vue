@@ -34,58 +34,31 @@
       <!-- Practice trials -->
       <!-- Here we create screens in a loop for every entry in forced_choice -->
       <template v-for="(forced_choice_task, i) of forced_choice">
-        <Screen :key="'forcedchoice-' + i" :progress="i / forced_choice.length">
-          <template #0="{ measurements, saveAndNextScreen }">
-            <!-- We automatically retrieve trial data from our data sources using $magpie.currentTrial.<data-source>
-            Once the participant has made a choice, the update:response event fires and we save the answer and progress to the next screeen.
-            -->
-            <img :src="forced_choice_task.picture" alt="" />
-            <p v-text="forced_choice_task.question"></p>
-            <ForcedChoiceInput
-              :options="[
-                forced_choice_task.option1,
-                forced_choice_task.option2
-              ]"
-              :response.sync="measurements.response"
-              @update:response="saveAndNextScreen()"
-            />
-          </template>
-        </Screen>
+        <ForcedChoiceScreen
+          :key="'forcedchoice-' + i"
+          :progress="i / forced_choice.length"
+          :picture="forced_choice_task.picture"
+          :question="forced_choice_task.question"
+          :options="[forced_choice_task.option1, forced_choice_task.option2]"
+        />
       </template>
 
       <template v-for="(dropdown_task, i) in multi_dropdown">
-        <Screen
+        <CompletionScreen
           :key="'multidropdown-' + i"
           :progress="i / multi_dropdown.length"
-        >
-          <template #0="{ measurements, saveAndNextScreen }">
-            <!-- Use $set for setting new properties to existing objects -->
-            <CompletionInput
-              :text="
-                dropdown_task.sentence_chunk_1 +
-                ' %s ' +
-                dropdown_task.sentence_chunk_2 +
-                ' %s ' +
-                dropdown_task.sentence_chunk_3
-              "
-              :options="[
-                dropdown_task.choice_options_1.split('|'),
-                dropdown_task.choice_options_2.split('|')
-              ]"
-              :responses.sync="measurements.completion"
-            />
-            <!-- Only show button when both responses are given -->
-            <button
-              v-if="
-                measurements.completion &&
-                measurements.completion.filter(Boolean).length === 2
-              "
-              @click="saveAndNextScreen()"
-            >
-              Done
-            </button>
-          </template>
-        </Screen>
+          :text="
+            dropdown_task.sentence_chunk_1 +
+            ' %s ' +
+            dropdown_task.sentence_chunk_2 +
+            ' %s ' +
+            dropdown_task.sentence_chunk_3
+          "
+          :options="[
+            dropdown_task.choice_options_1.split('|'),
+            dropdown_task.choice_options_2.split('|')
+          ]"
+        />
       </template>
 
       <!-- Main trials -->
@@ -94,43 +67,33 @@
         <template
           v-for="(sentenceChoice_task, j) in sentenceChoice.slice(i, 2)"
         >
-          <Screen :key="'sentenceChoice-' + i + '' + j">
-            <template #0="{ measurements, saveAndNextScreen }">
-              <img :src="sentenceChoice_task.picture" alt="" />
-              <p v-text="sentenceChoice_task.question"></p>
-              <ForcedChoiceInput
-                :options="[
-                  sentenceChoice_task.option1,
-                  sentenceChoice_task.option2
-                ]"
-                :response.sync="measurements.response"
-                @update:response="saveAndNextScreen()"
-              />
-            </template>
-          </Screen>
+          <ForcedChoiceScreen
+            :key="'sentenceChoice-' + i + '' + j"
+            :picture="sentenceChoice_task.picture"
+            :question="sentenceChoice_task.question"
+            :options="[
+              sentenceChoice_task.option1,
+              sentenceChoice_task.option2
+            ]"
+          />
         </template>
         <template
           v-for="(imageSelection_task, j) in imageSelection.slice(i, 2)"
         >
-          <Screen :key="'sentenceChoice-' + i + '' + j">
-            <template #0="{ measurements, saveAndNextScreen }">
-              <p>{{ imageSelection_task.question }}</p>
-              <ImageSelectionInput
-                :options="[
-                  {
-                    label: imageSelection_task.option1,
-                    src: imageSelection_task.picture1
-                  },
-                  {
-                    label: imageSelection_task.option2,
-                    src: imageSelection_task.picture2
-                  }
-                ]"
-                :response.sync="measurements.response"
-                @update:response="saveAndNextScreen()"
-              />
-            </template>
-          </Screen>
+          <ImageSelectionScreen
+            :key="'sentenceChoice-' + i + '' + j"
+            :question="imageSelection_task.question"
+            :options="[
+              {
+                label: imageSelection_task.option1,
+                src: imageSelection_task.picture1
+              },
+              {
+                label: imageSelection_task.option2,
+                src: imageSelection_task.picture2
+              }
+            ]"
+          />
         </template>
       </template>
 

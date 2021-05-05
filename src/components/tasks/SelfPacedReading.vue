@@ -75,11 +75,10 @@
 <script>
 import KeypressInput from '../inputs/KeypressInput';
 import Wait from '../helpers/Wait';
-import DebugResultsScreen from '@/components/screens/DebugResultsScreen';
 
 export default {
   name: 'SelfPacedReading',
-  components: { DebugResultsScreen, KeypressInput, Wait },
+  components: { KeypressInput, Wait },
   props: {
     /**
      * Self-paced reading text chunks

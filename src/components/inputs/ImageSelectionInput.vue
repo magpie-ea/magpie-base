@@ -9,8 +9,8 @@
         <p>Fries or soup?</p>
         <ImageSelectionInput
             :options="[
-                {src: 'fries.jpg', label: 'fries'},
-                {src: 'soup.jpg', label: 'soup' }]"
+                {src: 'img/fries.jpg', label: 'fries'},
+                {src: 'img/soup.jpg', label: 'soup' }]"
             @update:response="$magpie.addTrialData({image_choice: $event}); $magpie.nextScreen()"
         />
       </template>
