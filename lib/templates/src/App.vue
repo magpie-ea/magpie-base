@@ -135,63 +135,7 @@
 
       -->
 
-      <Screen key="additional-information" title="Additional information">
-        <template #0="{ measurements, saveAndNextScreen }">
-          <p>
-            Answering the following questions is optional, but your answers will
-            help us analyze our results.
-          </p>
-          <div style="text-align: left; width: 200px; margin: 0 auto">
-            <p>
-              <label
-                >Age
-                <input
-                  v-model="measurements.age"
-                  type="number"
-                  max="110"
-                  min="18"
-              /></label>
-            </p>
-            <p>
-              <label
-                >Gender
-                <DropdownInput
-                  :options="['male', 'female', 'other']"
-                  :response.sync="measurements.education"
-                />
-              </label>
-            </p>
-            <p>
-              <label
-                >Level of Eduction
-                <DropdownInput
-                  :options="[
-                    'Graduated Highschool',
-                    'Graduated Collage',
-                    'Higher degree'
-                  ]"
-                  :response.sync="measurements.education"
-                />
-              </label>
-            </p>
-            <p>
-              <label
-                >Native langauges
-                <input
-                  v-model="measurements.languages"
-                  type="text"
-                  placeholder="the langauge(s) spoken at home when you were a child"
-              /></label>
-            </p>
-            Further comments
-            <TextareaInput
-              :response.sync="measurements.education"
-            ></TextareaInput>
-          </div>
-
-          <button @click="saveAndNextScreen()">Next</button>
-        </template>
-      </Screen>
+      <PostTestScreen />
 
       <DebugResults />
 
