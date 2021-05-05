@@ -1,5 +1,5 @@
 <docs>
-This is a pre-built rating screen, with limited functionality, but simpler to use.
+This is a pre-built keypress screen, with limited functionality, but simpler to use.
 
 ```vue
 <Experiment>

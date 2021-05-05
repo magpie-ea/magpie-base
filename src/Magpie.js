@@ -204,7 +204,7 @@ export default class Magpie extends EventEmitter {
             {},
             Object.fromEntries(
               Object.entries(o).filter(
-                ([_, value]) => typeof value !== 'function'
+                ([, value]) => typeof value !== 'function'
               )
             )
           )
