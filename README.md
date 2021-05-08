@@ -12,7 +12,8 @@ To initialize a new experiment based on magpie (after installing the package), r
 
 For more information, please visit [the project homepage](https://magpie-ea.github.io/magpie-site/)
 
-The docs for the latest version are available at https://epic-bhabha-7e0966.netlify.app/
+## Documentation
+The API reference for the latest version is available at [magpie-reference.netlify.app](https://magpie-reference.netlify.app).
 
 
 ## Core Development
