@@ -94,6 +94,36 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+
+    /**
+     * Pass an array of paths to images that will be needed in this experiment to enable preloading
+     */
+    imageAssets: {
+      type: Array,
+      default() {
+        return [];
+      }
+    },
+
+    /**
+     * Pass an array of paths to audio files that will be needed in this experiment to enable preloading
+     */
+    audioAssets: {
+      type: Array,
+      default() {
+        return [];
+      }
+    },
+
+    /**
+     * Pass an array of paths to video files that will be needed in this experiment to enable preloading
+     */
+    videoAssets: {
+      type: Array,
+      default() {
+        return [];
+      }
     }
   },
   provide() {
@@ -118,6 +148,33 @@ export default {
     if (this.title) {
       document.title = this.title;
     }
+
+    // preload images
+    this.imageAssets.forEach((path) => {
+      const preloadLink = document.createElement('link');
+      preloadLink.href = path;
+      preloadLink.rel = 'preload';
+      preloadLink.as = 'image';
+      document.head.appendChild(preloadLink);
+    });
+
+    // preload audio
+    this.audioAssets.forEach((path) => {
+      const preloadLink = document.createElement('link');
+      preloadLink.href = path;
+      preloadLink.rel = 'preload';
+      preloadLink.as = 'audio';
+      document.head.appendChild(preloadLink);
+    });
+
+    // preload video
+    this.videoAssets.forEach((path) => {
+      const preloadLink = document.createElement('link');
+      preloadLink.href = path;
+      preloadLink.rel = 'preload';
+      preloadLink.as = 'video';
+      document.head.appendChild(preloadLink);
+    });
   },
   methods: {
     /**
