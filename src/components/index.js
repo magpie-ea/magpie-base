@@ -28,6 +28,7 @@ export { default as RatingScreen } from './screens/RatingScreen';
 export { default as CompletionScreen } from './screens/CompletionScreen';
 export { default as KeypressScreen } from './screens/KeypressScreen';
 export { default as PostTestScreen } from './screens/PostTestScreen';
+export { default as InstructionScreen } from './screens/InstructionScreen';
 
 export { default as Wait } from './helpers/Wait';
 export { default as Timer } from './helpers/Timer';

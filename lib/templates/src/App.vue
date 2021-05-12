@@ -9,7 +9,7 @@
 
     <!-- The contents of the #screens template slot define your experiment -->
     <template #screens>
-      <Screen :title="'Welcome'">
+      <InstructionScreen :title="'Welcome'">
         This is a sample introduction screen.
         <br />
         <br />
@@ -18,18 +18,15 @@
         <br />
         <br />
         This mock up experiment is a showcase of the functionality of magpie.
-        <!-- The $magpie field gives you access to magpie-specific functionality -->
-        <button @click="$magpie.nextScreen()">Begin the experiment</button>
-      </Screen>
+      </InstructionScreen>
 
-      <Screen :title="'General Instructions'">
+      <InstructionScreen :title="'General Instructions'">
         This is a sample instructions view.
         <br />
         <br />
         First you will go through two practice trials. The practice trial view
         uses magpie's forced choice trial input.
-        <button @click="$magpie.nextScreen()">to the practice trial</button>
-      </Screen>
+      </InstructionScreen>
 
       <!-- Practice trials -->
       <!-- Here we create screens in a loop for every entry in forced_choice -->
@@ -137,12 +134,9 @@
 
       <PostTestScreen />
 
-      <DebugResults />
-
       <!-- While developing your experiment, using the DebugResults screen is fine,
       once you're going live, you can use the <SubmitResults> screen to automatically send your experimental data to the server. -->
-
-      <Screen :title="'Thanks!'"> Goodbye </Screen>
+      <DebugResults />
     </template>
   </Experiment>
 </template>
