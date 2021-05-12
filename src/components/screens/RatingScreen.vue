@@ -20,7 +20,7 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
 </docs>
 
 <template>
-  <Screen v-bind="$props">
+  <Screen v-bind="$attrs">
     <template #0="{ measurements, saveAndNextScreen }">
       <p v-if="qud" v-text="qud"></p>
       <Record

@@ -49,7 +49,7 @@ This is a pre-built self-paced reading screen, with limited functionality, but s
 </docs>
 
 <template>
-  <Screen v-bind="$props">
+  <Screen v-bind="$attrs">
     <template #0="{ measurements, saveAndNextScreen }">
       <p v-if="qud" v-text="qud"></p>
       <Record

@@ -22,7 +22,7 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
 </docs>
 
 <template>
-  <Screen v-bind="$props">
+  <Screen v-bind="$attrs">
     <template #0="{ measurements, saveAndNextScreen }">
       <p v-if="qud" v-text="qud"></p>
       <Record

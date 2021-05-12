@@ -15,7 +15,7 @@ This is a pre-built forced choice screen, with limited functionality, but simple
 </docs>
 
 <template>
-  <Screen v-bind="$props" title="Additional information">
+  <Screen v-bind="$attrs" title="Additional information">
     <template #0="{ measurements, saveAndNextScreen }">
       <p>
         Answering the following questions is optional, but your answers will

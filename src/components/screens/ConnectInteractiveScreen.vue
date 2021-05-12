@@ -23,7 +23,7 @@ By default it looks like this:
 
 </docs>
 <template>
-  <Screen :title="title">
+  <Screen v-bind="$attrs">
     <slot>
       This screen sets up the socket connection for the interactive experiment
       and waits for other participants to join so that the number of required
@@ -38,12 +38,7 @@ import Screen from '../Screen';
 export default {
   name: 'ConnectInteractiveScreen',
   components: { Screen },
-  props: {
-    title: {
-      type: String,
-      default: ''
-    }
-  },
+  props: {},
   watch: {
     '$magpie.socket.state': function (state) {
       if (state === states.READY) {
