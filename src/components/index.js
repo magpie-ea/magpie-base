@@ -17,7 +17,7 @@ export { default as Rsvp } from './stimuli/Rsvp';
 
 export { default as ConnectInteractiveScreen } from './screens/ConnectInteractiveScreen';
 export { default as Chat } from './interactive/Chat';
-export { default as DebugResults } from './screens/DebugResultsScreen';
+export { default as DebugResultsScreen } from './screens/DebugResultsScreen';
 export { default as SubmitResultsScreen } from './screens/SubmitResultsScreen';
 export { default as SelfPacedReadingScreen } from './screens/SelfPacedReadingScreen';
 export { default as ForcedChoiceScreen } from './screens/ForcedChoiceScreen';

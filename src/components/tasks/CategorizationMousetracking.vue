@@ -34,7 +34,7 @@
       </template>
     </Screen>
 
-    <DebugResults />
+    <DebugResultsScreen />
 
   </template>
 </Experiment>

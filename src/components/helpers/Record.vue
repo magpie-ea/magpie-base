@@ -21,7 +21,7 @@ Record allows you to easily add arbitrary data to your measurements:
 
     </Screen>
 
-    <DebugResults />
+    <DebugResultsScreen />
 
   </template>
 </Experiment>
