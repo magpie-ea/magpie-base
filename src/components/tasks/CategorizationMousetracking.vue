@@ -27,8 +27,8 @@
           </template>
           <template #feedback>
             <!-- add values in `task` to measurements -->
-            <Record :data="task" />
-            <Wait :time="1" @done="saveAndNextScreen" />
+            <Record :data="{...task, ...measurements.mouseTrack}" />
+            <Wait :time="100" @done="saveAndNextScreen" />
           </template>
         </CategorizationMousetracking>
       </template>
