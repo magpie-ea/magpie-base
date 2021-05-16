@@ -184,11 +184,14 @@ export default {
       deep: true
     }
   },
-  mounted() {
+  beforeMount() {
+    this.$magpie.experiment.currentScreenComponent = this;
     this.currentSlide = 0;
+    this.$magpie.setProgress(this.progress);
+  },
+  mounted() {
     this.$magpie.mousetracking.start();
     this.$magpie.$el.addEventListener('mousemove', this.onMouseMove);
-    this.$magpie.setProgress(this.progress);
   },
   beforeDestroy() {
     this.$magpie.$el.removeEventListener('mousemove', this.onMouseMove);

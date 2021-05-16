@@ -29,6 +29,8 @@ Record allows you to easily add arbitrary data to your measurements:
 </docs>
 <template><span /></template>
 <script>
+import Vue from 'vue';
+
 export default {
   name: 'Record',
   props: {
@@ -38,9 +40,13 @@ export default {
     }
   },
   mounted() {
-    if ('measurements' in this.$parent) {
-      Object.assign(this.$parent.measurements, this.data);
-    }
+    Object.keys(this.data).forEach((key) => {
+      Vue.set(
+        this.$magpie.experiment.currentScreenComponent.measurements,
+        key,
+        this.data[key]
+      );
+    });
   }
 };
 </script>

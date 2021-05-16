@@ -134,6 +134,7 @@ export default {
   data() {
     return {
       currentScreen: 0,
+      currentScreenComponent: null,
       responseTimeStart: 0,
       magpie: new Magpie(this, this.$options)
     };
