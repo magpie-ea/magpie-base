@@ -14,9 +14,9 @@ This interactive component provides participants the opportunity to chat with ea
     <Screen>
 
       <template #0="{measurements}">
-        <Chat :data.sync="measurements.data" :participants.sync="measurements.participants" />
+        <Chat :data.sync="measurements.data" />
         <p>{{measurements.data? measurements.data.chatMessage.length : 0}} messages sent so far.</p>
-        <p>{{ measurements.participants? measurements.participants.length : 0 }} participants chatting.</p>
+        <p>{{ $magpie.socket.active.length }} participants chatting.</p>
       </template>
 
     </Screen>
@@ -34,10 +34,31 @@ This interactive component provides participants the opportunity to chat with ea
         v-for="(message, i) in messages"
         :key="i"
         :class="{
-          message: true,
+          message: message.event === 'message',
+          userEvent: message.event === 'join' || message.event === 'leave',
           me: message.participantId === $magpie.socket.participantId
         }"
-        v-text="message.message"
+        :style="{
+          ...(message.message && {
+            background: $magpie.socket.getParticipantColor(
+              message.participantId
+            )
+          }),
+          ...(!message.message && {
+            color: $magpie.socket.getParticipantColor(message.participantId)
+          })
+        }"
+        v-text="
+          message.message ||
+          (message.participantId === $magpie.socket.participantId
+            ? 'You'
+            : $magpie.socket.getParticipantName(message.participantId)) +
+            (message.event === 'join'
+              ? ' joined'
+              : message.event === 'leave'
+              ? ' left'
+              : '')
+        "
       ></p>
     </div>
     <div class="chat-input">
@@ -45,7 +66,7 @@ This interactive component provides participants the opportunity to chat with ea
         ref="text"
         cols="50"
         placeholder="Type your message to the other participant here."
-        @keydown.enter="send"
+        @keydown.enter.prevent="send"
       ></textarea>
       <button @click.stop="send()">Send</button>
     </div>
@@ -54,20 +75,14 @@ This interactive component provides participants the opportunity to chat with ea
 
 <script>
 import Vue from 'vue';
+import _ from 'lodash';
 const EVENT_CHAT_MESSAGE = 'chat_message';
-const EVENT_CHAT_PRESENCE = 'chat_presence';
-const PRESENCE_TIMEOUT = 10000;
-const PRESENCE_INTERVAL = 3000;
 
 export default {
   name: 'Chat',
   data() {
     return {
       messages: [],
-      presence: {
-        // Add the current participant already to not show 0 participants
-        [this.$magpie.socket.participantId]: true
-      },
       interval: null
     };
   },
@@ -85,34 +100,39 @@ export default {
        * Data contains all chat messages in tabular form: `{chatMessage: [], chatParticipantId: [], chatTime: []}`
        */
       this.$emit('update:data', this.flattenData(this.messages));
-    },
-    [EVENT_CHAT_PRESENCE](participantId) {
-      clearTimeout(this.presence[participantId]);
-      Vue.set(
-        this.presence,
-        participantId,
-        setTimeout(() => {
-          Vue.delete(this.presence, participantId);
-        }, PRESENCE_TIMEOUT)
-      );
     }
   },
   watch: {
-    presence() {
-      /**
-       * Participants contains an array of participant IDs currently viewing the chat in the current room
-       */
-      this.$emit('update:participants', Object.keys(this.presence));
+    '$magpie.socket.active'(newParticipants, oldParticipants) {
+      const joined = _.difference(newParticipants, oldParticipants);
+      const left = _.difference(oldParticipants, newParticipants);
+      left.forEach((participantId) => {
+        this.messages.push({
+          time: Date.now(),
+          participantId,
+          event: 'leave',
+          message: ''
+        });
+      });
+      joined.forEach((participantId) => {
+        this.messages.push({
+          time: Date.now(),
+          participantId,
+          event: 'join',
+          message: ''
+        });
+      });
     }
   },
   mounted() {
-    setInterval(() => {
-      this.$magpie.socket.broadcast(
-        EVENT_CHAT_PRESENCE,
-        this.$magpie.socket.participantId
-      );
-    }, PRESENCE_INTERVAL);
-    this.$emit('update:participants', Object.keys(this.presence));
+    $magpie.socket.active.forEach((participantId) => {
+      this.messages.push({
+        time: Date.now(),
+        participantId,
+        event: 'join',
+        message: ''
+      });
+    });
   },
   EVENT_CHAT_MESSAGE,
   methods: {
@@ -122,6 +142,7 @@ export default {
         return;
       }
       this.$magpie.socket.broadcast(EVENT_CHAT_MESSAGE, {
+        event: 'message',
         message,
         participantId: this.$magpie.socket.participantId,
         time: Date.now()
@@ -133,7 +154,8 @@ export default {
       return {
         chatMessage: messages.map((m) => m.message),
         chatParticipantId: messages.map((m) => m.participantId),
-        chatTime: messages.map((m) => m.time)
+        chatTime: messages.map((m) => m.time),
+        chatEvent: messages.map((m) => m.event)
       };
     }
   }
@@ -149,6 +171,17 @@ export default {
   height: 400px;
 }
 
+.userEvent {
+  width: 45%;
+  clear: both;
+  text-align: center;
+  margin: 5px auto;
+}
+
+.userEvent.me {
+  color: #70ba517a !important;
+}
+
 .message {
   width: 55%;
   float: left;
@@ -161,7 +194,7 @@ export default {
 
 .message.me {
   float: right;
-  background: #70ba517a;
+  background: #70ba517a !important;
 }
 
 .chat-input {

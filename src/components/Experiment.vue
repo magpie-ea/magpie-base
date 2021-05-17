@@ -189,6 +189,10 @@ export default {
       } else {
         this.currentScreen += 1;
       }
+      if (this.magpie.socket) {
+        this.magpie.socket.setCurrentScreen(this.currentScreen);
+      }
+
       // Start new trial data and restart response timer
       this.responseTimeStart = Date.now();
       this.magpie.currentVarsData = {};

@@ -17,6 +17,7 @@
     "chalk": "^4.1.1",
     "commander": "^5.1.0",
     "csv-stringify": "^5.6.2",
+    "cute-animals": "^0.2.3",
     "fs-extra": "^9.1.0",
     "k-progress": "^1.5.0",
     "lodash": "^4.17.21",

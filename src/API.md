@@ -161,6 +161,9 @@ Will display a progress bar if it's not visible, yet.
     * [.experimentId](#Socket+experimentId) : <code>string</code>
     * [.participantId](#Socket+participantId) : <code>&#x27;CONNECTING&#x27;</code> \| <code>&#x27;CONNECTED&#x27;</code> \| <code>&#x27;WAITING&#x27;</code> \| <code>&#x27;READY&#x27;</code> \| <code>&#x27;ERROR&#x27;</code>
     * [.participants](#Socket+participants) : <code>Array.&lt;string&gt;</code>
+    * [.active](#Socket+active) : <code>Array.&lt;string&gt;</code>
+    * [.getParticipantName(id)](#Socket+getParticipantName) ⇒ <code>String</code>
+    * [.getParticipantColor(id)](#Socket+getParticipantColor) ⇒ <code>String</code>
     * [.initialize()](#Socket+initialize)
     * [.broadcast(event, payload)](#Socket+broadcast)
 
@@ -184,6 +187,30 @@ A reactive property with the state of the socket
 A reactive list of online participants
 
 **Kind**: instance property of [<code>Socket</code>](#Socket)  
+<a name="Socket+active"></a>
+
+### socket.active : <code>Array.&lt;string&gt;</code>
+A reactive list of participants currently active in the current screen
+
+**Kind**: instance property of [<code>Socket</code>](#Socket)  
+<a name="Socket+getParticipantName"></a>
+
+### socket.getParticipantName(id) ⇒ <code>String</code>
+**Kind**: instance method of [<code>Socket</code>](#Socket)  
+
+| Param | Type |
+| --- | --- |
+| id | <code>String</code> | 
+
+<a name="Socket+getParticipantColor"></a>
+
+### socket.getParticipantColor(id) ⇒ <code>String</code>
+**Kind**: instance method of [<code>Socket</code>](#Socket)  
+
+| Param | Type |
+| --- | --- |
+| id | <code>String</code> | 
+
 <a name="Socket+initialize"></a>
 
 ### socket.initialize()

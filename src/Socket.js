@@ -1,6 +1,12 @@
 import { Socket as PhoenixSocket } from 'phoenix';
 import EventEmitter from 'events';
 import Vue from 'vue';
+import ANIMALS from 'cute-animals/corpus/animals.json';
+
+const PRESENCE_INTERVAL = 3000;
+const PRESENCE_TIMEOUT = 10000;
+
+export const EVENT_SCREEN_PRESENCE = 'screen_presence';
 
 export const states = {
   CONNECTING: 'CONNECTING',
@@ -63,7 +69,40 @@ export default class Socket extends EventEmitter {
      */
     this.participants = [];
 
+    /**
+     * A reactive list of participants currently active in the current screen
+     * @instance
+     * @member active
+     * @memberOf Socket
+     * @type {string[]}
+     */
+    this.active = [];
+
     Vue.observable(this);
+
+    this.currentScreen = null;
+    this.participantsPerScreen = {};
+    this.timeoutsPerParticipant = {};
+  }
+
+  /**
+   * @instance
+   * @memberOf Socket
+   * @param id{String}
+   * @returns {String}
+   */
+  getParticipantName(id) {
+    return hashIdToArray(id, ANIMALS);
+  }
+
+  /**
+   * @instance
+   * @memberOf Socket
+   * @param id{String}
+   * @returns {String}
+   */
+  getParticipantColor(id) {
+    return hashIdToArray(id, COLORS);
   }
 
   /**
@@ -87,7 +126,7 @@ export default class Socket extends EventEmitter {
 
     this.participantChannel
       .join()
-      // Note that `receive` functions are for receiving a *reply* from the server after you try to send it something, e.g. `join()` or `push()`.
+      // Note that `receive` functions are for receiving a *reply* from; the server after you try to send it something, e.g. `join()` or `push()`.
       // While `on` function is for passively listening for new messages initiated by the server.
       // We still need to wait for the actual confirmation message of "experiment_available". So we do nothing here.
       .receive('ok', () => {})
@@ -126,6 +165,38 @@ export default class Socket extends EventEmitter {
         this.participants.splice(this.participants.indexOf(id), 1)
       );
     });
+
+    setInterval(() => {
+      this.broadcast(EVENT_SCREEN_PRESENCE, {
+        [this.participantId]: this.currentScreen
+      });
+    }, PRESENCE_INTERVAL);
+
+    this.on(EVENT_SCREEN_PRESENCE, (data) => {
+      Object.assign(this.participantsPerScreen, data);
+      this.updateActiveParticipants();
+      const participant = Object.keys(data)[0];
+      if (!participant) {
+        return;
+      }
+      clearTimeout(this.timeoutsPerParticipant[participant]);
+
+      this.timeoutsPerParticipant[participant] = setTimeout(() => {
+        delete this.participantsPerScreen[participant];
+        this.updateActiveParticipants();
+      }, PRESENCE_TIMEOUT);
+    });
+  }
+
+  setCurrentScreen(index) {
+    this.currentScreen = index;
+    this.updateActiveParticipants();
+  }
+
+  updateActiveParticipants() {
+    this.active = Object.entries(this.participantsPerScreen)
+      .filter(([, value]) => value === this.currentScreen)
+      .map(([key]) => key);
   }
 
   setUpSubscriptions(subscriptions, thisArg) {
@@ -166,3 +237,33 @@ function generateId(len) {
   window.crypto.getRandomValues(arr);
   return Array.from(arr, dec2hex).join('');
 }
+
+function hash(str) {
+  var hash = 0,
+    i,
+    chr;
+  if (str.length === 0) return hash;
+  for (i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i);
+    hash = (hash << 5) - hash + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+}
+
+function hashIdToArray(id, array) {
+  var h = hash(id);
+  let animal = array[Math.abs(h % array.length)];
+  return animal;
+}
+
+const COLORS = [
+  '#ffadad',
+  '#ffd6a5',
+  '#fdffb6',
+  '#caffbf',
+  '#9bf6ff',
+  '#a0c4ff',
+  '#bdb2ff',
+  '#ffc6ff'
+];
