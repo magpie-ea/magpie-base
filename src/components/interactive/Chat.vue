@@ -125,7 +125,7 @@ export default {
     }
   },
   mounted() {
-    $magpie.socket.active.forEach((participantId) => {
+    this.$magpie.socket.active.forEach((participantId) => {
       this.messages.push({
         time: Date.now(),
         participantId,
