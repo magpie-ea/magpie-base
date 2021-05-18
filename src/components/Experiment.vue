@@ -176,6 +176,20 @@ export default {
       preloadLink.as = 'video';
       document.head.appendChild(preloadLink);
     });
+
+    // Ask the user before closing the page
+    window.addEventListener('beforeunload', (e) => {
+      e.preventDefault();
+    });
+
+    let alert;
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') {
+        alert = Alert('ACTIVE EXPERIMENT!');
+      } else if (alert) {
+        alert();
+      }
+    });
   },
   methods: {
     /**
@@ -235,6 +249,25 @@ export default {
     ]);
   }
 };
+
+function Alert(msg, ti) {
+  // msg = the message, ti= time interval between title changes(default is 1.5s)
+  var intervalId,
+    oldTitle = document.title;
+  intervalId = setInterval(
+    function () {
+      document.title = document.title === msg ? oldTitle : msg;
+    },
+    ti ? ti : 1500
+  );
+  return function () {
+    if (oldTitle) {
+      clearInterval(intervalId);
+      document.title = oldTitle;
+      oldTitle = intervalId = null;
+    }
+  };
+}
 </script>
 
 <style>
