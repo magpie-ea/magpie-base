@@ -107,14 +107,17 @@ export default {
 .options label * {
   cursor: pointer;
 }
+
 .multiple-choice.vertical {
   text-align: left;
   width: 500px;
   margin: 0 auto;
 }
+
 .multiple-choice.vertical label {
   display: block;
 }
+
 .multiple-choice.horizontal label {
   display: inline-block;
   margin: 0 10px;

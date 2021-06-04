@@ -164,15 +164,18 @@ export default {
   text-align: left;
   width: 100%;
 }
+
 .matrix-choice .row {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+
 .matrix-choice .row > :first-child {
   width: 50%;
   text-align: right;
 }
+
 .matrix-choice .row label {
   width: 50px;
   display: inline-block;
