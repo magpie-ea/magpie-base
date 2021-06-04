@@ -9,6 +9,9 @@ export { default as KeypressInput } from './inputs/KeypressInput';
 export { default as RatingInput } from './inputs/RatingInput';
 export { default as SliderInput } from './inputs/SliderInput';
 export { default as TextareaInput } from './inputs/TextareaInput';
+export { default as MultipleChoiceInput } from './inputs/MultipleChoiceInput';
+export { default as MultipleChoiceMatrixInput } from './inputs/MultipleChoiceMatrixInput';
+export { default as SliderRangesInput } from './inputs/SliderRangesInput';
 
 export { default as CategorizationMousetracking } from './tasks/CategorizationMousetracking';
 export { default as SelfPacedReading } from './tasks/SelfPacedReading';
