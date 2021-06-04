@@ -30,6 +30,9 @@
         class="slider"
         :value="initial"
         :tooltip="tooltip ? 'always' : 'none'"
+        :min="min"
+        :max="max"
+        :interval="interval"
         @change="$emit('update:response', $event)"
       />
       <div class="right">{{ right }}</div>
@@ -71,6 +74,30 @@ export default {
       type: Number,
       optional: true,
       default: 0
+    },
+    /**
+     * Minimal slider value
+     */
+    min: {
+      type: Number,
+      optional: true,
+      default: 0
+    },
+    /**
+     * Maximum slider value
+     */
+    max: {
+      type: Number,
+      optional: true,
+      default: 100
+    },
+    /**
+     * Interval between slider values
+     */
+    interval: {
+      type: Number,
+      optional: true,
+      default: 1
     },
     /**
      * Whether to show the tooltip
