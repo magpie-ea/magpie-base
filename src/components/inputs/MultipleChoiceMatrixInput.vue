@@ -110,6 +110,7 @@ You can also randomize the question order. The response data will still be in th
 <script>
 import _ from 'lodash';
 import MultipleChoiceInput from '@/components/inputs/MultipleChoiceInput';
+import Vue from 'vue';
 /**
  * Have the participant choose between multiple options.
  */
@@ -149,7 +150,7 @@ export default {
   },
   methods: {
     onOptionClick(i, response) {
-      this.responses[i] = response;
+      Vue.set(this.responses, i, response);
       /**
        * Change event with the chosen options.
        */
