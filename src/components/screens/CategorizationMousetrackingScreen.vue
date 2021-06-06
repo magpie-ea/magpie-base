@@ -80,7 +80,7 @@ This is a pre-built categorization mouse tracking screen, with limited functiona
 import Screen from '../Screen';
 import Wait from '../helpers/Wait';
 import Record from '../helpers/Record';
-import CategorizationMousetracking from '@/components/tasks/CategorizationMousetracking';
+import CategorizationMousetracking from '../tasks/CategorizationMousetracking';
 
 export default {
   name: 'CategorizationMousetrackingScreen',

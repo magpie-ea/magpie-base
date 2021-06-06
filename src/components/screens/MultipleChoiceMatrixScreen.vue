@@ -65,7 +65,7 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
 <script>
 import Screen from '../Screen';
 import Record from '../helpers/Record';
-import MultipleChoiceMatrixInput from '@/components/inputs/MultipleChoiceMatrixInput';
+import MultipleChoiceMatrixInput from '../inputs/MultipleChoiceMatrixInput';
 
 export default {
   name: 'MultipleChoiceMatrixScreen',

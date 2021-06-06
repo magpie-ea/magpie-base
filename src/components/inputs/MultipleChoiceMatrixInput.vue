@@ -109,10 +109,10 @@ You can also randomize the question order. The response data will still be in th
 
 <script>
 import _ from 'lodash';
-import MultipleChoiceInput from '@/components/inputs/MultipleChoiceInput';
+import MultipleChoiceInput from './MultipleChoiceInput';
 import Vue from 'vue';
 /**
- * Have the participant choose between multiple options.
+ * Have the participant choose between multiple options for multiple questions (arranged in a matrix).
  */
 export default {
   name: 'MultipleChoiceMatrixInput',

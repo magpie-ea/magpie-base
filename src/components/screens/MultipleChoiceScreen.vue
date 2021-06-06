@@ -45,8 +45,11 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
 <script>
 import Screen from '../Screen';
 import Record from '../helpers/Record';
-import MultipleChoiceInput from '@/components/inputs/MultipleChoiceInput';
+import MultipleChoiceInput from '../inputs/MultipleChoiceInput';
 
+/**
+ * Have participants choose answer from multiple options
+ */
 export default {
   name: 'MultipleChoiceScreen',
   components: {
