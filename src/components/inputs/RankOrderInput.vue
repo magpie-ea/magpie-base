@@ -67,10 +67,12 @@ export default {
   text-align: left;
   margin: 0 auto;
 }
+
 .rankorder-input .item {
   cursor: move;
   margin-bottom: 10px;
 }
+
 .pill {
   background: lightblue;
   border-radius: 10px;
