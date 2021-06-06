@@ -103,7 +103,7 @@ export default {
     }
   },
   watch: {
-    '$magpie.socket.active'(newParticipants, oldParticipants) {
+    ['$magpie.socket.active'](newParticipants, oldParticipants) {
       const joined = _.difference(newParticipants, oldParticipants);
       const left = _.difference(oldParticipants, newParticipants);
       left.forEach((participantId) => {
