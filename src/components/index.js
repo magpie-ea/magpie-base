@@ -17,6 +17,7 @@ export { default as CategorizationMousetracking } from './tasks/CategorizationMo
 export { default as SelfPacedReading } from './tasks/SelfPacedReading';
 
 export { default as Rsvp } from './stimuli/Rsvp';
+export { default as FixationCross } from './stimuli/FixationCross';
 
 export { default as ConnectInteractiveScreen } from './screens/ConnectInteractiveScreen';
 export { default as Chat } from './interactive/Chat';
@@ -36,3 +37,4 @@ export { default as CategorizationMousetrackingScreen } from './screens/Categori
 
 export { default as Wait } from './helpers/Wait';
 export { default as Timer } from './helpers/Timer';
+export { default as Record } from './helpers/Record';
