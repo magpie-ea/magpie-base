@@ -12,6 +12,7 @@ export { default as TextareaInput } from './inputs/TextareaInput';
 export { default as MultipleChoiceInput } from './inputs/MultipleChoiceInput';
 export { default as MultipleChoiceMatrixInput } from './inputs/MultipleChoiceMatrixInput';
 export { default as SliderRangesInput } from './inputs/SliderRangesInput';
+export { default as RankOrderInput } from './inputs/RankOrderInput';
 
 export { default as CategorizationMousetracking } from './tasks/CategorizationMousetracking';
 export { default as SelfPacedReading } from './tasks/SelfPacedReading';
