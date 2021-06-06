@@ -27,13 +27,12 @@
     <div class="slider-element">
       <div class="left">{{ left }}</div>
       <Slider
+        v-model="value"
         class="slider"
-        :value="initial"
         :tooltip="tooltip ? 'always' : 'none'"
         :min="min"
         :max="max"
         :interval="interval"
-        @change="$emit('update:response', $event)"
       />
       <div class="right">{{ right }}</div>
     </div>
@@ -106,6 +105,16 @@ export default {
       type: Boolean,
       optional: true,
       default: false
+    }
+  },
+  data() {
+    return {
+      value: this.initial
+    };
+  },
+  watch: {
+    value() {
+      this.$emit('update:response', this.value);
     }
   }
 };
