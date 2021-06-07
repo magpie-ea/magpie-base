@@ -44,13 +44,13 @@ export default {
   name: 'WaitForParticipants',
   watch: {
     ['$magpie.socket.active'](newParticipants) {
-      if (newParticipants.length === $magpie.socket.chain) {
+      if (newParticipants.length === this.$magpie.socket.chain) {
         this.$emit('done');
       }
     }
   },
   mounted() {
-    if (newParticipants.length === $magpie.socket.chain) {
+    if (this.$magpie.socket.active.length === this.$magpie.socket.chain) {
       this.$emit('done');
     }
   }
