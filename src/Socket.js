@@ -78,6 +78,33 @@ export default class Socket extends EventEmitter {
      */
     this.active = [];
 
+    /**
+     * The variant number of this session
+     * @instance
+     * @member active
+     * @memberOf Socket
+     * @type {Number}
+     */
+    this.variant = 0;
+
+    /**
+     * The chain number of this session
+     * @instance
+     * @member active
+     * @memberOf Socket
+     * @type {Number}
+     */
+    this.chain = 0;
+
+    /**
+     * The realization number of this session
+     * @instance
+     * @member active
+     * @memberOf Socket
+     * @type {Number}
+     */
+    this.realization = 0;
+
     Vue.observable(this);
 
     this.currentScreen = null;
