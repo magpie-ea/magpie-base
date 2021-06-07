@@ -76,7 +76,7 @@ This interactive component provides participants the opportunity to chat with ea
 <script>
 import Vue from 'vue';
 import _ from 'lodash';
-const EVENT_CHAT_MESSAGE = 'chat_message';
+const EVENT_CHAT_MESSAGE = '$magpie.chat_message';
 
 export default {
   name: 'Chat',
