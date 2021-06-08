@@ -41,7 +41,7 @@
     "prettier": "^2.2.1",
     "stylelint": "^13.13.1",
     "tone": "^14.7.77",
-    "vue-cli-plugin-styleguidist": "~4.38.1",
+    "vue-cli-plugin-styleguidist": "~4.40.0",
     "vue-konva": "^2.1.7",
     "vue-template-compiler": "^2.6.12"
   },
