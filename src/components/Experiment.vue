@@ -6,7 +6,6 @@ For every source of trial data you can provide a label and an array. Later you w
 
 ```vue
 <Experiment>
-  <template #screens>
 
     <Screen>
       blue
@@ -22,7 +21,6 @@ For every source of trial data you can provide a label and an array. Later you w
       yellow
     </Screen>
 
-  </template>
 </Experiment>
 ```
 
@@ -30,16 +28,14 @@ For every source of trial data you can provide a label and an array. Later you w
 
 ```vue
 <Experiment>
-  <template #screens>
 
     <Screen v-for="(color, i) in ['blue', 'green', 'yellow']" :key="i">
-      <template #0="{nextScreen}">
+      <Slide>
         Screen {{i}}: {{ color }}
-        <button @click="nextScreen()">next</button>
-      </template>
+        <button @click="$magpie.nextScreen()">next</button>
+      </Slide>
     </Screen>
 
-  </template>
 </Experiment>
 ```
 
@@ -52,7 +48,7 @@ Besides the `screens` slot, the Experiment component also provides an optional `
   <template #title>
     My experiment
   </template>
-  <template #screens>
+  <template #default>
     <Screen>
       blue
       <button @click="$magpie.nextScreen()">next</button>
@@ -222,12 +218,12 @@ export default {
    */
   /**
    * Place your screens inside this slot. They will be visible one after the other, like a slide show.
-   * @slot screens
+   * @slot default
    */
   render(h) {
     // HACKY-O
     this.$parent.$magpie = this.magpie;
-    const children = this.$slots.screens;
+    const children = this.$slots.default;
     const screens = children.filter((c) => !!c.componentOptions);
     return h('div', { class: 'experiment' + (this.wide ? ' wide' : '') }, [
       h('div', { class: 'header' }, [

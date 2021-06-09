@@ -18,6 +18,8 @@
     * [new Magpie()](#new_Magpie_new)
     * [.validators](#Magpie+validators) : <code>object</code>
     * [.v](#Magpie+v) : <code>object</code>
+    * [.measurements](#Magpie+measurements) : <code>object</code>
+    * [.validateMeasurements](#Magpie+validateMeasurements) : <code>object</code>
     * [.id](#Magpie+id) : <code>string</code>
     * [.serverUrl](#Magpie+serverUrl) : <code>string</code>
     * [.submissionUrl](#Magpie+submissionUrl) : <code>string</code>
@@ -27,7 +29,9 @@
     * [.contactEmail](#Magpie+contactEmail) : <code>boolean</code>
     * [.socket](#Magpie+socket) : [<code>Socket</code>](#Socket)
     * [.mousetracking](#Magpie+mousetracking) : [<code>Mousetracking</code>](#Mousetracking)
+    * [.nextSlide(index)](#Magpie+nextSlide)
     * [.nextScreen(index)](#Magpie+nextScreen)
+    * [.saveAndNextScreen(index)](#Magpie+saveAndNextScreen)
     * [.addTrialData(data)](#Magpie+addTrialData)
     * [.addExpData(data)](#Magpie+addExpData)
     * [.submit()](#Magpie+submit) ⇒ <code>Promise.&lt;void&gt;</code>
@@ -49,6 +53,19 @@ Gives easy access to validators. Validation is based on [vuelidate](https://vuel
 
 ### magpie.v : <code>object</code>
 Shorthand for $magpie.validators
+
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+measurements"></a>
+
+### magpie.measurements : <code>object</code>
+The measurements of the current screen. All data in this object
+can be saved using $magpie.saveMeasurements
+
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+validateMeasurements"></a>
+
+### magpie.validateMeasurements : <code>object</code>
+Validation results on the current measurements
 
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
 <a name="Magpie+id"></a>
@@ -89,10 +106,34 @@ The ID of the experiment
 
 ### magpie.mousetracking : [<code>Mousetracking</code>](#Mousetracking)
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+nextSlide"></a>
+
+### magpie.nextSlide(index)
+Go to the next slide.
+
+**Kind**: instance method of [<code>Magpie</code>](#Magpie)  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| index | <code>int</code> | the index of the slide to go to (optional; default is next slide) |
+
 <a name="Magpie+nextScreen"></a>
 
 ### magpie.nextScreen(index)
 Go to the next screen. (Will also reset scroll position.)
+
+**Kind**: instance method of [<code>Magpie</code>](#Magpie)  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| index | <code>int</code> | the index of the screen to go to (optional; default is next screen) |
+
+<a name="Magpie+saveAndNextScreen"></a>
+
+### magpie.saveAndNextScreen(index)
+SaveMeasurements and go to the next screen. (Will also reset scroll position.)
 
 **Kind**: instance method of [<code>Magpie</code>](#Magpie)  
 **Access**: public  
@@ -162,6 +203,9 @@ Will display a progress bar if it's not visible, yet.
     * [.participantId](#Socket+participantId) : <code>&#x27;CONNECTING&#x27;</code> \| <code>&#x27;CONNECTED&#x27;</code> \| <code>&#x27;WAITING&#x27;</code> \| <code>&#x27;READY&#x27;</code> \| <code>&#x27;ERROR&#x27;</code>
     * [.participants](#Socket+participants) : <code>Array.&lt;string&gt;</code>
     * [.active](#Socket+active) : <code>Array.&lt;string&gt;</code>
+    * [.active](#Socket+active) : <code>Number</code>
+    * [.active](#Socket+active) : <code>Number</code>
+    * [.active](#Socket+active) : <code>Number</code>
     * [.getParticipantName(id)](#Socket+getParticipantName) ⇒ <code>String</code>
     * [.getParticipantColor(id)](#Socket+getParticipantColor) ⇒ <code>String</code>
     * [.initialize()](#Socket+initialize)
@@ -191,6 +235,24 @@ A reactive list of online participants
 
 ### socket.active : <code>Array.&lt;string&gt;</code>
 A reactive list of participants currently active in the current screen
+
+**Kind**: instance property of [<code>Socket</code>](#Socket)  
+<a name="Socket+active"></a>
+
+### socket.active : <code>Number</code>
+The variant number of this session
+
+**Kind**: instance property of [<code>Socket</code>](#Socket)  
+<a name="Socket+active"></a>
+
+### socket.active : <code>Number</code>
+The chain number of this session
+
+**Kind**: instance property of [<code>Socket</code>](#Socket)  
+<a name="Socket+active"></a>
+
+### socket.active : <code>Number</code>
+The realization number of this session
 
 **Kind**: instance property of [<code>Socket</code>](#Socket)  
 <a name="Socket+getParticipantName"></a>

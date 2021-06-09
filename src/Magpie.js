@@ -37,6 +37,29 @@ export default class Magpie extends EventEmitter {
     return validators;
   }
 
+  /**
+   * The measurements of the current screen. All data in this object
+   * can be saved using $magpie.saveMeasurements
+   * @instance
+   * @member measurements
+   * @memberOf Magpie
+   * @type {object}
+   */
+  get measurements() {
+    return this.experiment.currentScreenComponent.measurements;
+  }
+
+  /**
+   * Validation results on the current measurements
+   * @instance
+   * @member validateMeasurements
+   * @memberOf Magpie
+   * @type {object}
+   */
+  get validateMeasurements() {
+    return this.experiment.currentScreenComponent.$v.measurements;
+  }
+
   constructor(experiment, options) {
     super();
 
@@ -148,6 +171,17 @@ export default class Magpie extends EventEmitter {
   }
 
   /**
+   * Go to the next slide.
+   * @instance
+   * @memberOf Magpie
+   * @public
+   * @param index{int} the index of the slide to go to (optional; default is next slide)
+   */
+  nextSlide(...params) {
+    this.experiment.currentScreenComponent.nextSlide(...params);
+  }
+
+  /**
    * Go to the next screen. (Will also reset scroll position.)
    * @instance
    * @memberOf Magpie
@@ -156,6 +190,18 @@ export default class Magpie extends EventEmitter {
    */
   nextScreen(...params) {
     this.experiment.nextScreen(...params);
+  }
+
+  /**
+   * SaveMeasurements and go to the next screen. (Will also reset scroll position.)
+   * @instance
+   * @memberOf Magpie
+   * @public
+   * @param index{int} the index of the screen to go to (optional; default is next screen)
+   */
+  saveAndNextScreen(index) {
+    this.saveMeasurements();
+    this.nextScreen(index);
   }
 
   /**
@@ -185,6 +231,10 @@ export default class Magpie extends EventEmitter {
    */
   addExpData(data) {
     Object.assign(this.expData, data);
+  }
+
+  saveMeasurements() {
+    this.addTrialData({ ...this.measurements });
   }
 
   onSocketError(er) {

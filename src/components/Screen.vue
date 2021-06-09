@@ -3,11 +3,9 @@
 
 ```vue
 <Experiment>
-  <template #screens>
     <Screen>
       Hello World.
     </Screen>
-  </template>
 </Experiment>
 ```
 
@@ -15,12 +13,10 @@
 
 ```vue
 <Experiment>
-  <template #screens>
     <Screen v-for="i in 10" :key="i" :progress="i/10">
       Hello World.
       <button @click="$magpie.nextScreen()">Next</button>
     </Screen>
-  </template>
 </Experiment>
 ```
 
@@ -30,20 +26,17 @@ You can go to the next slide with the `nextSlide` function that is exposed by th
 
 ```vue
 <Experiment>
-  <template #screens>
     <Screen title="Wow.">
 
-      <template #0="{nextSlide}">
-        Hello <button @click="nextSlide">World</button>.
-      </template>
+      <Slide>
+        Hello <button @click="$magpie.nextSlide()">World</button>.
+      </Slide>
 
-      <template #1>
+      <Slide>
         Hello you.
-      </template>
+      </Slide>
 
     </Screen>
-
-  </template>
 </Experiment>
 ```
 
@@ -52,20 +45,17 @@ The screen component also conveniently exposes an object for you to store in the
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen title="Wow.">
-      <template #0="{measurements, saveAndNextScreen}">
+      <Slide>
         Hello
-        <TextareaInput :response.sync="measurements.text" />
-        {{ measurements.text }}?
-        <button v-if="measurements.text" @click="saveAndNextScreen()">Done</button>
-      </template>
+        <TextareaInput :response.sync="$magpie.measurements.text" />
+        {{ $magpie.measurements.text }}?
+        <button v-if="$magpie.measurements.text" @click="$magpie.saveAndNextScreen()">Done</button>
+      </Slide>
     </Screen>
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 
@@ -74,8 +64,6 @@ The screen can also be used to validate observations.
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen :validations="{
       text: {
         minLength: $magpie.v.minLength(4),
@@ -83,54 +71,25 @@ The screen can also be used to validate observations.
       }
     }">
 
-      <template #0="{measurements, saveAndNextScreen, validations}">
+      <Slide>
         Hello
-        <TextareaInput :response.sync="measurements.text" />
+        <TextareaInput :response.sync="$magpie.measurements.text" />
 
-        {{ measurements.text }}?
+        {{ $magpie.measurements.text }}?
 
-        <button v-if="!validations.text.$error" @click="saveAndNextScreen()">Done</button>
+        <button v-if="!$magpie.validateMeasurements.$invalid" @click="$magpie.saveAndNextScreen()">Done</button>
 
         <p v-else>At least 4 characters required and only alphabetic characters, please.</p>
 
-      </template>
+      </Slide>
 
     </Screen>
 
     <DebugResults />
-
-  </template>
 </Experiment>
 ```
 
 </docs>
-
-<template>
-  <div class="screen">
-    <h2 v-if="title">{{ title }}</h2>
-    <slot name="default">
-      <!-- @slot Multi-slot with slide number as name to maintain different slides
-           @binding {object} measurements a temporary object to store your responses before adding them to the results
-           @binding {object} validations an object that exposes validation results as defined by Screen's validation property
-           @binding {function} nextScreen Jump to the next screen
-           @binding {function} saveAndNextScreen Jump to the next screen, saving currently recorded measurements
-           @binding {function} save save currently recorded measurements
-           @binding {function} nextSlide Jump to the next slide
-      -->
-      <slot
-        :name="currentSlide"
-        :nextSlide="nextSlide"
-        :measurements="measurements"
-        :nextScreen="(...args) => $magpie.nextScreen(...args)"
-        :saveAndNextScreen="saveAndNextScreen"
-        :save="save"
-        :validations="$v.measurements"
-      >
-        Slide #{{ currentSlide }} could not be found
-      </slot>
-    </slot>
-  </div>
-</template>
 
 <script>
 import { validationMixin } from 'vuelidate';
@@ -196,11 +155,6 @@ export default {
   beforeDestroy() {
     this.$magpie.$el.removeEventListener('mousemove', this.onMouseMove);
   },
-  validations() {
-    return {
-      measurements: this.validations
-    };
-  },
   methods: {
     nextSlide(index) {
       if (typeof index === 'number') {
@@ -216,14 +170,25 @@ export default {
        */
       this.$emit('mousemove', { x: e.layerX, y: e.layerY });
       this.$magpie.mousetracking.onMouseMove(e);
-    },
-    save() {
-      this.$magpie.addTrialData({ ...this.measurements });
-    },
-    saveAndNextScreen(index) {
-      this.save();
-      this.$magpie.nextScreen(index);
     }
+  },
+  /**
+   * Place your slides inside this slot. They will be visible one after the other, like a slide show.
+   * @slot default
+   */
+  render(h) {
+    // HACKY-O
+    const children = this.$slots.default;
+    const slides = children.filter((c) => !!c.componentOptions);
+    return h('div', { class: 'screen' }, [
+      this.title ? h('h2', this.title) : null,
+      slides.length ? slides[this.currentSlide] : this.$slots.default
+    ]);
+  },
+  validations() {
+    return {
+      measurements: this.validations
+    };
   }
 };
 </script>
