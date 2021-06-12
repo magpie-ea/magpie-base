@@ -3,13 +3,13 @@ This is a pre-built self-paced reading screen, with limited functionality, but s
 
 ```vue
 <Experiment>
-  <template #screens>
-
-    <SelfPacedReadingScreen :chunks="['This', 'is', 'a', 'nice', 'text.']" word-pos="next" underline="sentence" />
+    <SelfPacedReadingScreen
+        :chunks="['This', 'is', 'a', 'nice', 'text.']"
+        word-pos="next"
+        underline="sentence" />
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 
@@ -17,13 +17,15 @@ This is a pre-built self-paced reading screen, with limited functionality, but s
 
 ```vue
 <Experiment>
-  <template #screens>
 
-    <SelfPacedReadingScreen :chunks="['This', 'is', 'a', 'nice', 'text.']" word-pos="next" underline="sentence" :options="['Yes', 'bar']" />
+    <SelfPacedReadingScreen
+        :chunks="['This', 'is', 'a', 'nice', 'text.']"
+        word-pos="next"
+        underline="sentence"
+        :options="['Yes', 'bar']" />
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 
@@ -31,7 +33,6 @@ This is a pre-built self-paced reading screen, with limited functionality, but s
 
 ```vue
 <Experiment>
-  <template #screens>
 
     <SelfPacedReadingScreen
         :chunks="['This', 'is', 'a', 'nice', 'text.']"
@@ -43,14 +44,13 @@ This is a pre-built self-paced reading screen, with limited functionality, but s
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ measurements, saveAndNextScreen }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -68,27 +68,27 @@ This is a pre-built self-paced reading screen, with limited functionality, but s
         :chunks="chunks"
         :word-pos="wordPos"
         :underline="underline"
-        :response-times.sync="measurements.response_times"
+        :response-times.sync="$magpie.measurements.response_times"
       >
         <template #task>
           <p v-if="question" v-text="question"></p>
           <ForcedChoiceInput
             v-if="options.length"
             :options="options"
-            :response.sync="measurements.choice"
-            @update:response="saveAndNextScreen"
+            :response.sync="$magpie.measurements.choice"
+            @update:response="$magpie.saveAndNextScreen()"
           />
           <RatingInput
             v-else-if="optionLeft && optionRight"
             :right="optionRight"
             :left="optionLeft"
-            :response.sync="measurements.rating"
-            @update:response="saveAndNextScreen"
+            :response.sync="$magpie.measurements.rating"
+            @update:response="$magpie.saveAndNextScreen()"
           />
-          <Wait v-else :time="1" @done="saveAndNextScreen" />
+          <Wait v-else :time="1" @done="$magpie.saveAndNextScreen()" />
         </template>
       </SelfPacedReading>
-    </template>
+    </Slide>
   </Screen>
 </template>
 
@@ -99,10 +99,12 @@ import ForcedChoiceInput from '..//inputs/ForcedChoiceInput';
 import RatingInput from '..//inputs/RatingInput';
 import Wait from '..//helpers/Wait';
 import Record from '..//helpers/Record';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'SelfPacedReadingScreen',
   components: {
+    Slide,
     Record,
     Wait,
     RatingInput,

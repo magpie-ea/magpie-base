@@ -1,25 +1,22 @@
 <docs>
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0="{measurements, saveAndNextScreen}">
+      <Slide>
         <p>Fries or soup?</p>
         <DropdownInput
             :options="['fries', 'soup']"
-            :response.sync="measurements.lunch"
+            :response.sync= "$magpie.measurements.lunch"
           />
-        <p v-if="measurements.lunch === 'soup'">I disagree!</p>
-        <button @click="saveAndNextScreen">Submit</button>
-      </template>
+        <p v-if= "$magpie.measurements.lunch === 'soup'">I disagree!</p>
+        <button @click="$magpie.saveAndNextScreen">Submit</button>
+      </Slide>
 
     </Screen>
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>

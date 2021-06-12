@@ -5,7 +5,7 @@
 
     <Screen>
 
-      <template #0="{measurements}">
+      <template  >
         <p>Fries or soup?</p>
         <ImageSelectionInput
             :options="[

@@ -2,21 +2,17 @@
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0="{measurements}">
+      <Slide>
         <p>How was your breakfast?</p>
         <MultipleChoiceInput
-            :response.sync="measurements.breakfast"
+            :response.sync= "$magpie.measurements.breakfast"
             :options="['Not enjoyable', 'Rather not enjoyable', 'OK', 'Rather enjoyable', 'Really enjoyable']" />
-        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
-      </template>
+        <button @click="$magpie.saveAndNextScreen();">Submit</button>
+      </Slide>
 
     </Screen>
-
-  </template>
 </Experiment>
 ```
 
@@ -27,13 +23,13 @@
 
     <Screen>
 
-      <template #0="{measurements}">
+      <template  >
         <p>How was your breakfast?</p>
         <MultipleChoiceInput
-            :response.sync="measurements.breakfast"
+            :response.sync= "$magpie.measurements.breakfast"
             orientation="horizontal"
             :options="['Not enjoyable', 'Rather not enjoyable', 'OK', 'Rather enjoyable', 'Really enjoyable']" />
-        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
+        <button @click="$magpie.saveAndNextScreen();">Submit</button>
       </template>
 
     </Screen>

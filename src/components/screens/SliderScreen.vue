@@ -3,8 +3,6 @@ This is a pre-built slider rating screen, with limited functionality, but simple
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <SliderScreen
         question="How healthy do you usually eat?"
         qud="Eating healthy is good for you."
@@ -14,14 +12,13 @@ This is a pre-built slider rating screen, with limited functionality, but simple
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ measurements, saveAndNextScreen }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -35,12 +32,15 @@ This is a pre-built slider rating screen, with limited functionality, but simple
       <SliderInput
         :left="optionLeft"
         :right="optionRight"
-        :response.sync="measurements.response"
+        :response.sync="$magpie.measurements.response"
       />
-      <button v-if="measurements.response" @click="saveAndNextScreen">
+      <button
+        v-if="$magpie.measurements.response"
+        @click="$magpie.saveAndNextScreen()"
+      >
         Next
       </button>
-    </template>
+    </Slide>
   </Screen>
 </template>
 
@@ -48,10 +48,12 @@ This is a pre-built slider rating screen, with limited functionality, but simple
 import Screen from '../Screen';
 import Record from '..//helpers/Record';
 import SliderInput from '..//inputs/SliderInput';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'SliderScreen',
   components: {
+    Slide,
     SliderInput,
     Record,
     Screen

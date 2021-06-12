@@ -4,18 +4,15 @@ You can use HTML's `<img>` tag to play audio.
 For more details see [HTML img Element docs on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img).
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0>
+      <Slide>
         This is a sealion.<br/>
         <img src="img/sea_lion.jpg" />
-      </template>
+      </Slide>
 
     </Screen>
 
-  </template>
 </Experiment>
 ```
 </docs>

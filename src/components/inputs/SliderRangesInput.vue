@@ -1,22 +1,23 @@
 <docs>
 ```vue
 <Experiment>
-  <template #screens>
 
     <Screen>
 
-      <template #0="{measurements}">
+      <Slide>
         <p>How often do you eat meat, vegetarian or vegan?</p>
         <SliderRangesInput
             :ranges="['meat', 'vegetarian', 'vegan']"
-            :range-values.sync="measurements.food_types" />
-        <p v-if="measurements.food_types">{{measurements.food_types[0]}}% Meat, {{measurements.food_types[1]}}% Vegetarian, {{measurements.food_types[2]}}% Vegan</p>
-        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
-      </template>
+            :range-values.sync= "$magpie.measurements.food_types" />
+        <p v-if= "$magpie.measurements.food_types">
+          {{$magpie.measurements.food_types[0]}}% Meat,
+          {{$magpiemeasurements.food_types[1]}}% Vegetarian,
+          {{$magpiemeasurements.food_types[2]}}% Vegan</p>
+        <button @click="$magpie.saveAndNextScreen();">Submit</button>
+      </Slide>
 
     </Screen>
 
-  </template>
 </Experiment>
 ```
 </docs>

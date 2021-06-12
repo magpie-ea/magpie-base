@@ -3,20 +3,21 @@ This is a pre-built forced choice screen, with limited functionality, but simple
 
 ```vue
 <Experiment>
-  <template #screens>
 
-    <ForcedChoiceScreen :options="['Yes', 'No']" question="Do you understand this question?" qud="Always do the opposite of what you are asked." />
+    <ForcedChoiceScreen
+        :options="['Yes', 'No']"
+        question="Do you understand this question?"
+        qud="Always do the opposite of what you are asked." />
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ measurements, saveAndNextScreen }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -29,10 +30,10 @@ This is a pre-built forced choice screen, with limited functionality, but simple
       <p v-if="question" v-text="question"></p>
       <ForcedChoiceInput
         :options="options"
-        :response.sync="measurements.choice"
-        @update:response="saveAndNextScreen"
+        :response.sync="$magpie.measurements.choice"
+        @update:response="$magpie.saveAndNextScreen()"
       />
-    </template>
+    </Slide>
   </Screen>
 </template>
 
@@ -40,10 +41,12 @@ This is a pre-built forced choice screen, with limited functionality, but simple
 import Screen from '../Screen';
 import ForcedChoiceInput from '..//inputs/ForcedChoiceInput';
 import Record from '..//helpers/Record';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'ForcedChoiceScreen',
   components: {
+    Slide,
     Record,
     ForcedChoiceInput,
     Screen

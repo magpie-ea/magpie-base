@@ -3,7 +3,6 @@ This is a pre-built image selection screen, with limited functionality, but simp
 
 ```vue
 <Experiment>
-  <template #screens>
 
     <TextareaScreen
         question="What do you usually eat?"
@@ -12,14 +11,13 @@ This is a pre-built image selection screen, with limited functionality, but simp
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ measurements, saveAndNextScreen }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -28,14 +26,17 @@ This is a pre-built image selection screen, with limited functionality, but simp
         }"
       />
       <p v-if="question" v-text="question"></p>
-      <TextareaInput :response.sync="measurements.response" />
+      <TextareaInput :response.sync="$magpie.measurements.response" />
       <button
-        v-if="measurements.response && measurements.response.length >= minChars"
-        @click="saveAndNextScreen"
+        v-if="
+          $magpie.measurements.response &&
+          $magpie.measurements.response.length >= minChars
+        "
+        @click="$magpie.saveAndNextScreen()"
       >
         Next
       </button>
-    </template>
+    </Slide>
   </Screen>
 </template>
 
@@ -43,10 +44,12 @@ This is a pre-built image selection screen, with limited functionality, but simp
 import Screen from '../Screen';
 import Record from '..//helpers/Record';
 import TextareaInput from '..//inputs/TextareaInput';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'TextareaScreen',
   components: {
+    Slide,
     TextareaInput,
     Record,
     Screen

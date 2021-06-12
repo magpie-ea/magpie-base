@@ -3,8 +3,6 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <RatingScreen
         question="How healthy do you usually eat?"
         qud="Eating healthy is good for you."
@@ -14,14 +12,13 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ measurements, saveAndNextScreen }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -35,10 +32,10 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
       <RatingInput
         :left="optionLeft"
         :right="optionRight"
-        :response.sync="measurements.response"
-        @update:response="saveAndNextScreen()"
+        :response.sync="$magpie.measurements.response"
+        @update:response="$magpie.saveAndNextScreen()"
       />
-    </template>
+    </Slide>
   </Screen>
 </template>
 
@@ -46,10 +43,12 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
 import Screen from '../Screen';
 import Record from '..//helpers/Record';
 import RatingInput from '..//inputs/RatingInput';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'RatingScreen',
   components: {
+    Slide,
     RatingInput,
     Record,
     Screen

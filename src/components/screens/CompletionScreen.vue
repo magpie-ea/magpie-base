@@ -3,8 +3,6 @@ This is a pre-built completion screen, with limited functionality, but simpler t
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <CompletionScreen
         question="What happened in antartica?"
         text="One %s fell over three %s."
@@ -15,15 +13,13 @@ This is a pre-built completion screen, with limited functionality, but simpler t
     />
 
     <DebugResultsScreen />
-
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ measurements, saveAndNextScreen }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -37,33 +33,36 @@ This is a pre-built completion screen, with limited functionality, but simpler t
       <CompletionInput
         :text="text"
         :options="options"
-        :response.sync="measurements.completed_text"
-        :responses.sync="measurements.responses"
+        :response.sync="$magpie.measurements.completed_text"
+        :responses.sync="$magpie.measurements.responses"
       />
       <button
         v-if="
-          measurements.responses &&
-          measurements.responses.filter(Boolean).length === options.length
+          $magpie.measurements.responses &&
+          $magpie.measurements.responses.filter(Boolean).length ===
+            options.length
         "
-        @click="saveAndNextScreen"
+        @click="$magpie.saveAndNextScreen()"
       >
         Next
       </button>
-    </template>
+    </Slide>
   </Screen>
 </template>
 
 <script>
 import Screen from '../Screen';
-import Record from '..//helpers/Record';
-import CompletionInput from '..//inputs/CompletionInput';
+import Slide from '../Screen';
+import Record from '../helpers/Record';
+import CompletionInput from '../inputs/CompletionInput';
 
 export default {
   name: 'CompletionScreen',
   components: {
     CompletionInput,
     Record,
-    Screen
+    Screen,
+    Slide
   },
   props: {
     /**

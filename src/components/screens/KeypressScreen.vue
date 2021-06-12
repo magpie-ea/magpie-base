@@ -3,8 +3,6 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <KeypressScreen
         question="Are fries healthy?"
         picture="img/fries.jpg"
@@ -16,14 +14,13 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ measurements, saveAndNextScreen }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -35,10 +32,10 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
       <p v-if="question" v-text="question"></p>
       <KeypressInput
         :keys="keys"
-        :response.sync="measurements.keypress"
-        @update:response="saveAndNextScreen"
+        :response.sync="$magpie.measurements.keypress"
+        @update:response="$magpie.saveAndNextScreen()"
       />
-    </template>
+    </Slide>
   </Screen>
 </template>
 
@@ -46,10 +43,12 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
 import Screen from '../Screen';
 import Record from '..//helpers/Record';
 import KeypressInput from '..//inputs/KeypressInput';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'KeypressScreen',
   components: {
+    Slide,
     KeypressInput,
     Record,
     Screen

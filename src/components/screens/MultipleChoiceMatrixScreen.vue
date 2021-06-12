@@ -3,7 +3,6 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
 
 ```vue
 <Experiment>
-  <template #screens>
 
     <MultipleChoiceMatrixScreen
         :questions="[
@@ -17,8 +16,6 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
     />
 
     <DebugResultsScreen />
-
-  </template>
 </Experiment>
 ```
 </docs>
@@ -36,7 +33,7 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
       }
     }"
   >
-    <template #0="{ measurements, saveAndNextScreen, validations }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -50,15 +47,15 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
         :options="options"
         :questions="questions"
         :randomize="randomize"
-        :responses.sync="measurements.responses"
+        :responses.sync="$magpie.measurements.responses"
       />
       <button
-        v-if="measurements.responses && !validations.$error"
-        @click="saveAndNextScreen()"
+        v-if="$magpie.measurements.responses && !validations.$error"
+        @click="$magpie.saveAndNextScreen()"
       >
         Submit
       </button>
-    </template>
+    </Slide>
   </Screen>
 </template>
 
@@ -66,10 +63,12 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
 import Screen from '../Screen';
 import Record from '../helpers/Record';
 import MultipleChoiceMatrixInput from '../inputs/MultipleChoiceMatrixInput';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'MultipleChoiceMatrixScreen',
   components: {
+    Slide,
     MultipleChoiceMatrixInput,
     Record,
     Screen

@@ -3,7 +3,6 @@ This is a pre-built categorization mouse tracking screen, with limited functiona
 
 ```vue
 <Experiment>
-  <template #screens>
 
     <CategorizationMousetrackingScreen
         option1="Right"
@@ -12,14 +11,13 @@ This is a pre-built categorization mouse tracking screen, with limited functiona
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ measurements, saveAndNextScreen, save }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -30,8 +28,8 @@ This is a pre-built categorization mouse tracking screen, with limited functiona
         }"
       />
       <CategorizationMousetracking
-        :response.sync="measurements.option"
-        :mouse-track.sync="measurements.mouseTrack"
+        :response.sync="$magpie.measurements.option"
+        :mouse-track.sync="$magpie.measurements.mouseTrack"
       >
         <template #prep>
           <slot name="prep"></slot>
@@ -68,15 +66,16 @@ This is a pre-built categorization mouse tracking screen, with limited functiona
           </slot>
         </template>
         <template #feedback>
-          <Record :data="{ ...measurements.mouseTrack }" />
-          <Wait :time="1" @done="saveAndNextScreen" />
+          <Record :data="{ ...$magpie.measurements.mouseTrack }" />
+          <Wait :time="1" @done="$magpie.saveAndNextScreen()" />
         </template>
       </CategorizationMousetracking>
-    </template>
+    </Slide>
   </Screen>
 </template>
 
 <script>
+import Slide from '../Slide';
 import Screen from '../Screen';
 import Wait from '../helpers/Wait';
 import Record from '../helpers/Record';
@@ -88,7 +87,8 @@ export default {
     CategorizationMousetracking,
     Record,
     Wait,
-    Screen
+    Screen,
+    Slide
   },
   props: {
     /**

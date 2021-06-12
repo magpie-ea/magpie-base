@@ -4,26 +4,23 @@ This component allows you to display textual or other content in a rapid serial 
 ### Text
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0="{nextSlide}">
-        <button @click="nextSlide">Start</button>
-      </template>
+      <Slide>
+        <button @click= "$magpie.nextSlide()">Start</button>
+      </Slide>
 
-      <template #1="{nextSlide}">
+      <Slide>
         <Rsvp :chunks="'I wonder if you can read this, as it is a rapid serial visual presentation of a long text.'.split(' ')"
-              @end="nextSlide" />
-      </template>
+              @end= "$magpie.nextSlide()" />
+      </Slide>
 
-      <template #2>
+      <Slide>
         That's what I thought.
-      </template>
+      </Slide>
 
     </Screen>
 
-  </template>
 </Experiment>
 ```
 
@@ -31,28 +28,26 @@ This component allows you to display textual or other content in a rapid serial 
 The Rsvp component allows you to define the presentation of the chunks you provide. E.g. we could also use this component to display images.
 ```vue
 <Experiment>
-  <template #screens>
     <Screen>
-      <template #0="{nextSlide}">
-        <button @click="nextSlide">Start</button>
-      </template>
-      <template #1="{nextSlide}">
+      <Slide>
+        <button @click= "$magpie.nextSlide()">Start</button>
+      </Slide>
+      <Slide>
         <Rsvp :chunks="[
             'public/images/rsvp1.jpg',
             'public/images/rsvp2.jpg',
             'public/images/rsvp3.jpg',
             'public/images/rsvp4.jpg',
-            ]" @end="nextSlide">
+            ]" @end= "$magpie.nextSlide()">
           <template #presentation="{chunk}">
             <img :src="chunk" />
           </template>
         </Rsvp>
-      </template>
-      <template #2>
+      </Slide>
+      <Slide>
         Done.
-      </template>
+      </Slide>
     </Screen>
-  </template>
 </Experiment>
 ```
 

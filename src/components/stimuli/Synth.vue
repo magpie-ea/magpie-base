@@ -3,22 +3,20 @@ The Synth component is a basic sound Synthesizer based on [Tone.js](https://tone
 
 ```vue
 <Experiment>
-  <template #screens>
     <Screen title="Click to beep.">
 
-      <template #0="{nextSlide}">
-        <button @click="nextSlide">Start</button>
-      </template>
+      <Slide>
+        <button @click= "$magpie.nextSlide()">Start</button>
+      </Slide>
 
-      <template #1="{nextSlide}">
+      <Slide>
         <Synth oscillator="fmsine" frequency="C4"/>
         <Synth oscillator="fmsine" frequency="E4"/>
         <Synth oscillator="fmsine" frequency="G4"/>
-        <button @click="nextSlide(0)">Stop</button>
-      </template>
+        <button @click="$magpie.nextSlide(0)">Stop</button>
+      </Slide>
 
     </Screen>
-  </template>
 </Experiment>
 ```
 

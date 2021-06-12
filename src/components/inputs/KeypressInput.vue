@@ -1,24 +1,20 @@
 <docs>
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0="{measurements}">
+      <Slide>
         <p>Fries or soup?</p>
         <KeypressInput
-            :response.sync="measurements.lunch"
+            :response.sync= "$magpie.measurements.lunch"
             :keys="{
               f: 'fries',
               j: 'soup'
             }"
-            @update:response="$magpie.addTrialData(measurements); $magpie.nextScreen();" />
-      </template>
+            @update:response="$magpie.saveAndNextScreen();" />
+      </Slide>
 
     </Screen>
-
-  </template>
 </Experiment>
 ```
 </docs>

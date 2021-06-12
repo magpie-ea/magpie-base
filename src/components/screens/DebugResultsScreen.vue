@@ -6,7 +6,7 @@ Once you are gaoing live with your experiment, you can use the SubmitResultsScre
 
 <template>
   <Screen title="Results" class="debugResults">
-    <template #0>
+    <Slide>
       <button @click="downloadCsv">Download all data as csv</button>
       <table>
         <thead>
@@ -22,17 +22,18 @@ Once you are gaoing live with your experiment, you can use the SubmitResultsScre
           </tr>
         </tbody>
       </table>
-    </template>
+    </Slide>
   </Screen>
 </template>
 
 <script>
 import Screen from '../Screen';
 import stringify from 'csv-stringify/lib/sync';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'DebugResultsScreen',
-  components: { Screen },
+  components: { Slide, Screen },
   props: {},
   data() {
     const results = this.$magpie.getData();

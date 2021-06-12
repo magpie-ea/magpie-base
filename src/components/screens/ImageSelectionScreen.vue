@@ -3,8 +3,6 @@ This is a pre-built image selection screen, with limited functionality, but simp
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <ImageSelectionScreen
         :options="[
                 {src: 'img/fries.jpg', label: 'fries'},
@@ -16,14 +14,13 @@ This is a pre-built image selection screen, with limited functionality, but simp
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ measurements, saveAndNextScreen }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -35,10 +32,10 @@ This is a pre-built image selection screen, with limited functionality, but simp
       <p v-if="question" v-text="question"></p>
       <ImageSelectionInput
         :options="options"
-        :response.sync="measurements.image_choice"
-        @update:response="saveAndNextScreen"
+        :response.sync="$magpie.measurements.image_choice"
+        @update:response="$magpie.saveAndNextScreen()"
       />
-    </template>
+    </Slide>
   </Screen>
 </template>
 
@@ -46,10 +43,12 @@ This is a pre-built image selection screen, with limited functionality, but simp
 import Screen from '../Screen';
 import Record from '..//helpers/Record';
 import ImageSelectionInput from '..//inputs/ImageSelectionInput';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'ImageSelectionScreen',
   components: {
+    Slide,
     ImageSelectionInput,
     Record,
     Screen

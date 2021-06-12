@@ -3,20 +3,17 @@ This is a pre-built forced choice screen, with limited functionality, but simple
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <PostTestScreen />
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs" title="Additional information">
-    <template #0="{ measurements, saveAndNextScreen }">
+    <Slide>
       <p>
         Answering the following questions is optional, but your answers will
         help us analyze our results.
@@ -25,7 +22,11 @@ This is a pre-built forced choice screen, with limited functionality, but simple
         <p v-if="age">
           <label
             >Age
-            <input v-model="measurements.age" type="number" max="110" min="18"
+            <input
+              v-model="$magpie.measurements.age"
+              type="number"
+              max="110"
+              min="18"
           /></label>
         </p>
         <p v-if="gender">
@@ -33,7 +34,7 @@ This is a pre-built forced choice screen, with limited functionality, but simple
             >Gender
             <DropdownInput
               :options="['male', 'female', 'other']"
-              :response.sync="measurements.gender"
+              :response.sync="$magpie.measurements.gender"
             />
           </label>
         </p>
@@ -46,7 +47,7 @@ This is a pre-built forced choice screen, with limited functionality, but simple
                 'Graduated Collage',
                 'Higher degree'
               ]"
-              :response.sync="measurements.education"
+              :response.sync="$magpie.measurements.education"
             />
           </label>
         </p>
@@ -54,7 +55,7 @@ This is a pre-built forced choice screen, with limited functionality, but simple
           <label
             >Native langauges
             <input
-              v-model="measurements.languages"
+              v-model="$magpie.measurements.languages"
               type="text"
               placeholder="the langauge(s) spoken at home when you were a child"
           /></label>
@@ -62,13 +63,15 @@ This is a pre-built forced choice screen, with limited functionality, but simple
         <!-- @slot You can add additional questions here, storing data in measurements
            @binding {object} measurements a temporary object to store your responses before adding them to the results
            -->
-        <slot :measurements="measurements" />
+        <slot :measurements="$magpie.measurements" />
         Further comments
-        <TextareaInput :response.sync="measurements.comments"></TextareaInput>
+        <TextareaInput
+          :response.sync="$magpie.measurements.comments"
+        ></TextareaInput>
       </div>
 
-      <button @click="saveAndNextScreen()">Next</button>
-    </template>
+      <button @click="$magpie.saveAndNextScreen()">Next</button>
+    </Slide>
   </Screen>
 </template>
 
@@ -76,10 +79,12 @@ This is a pre-built forced choice screen, with limited functionality, but simple
 import Screen from '../Screen';
 import TextareaInput from '..//inputs/TextareaInput';
 import DropdownInput from '..//inputs/DropdownInput';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'PostTestScreen',
   components: {
+    Slide,
     DropdownInput,
     TextareaInput,
     Screen

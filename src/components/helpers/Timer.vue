@@ -1,24 +1,20 @@
 <docs>
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0="{nextSlide, measurements}">
+      <Slide>
         Slide 1<br />
-        <Timer v-model="measurements.timer"></Timer>
-        <button @click="nextSlide">Next slide</button>
-      </template>
+        <Timer v-model="$magpie.measurements.timer"></Timer>
+        <button @click="$magpie.nextSlide()">Next slide</button>
+      </Slide>
 
-      <template #1="{nextSlide, measurements}">
+      <Slide>
         Slide 2<br />
-        Time until click: {{measurements.timer()/1000}} seconds
-      </template>
+        Time until click: {{$magpie.measurements.timer()/1000}} seconds
+      </Slide>
 
     </Screen>
-
-  </template>
 </Experiment>
 ```
 </docs>

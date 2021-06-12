@@ -7,7 +7,6 @@ By default it looks like this:
 
 ```vue
 <Experiment>
-  <template #screens>
 
     <Screen>
        <button @click="$magpie.nextScreen()">Connect</button>
@@ -17,7 +16,6 @@ By default it looks like this:
 
     <Screen>Connected.</Screen>
 
-  </template>
 </Experiment>
 ```
 

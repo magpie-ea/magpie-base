@@ -1,37 +1,33 @@
 <docs>
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0="{nextSlide}">
+      <Slide  >
         Slide 1
-        <button @click="nextSlide">Next slide</button>
-      </template>
+        <button @click= "$magpie.nextSlide()">Next slide</button>
+      </Slide>
 
-      <template #1="{nextSlide}">
+      <Slide  >
         Slide 2
-        <Wait key="wait for slide 2" :time="500" @done="nextSlide" />
-      </template>
+        <Wait key="wait for slide 2" :time="500" @done= "$magpie.nextSlide()" />
+      </Slide>
 
-      <template #2="{nextSlide}">
+      <Slide  >
         Slide 3
-        <Wait key="wait for slide 3" :time="500" @done="nextSlide" />
-      </template>
+        <Wait key="wait for slide 3" :time="500" @done= "$magpie.nextSlide()" />
+      </Slide>
 
-      <template #3="{nextSlide}">
+      <Slide  >
         Slide 4
-        <Wait key="wait for slide 4" :time="500" @done="nextSlide" />
-      </template>
+        <Wait key="wait for slide 4" :time="500" @done= "$magpie.nextSlide()" />
+      </Slide>
 
-      <template #4="{nextSlide}">
+      <Slide  >
         Slide 5
-      </template>
+      </Slide>
 
     </Screen>
-
-  </template>
 </Experiment>
 ```
 </docs>

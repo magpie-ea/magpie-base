@@ -2,28 +2,20 @@
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
-
-      <template #0="{measurements, saveAndNextScreen}">
-        <SelfPacedReading :chunks="'This is a nice text.'.split(' ')" word-pos="next" underline="sentence" :response-times.sync="measurements.times">
+        <SelfPacedReading :chunks="'This is a nice text.'.split(' ')" word-pos="next" underline="sentence" :response-times.sync= "$magpie.measurements.times">
           <template #task>
             <p>Is it?</p>
             <RatingInput
                 left="No"
                 right="Yes"
-                :response.sync="measurements.rating"
-                @update:response="saveAndNextScreen" />
+                :response.sync= "$magpie.measurements.rating"
+                @update:response="$magpie.saveAndNextScreen()" />
           </template>
         </SelfPacedReading>
-      </template>
-
     </Screen>
 
     <DebugResultsScreen />
-
-  </template>
 </Experiment>
 ```
 
@@ -33,13 +25,13 @@
   <div>
     <div v-if="slide === 0">
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->
-      <slot name="prep" :done="nextSlide">
-        <Wait :time="1" @done="nextSlide" />
+      <slot name="prep" :done="$magpie.nextSlide">
+        <Wait :time="1" @done="$magpie.nextSlide" />
       </slot>
     </div>
 
     <div v-if="slide === 1">
-      <Wait :time="500" @done="nextSlide" />
+      <Wait :time="500" @done="$magpie.nextSlide" />
     </div>
 
     <div v-if="slide === 2">

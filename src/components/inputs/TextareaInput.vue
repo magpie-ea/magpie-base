@@ -1,22 +1,18 @@
 <docs>
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0="{measurements}">
+      <Slide>
         <p>Fries or soup? Discuss.</p>
         <TextareaInput
-            :response.sync="measurements.lunch"
+            :response.sync= "$magpie.measurements.lunch"
           />
-        <p v-if="measurements.lunch && measurements.lunch.length > 32">I disagree!</p>
-        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
-      </template>
+        <p v-if= "$magpie.measurements.lunch && $magpie.measurements.lunch.length > 32">I disagree!</p>
+        <button @click="$magpie.saveAndNextScreen();">Submit</button>
+      </Slide>
 
     </Screen>
-
-  </template>
 </Experiment>
 ```
 </docs>

@@ -3,8 +3,6 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <MultipleChoiceScreen
         question="How was your breakfast?"
         :options="['Not enjoyable', 'Rather not enjoyable', 'OK', 'Rather enjoyable', 'Really enjoyable']"
@@ -12,14 +10,13 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ measurements, saveAndNextScreen }">
+    <Slide>
       <p v-if="qud" v-text="qud"></p>
       <Record
         :data="{
@@ -33,12 +30,15 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
       <MultipleChoiceInput
         :options="options"
         :orientation="orientation"
-        :response.sync="measurements.response"
+        :response.sync="$magpie.measurements.response"
       />
-      <button v-if="measurements.response" @click="saveAndNextScreen()">
+      <button
+        v-if="$magpie.measurements.response"
+        @click="$magpie.saveAndNextScreen()"
+      >
         Submit
       </button>
-    </template>
+    </Slide>
   </Screen>
 </template>
 
@@ -46,6 +46,7 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
 import Screen from '../Screen';
 import Record from '../helpers/Record';
 import MultipleChoiceInput from '../inputs/MultipleChoiceInput';
+import Slide from '@/components/Slide';
 
 /**
  * Have participants choose answer from multiple options
@@ -53,6 +54,7 @@ import MultipleChoiceInput from '../inputs/MultipleChoiceInput';
 export default {
   name: 'MultipleChoiceScreen',
   components: {
+    Slide,
     MultipleChoiceInput,
     Record,
     Screen

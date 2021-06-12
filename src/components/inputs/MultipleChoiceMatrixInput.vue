@@ -2,11 +2,9 @@
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0="{measurements}">
+      <Slide>
         <MultipleChoiceMatrixInput
             :options="['Not enjoyable', 'Rather not enjoyable', 'OK', 'Rather enjoyable', 'Really enjoyable']"
             :questions="[
@@ -16,16 +14,15 @@
               'What is your opinion of television?',
               'What is your opinion of folk music?'
             ]"
-            :responses.sync="measurements.responses"
+            :responses.sync= "$magpie.measurements.responses"
         />
-        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
-      </template>
+        <button @click="$magpie.saveAndNextScreen();">Submit</button>
+      </Slide>
 
     </Screen>
 
     <DebugResultsScreen />
 
-  </template>
 </Experiment>
 ```
 
@@ -37,7 +34,7 @@ You can also randomize the question order. The response data will still be in th
 
     <Screen>
 
-      <template #0="{measurements}">
+      <template  >
         <MultipleChoiceMatrixInput
             :options="['Not enjoyable', 'Rather not enjoyable', 'OK', 'Rather enjoyable', 'Really enjoyable']"
             :questions="[
@@ -48,9 +45,9 @@ You can also randomize the question order. The response data will still be in th
               'What is your opinion of folk music?'
             ]"
             :randomize="true"
-            :responses.sync="measurements.responses"
+            :responses.sync= "$magpie.measurements.responses"
         />
-        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
+        <button @click="$magpie.saveAndNextScreen();">Submit</button>
       </template>
 
     </Screen>

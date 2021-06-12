@@ -5,10 +5,10 @@ You can provide the submission URL to the Experiment component.
 
 <template>
   <Screen v-if="!$magpie.debug" title="Submitting">
-    <template #0="{ nextSlide }">
+    <Slide>
       <p>Hold on, while we submit your data.</p>
       <Wait :time="0" @done="submit(nextSlide)" />
-    </template>
+    </Slide>
     <template #1>
       <p v-if="!error">
         All done. Thank you!
@@ -33,9 +33,10 @@ You can provide the submission URL to the Experiment component.
 import Screen from '../Screen';
 import Wait from '../helpers/Wait';
 import DebugResultsScreen from './DebugResultsScreen';
+import Slide from '@/components/Slide';
 export default {
   name: 'SubmitResultsScreen',
-  components: { DebugResultsScreen, Wait, Screen },
+  components: { Slide, DebugResultsScreen, Wait, Screen },
   props: {},
   data() {
     return {

@@ -3,8 +3,6 @@ This is a pre-built instruction screen, with limited functionality, but simpler 
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <InstructionScreen>
       These are instructions for the participant.<br />
       Below the instructions is a button to continue.
@@ -15,28 +13,29 @@ This is a pre-built instruction screen, with limited functionality, but simpler 
       Below the instructions is a button to continue.
     </InstructionScreen>
 
-  </template>
 </Experiment>
 ```
 </docs>
 
 <template>
   <Screen v-bind="$attrs">
-    <template #0="{ nextScreen }">
+    <Slide>
       <div class="instructions">
         <slot name="default" />
       </div>
-      <button @click="nextScreen">Next</button>
-    </template>
+      <button @click="$magpie.nextScreen()">Next</button>
+    </Slide>
   </Screen>
 </template>
 
 <script>
 import Screen from '../Screen';
+import Slide from '@/components/Slide';
 
 export default {
   name: 'InstructionScreen',
   components: {
+    Slide,
     Screen
   },
   props: {}

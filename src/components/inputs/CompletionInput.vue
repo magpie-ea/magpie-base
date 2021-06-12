@@ -2,25 +2,23 @@
 
 ```vue
 <Experiment>
-  <template #screens>
     <Screen>
 
-      <template #0="{measurements}">
+      <Slide>
         <CompletionInput
           text="One %s fell over three %s."
-          :responses.sync="measurements.words"
+          :responses.sync= "$magpie.measurements.words"
           :options="[
               ['horse', 'penguin', 'bird'],
               ['icicles', 'trees', 'bushes']
               ]"
           />
-        <p v-if="measurements.words">A {{measurements.words[0]}} would never fall over {{measurements.words[1]}}</p>
-        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Done</button>
-      </template>
+        <p v-if= "$magpie.measurements.words">A {{$magpie.measurements.words[0]}} would never fall over {{$magpie.measurements.words[1]}}</p>
+        <button @click="$magpie.saveAndNextScreen();">Done</button>
+      </Slide>
 
     </Screen>
 
-  </template>
 </Experiment>
 ```
 </docs>

@@ -4,20 +4,17 @@ You can use HTML's audio tag to play audio.
 For more details see [HTML Audio Element docs on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio).
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0>
+      <Slide>
         This is a dog.<br/>
         <button @click="$refs.audio.play()">Start</button>
         <button @click="$refs.audio.pause()">Stop</button>
         <audio ref="audio" src="audio/dog_bark.ogg" loop />
-      </template>
+      </Slide>
 
     </Screen>
 
-  </template>
 </Experiment>
 ```
 </docs>
@@ -28,7 +25,6 @@ For more details see [HTML Audio Element docs on MDN](https://developer.mozilla.
 // This is a dummy component to generate nice documentation for HTML's audio element
 export default {
   name: 'Audio',
-
   props: {
     /**
      * if specified, the audio will automatically begin playback as soon as it can do so, without waiting for the entire audio file to finish downloading.

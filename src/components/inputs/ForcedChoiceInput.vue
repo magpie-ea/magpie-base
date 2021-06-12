@@ -2,22 +2,19 @@
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template #0="{measurements}">
+      <Slide>
         <p>What's on the bread?</p>
         <ForcedChoiceInput
-            :response.sync="measurements.bread"
+            :response.sync= "$magpie.measurements.bread"
             :options="['Ham', 'Jam']" />
-          <p v-if="measurements.bread === 'Jam'">A sweet tooth, eh!?</p>
-        <button @click="$magpie.addTrialData(measurements); $magpie.nextScreen();">Submit</button>
-      </template>
+          <p v-if= "$magpie.measurements.bread === 'Jam'">A sweet tooth, eh!?</p>
+        <button @click="$magpie.saveAndNextScreen();">Submit</button>
+      </Slide>
 
     </Screen>
 
-  </template>
 </Experiment>
 ```
 
@@ -29,12 +26,12 @@ The following example will submit the response directly on clicking it.
 
     <Screen>
 
-      <template #0="{measurements}">
+      <template  >
         <p>What's on the bread?</p>
         <ForcedChoiceInput
-            :response.sync="measurements.bread"
+            :response.sync= "$magpie.measurements.bread"
             :options="['Ham', 'Jam']"
-            @update:response="$magpie.addTrialData(measurements); $magpie.nextScreen();"/>
+            @update:response="$magpie.saveAndNextScreen();"/>
       </template>
 
     </Screen>

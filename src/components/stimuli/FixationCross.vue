@@ -3,17 +3,10 @@ This component allows you to display a fixation cross.
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
-
-      <template #0="{nextSlide}">
         <FixationCross />
-      </template>
-
     </Screen>
 
-  </template>
 </Experiment>
 ```
 </docs>

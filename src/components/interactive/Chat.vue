@@ -3,8 +3,6 @@ This interactive component provides participants the opportunity to chat with ea
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
       <button @click="$magpie.nextScreen()">Start</button>
     </Screen>
@@ -13,15 +11,14 @@ This interactive component provides participants the opportunity to chat with ea
 
     <Screen>
 
-      <template #0="{measurements}">
-        <Chat :data.sync="measurements.data" />
-        <p>{{measurements.data? measurements.data.chatMessage.length : 0}} messages sent so far.</p>
+      <Slide>
+        <Chat :data.sync= "$magpie.measurements.data" />
+        <p>{{$magpie.measurements.data? $magpie.measurements.data.chatMessage.length : 0}} messages sent so far.</p>
         <p>{{ $magpie.socket.active.length }} participants chatting.</p>
-      </template>
+      </Slide>
 
     </Screen>
 
-  </template>
 </Experiment>
 ```
 
