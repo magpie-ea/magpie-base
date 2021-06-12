@@ -66,13 +66,12 @@ Besides the `screens` slot, the Experiment component also provides an optional `
 </docs>
 
 <script>
-import kProgress from 'k-progress';
 import Magpie from '../Magpie';
+import kProgress from 'k-progress';
 
 /**
  * This is the main component for your online experiment. Put it at the root of your application.
  * The experiment is available in all subcomponents and in the parent as `$magpie`
- * @property trial Per trial data supplied via the trials prop
  */
 export default {
   name: 'Experiment',
@@ -122,26 +121,19 @@ export default {
       }
     }
   },
-  provide() {
-    return {
-      experiment: this.magpie
-    };
-  },
   data() {
     return {
-      currentScreen: 0,
-      currentScreenComponent: null,
-      responseTimeStart: 0,
-      magpie: new Magpie(this, this.$options)
+      currentScreenComponent: {}
     };
   },
-  mounted() {
-    window.$magpie = this.magpie;
-    if (this.magpie.socket) {
-      this.magpie.socket.initialize();
+  created() {
+    if (window.MAGPIE_STYLEGUIDIST) {
+      this.$magpie = new Magpie(this.$options.magpie);
+      this.$parent.$magpie = this.$magpie;
     }
-    this.magpie.addExpData({ experiment_start_time: Date.now() });
-    this.responseTimeStart = Date.now();
+    this.$magpie.experiment = this;
+    window.$magpie = this.$magpie;
+
     if (this.title) {
       document.title = this.title;
     }
@@ -188,25 +180,7 @@ export default {
     });
   },
   methods: {
-    /**
-     * Go to the next screen. (Will also reset scroll position.)
-     * @public
-     * @param index{int} the index of the screen to go to (optional; default is next screen)
-     */
-    nextScreen(index) {
-      if (typeof index === 'number') {
-        this.currentScreen = index;
-      } else {
-        this.currentScreen += 1;
-      }
-      if (this.magpie.socket) {
-        this.magpie.socket.setCurrentScreen(this.currentScreen);
-      }
-
-      // Start new trial data and restart response timer
-      this.responseTimeStart = Date.now();
-      this.magpie.currentVarsData = {};
-
+    scrollToTop() {
       // Scroll to top of experiment element
       const expPos = this.$el.getBoundingClientRect();
       window.scrollTo(0, window.scrollY + expPos.top);
@@ -221,18 +195,16 @@ export default {
    * @slot default
    */
   render(h) {
-    // HACKY-O
-    this.$parent.$magpie = this.magpie;
     const children = this.$slots.default;
     const screens = children.filter((c) => !!c.componentOptions);
     return h('div', { class: 'experiment' + (this.wide ? ' wide' : '') }, [
       h('div', { class: 'header' }, [
         h('div', { class: 'col title' }, this.$slots.title),
         h('div', { class: 'col status' }, [
-          this.magpie.progress !== -1
+          this.$magpie.progress !== -1
             ? h(kProgress, {
                 props: {
-                  percent: this.magpie.progress * 100,
+                  percent: this.$magpie.progress * 100,
                   showText: false,
                   lineHeight: 10
                 },
@@ -241,7 +213,7 @@ export default {
             : null
         ])
       ]),
-      screens[this.currentScreen]
+      screens[this.$magpie.currentScreenIndex]
     ]);
   }
 };

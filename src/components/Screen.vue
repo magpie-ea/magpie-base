@@ -92,15 +92,12 @@ The screen can also be used to validate observations.
 </docs>
 
 <script>
-import { validationMixin } from 'vuelidate';
-
 /**
  * This component lets you create experiment sections that appear one after the other like a slideshow.
  * Trial data
  */
 export default {
   name: 'Screen',
-  mixins: [validationMixin],
   props: {
     /**
      * The title of this screen
@@ -127,68 +124,25 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      currentSlide: 0,
-      measurements: Object.fromEntries(
-        Object.entries(this.validations).map(([field]) => [field, null])
-      )
-    };
-  },
-  watch: {
-    measurements: {
-      handler() {
-        this.$v.measurements.$touch();
-      },
-      deep: true
-    }
-  },
   beforeMount() {
-    this.$magpie.experiment.currentScreenComponent = this;
-    this.currentSlide = 0;
     this.$magpie.setProgress(this.progress);
   },
   mounted() {
     this.$magpie.mousetracking.start();
-    this.$magpie.$el.addEventListener('mousemove', this.onMouseMove);
-  },
-  beforeDestroy() {
-    this.$magpie.$el.removeEventListener('mousemove', this.onMouseMove);
-  },
-  methods: {
-    nextSlide(index) {
-      if (typeof index === 'number') {
-        this.currentSlide = index;
-        return;
-      }
-      this.currentSlide++;
-    },
-    onMouseMove(e) {
-      /**
-       * @property x{int} X coordinate
-       * @property y{int} Y coordinate
-       */
-      this.$emit('mousemove', { x: e.layerX, y: e.layerY });
-      this.$magpie.mousetracking.onMouseMove(e);
-    }
   },
   /**
    * Place your slides inside this slot. They will be visible one after the other, like a slide show.
    * @slot default
    */
   render(h) {
-    // HACKY-O
     const children = this.$slots.default;
     const slides = children.filter((c) => !!c.componentOptions);
     return h('div', { class: 'screen' }, [
       this.title ? h('h2', this.title) : null,
-      slides.length ? slides[this.currentSlide] : this.$slots.default
+      slides.length === children.length
+        ? slides[this.$magpie.currentSlideIndex]
+        : this.$slots.default
     ]);
-  },
-  validations() {
-    return {
-      measurements: this.validations
-    };
   }
 };
 </script>

@@ -1,5 +1,6 @@
 export { default as Experiment } from './Experiment';
 export { default as Screen } from './Screen';
+export { default as Slide } from './Slide';
 
 export { default as CompletionInput } from './inputs/CompletionInput';
 export { default as DropdownInput } from './inputs/DropdownInput';

@@ -11,10 +11,6 @@ import packageJSON from '../package.json';
  * @class Magpie
  */
 export default class Magpie extends EventEmitter {
-  get $el() {
-    return this.experiment.$el;
-  }
-
   /**
    * Gives easy access to validators. Validation is based on [vuelidate](https://vuelidate.js.org). These are [the built-in validators](https://vuelidate.js.org/#sub-builtin-validators)
    * @instance
@@ -38,18 +34,6 @@ export default class Magpie extends EventEmitter {
   }
 
   /**
-   * The measurements of the current screen. All data in this object
-   * can be saved using $magpie.saveMeasurements
-   * @instance
-   * @member measurements
-   * @memberOf Magpie
-   * @type {object}
-   */
-  get measurements() {
-    return this.experiment.currentScreenComponent.measurements;
-  }
-
-  /**
    * Validation results on the current measurements
    * @instance
    * @member validateMeasurements
@@ -57,13 +41,17 @@ export default class Magpie extends EventEmitter {
    * @type {object}
    */
   get validateMeasurements() {
-    return this.experiment.currentScreenComponent.$v.measurements;
+    return this.experiment
+      ? this.experiment.currentScreenComponent
+        ? this.experiment.currentScreenComponent.$v.measurements || {}
+        : {}
+      : {};
   }
 
-  constructor(experiment, options) {
+  constructor(options) {
     super();
 
-    this.experiment = experiment;
+    this.experiment = {};
 
     // options
 
@@ -75,7 +63,7 @@ export default class Magpie extends EventEmitter {
      * @memberOf Magpie
      * @type {string}
      */
-    this.id = options.magpie.experimentId;
+    this.id = options.experimentId;
 
     /**
      * @instance
@@ -83,7 +71,7 @@ export default class Magpie extends EventEmitter {
      * @memberOf Magpie
      * @type {string}
      */
-    this.serverUrl = options.magpie.serverUrl;
+    this.serverUrl = options.serverUrl;
 
     /**
      * @instance
@@ -103,7 +91,7 @@ export default class Magpie extends EventEmitter {
      * @memberOf Magpie
      * @type {string}
      */
-    this.completionUrl = options.magpie.completionUrl;
+    this.completionUrl = options.completionUrl;
 
     /**
      * @instance
@@ -111,21 +99,21 @@ export default class Magpie extends EventEmitter {
      * @memberOf Magpie
      * @type {string}
      */
-    this.contactEmail = options.magpie.contactEmail;
+    this.contactEmail = options.contactEmail;
     /**
      * @instance
      * @member mode
      * @memberOf Magpie
      * @type {string}
      */
-    this.mode = options.magpie.mode;
+    this.mode = options.mode;
     /**
      * @instance
      * @member contactEmail
      * @memberOf Magpie
      * @type {boolean}
      */
-    this.debug = options.magpie.mode === 'debug';
+    this.debug = options.mode === 'debug';
 
     /**
      * @instance
@@ -133,13 +121,13 @@ export default class Magpie extends EventEmitter {
      * @memberOf Magpie
      * @type {Socket}
      */
-    this.socket = options.magpie.socketUrl
-      ? new Socket(
-          options.magpie.experimentId,
-          options.magpie.socketUrl,
-          this.onSocketError
-        )
+    this.socket = options.socketUrl
+      ? new Socket(options.experimentId, options.socketUrl, this.onSocketError)
       : false;
+
+    if (this.socket) {
+      this.socket.initialize();
+    }
 
     this.trialData = window.magpie_trial_data = {};
     this.expData = window.magpie_exp_data = {};
@@ -152,6 +140,43 @@ export default class Magpie extends EventEmitter {
      * @type {Mousetracking}
      */
     this.mousetracking = new Mousetracking();
+
+    /**
+     * The id of the current screen
+     * @instance
+     * @member currentScreenIndex
+     * @memberOf Magpie
+     * @type {number}
+     */
+    this.currentScreenIndex = 0;
+
+    /**
+     * The id of the current slide
+     * @instance
+     * @member currentSlideIndex
+     * @memberOf Magpie
+     * @type {number}
+     */
+    this.currentSlideIndex = 0;
+
+    /**
+     * The start time of the response_time measurement
+     * @instance
+     * @member responseTimeStart
+     * @memberOf Magpie
+     * @type {number}
+     */
+    this.responseTimeStart = Date.now();
+
+    /**
+     * The measurements of the current screen. All data in this object
+     * can be saved using $magpie.saveMeasurements
+     * @instance
+     * @member measurements
+     * @memberOf Magpie
+     * @type {object}
+     */
+    this.measurements = {};
 
     // Provide debug info
     console.log('_magpie ' + packageJSON.version);
@@ -168,6 +193,8 @@ export default class Magpie extends EventEmitter {
     if (this.mode === 'prolific') {
       this.extractProlificData();
     }
+
+    this.addExpData({ experiment_start_time: Date.now() });
   }
 
   /**
@@ -177,8 +204,12 @@ export default class Magpie extends EventEmitter {
    * @public
    * @param index{int} the index of the slide to go to (optional; default is next slide)
    */
-  nextSlide(...params) {
-    this.experiment.currentScreenComponent.nextSlide(...params);
+  nextSlide(index) {
+    if (typeof index === 'number') {
+      this.currentSlideIndex = index;
+      return;
+    }
+    this.currentSlideIndex++;
   }
 
   /**
@@ -188,8 +219,21 @@ export default class Magpie extends EventEmitter {
    * @public
    * @param index{int} the index of the screen to go to (optional; default is next screen)
    */
-  nextScreen(...params) {
-    this.experiment.nextScreen(...params);
+  nextScreen(index) {
+    if (typeof index === 'number') {
+      this.currentScreenIndex = index;
+    } else {
+      this.currentScreenIndex += 1;
+    }
+    this.currentSlideIndex = 0;
+    this.measurements = {};
+    this.currentVarsData = {};
+    if (this.$magpie.socket) {
+      this.$magpie.socket.setCurrentScreen(this.currentScreenIndex);
+    }
+    // Start new trial data and restart response timer
+    this.responseTimeStart = Date.now();
+    this.experiment.scrollToTop();
   }
 
   /**

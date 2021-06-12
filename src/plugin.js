@@ -1,13 +1,15 @@
 import * as components from './components';
+import Magpie from './Magpie';
 
 export default function (Vue, config) {
+  const magpie = new Magpie(config);
   // auto-import all components
   Vue.mixin({
     components: { ...components }, // casting Module to Object
-    inject: {
-      $magpie: {
-        from: 'experiment',
-        default: () => ({})
+
+    computed: {
+      $magpie() {
+        return magpie;
       }
     },
 

@@ -18,7 +18,6 @@
     * [new Magpie()](#new_Magpie_new)
     * [.validators](#Magpie+validators) : <code>object</code>
     * [.v](#Magpie+v) : <code>object</code>
-    * [.measurements](#Magpie+measurements) : <code>object</code>
     * [.validateMeasurements](#Magpie+validateMeasurements) : <code>object</code>
     * [.id](#Magpie+id) : <code>string</code>
     * [.serverUrl](#Magpie+serverUrl) : <code>string</code>
@@ -29,6 +28,10 @@
     * [.contactEmail](#Magpie+contactEmail) : <code>boolean</code>
     * [.socket](#Magpie+socket) : [<code>Socket</code>](#Socket)
     * [.mousetracking](#Magpie+mousetracking) : [<code>Mousetracking</code>](#Mousetracking)
+    * [.currentScreenIndex](#Magpie+currentScreenIndex) : <code>number</code>
+    * [.currentSlideIndex](#Magpie+currentSlideIndex) : <code>number</code>
+    * [.responseTimeStart](#Magpie+responseTimeStart) : <code>number</code>
+    * [.measurements](#Magpie+measurements) : <code>object</code>
     * [.nextSlide(index)](#Magpie+nextSlide)
     * [.nextScreen(index)](#Magpie+nextScreen)
     * [.saveAndNextScreen(index)](#Magpie+saveAndNextScreen)
@@ -53,13 +56,6 @@ Gives easy access to validators. Validation is based on [vuelidate](https://vuel
 
 ### magpie.v : <code>object</code>
 Shorthand for $magpie.validators
-
-**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
-<a name="Magpie+measurements"></a>
-
-### magpie.measurements : <code>object</code>
-The measurements of the current screen. All data in this object
-can be saved using $magpie.saveMeasurements
 
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
 <a name="Magpie+validateMeasurements"></a>
@@ -105,6 +101,31 @@ The ID of the experiment
 <a name="Magpie+mousetracking"></a>
 
 ### magpie.mousetracking : [<code>Mousetracking</code>](#Mousetracking)
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+currentScreenIndex"></a>
+
+### magpie.currentScreenIndex : <code>number</code>
+The id of the current screen
+
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+currentSlideIndex"></a>
+
+### magpie.currentSlideIndex : <code>number</code>
+The id of the current slide
+
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+responseTimeStart"></a>
+
+### magpie.responseTimeStart : <code>number</code>
+The start time of the response_time measurement
+
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+measurements"></a>
+
+### magpie.measurements : <code>object</code>
+The measurements of the current screen. All data in this object
+can be saved using $magpie.saveMeasurements
+
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
 <a name="Magpie+nextSlide"></a>
 
