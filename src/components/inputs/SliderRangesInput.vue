@@ -11,8 +11,8 @@
             :range-values.sync= "$magpie.measurements.food_types" />
         <p v-if= "$magpie.measurements.food_types">
           {{$magpie.measurements.food_types[0]}}% Meat,
-          {{$magpiemeasurements.food_types[1]}}% Vegetarian,
-          {{$magpiemeasurements.food_types[2]}}% Vegan</p>
+          {{$magpie.measurements.food_types[1]}}% Vegetarian,
+          {{$magpie.measurements.food_types[2]}}% Vegan</p>
         <button @click="$magpie.saveAndNextScreen();">Submit</button>
       </Slide>
 
