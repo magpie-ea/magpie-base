@@ -25,13 +25,13 @@
   <div>
     <div v-if="slide === 0">
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->
-      <slot name="prep" :done="$magpie.nextSlide">
-        <Wait :time="1" @done="$magpie.nextSlide" />
+      <slot name="prep" :done="nextSlide()">
+        <Wait :time="1" @done="nextSlide()" />
       </slot>
     </div>
 
     <div v-if="slide === 1">
-      <Wait :time="500" @done="$magpie.nextSlide" />
+      <Wait :time="500" @done="nextSlide()" />
     </div>
 
     <div v-if="slide === 2">

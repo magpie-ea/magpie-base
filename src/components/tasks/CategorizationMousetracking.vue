@@ -2,33 +2,35 @@
 
 ```vue
 <Experiment>
-    <Screen :key="i" v-for="(task, i) in [
-    {o1: 'Mammal', o2: 'Bird', s: 'Bat'},
-    {o1: 'Bird', o2: 'Insect', s: 'Kolibri'},
-    {o1: 'Fish', o2: 'Mammal', s: 'Whale'},
-    {o1: 'Fish', o2: 'Bird', s: 'Penguin'}
-    ]">
-        <CategorizationMousetracking :response.sync= "$magpie.measurements.option" :mouseTrack.sync= "$magpie.measurements.mouseTrack">
-          <template #option1>
-            <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
-              {{ task.o1 }}
-            </div>
-          </template>
-          <template #option2>
-            <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
-              {{ task.o2 }}
-            </div>
-          </template>
-          <template #stimulus>
-            <span>{{ task.s }}</span>
-          </template>
-          <template #feedback>
-            <!-- add values in `task` to measurements -->
-            <Record :data="{...task, ...$magpie.measurements.mouseTrack}" />
-            <Wait :time="100" @done="$magpie.saveAndNextScreen()" />
-          </template>
-        </CategorizationMousetracking>
-    </Screen>
+    <template v-for="(task, i) in [
+      {o1: 'Mammal', o2: 'Bird', s: 'Bat'},
+      {o1: 'Bird', o2: 'Insect', s: 'Kolibri'},
+      {o1: 'Fish', o2: 'Mammal', s: 'Whale'},
+      {o1: 'Fish', o2: 'Bird', s: 'Penguin'}
+      ]">
+      <Screen :key="i">
+          <CategorizationMousetracking :response.sync="$magpie.measurements.option" :mouseTrack.sync="$magpie.measurements.mouseTrack">
+            <template #option1>
+              <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
+                {{ task.o1 }}
+              </div>
+            </template>
+            <template #option2>
+              <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
+                {{ task.o2 }}
+              </div>
+            </template>
+            <template #stimulus>
+              <span>{{ task.s }}</span>
+            </template>
+            <template #feedback>
+              <!-- add values in `task` to measurements -->
+              <Record :data="{...task, ...$magpie.measurements.mouseTrack}" />
+              <Wait :time="100" @done="$magpie.saveAndNextScreen()" />
+            </template>
+          </CategorizationMousetracking>
+      </Screen>
+    </template>
 
     <DebugResultsScreen />
 
@@ -41,17 +43,17 @@
   <div>
     <div v-if="slide === 0">
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->
-      <slot name="prep" :done="$magpie.nextSlide">
-        <Wait :time="1" @done="$magpie.nextSlide" />
+      <slot name="prep" :done="nextSlide()">
+        <Wait :time="1" @done="nextSlide()" />
       </slot>
     </div>
 
     <div v-if="slide === 1">
-      <Wait key="pause" :time="500" @done="$magpie.nextSlide" />
+      <Wait key="pause" :time="500" @done="nextSlide()" />
     </div>
 
     <div v-if="slide === 2">
-      <Wait key="wait a bit" :time="500" @done="$magpie.nextSlide" />
+      <Wait key="wait a bit" :time="500" @done="nextSlide()" />
       <div class="options">
         <!-- @slot provide content for categorization option one -->
         <div class="option1"><slot name="option1" /></div>
