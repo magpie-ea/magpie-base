@@ -10,3 +10,5 @@ Vue.use(MagpieVue, {
   socketUrl: 'wss://magpie-demo.herokuapp.com/socket',
   contactEmail: 'test@random.com'
 });
+
+window.MAGPIE_STYLEGUIDIST = true

@@ -50,7 +50,10 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
         :responses.sync="$magpie.measurements.responses"
       />
       <button
-        v-if="$magpie.measurements.responses && !validations.$error"
+        v-if="
+          $magpie.measurements.responses &&
+          !$magpie.validateMeasurements.$invalid
+        "
         @click="$magpie.saveAndNextScreen()"
       >
         Submit

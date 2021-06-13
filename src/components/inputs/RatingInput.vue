@@ -20,8 +20,6 @@
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
       <p>Fries or soup?</p>
       <RatingInput
@@ -30,7 +28,6 @@
           :count="11"/>
     </Screen>
 
-  </template>
 </Experiment>
 ```
 </docs>

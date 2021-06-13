@@ -1,11 +1,9 @@
 <docs>
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template  >
+      <Slide>
         <p>Fries or soup?</p>
         <ImageSelectionInput
             :options="[
@@ -13,11 +11,9 @@
                 {src: 'img/soup.jpg', label: 'soup' }]"
             @update:response="$magpie.addTrialData({image_choice: $event}); $magpie.nextScreen()"
         />
-      </template>
+      </Slide>
 
     </Screen>
-
-  </template>
 </Experiment>
 ```
 </docs>

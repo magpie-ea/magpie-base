@@ -30,11 +30,9 @@ You can also randomize the question order. The response data will still be in th
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template  >
+      <Slide>
         <MultipleChoiceMatrixInput
             :options="['Not enjoyable', 'Rather not enjoyable', 'OK', 'Rather enjoyable', 'Really enjoyable']"
             :questions="[
@@ -48,13 +46,11 @@ You can also randomize the question order. The response data will still be in th
             :responses.sync= "$magpie.measurements.responses"
         />
         <button @click="$magpie.saveAndNextScreen();">Submit</button>
-      </template>
+      </Slide>
 
     </Screen>
 
     <DebugResultsScreen />
-
-  </template>
 </Experiment>
 ```
 

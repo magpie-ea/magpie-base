@@ -3,22 +3,22 @@ Record allows you to easily add arbitrary data to your measurements:
 ```vue
 <Experiment>
 
-    <Screen v-for="(task, i) in [{foo: 'bar'}, {foo: 'baz'}]">
+    <template v-for="(task, i) in [{foo: 'bar'}, {foo: 'baz'}]">
+      <Screen :key="i">
 
-      <Slide>
-        Slide 1<br />
-        <Record :data="task" />
-        <Timer v-model="$magpie.measurements.timer"></Timer>
-        <button @click="$magpie.nextSlide()">Next slide</button>
-      </Slide>
+        <Slide>
+          Slide 1<br />
+          <Record :data="task" />
+          <button @click="$magpie.nextSlide()">Next slide</button>
+        </Slide>
 
-      <Slide>
-        Slide 2<br />
-        Time until click: {{$magpie.measurements.timer()/1000}} seconds
-        <button @click="$magpie.saveAndNextScreen()">next</button>
-      </Slide>
+        <Slide>
+          Slide 2<br />
+          <button @click="$magpie.saveAndNextScreen()">next</button>
+        </Slide>
 
-    </Screen>
+      </Screen>
+    </template>
 
     <DebugResultsScreen />
 </Experiment>
@@ -38,11 +38,9 @@ export default {
   },
   mounted() {
     Object.keys(this.data).forEach((key) => {
-      Vue.set(
-        this.$magpie.experiment.currentScreenComponent.measurements,
-        key,
-        this.data[key]
-      );
+      if (typeof this.data[key] !== 'undefined') {
+        Vue.set(this.$magpie.measurements, key, this.data[key]);
+      }
     });
   }
 };

@@ -8,7 +8,7 @@ Once you are gaoing live with your experiment, you can use the SubmitResultsScre
   <Screen title="Results" class="debugResults">
     <Slide>
       <button @click="downloadCsv">Download all data as csv</button>
-      <table>
+      <table v-if="results.length">
         <thead>
           <tr>
             <th v-for="key in Object.keys(results[0])" :key="key">{{ key }}</th>
@@ -36,14 +36,17 @@ export default {
   components: { Slide, Screen },
   props: {},
   data() {
-    const results = this.$magpie.getData();
     return {
-      results,
-      csv: stringify(results, {
-        columns: Object.keys(results[0]),
-        header: true
-      })
+      results: [],
+      csv: ''
     };
+  },
+  mounted() {
+    this.results = this.$magpie.getData();
+    this.csv = stringify(this.results, {
+      columns: Object.keys(this.results[0]),
+      header: true
+    });
   },
   methods: {
     downloadCsv() {

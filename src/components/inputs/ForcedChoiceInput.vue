@@ -22,21 +22,17 @@ The following example will submit the response directly on clicking it.
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template  >
+      <Slide>
         <p>What's on the bread?</p>
         <ForcedChoiceInput
             :response.sync= "$magpie.measurements.bread"
             :options="['Ham', 'Jam']"
             @update:response="$magpie.saveAndNextScreen();"/>
-      </template>
+      </Slide>
 
     </Screen>
-
-  </template>
 </Experiment>
 ```
 

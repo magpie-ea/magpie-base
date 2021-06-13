@@ -4,7 +4,7 @@ This component starts a timer. See `TimerStop` for how to use it.
 <template><span /></template>
 <script>
 export default {
-  name: 'Timer',
+  name: 'TimerStart',
   props: {
     id: {
       type: String,

@@ -38,5 +38,6 @@ export { default as InstructionScreen } from './screens/InstructionScreen';
 export { default as CategorizationMousetrackingScreen } from './screens/CategorizationMousetrackingScreen';
 
 export { default as Wait } from './helpers/Wait';
-export { default as Timer } from './helpers/Timer';
+export { default as TimerStop } from './helpers/TimerStop';
+export { default as TimerStart } from './helpers/TimerStart';
 export { default as Record } from './helpers/Record';

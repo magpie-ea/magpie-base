@@ -1,5 +1,7 @@
 <template>
-  <div><slot name="default"></slot></div>
+  <div>
+    <slot name="default"></slot>
+  </div>
 </template>
 
 <script>

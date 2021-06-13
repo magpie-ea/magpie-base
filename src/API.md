@@ -18,7 +18,6 @@
     * [new Magpie()](#new_Magpie_new)
     * [.validators](#Magpie+validators) : <code>object</code>
     * [.v](#Magpie+v) : <code>object</code>
-    * [.validateMeasurements](#Magpie+validateMeasurements) : <code>object</code>
     * [.id](#Magpie+id) : <code>string</code>
     * [.serverUrl](#Magpie+serverUrl) : <code>string</code>
     * [.submissionUrl](#Magpie+submissionUrl) : <code>string</code>
@@ -32,6 +31,8 @@
     * [.currentSlideIndex](#Magpie+currentSlideIndex) : <code>number</code>
     * [.responseTimeStart](#Magpie+responseTimeStart) : <code>number</code>
     * [.measurements](#Magpie+measurements) : <code>object</code>
+    * [.validateMeasurements](#Magpie+validateMeasurements) : <code>object</code>
+    * [.timers](#Magpie+timers) : <code>object</code>
     * [.nextSlide(index)](#Magpie+nextSlide)
     * [.nextScreen(index)](#Magpie+nextScreen)
     * [.saveAndNextScreen(index)](#Magpie+saveAndNextScreen)
@@ -56,12 +57,6 @@ Gives easy access to validators. Validation is based on [vuelidate](https://vuel
 
 ### magpie.v : <code>object</code>
 Shorthand for $magpie.validators
-
-**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
-<a name="Magpie+validateMeasurements"></a>
-
-### magpie.validateMeasurements : <code>object</code>
-Validation results on the current measurements
 
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
 <a name="Magpie+id"></a>
@@ -125,6 +120,18 @@ The start time of the response_time measurement
 ### magpie.measurements : <code>object</code>
 The measurements of the current screen. All data in this object
 can be saved using $magpie.saveMeasurements
+
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+validateMeasurements"></a>
+
+### magpie.validateMeasurements : <code>object</code>
+Validation results on the current measurements
+
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+timers"></a>
+
+### magpie.timers : <code>object</code>
+A hash of timer start points by id
 
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
 <a name="Magpie+nextSlide"></a>

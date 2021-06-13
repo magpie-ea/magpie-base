@@ -33,21 +33,6 @@ export default class Magpie extends EventEmitter {
     return validators;
   }
 
-  /**
-   * Validation results on the current measurements
-   * @instance
-   * @member validateMeasurements
-   * @memberOf Magpie
-   * @type {object}
-   */
-  get validateMeasurements() {
-    return this.experiment
-      ? this.experiment.currentScreenComponent
-        ? this.experiment.currentScreenComponent.$v.measurements || {}
-        : {}
-      : {};
-  }
-
   constructor(options) {
     super();
 
@@ -178,6 +163,24 @@ export default class Magpie extends EventEmitter {
      */
     this.measurements = {};
 
+    /**
+     * Validation results on the current measurements
+     * @instance
+     * @member validateMeasurements
+     * @memberOf Magpie
+     * @type {object}
+     */
+    this.validateMeasurements = {};
+
+    /**
+     * A hash of timer start points by id
+     * @instance
+     * @member timers
+     * @memberOf Magpie
+     * @type {object}
+     */
+    this.timers = {};
+
     // Provide debug info
     console.log('_magpie ' + packageJSON.version);
     console.log('Experiment id: ' + this.id);
@@ -228,8 +231,8 @@ export default class Magpie extends EventEmitter {
     this.currentSlideIndex = 0;
     this.measurements = {};
     this.currentVarsData = {};
-    if (this.$magpie.socket) {
-      this.$magpie.socket.setCurrentScreen(this.currentScreenIndex);
+    if (this.socket) {
+      this.socket.setCurrentScreen(this.currentScreenIndex);
     }
     // Start new trial data and restart response timer
     this.responseTimeStart = Date.now();
@@ -261,8 +264,8 @@ export default class Magpie extends EventEmitter {
       this.trialData[this.experiment.currentScreen] = [];
     }
     this.trialData[this.experiment.currentScreen].push({
-      ...data,
-      response_time: Date.now() - this.experiment.responseTimeStart
+      response_time: Date.now() - this.responseTimeStart,
+      ...data
     });
   }
 
@@ -278,7 +281,10 @@ export default class Magpie extends EventEmitter {
   }
 
   saveMeasurements() {
-    this.addTrialData({ ...this.measurements });
+    this.addTrialData({
+      response_time: Date.now() - this.responseTimeStart,
+      ...this.measurements
+    });
   }
 
   onSocketError(er) {

@@ -92,12 +92,15 @@ The screen can also be used to validate observations.
 </docs>
 
 <script>
+import { validationMixin } from 'vuelidate';
+
 /**
  * This component lets you create experiment sections that appear one after the other like a slideshow.
  * Trial data
  */
 export default {
   name: 'Screen',
+  mixins: [validationMixin],
   props: {
     /**
      * The title of this screen
@@ -124,11 +127,31 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      measurements: {}
+    };
+  },
+  watch: {
+    '$magpie.measurements': {
+      handler() {
+        this.measurements = this.$magpie.measurements;
+        this.$v.measurements.$touch();
+      },
+      deep: true
+    }
+  },
   beforeMount() {
     this.$magpie.setProgress(this.progress);
   },
   mounted() {
+    this.$magpie.validateMeasurements = this.$v.measurements;
     this.$magpie.mousetracking.start();
+  },
+  validations() {
+    return {
+      measurements: this.validations
+    };
   },
   /**
    * Place your slides inside this slot. They will be visible one after the other, like a slide show.
@@ -136,12 +159,19 @@ export default {
    */
   render(h) {
     const children = this.$slots.default;
+    let slide;
     const slides = children.filter((c) => !!c.componentOptions);
+    if (
+      slides.length &&
+      slides.every((c) => c.componentOptions.tag === 'Slide')
+    ) {
+      slide = slides[this.$magpie.currentSlideIndex];
+    } else {
+      slide = this.$slots.default;
+    }
     return h('div', { class: 'screen' }, [
       this.title ? h('h2', this.title) : null,
-      slides.length === children.length
-        ? slides[this.$magpie.currentSlideIndex]
-        : this.$slots.default
+      slide
     ]);
   }
 };

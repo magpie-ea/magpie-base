@@ -8,7 +8,7 @@
         <RankOrderInput
             :options="['Fries', 'Vegetable soup', 'Salad', 'Burger', 'Risotto']"
             :response.sync= "$magpie.measurements.order" />
-        <button @click="$magpie.saveAndNextScreen">Submit</button>
+        <button @click="$magpie.saveAndNextScreen()">Submit</button>
       </Slide>
 
     </Screen>

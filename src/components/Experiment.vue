@@ -128,8 +128,7 @@ export default {
   },
   created() {
     if (window.MAGPIE_STYLEGUIDIST) {
-      this.$magpie = new Magpie(this.$options.magpie);
-      this.$parent.$magpie = this.$magpie;
+      this.$parent.magpie = new Magpie(this.$options.magpie);
     }
     this.$magpie.experiment = this;
     window.$magpie = this.$magpie;
@@ -196,7 +195,11 @@ export default {
    */
   render(h) {
     const children = this.$slots.default;
-    const screens = children.filter((c) => !!c.componentOptions);
+    const screen = children
+      ? children.filter((c) => !!c.componentOptions)[
+          this.$magpie.currentScreenIndex
+        ]
+      : null;
     return h('div', { class: 'experiment' + (this.wide ? ' wide' : '') }, [
       h('div', { class: 'header' }, [
         h('div', { class: 'col title' }, this.$slots.title),
@@ -213,7 +216,7 @@ export default {
             : null
         ])
       ]),
-      screens[this.$magpie.currentScreenIndex]
+      screen
     ]);
   }
 };

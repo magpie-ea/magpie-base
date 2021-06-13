@@ -19,22 +19,18 @@
 
 ```vue
 <Experiment>
-  <template #screens>
-
     <Screen>
 
-      <template  >
+      <Slide>
         <p>How was your breakfast?</p>
         <MultipleChoiceInput
             :response.sync= "$magpie.measurements.breakfast"
             orientation="horizontal"
             :options="['Not enjoyable', 'Rather not enjoyable', 'OK', 'Rather enjoyable', 'Really enjoyable']" />
         <button @click="$magpie.saveAndNextScreen();">Submit</button>
-      </template>
+      </Slide>
 
     </Screen>
-
-  </template>
 </Experiment>
 ```
 
