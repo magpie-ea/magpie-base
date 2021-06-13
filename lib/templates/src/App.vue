@@ -8,7 +8,7 @@
     </template>
 
     <!-- The contents of the #screens template slot define your experiment -->
-    <template #screens>
+    <template #default>
       <InstructionScreen :title="'Welcome'">
         This is a sample introduction screen.
         <br />
@@ -96,24 +96,24 @@
 
       <template v-for="(rating_task, i) in sliderRating">
         <Screen :key="'sliderRating-' + i">
-          <template #0="{ nextSlide }">
-            <Wait :time="500" @done="nextSlide" />
-          </template>
+          <Slide>
+            <Wait :time="500" @done="$magpie.nextSlide()" />
+          </Slide>
 
-          <template #1="{ nextSlide }">
-            <Wait :time="1500" @done="nextSlide" />
+          <Slide>
+            <Wait :time="1500" @done="$magpie.nextSlide()" />
             <img :src="rating_task.picture" alt="" />
-          </template>
+          </Slide>
 
-          <template #2="{ measurements, saveAndNextScreen }">
+          <Slide>
             <p>{{ rating_task.question }}</p>
             <SliderInput
               :left="rating_task.optionLeft"
               :right="rating_task.optionRight"
-              :response.sync="measurements.slider"
+              :response.sync="$magpie.measurements.slider"
             />
-            <button @click="saveAndNextScreen()">Done</button>
-          </template>
+            <button @click="$magpie.saveAndNextScreen()">Done</button>
+          </Slide>
         </Screen>
       </template>
 
@@ -124,9 +124,9 @@
       <ConnectInteractiveScreen />
 
       <Screen>
-        <template #0="{ measurements, saveAndNextScreen }">
-          <Chat :messages.sync="measurements.messages"></Chat>
-          <button @click="saveAndNextScreen()">Next</button>
+        <Slide>
+          <Chat :messages.sync="$magpie.measurements.messages"></Chat>
+          <button @click="$magpie.saveAndNextScreen()">Next</button>
         </template>
       </Screen>
 
@@ -136,7 +136,7 @@
 
       <!-- While developing your experiment, using the DebugResults screen is fine,
       once you're going live, you can use the <SubmitResults> screen to automatically send your experimental data to the server. -->
-      <DebugResults />
+      <DebugResultsScreen />
     </template>
   </Experiment>
 </template>
