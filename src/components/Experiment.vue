@@ -178,6 +178,11 @@ export default {
       }
     });
   },
+  mounted() {
+    this.$el.addEventListener('mousemove', (e) =>
+      this.$magpie.mousetracking.onMouseMove(e)
+    );
+  },
   methods: {
     scrollToTop() {
       // Scroll to top of experiment element

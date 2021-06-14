@@ -237,6 +237,7 @@ export default class Magpie extends EventEmitter {
     // Start new trial data and restart response timer
     this.responseTimeStart = Date.now();
     this.experiment.scrollToTop();
+    this.mousetracking.start();
   }
 
   /**
