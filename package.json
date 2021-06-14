@@ -1,6 +1,6 @@
 {
   "name": "magpie-base",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Provides base components for _magpie frontend projects",
   "author": "_magpie project",
   "scripts": {
@@ -8,7 +8,6 @@
     "docs": "jsdoc2md src/Magpie.js src/Socket.js src/Mousetracking.js > src/API.md; vue-cli-service styleguidist",
     "docs:build": "vue-cli-service styleguidist:build",
     "jsdoc": "jsdoc2md src/Magpie.js src/Socket.js src/Mousetracking.js > src/API.md",
-    "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "stylelint": "stylelint src",
     "stylelint:fix": "stylelint src --fix"
