@@ -16,28 +16,32 @@ export { default as SliderRangesInput } from './inputs/SliderRangesInput';
 export { default as RankOrderInput } from './inputs/RankOrderInput';
 
 export { default as CategorizationMousetracking } from './tasks/CategorizationMousetracking';
-export { default as SelfPacedReading } from './tasks/SelfPacedReading';
 
 export { default as Rsvp } from './stimuli/Rsvp';
 export { default as FixationCross } from './stimuli/FixationCross';
+export { default as SelfPacedReading } from './stimuli/SelfPacedReading';
 
-export { default as ConnectInteractiveScreen } from './screens/ConnectInteractiveScreen';
 export { default as Chat } from './interactive/Chat';
+
+export { default as LifecycleScreen } from './screens/LifecycleScreen';
+export { default as ConnectInteractiveScreen } from './screens/ConnectInteractiveScreen';
 export { default as DebugResultsScreen } from './screens/DebugResultsScreen';
 export { default as SubmitResultsScreen } from './screens/SubmitResultsScreen';
-export { default as SelfPacedReadingScreen } from './screens/SelfPacedReadingScreen';
-export { default as ForcedChoiceScreen } from './screens/ForcedChoiceScreen';
-export { default as ImageSelectionScreen } from './screens/ImageSelectionScreen';
-export { default as TextareaScreen } from './screens/TextareaScreen';
-export { default as SliderScreen } from './screens/SliderScreen';
-export { default as RatingScreen } from './screens/RatingScreen';
-export { default as CompletionScreen } from './screens/CompletionScreen';
-export { default as KeypressScreen } from './screens/KeypressScreen';
 export { default as PostTestScreen } from './screens/PostTestScreen';
 export { default as InstructionScreen } from './screens/InstructionScreen';
-export { default as CategorizationMousetrackingScreen } from './screens/CategorizationMousetrackingScreen';
+
+export { default as ForcedChoiceScreen } from './trial_screens/ForcedChoiceScreen';
+export { default as ImageSelectionScreen } from './trial_screens/ImageSelectionScreen';
+export { default as TextareaScreen } from './trial_screens/TextareaScreen';
+export { default as SliderScreen } from './trial_screens/SliderScreen';
+export { default as SliderRangesScreen } from './trial_screens/SliderRangesScreen';
+export { default as RatingScreen } from './trial_screens/RatingScreen';
+export { default as CompletionScreen } from './trial_screens/CompletionScreen';
+export { default as KeypressScreen } from './trial_screens/KeypressScreen';
+export { default as CategorizationMousetrackingScreen } from './trial_screens/CategorizationMousetrackingScreen';
 
 export { default as Wait } from './helpers/Wait';
 export { default as TimerStop } from './helpers/TimerStop';
 export { default as TimerStart } from './helpers/TimerStart';
 export { default as Record } from './helpers/Record';
+export { default as ResponseTimeStart } from './helpers/ResponseTimeStart';

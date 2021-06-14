@@ -15,12 +15,19 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
 </docs>
 
 <template>
-  <Screen v-bind="$attrs">
-    <Slide>
-      <p v-if="qud" v-text="qud"></p>
+  <!-- pass down props -->
+  <LifecycleScreen v-bind="$attrs">
+    <!-- pass down slots -->
+    <template slot="fixation">
+      <slot name="fixation"></slot>
+    </template>
+    <template slot="stimulus">
+      <slot name="stimulus"></slot>
+    </template>
+
+    <template #task>
       <Record
         :data="{
-          qud,
           question,
           options,
           orientation
@@ -33,20 +40,22 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
         :response.sync="$magpie.measurements.response"
       />
       <button
-        v-if="$magpie.measurements.response"
+        v-if="
+          $magpie.measurements.response &&
+          !$magpie.validateMeasurements.response.$invalid
+        "
         @click="$magpie.saveAndNextScreen()"
       >
-        Submit
+        Next
       </button>
-    </Slide>
-  </Screen>
+    </template>
+  </LifecycleScreen>
 </template>
 
 <script>
-import Screen from '../Screen';
 import Record from '../helpers/Record';
 import MultipleChoiceInput from '../inputs/MultipleChoiceInput';
-import Slide from '../Slide';
+import LifecycleScreen from '../screens/LifecycleScreen';
 
 /**
  * Have participants choose answer from multiple options
@@ -54,19 +63,11 @@ import Slide from '../Slide';
 export default {
   name: 'MultipleChoiceScreen',
   components: {
-    Slide,
+    LifecycleScreen,
     MultipleChoiceInput,
-    Record,
-    Screen
+    Record
   },
   props: {
-    /**
-     * Question under discussion. Always visible on the screen
-     */
-    qud: {
-      type: String,
-      default: ''
-    },
     /**
      * A question
      */
@@ -87,6 +88,41 @@ export default {
     orientation: {
       type: String,
       default: 'vertical'
+    },
+    /**
+     * Question under discussion. Always visible on the screen
+     */
+    qud: {
+      type: String,
+      default: ''
+    },
+    /**
+     * Duration of the pause phase, don't set this, to avoid the pause altogether
+     */
+    pauseTime: {
+      type: Number,
+      default: 0
+    },
+    /**
+     * Duration of the fixation point phase, don't set this to avoid showing the fixation point altogether
+     */
+    fixationTime: {
+      type: Number,
+      default: 0
+    },
+    /**
+     * Duration of the stimulus phase, don't set this to avoid hiding the stimulus altogether
+     */
+    stimulusTime: {
+      type: Number,
+      default: 0
+    },
+    /**
+     * How long the response should be enabled, don't set this, to avoid the timeout altogether
+     */
+    responseTime: {
+      type: Number,
+      default: 0
     }
   }
 };

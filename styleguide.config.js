@@ -16,9 +16,9 @@ module.exports = {
       components: 'src/components/*.vue'
     },
     {
-      name: 'Inputs',
-      content: 'src/components/inputs/docs.md',
-      components: 'src/components/inputs/*.vue'
+      name: 'Screens',
+      content: 'src/components/screens/docs.md',
+      components: 'src/components/screens/*.vue'
     },
     {
       name: 'Stimuli',
@@ -26,14 +26,19 @@ module.exports = {
       components: 'src/components/stimuli/*.vue'
     },
     {
+      name: 'Trial Screens',
+      content: 'src/components/trial_screens/docs.md',
+      components: 'src/components/trial_screens/*.vue'
+    },
+    {
+      name: 'Inputs',
+      content: 'src/components/inputs/docs.md',
+      components: 'src/components/inputs/*.vue'
+    },
+    {
       name: 'Tasks',
       content: 'src/components/tasks/docs.md',
       components: 'src/components/tasks/*.vue'
-    },
-    {
-      name: 'Screens',
-      content: 'src/components/screens/docs.md',
-      components: 'src/components/screens/*.vue'
     },
     {
       name: 'Interactive',

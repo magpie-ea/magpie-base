@@ -60,7 +60,7 @@ export default {
   name: 'RatingInput',
   props: {
     /**
-     * The langth of the rating scale
+     * The length of the rating scale
      */
     count: {
       type: Number,

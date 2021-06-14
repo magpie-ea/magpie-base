@@ -3,16 +3,11 @@
 ```vue
 <Experiment>
     <Screen>
-        <SelfPacedReading :chunks="'This is a nice text.'.split(' ')" word-pos="next" underline="sentence" :response-times.sync= "$magpie.measurements.times">
-          <template #task>
-            <p>Is it?</p>
-            <RatingInput
-                left="No"
-                right="Yes"
-                :response.sync= "$magpie.measurements.rating"
-                @update:response="$magpie.saveAndNextScreen()" />
-          </template>
-        </SelfPacedReading>
+        <SelfPacedReading
+            :chunks="['This', 'is', 'a', 'nice', 'text.']"
+            word-pos="next"
+            underline="sentence"
+            :response-times.sync="$magpie.measurements.times" />
     </Screen>
 
     <DebugResultsScreen />
@@ -57,9 +52,9 @@
         ></span>
       </div>
       <!-- @slot task content, displayed after the whole text was read -->
-      <slot v-if="word >= chunks.length" name="task">
+      <template v-if="word >= chunks.length">
         <Wait :time="0" @done="$emit('end')" />
-      </slot>
+      </template>
     </div>
   </div>
 </template>
