@@ -43,7 +43,7 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
 import Screen from '../Screen';
 import Record from '..//helpers/Record';
 import KeypressInput from '..//inputs/KeypressInput';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 
 export default {
   name: 'KeypressScreen',

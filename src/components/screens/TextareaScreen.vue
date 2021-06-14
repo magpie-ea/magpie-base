@@ -42,9 +42,9 @@ This is a pre-built image selection screen, with limited functionality, but simp
 
 <script>
 import Screen from '../Screen';
-import Record from '..//helpers/Record';
-import TextareaInput from '..//inputs/TextareaInput';
-import Slide from '@/components/Slide';
+import Record from '../helpers/Record';
+import TextareaInput from '../inputs/TextareaInput';
+import Slide from '../Slide';
 
 export default {
   name: 'TextareaScreen',

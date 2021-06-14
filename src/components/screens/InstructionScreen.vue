@@ -30,7 +30,7 @@ This is a pre-built instruction screen, with limited functionality, but simpler 
 
 <script>
 import Screen from '../Screen';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 
 export default {
   name: 'InstructionScreen',

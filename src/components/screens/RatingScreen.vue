@@ -43,7 +43,7 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
 import Screen from '../Screen';
 import Record from '..//helpers/Record';
 import RatingInput from '..//inputs/RatingInput';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 
 export default {
   name: 'RatingScreen',

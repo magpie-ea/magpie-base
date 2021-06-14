@@ -66,7 +66,7 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
 import Screen from '../Screen';
 import Record from '../helpers/Record';
 import MultipleChoiceMatrixInput from '../inputs/MultipleChoiceMatrixInput';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 
 export default {
   name: 'MultipleChoiceMatrixScreen',

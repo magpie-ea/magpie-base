@@ -46,7 +46,7 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
 import Screen from '../Screen';
 import Record from '../helpers/Record';
 import MultipleChoiceInput from '../inputs/MultipleChoiceInput';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 
 /**
  * Have participants choose answer from multiple options

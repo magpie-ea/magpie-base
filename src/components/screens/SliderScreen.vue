@@ -48,7 +48,7 @@ This is a pre-built slider rating screen, with limited functionality, but simple
 import Screen from '../Screen';
 import Record from '..//helpers/Record';
 import SliderInput from '..//inputs/SliderInput';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 
 export default {
   name: 'SliderScreen',

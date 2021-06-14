@@ -33,7 +33,7 @@ You can provide the submission URL to the Experiment component.
 import Screen from '../Screen';
 import Wait from '../helpers/Wait';
 import DebugResultsScreen from './DebugResultsScreen';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 export default {
   name: 'SubmitResultsScreen',
   components: { Slide, DebugResultsScreen, Wait, Screen },

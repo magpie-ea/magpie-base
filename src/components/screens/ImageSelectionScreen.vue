@@ -43,7 +43,7 @@ This is a pre-built image selection screen, with limited functionality, but simp
 import Screen from '../Screen';
 import Record from '..//helpers/Record';
 import ImageSelectionInput from '..//inputs/ImageSelectionInput';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 
 export default {
   name: 'ImageSelectionScreen',

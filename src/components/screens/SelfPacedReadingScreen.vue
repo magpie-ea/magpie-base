@@ -99,7 +99,7 @@ import ForcedChoiceInput from '..//inputs/ForcedChoiceInput';
 import RatingInput from '..//inputs/RatingInput';
 import Wait from '..//helpers/Wait';
 import Record from '..//helpers/Record';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 
 export default {
   name: 'SelfPacedReadingScreen',

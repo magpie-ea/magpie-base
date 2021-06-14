@@ -29,7 +29,7 @@ Once you are gaoing live with your experiment, you can use the SubmitResultsScre
 <script>
 import Screen from '../Screen';
 import stringify from 'csv-stringify/lib/sync';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 
 export default {
   name: 'DebugResultsScreen',

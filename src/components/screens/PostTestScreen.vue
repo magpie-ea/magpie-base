@@ -79,7 +79,7 @@ This is a pre-built forced choice screen, with limited functionality, but simple
 import Screen from '../Screen';
 import TextareaInput from '..//inputs/TextareaInput';
 import DropdownInput from '..//inputs/DropdownInput';
-import Slide from '@/components/Slide';
+import Slide from '../Slide';
 
 export default {
   name: 'PostTestScreen',
