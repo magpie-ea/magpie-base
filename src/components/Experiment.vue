@@ -127,9 +127,7 @@ export default {
     };
   },
   created() {
-    if (window.MAGPIE_STYLEGUIDIST) {
-      this.$parent.magpie = new Magpie(this.$options.magpie);
-    }
+    this.$parent.magpie = new Magpie(this.$options.magpie);
     this.$magpie.experiment = this;
     window.$magpie = this.$magpie;
 

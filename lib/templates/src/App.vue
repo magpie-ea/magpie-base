@@ -1,123 +1,107 @@
 <template>
-  <!--
-  Define your data sources with the trials attribute -->
   <Experiment title="_magpie demo">
-    <!-- The contents of the #title template slot will be displayed in the upper left corner of the experiment -->
-    <template #title>
-      <div>The experiment</div>
+    <InstructionScreen :title="'Welcome'">
+      This is a sample introduction screen.
+      <br />
+      <br />
+      This screen welcomes the participant and gives general information about
+      the experiment.
+      <br />
+      <br />
+      This mock up experiment is a showcase of the functionality of magpie.
+    </InstructionScreen>
+
+    <InstructionScreen :title="'General Instructions'">
+      This is a sample instructions view.
+      <br />
+      <br />
+      First you will go through two practice trials. The practice trial view
+      uses magpie's forced choice trial input.
+    </InstructionScreen>
+
+    <!-- Practice trials -->
+    <!-- Here we create screens in a loop for every entry in forced_choice -->
+    <template v-for="(forced_choice_task, i) of forced_choice">
+      <ForcedChoiceScreen
+        :key="'forcedchoice-' + i"
+        :progress="i / forced_choice.length"
+        :picture="forced_choice_task.picture"
+        :question="forced_choice_task.question"
+        :options="[forced_choice_task.option1, forced_choice_task.option2]"
+      />
     </template>
 
-    <!-- The contents of the #screens template slot define your experiment -->
-    <template #default>
-      <InstructionScreen :title="'Welcome'">
-        This is a sample introduction screen.
-        <br />
-        <br />
-        This screen welcomes the participant and gives general information about
-        the experiment.
-        <br />
-        <br />
-        This mock up experiment is a showcase of the functionality of magpie.
-      </InstructionScreen>
+    <template v-for="(dropdown_task, i) in multi_dropdown">
+      <CompletionScreen
+        :key="'multidropdown-' + i"
+        :progress="i / multi_dropdown.length"
+        :text="
+          dropdown_task.sentence_chunk_1 +
+          ' %s ' +
+          dropdown_task.sentence_chunk_2 +
+          ' %s ' +
+          dropdown_task.sentence_chunk_3
+        "
+        :options="[
+          dropdown_task.choice_options_1.split('|'),
+          dropdown_task.choice_options_2.split('|')
+        ]"
+      />
+    </template>
 
-      <InstructionScreen :title="'General Instructions'">
-        This is a sample instructions view.
-        <br />
-        <br />
-        First you will go through two practice trials. The practice trial view
-        uses magpie's forced choice trial input.
-      </InstructionScreen>
+    <!-- Main trials -->
 
-      <!-- Practice trials -->
-      <!-- Here we create screens in a loop for every entry in forced_choice -->
-      <template v-for="(forced_choice_task, i) of forced_choice">
+    <template v-for="i in range(0, sentenceChoice.length, 2)">
+      <template v-for="(sentenceChoice_task, j) in sentenceChoice.slice(i, 2)">
         <ForcedChoiceScreen
-          :key="'forcedchoice-' + i"
-          :progress="i / forced_choice.length"
-          :picture="forced_choice_task.picture"
-          :question="forced_choice_task.question"
-          :options="[forced_choice_task.option1, forced_choice_task.option2]"
+          :key="'sentenceChoice-' + i + '' + j"
+          :picture="sentenceChoice_task.picture"
+          :question="sentenceChoice_task.question"
+          :options="[sentenceChoice_task.option1, sentenceChoice_task.option2]"
         />
       </template>
-
-      <template v-for="(dropdown_task, i) in multi_dropdown">
-        <CompletionScreen
-          :key="'multidropdown-' + i"
-          :progress="i / multi_dropdown.length"
-          :text="
-            dropdown_task.sentence_chunk_1 +
-            ' %s ' +
-            dropdown_task.sentence_chunk_2 +
-            ' %s ' +
-            dropdown_task.sentence_chunk_3
-          "
+      <template v-for="(imageSelection_task, j) in imageSelection.slice(i, 2)">
+        <ImageSelectionScreen
+          :key="'sentenceChoice-' + i + '' + j"
+          :question="imageSelection_task.question"
           :options="[
-            dropdown_task.choice_options_1.split('|'),
-            dropdown_task.choice_options_2.split('|')
+            {
+              label: imageSelection_task.option1,
+              src: imageSelection_task.picture1
+            },
+            {
+              label: imageSelection_task.option2,
+              src: imageSelection_task.picture2
+            }
           ]"
         />
       </template>
+    </template>
 
-      <!-- Main trials -->
+    <template v-for="(rating_task, i) in sliderRating">
+      <Screen :key="'sliderRating-' + i">
+        <Slide>
+          <Wait :time="500" @done="$magpie.nextSlide()" />
+        </Slide>
 
-      <template v-for="i in range(0, sentenceChoice.length, 2)">
-        <template
-          v-for="(sentenceChoice_task, j) in sentenceChoice.slice(i, 2)"
-        >
-          <ForcedChoiceScreen
-            :key="'sentenceChoice-' + i + '' + j"
-            :picture="sentenceChoice_task.picture"
-            :question="sentenceChoice_task.question"
-            :options="[
-              sentenceChoice_task.option1,
-              sentenceChoice_task.option2
-            ]"
+        <Slide>
+          <Wait :time="1500" @done="$magpie.nextSlide()" />
+          <img :src="rating_task.picture" alt="" />
+        </Slide>
+
+        <Slide>
+          <p>{{ rating_task.question }}</p>
+          <SliderInput
+            :left="rating_task.optionLeft"
+            :right="rating_task.optionRight"
+            :response.sync="$magpie.measurements.slider"
           />
-        </template>
-        <template
-          v-for="(imageSelection_task, j) in imageSelection.slice(i, 2)"
-        >
-          <ImageSelectionScreen
-            :key="'sentenceChoice-' + i + '' + j"
-            :question="imageSelection_task.question"
-            :options="[
-              {
-                label: imageSelection_task.option1,
-                src: imageSelection_task.picture1
-              },
-              {
-                label: imageSelection_task.option2,
-                src: imageSelection_task.picture2
-              }
-            ]"
-          />
-        </template>
-      </template>
+          <button @click="$magpie.saveAndNextScreen()">Done</button>
+        </Slide>
+      </Screen>
+    </template>
 
-      <template v-for="(rating_task, i) in sliderRating">
-        <Screen :key="'sliderRating-' + i">
-          <Slide>
-            <Wait :time="500" @done="$magpie.nextSlide()" />
-          </Slide>
-
-          <Slide>
-            <Wait :time="1500" @done="$magpie.nextSlide()" />
-            <img :src="rating_task.picture" alt="" />
-          </Slide>
-
-          <Slide>
-            <p>{{ rating_task.question }}</p>
-            <SliderInput
-              :left="rating_task.optionLeft"
-              :right="rating_task.optionRight"
-              :response.sync="$magpie.measurements.slider"
-            />
-            <button @click="$magpie.saveAndNextScreen()">Done</button>
-          </Slide>
-        </Screen>
-      </template>
-
-      <!--
+    <!--
 
       Comment this in, to try out interactive components like the Chat component.
 
@@ -132,12 +116,11 @@
 
       -->
 
-      <PostTestScreen />
+    <PostTestScreen />
 
-      <!-- While developing your experiment, using the DebugResults screen is fine,
+    <!-- While developing your experiment, using the DebugResults screen is fine,
       once you're going live, you can use the <SubmitResults> screen to automatically send your experimental data to the server. -->
-      <DebugResultsScreen />
-    </template>
+    <DebugResultsScreen />
   </Experiment>
 </template>
 
