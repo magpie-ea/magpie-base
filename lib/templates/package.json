@@ -21,7 +21,7 @@
   "dependencies": {
     "konva": "^7.2.5",
     "lodash": "^4.17.20",
-    "magpie-base": "^0.3.0",
+    "magpie-base": "^0.4.0",
     "tone": "^14.7.77",
     "vue": "^2.6.11",
     "vue-konva": "^2.1.7"
