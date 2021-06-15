@@ -19,16 +19,18 @@
       uses magpie's forced choice trial input.
     </InstructionScreen>
 
-    <!-- Practice trials -->
     <!-- Here we create screens in a loop for every entry in forced_choice -->
     <template v-for="(forced_choice_task, i) of forced_choice">
       <ForcedChoiceScreen
         :key="'forcedchoice-' + i"
         :progress="i / forced_choice.length"
-        :picture="forced_choice_task.picture"
         :question="forced_choice_task.question"
         :options="[forced_choice_task.option1, forced_choice_task.option2]"
-      />
+      >
+        <template #stimulus>
+          <img :src="forced_choice_task.picture" />
+        </template>
+      </ForcedChoiceScreen>
     </template>
 
     <template v-for="(dropdown_task, i) in multi_dropdown">
@@ -49,16 +51,17 @@
       />
     </template>
 
-    <!-- Main trials -->
-
     <template v-for="i in range(0, sentenceChoice.length, 2)">
       <template v-for="(sentenceChoice_task, j) in sentenceChoice.slice(i, 2)">
         <ForcedChoiceScreen
           :key="'sentenceChoice-' + i + '' + j"
-          :picture="sentenceChoice_task.picture"
           :question="sentenceChoice_task.question"
           :options="[sentenceChoice_task.option1, sentenceChoice_task.option2]"
-        />
+        >
+          <template #stimulus>
+            <img :src="sentenceChoice_task.picture" />
+          </template>
+        </ForcedChoiceScreen>
       </template>
       <template v-for="(imageSelection_task, j) in imageSelection.slice(i, 2)">
         <ImageSelectionScreen
@@ -79,26 +82,18 @@
     </template>
 
     <template v-for="(rating_task, i) in sliderRating">
-      <Screen :key="'sliderRating-' + i">
-        <Slide>
-          <Wait :time="500" @done="$magpie.nextSlide()" />
-        </Slide>
-
-        <Slide>
-          <Wait :time="1500" @done="$magpie.nextSlide()" />
+      <SliderScreen
+        :key="'sliderRating-' + i"
+        :pause-time="500"
+        :stimulus-time="1500"
+        :question="rating_task.question"
+        :left="rating_task.optionLeft"
+        :right="rating_task.optionRight"
+      >
+        <template #stimulus>
           <img :src="rating_task.picture" alt="" />
-        </Slide>
-
-        <Slide>
-          <p>{{ rating_task.question }}</p>
-          <SliderInput
-            :left="rating_task.optionLeft"
-            :right="rating_task.optionRight"
-            :response.sync="$magpie.measurements.slider"
-          />
-          <button @click="$magpie.saveAndNextScreen()">Done</button>
-        </Slide>
-      </Screen>
+        </template>
+      </SliderScreen>
     </template>
 
     <!--
@@ -108,10 +103,8 @@
       <ConnectInteractiveScreen />
 
       <Screen>
-        <Slide>
           <Chat :messages.sync="$magpie.measurements.messages"></Chat>
           <button @click="$magpie.saveAndNextScreen()">Next</button>
-        </template>
       </Screen>
 
       -->
