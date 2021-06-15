@@ -1,5 +1,5 @@
 <docs>
-You can use HTML's `<img>` tag to play audio.
+You can use HTML's `<img>` tag to display images.
 
 For more details see [HTML img Element docs on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img).
 ```vue
