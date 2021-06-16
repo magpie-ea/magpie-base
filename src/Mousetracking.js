@@ -1,21 +1,14 @@
-import EventEmitter from 'events';
-import Vue from 'vue';
-
 /**
  * @class Mousetracking
  */
-export default class Mousetracking extends EventEmitter {
+export default class Mousetracking {
   constructor() {
-    super();
-
     this.time = [0];
     this.x = [0];
     this.y = [0];
     this.startTime = 0;
     this.originX = 0;
     this.originY = 0;
-
-    Vue.observable(this);
   }
 
   onMouseMove(e) {

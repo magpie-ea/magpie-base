@@ -5,6 +5,7 @@ import * as validators from '../src/validators';
 import _ from 'lodash';
 import Mousetracking from './Mousetracking';
 import packageJSON from '../package.json';
+import Eyetracking from '@/Eyetracking';
 
 /**
  * Magpie specific vue tools exposed as $magpie
@@ -127,6 +128,14 @@ export default class Magpie extends EventEmitter {
     this.mousetracking = new Mousetracking();
 
     /**
+     * @instance
+     * @member eyetracking
+     * @memberOf Magpie
+     * @type {Eyetracking}
+     */
+    this.eyetracking = new Eyetracking();
+
+    /**
      * The id of the current screen
      * @instance
      * @member currentScreenIndex
@@ -238,6 +247,7 @@ export default class Magpie extends EventEmitter {
     this.responseTimeStart = Date.now();
     this.experiment.scrollToTop();
     this.mousetracking.start();
+    this.eyetracking.pause();
   }
 
   /**
