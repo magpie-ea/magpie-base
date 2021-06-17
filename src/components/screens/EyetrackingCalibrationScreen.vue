@@ -127,6 +127,7 @@ export default {
 .point {
   position: absolute;
 }
+
 .point.check {
   position: fixed;
   left: 50vw;

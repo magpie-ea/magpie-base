@@ -118,6 +118,7 @@ export default {
 .point {
   position: absolute;
 }
+
 .point.check {
   position: fixed;
 }
