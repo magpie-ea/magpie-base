@@ -1,4 +1,4 @@
-import '../lib/webgazer';
+import webgazer from 'webgazer/src/index.mjs';
 
 /**
  * @class Eyetracking
@@ -16,7 +16,6 @@ export default class Eyetracking {
   }
 
   async initialize() {
-    const webgazer = window['webgazer']; // They are unable to provide a normal build
     webgazer.setRegression('ridge');
     webgazer.setGazeListener((data) => data && this.onGaze(data));
     return webgazer.begin();
@@ -53,12 +52,12 @@ export default class Eyetracking {
   }
 
   pause() {
-    const webgazer = window['webgazer']; // They are unable to provide a normal build
-    webgazer.pause();
+    if (webgazer) {
+      webgazer.pause();
+    }
   }
 
   resume() {
-    const webgazer = window['webgazer']; // They are unable to provide a normal build
     webgazer.resume();
   }
 
@@ -71,7 +70,6 @@ export default class Eyetracking {
    * @public
    */
   setDebug(debugging) {
-    const webgazer = window['webgazer']; // They are unable to provide a normal build
     webgazer.showVideoPreview(debugging);
     webgazer.showPredictionPoints(debugging);
   }

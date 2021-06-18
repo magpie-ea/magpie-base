@@ -7,6 +7,8 @@
 <dd></dd>
 <dt><a href="#Mousetracking">Mousetracking</a></dt>
 <dd></dd>
+<dt><a href="#Eyetracking">Eyetracking</a></dt>
+<dd></dd>
 </dl>
 
 <a name="Magpie"></a>
@@ -27,6 +29,7 @@
     * [.contactEmail](#Magpie+contactEmail) : <code>boolean</code>
     * [.socket](#Magpie+socket) : [<code>Socket</code>](#Socket)
     * [.mousetracking](#Magpie+mousetracking) : [<code>Mousetracking</code>](#Mousetracking)
+    * [.eyetracking](#Magpie+eyetracking) : [<code>Eyetracking</code>](#Eyetracking)
     * [.currentScreenIndex](#Magpie+currentScreenIndex) : <code>number</code>
     * [.currentSlideIndex](#Magpie+currentSlideIndex) : <code>number</code>
     * [.responseTimeStart](#Magpie+responseTimeStart) : <code>number</code>
@@ -96,6 +99,10 @@ The ID of the experiment
 <a name="Magpie+mousetracking"></a>
 
 ### magpie.mousetracking : [<code>Mousetracking</code>](#Mousetracking)
+**Kind**: instance property of [<code>Magpie</code>](#Magpie)  
+<a name="Magpie+eyetracking"></a>
+
+### magpie.eyetracking : [<code>Eyetracking</code>](#Eyetracking)
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
 <a name="Magpie+currentScreenIndex"></a>
 
@@ -345,6 +352,53 @@ Initialize the socket
 Get the mouse track since the appearance of the current screen
 
 **Kind**: instance method of [<code>Mousetracking</code>](#Mousetracking)  
+**Access**: public  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| rate | <code>int</code> | <code>15</code> | Time resolution in ms (optional; defaults to 15ms) |
+
+<a name="Eyetracking"></a>
+
+## Eyetracking
+**Kind**: global class  
+
+* [Eyetracking](#Eyetracking)
+    * [.start(x, y)](#Eyetracking+start)
+    * [.setDebug(debugging)](#Eyetracking+setDebug)
+    * [.getEyeTrack(rate)](#Eyetracking+getEyeTrack) ⇒ <code>Object</code>
+
+<a name="Eyetracking+start"></a>
+
+### eyetracking.start(x, y)
+(re)start eye tracking for the current screen
+
+**Kind**: instance method of [<code>Eyetracking</code>](#Eyetracking)  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| x | <code>Number</code> | Relative Origin x coordinate |
+| y | <code>Number</code> | Relative Origin y coordinate |
+
+<a name="Eyetracking+setDebug"></a>
+
+### eyetracking.setDebug(debugging)
+set debugging status
+
+**Kind**: instance method of [<code>Eyetracking</code>](#Eyetracking)  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| debugging | <code>Boolean</code> | Whether to display debugging information |
+
+<a name="Eyetracking+getEyeTrack"></a>
+
+### eyetracking.getEyeTrack(rate) ⇒ <code>Object</code>
+Get the eye gaze track since the appearance of the current screen
+
+**Kind**: instance method of [<code>Eyetracking</code>](#Eyetracking)  
 **Access**: public  
 
 | Param | Type | Default | Description |
