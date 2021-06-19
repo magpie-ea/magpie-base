@@ -414,7 +414,10 @@ const addEmptyColumns = function (trialData) {
 
   for (var j = 0; j < trialData.length; j++) {
     for (var k = 0; k < columns.length; k++) {
-      if (!trialData[j].hasOwnProperty(columns[k])) {
+      if (
+        !trialData[j].hasOwnProperty(columns[k]) ||
+        typeof trialData[j] === 'undefined'
+      ) {
         trialData[j][columns[k]] = 'NA';
       }
     }
