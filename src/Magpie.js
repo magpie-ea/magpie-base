@@ -5,7 +5,7 @@ import * as validators from '../src/validators';
 import _ from 'lodash';
 import Mousetracking from './Mousetracking';
 import packageJSON from '../package.json';
-import Eyetracking from '@/Eyetracking';
+import Eyetracking from './Eyetracking';
 
 /**
  * Magpie specific vue tools exposed as $magpie

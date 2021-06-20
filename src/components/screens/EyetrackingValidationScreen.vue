@@ -60,9 +60,9 @@ This screen is used to initialize and calibrate eye tracking.
 
 <script>
 import Screen from '../Screen';
-import Slide from '@/components/Slide';
-import EyetrackingStart from '@/components/helpers/EyetrackingStart';
-import Wait from '@/components/helpers/Wait';
+import Slide from '../Slide';
+import EyetrackingStart from '../helpers/EyetrackingStart';
+import Wait from '../helpers/Wait';
 export default {
   name: 'EyetrackingValidationScreen',
   components: { Wait, EyetrackingStart, Slide, Screen },
