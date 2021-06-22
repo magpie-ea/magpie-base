@@ -4,7 +4,7 @@ This component asks the user to enable full screen.
 <template><span /></template>
 <script>
 export default {
-  name: 'FullScreenStart',
+  name: 'FullscreenStart',
   mounted() {
     document.documentElement.requestFullscreen();
   }
