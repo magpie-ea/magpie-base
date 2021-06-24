@@ -1,9 +1,6 @@
 <docs>
 ### A simple experiment with 3 screens
 
-The Experiment component allows you to define trial data to make it conveniently accessible during your experiment.
-For every source of trial data you can provide a label and an array. Later you will be able to automatically iterate over that array by accessing the label as a subproperty of `$magpie.currentTrial`.
-
 ```vue
 <Experiment>
 
