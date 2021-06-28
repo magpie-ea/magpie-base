@@ -271,10 +271,10 @@ export default class Magpie extends EventEmitter {
    * @param data{Object} a flat object whose data you want to add to the results
    */
   addTrialData(data) {
-    if (!this.trialData[this.experiment.currentScreen]) {
-      this.trialData[this.experiment.currentScreen] = [];
+    if (!this.trialData[this.currentScreenIndex]) {
+      this.trialData[this.currentScreenIndex] = [];
     }
-    this.trialData[this.experiment.currentScreen].push({
+    this.trialData[this.currentScreenIndex].push({
       response_time: Date.now() - this.responseTimeStart,
       ...data
     });
