@@ -66,11 +66,19 @@
 
     <Slide>
       <div class="options">
-        <div class="option1" @[selectEvent]="submit('option1')">
+        <div
+          v-if="!$magpie.measurements.response"
+          class="option1"
+          @[selectEvent]="submit('option1')"
+        >
           <slot name="option1" />
         </div>
         <div class="space"></div>
-        <div class="option2" @[selectEvent]="submit('option2')">
+        <div
+          v-if="!$magpie.measurements.response"
+          class="option2"
+          @[selectEvent]="submit('option2')"
+        >
           <slot name="option2" />
         </div>
       </div>
@@ -80,6 +88,7 @@
          @binding {object} coordinates The coordinates of the Start button on the page (`{x: number, y: number})
          -->
         <slot v-if="playing" name="stimulus" :coordinates="buttonCoordinates" />
+        <slot v-if="$magpie.measurements.response" name="feedback" />
       </div>
       <button v-if="!playing" ref="button" @click="onPressPlay">Go</button>
       <Wait
@@ -88,38 +97,26 @@
         @done="$magpie.nextSlide()"
       />
       <TimerStart v-if="playing" id="fcmt-response-time" />
-    </Slide>
-
-    <Slide>
       <TimerStop
+        v-if="$magpie.measurements.response"
         id="fcmt-response-time"
         :time.sync="$magpie.measurements.response_time"
       />
-      <Record
-        :data="{
-          ...$magpie.mousetracking.getMouseTrack(),
-          response: label
-        }"
-      />
-      <div class="stimulus">
-        <!-- @slot optionally provide feedback -->
-        <slot name="feedback" />
-      </div>
     </Slide>
   </Screen>
 </template>
 
 <script>
+import Vue from 'vue';
 import Wait from '../helpers/Wait';
 import Screen from '../Screen';
 import Slide from '../Slide';
-import Record from '../helpers/Record';
 import TimerStop from '../helpers/TimerStop';
 import TimerStart from '../helpers/TimerStart';
 
 export default {
   name: 'ForcedChoiceMousetrackingScreen',
-  components: { TimerStart, TimerStop, Record, Slide, Screen, Wait },
+  components: { TimerStart, TimerStop, Slide, Screen, Wait },
   props: {
     /**
      * string representation of option 1
@@ -166,8 +163,7 @@ export default {
   },
   data() {
     return {
-      playing: false,
-      label: null
+      playing: false
     };
   },
   computed: {
@@ -188,8 +184,15 @@ export default {
     },
     submit(label) {
       if (!this.playing) return;
-      this.label = this[label];
-      this.$magpie.nextSlide();
+      this.$magpie.measurements.response = this[label];
+      const mouseTrack = this.$magpie.mousetracking.getMouseTrack();
+      for (const prop in mouseTrack) {
+        Vue.set(
+          this.$magpie.measurements,
+          prop,
+          JSON.parse(JSON.stringify(mouseTrack[prop]))
+        );
+      }
     }
   }
 };
