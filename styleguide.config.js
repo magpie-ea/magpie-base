@@ -36,11 +36,6 @@ module.exports = {
       components: 'src/components/inputs/*.vue'
     },
     {
-      name: 'Tasks',
-      content: 'src/components/tasks/docs.md',
-      components: 'src/components/tasks/*.vue'
-    },
-    {
       name: 'Interactive',
       content: 'src/components/interactive/docs.md',
       components: 'src/components/interactive/*.vue'

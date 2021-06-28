@@ -8,8 +8,7 @@
       {o1: 'Fish', o2: 'Mammal', s: 'Whale'},
       {o1: 'Fish', o2: 'Bird', s: 'Penguin'}
       ]">
-      <Screen :key="i">
-          <CategorizationMousetracking :response.sync="$magpie.measurements.option" :mouseTrack.sync="$magpie.measurements.mouseTrack">
+      <ForcedChoiceMousetrackingScreen :key="i" :option1="task.o1" :option2="task.o2">
             <template #option1>
               <div :style="{backgroundColor: 'lightyellow', width: '100px', padding: '70px'}">
                 {{ task.o1 }}
@@ -25,11 +24,10 @@
             </template>
             <template #feedback>
               <!-- add values in `task` to measurements -->
-              <Record :data="{...task, ...$magpie.measurements.mouseTrack}" />
+              <Record :data="{...task}" />
               <Wait :time="100" @done="$magpie.saveAndNextScreen()" />
             </template>
-          </CategorizationMousetracking>
-      </Screen>
+      </ForcedChoiceMousetrackingScreen>
     </template>
 
     <DebugResultsScreen />
@@ -40,39 +38,43 @@
 </docs>
 
 <template>
-  <div>
-    <div v-if="slide === 0">
+  <Screen v-bind="$attrs">
+    <Slide>
+      <p v-if="qud" class="qud" v-text="qud" />
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->
-      <slot name="prep" :done="nextSlide()">
-        <Wait :time="1" @done="nextSlide()" />
+      <slot name="preparation">
+        <Wait :time="1" @done="$magpie.nextSlide()" />
       </slot>
-    </div>
+    </Slide>
 
-    <div v-if="slide === 1">
-      <Wait key="pause" :time="500" @done="nextSlide()" />
-    </div>
+    <Slide>
+      <p v-if="qud" class="qud" v-text="qud" />
+      <Wait key="pause" :time="pauseTime" @done="$magpie.nextSlide()" />
+    </Slide>
 
-    <div v-if="slide === 2">
-      <Wait key="wait a bit" :time="500" @done="nextSlide()" />
+    <Slide>
+      <p v-if="qud" class="qud" v-text="qud" />
+      <Wait key="wait a bit" :time="500" @done="$magpie.nextSlide()" />
       <div class="options">
-        <!-- @slot provide content for categorization option one -->
+        <!-- @slot provide content for choice one -->
         <div class="option1"><slot name="option1" /></div>
         <div class="space"></div>
-        <!-- @slot provide content for categorization option two -->
+        <!-- @slot provide content for choice two -->
         <div class="option2"><slot name="option2" /></div>
       </div>
-    </div>
+    </Slide>
 
-    <div v-if="slide === 3">
+    <Slide>
       <div class="options">
-        <div class="option1" @[selectEvent]="onOption1(nextSlide)">
+        <div class="option1" @[selectEvent]="submit('option1')">
           <slot name="option1" />
         </div>
         <div class="space"></div>
-        <div class="option2" @[selectEvent]="onOption2(nextSlide)">
+        <div class="option2" @[selectEvent]="submit('option2')">
           <slot name="option2" />
         </div>
       </div>
+      <p v-if="qud" class="qud" v-text="qud" />
       <div class="stimulus">
         <!-- @slot provide content for the main stimulus
          @binding {object} coordinates The coordinates of the Start button on the page (`{x: number, y: number})
@@ -80,30 +82,58 @@
         <slot v-if="playing" name="stimulus" :coordinates="buttonCoordinates" />
       </div>
       <button v-if="!playing" ref="button" @click="onPressPlay">Go</button>
-    </div>
+      <Wait
+        v-if="playing && responseTime"
+        :time="responseTime"
+        @done="$magpie.nextSlide()"
+      />
+      <TimerStart v-if="playing" id="fcmt-response-time" />
+    </Slide>
 
-    <div v-if="slide === 4">
+    <Slide>
+      <TimerStop
+        id="fcmt-response-time"
+        :time.sync="$magpie.measurements.response_time"
+      />
+      <Record
+        :data="{
+          ...$magpie.mousetracking.getMouseTrack(),
+          response: label
+        }"
+      />
       <div class="stimulus">
         <!-- @slot optionally provide feedback -->
         <slot name="feedback" />
       </div>
-    </div>
-  </div>
+    </Slide>
+  </Screen>
 </template>
 
 <script>
 import Wait from '../helpers/Wait';
+import Screen from '../Screen';
+import Slide from '../Slide';
+import Record from '../helpers/Record';
+import TimerStop from '../helpers/TimerStop';
+import TimerStart from '../helpers/TimerStart';
 
 export default {
-  name: 'CategorizationMousetracking',
-  components: { Wait },
+  name: 'ForcedChoiceMousetrackingScreen',
+  components: { TimerStart, TimerStop, Record, Slide, Screen, Wait },
   props: {
     /**
-     * Title of the screen
+     * string representation of option 1
      */
-    title: {
+    option1: {
       type: String,
-      default: ''
+      default: 'option1'
+    },
+    /**
+     * string representation of option 2
+     */
+    option2: {
+      type: String,
+      default: 'option2'
     },
     /**
      * The event that causes the response to be selected, e.g. `click`, `mouseover`, etc.
@@ -111,14 +141,33 @@ export default {
     selectEvent: {
       type: String,
       default: 'mouseover'
+    },
+    /**
+     * Question under discussion. Always visible on the screen
+     */
+    qud: {
+      type: String,
+      default: ''
+    },
+    /**
+     * Duration of the pause phase, don't set this, to avoid the pause altogether
+     */
+    pauseTime: {
+      type: Number,
+      default: 0
+    },
+    /**
+     * How long the response should be enabled, don't set this, to avoid the timeout altogether
+     */
+    responseTime: {
+      type: Number,
+      default: 0
     }
   },
   data() {
     return {
       playing: false,
-      label: null,
-      track: null,
-      slide: 0
+      label: null
     };
   },
   computed: {
@@ -130,9 +179,6 @@ export default {
     }
   },
   methods: {
-    nextSlide() {
-      this.slide++;
-    },
     onPressPlay() {
       this.playing = true;
       this.$magpie.mousetracking.start(
@@ -140,20 +186,10 @@ export default {
         this.buttonCoordinates.y
       );
     },
-    onOption1(cb) {
+    submit(label) {
       if (!this.playing) return;
-      this.submit('left', cb);
-    },
-    onOption2(cb) {
-      if (!this.playing) return;
-      this.submit('right', cb);
-    },
-    submit(label, cb) {
-      this.label = label;
-      this.track = this.$magpie.mousetracking.getMouseTrack();
-      this.$emit('update:response', this.label);
-      this.$emit('update:mouseTrack', this.track);
-      cb();
+      this.label = this[label];
+      this.$magpie.nextSlide();
     }
   }
 };
@@ -184,5 +220,10 @@ button {
   bottom: 20px;
   left: 50%;
   position: absolute;
+}
+
+.qud {
+  position: relative;
+  top: 150px;
 }
 </style>
