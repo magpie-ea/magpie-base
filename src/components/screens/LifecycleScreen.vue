@@ -5,8 +5,9 @@ This is a built-in screen with 4 life cycle phases:
  * Fixation
  * Stimulus presentation
  * Response
+ * Feedback
 
-The last three phases can be completely customized using the corresponding slots, as you can see below.
+The last four phases can be completely customized using the corresponding slots, as you can see below.
 
 ```vue
 <Experiment>
@@ -82,6 +83,16 @@ The last three phases can be completely customized using the corresponding slots
       />
       <ResponseTimeStart />
     </Slide>
+    <Slide v-if="feedbackTime">
+      <!-- Feedback phase -->
+      <p v-if="qud" v-text="qud"></p>
+      <slot name="feedback"></slot>
+      <Wait
+        v-if="feedbackTime > 0"
+        :time="feedbackTime"
+        @done="$magpie.nextScreen()"
+      />
+    </Slide>
   </Screen>
 </template>
 
@@ -138,6 +149,23 @@ export default {
     responseTime: {
       type: Number,
       default: 0
+    },
+    /**
+     * How long feedback should be displayed, don't set this, to avoid displaying feedback altogether
+     */
+    feedbackTime: {
+      type: Number,
+      default: 0
+    }
+  },
+  methods: {
+    nextAfterResponse() {
+      if (this.$props.feedbackTime) {
+        this.$magpie.saveMeasurements();
+        this.$magpie.nextSlide();
+      } else {
+        this.$magpie.saveAndNextScreen();
+      }
     }
   }
 };

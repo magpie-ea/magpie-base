@@ -5,12 +5,19 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
 <Experiment>
     <KeypressScreen
         question="Are fries healthy?"
-        picture="img/fries.jpg"
+        :feedback-time="1000"
         :keys="{
               f: 'yes',
               j: 'no'
             }"
-    />
+    >
+      <template #stimulus>
+        <img src="img/fries.jpg" />
+      </template>
+      <template #feedback>
+        You are correct.
+      </template>
+    </KeypressScreen>
 
     <DebugResultsScreen />
 
@@ -20,10 +27,11 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
 
 <template>
   <!-- pass down props -->
-  <LifecycleScreen v-bind="$attrs">
+  <LifecycleScreen v-bind="$props">
     <!-- pass down slots -->
     <template slot="fixation">
-      <slot name="fixation"></slot>
+      <slot name="fixation"><FixationCross /></slot>
+      <KeypressInput :keys="keys" />
     </template>
     <template slot="stimulus">
       <slot name="stimulus"></slot>
@@ -39,8 +47,12 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
       <KeypressInput
         :keys="keys"
         :response.sync="$magpie.measurements.response"
-        @update:response="$magpie.saveAndNextScreen()"
+        @update:response="nextAfterResponse"
       />
+    </template>
+
+    <template #feedback>
+      <slot name="feedback"></slot>
     </template>
   </LifecycleScreen>
 </template>
@@ -49,21 +61,27 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
 import Record from '../helpers/Record';
 import KeypressInput from '../inputs/KeypressInput';
 import LifecycleScreen from '../screens/LifecycleScreen';
+import FixationCross from '../stimuli/FixationCross';
 
+/**
+ * Inherits from LifecycleScreen
+ */
 export default {
   name: 'KeypressScreen',
   components: {
+    FixationCross,
     LifecycleScreen,
     KeypressInput,
     Record
   },
+  extends: LifecycleScreen,
   props: {
     /**
      * A question
      */
     question: {
       type: String,
-      required: true
+      default: ''
     },
     /**
      * An object with keys mapped to option labels
@@ -71,41 +89,6 @@ export default {
     keys: {
       type: Object,
       required: true
-    },
-    /**
-     * Question under discussion. Always visible on the screen
-     */
-    qud: {
-      type: String,
-      default: ''
-    },
-    /**
-     * Duration of the pause phase, don't set this, to avoid the pause altogether
-     */
-    pauseTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * Duration of the fixation point phase, don't set this to avoid showing the fixation point altogether
-     */
-    fixationTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * Duration of the stimulus phase, don't set this to avoid hiding the stimulus altogether
-     */
-    stimulusTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * How long the response should be enabled, don't set this, to avoid the timeout altogether
-     */
-    responseTime: {
-      type: Number,
-      default: 0
     }
   }
 };

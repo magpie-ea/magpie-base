@@ -22,7 +22,7 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
 
 <template>
   <!-- pass down props -->
-  <LifecycleScreen v-bind="$attrs">
+  <LifecycleScreen v-bind="$props">
     <!-- pass down slots -->
     <template slot="fixation">
       <slot name="fixation"></slot>
@@ -50,10 +50,13 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
           $magpie.measurements.responses &&
           !$magpie.validateMeasurements.$invalid
         "
-        @click="$magpie.saveAndNextScreen()"
+        @click="nextAfterResponse"
       >
         Submit
       </button>
+    </template>
+    <template #feedback>
+      <slot name="feedback"></slot>
     </template>
   </LifecycleScreen>
 </template>
@@ -62,7 +65,9 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
 import Record from '../helpers/Record';
 import MultipleChoiceMatrixInput from '../inputs/MultipleChoiceMatrixInput';
 import LifecycleScreen from '../screens/LifecycleScreen';
-
+/**
+ * Inherits from LifecycleScreen
+ */
 export default {
   name: 'MultipleChoiceMatrixScreen',
   components: {
@@ -70,6 +75,7 @@ export default {
     MultipleChoiceMatrixInput,
     Record
   },
+  extends: LifecycleScreen,
   props: {
     /**
      * The questions to ask
@@ -91,45 +97,7 @@ export default {
     randomize: {
       type: Boolean,
       default: false
-    },
-    /**
-     * Question under discussion. Always visible on the screen
-     */
-    qud: {
-      type: String,
-      default: ''
-    },
-    /**
-     * Duration of the pause phase, don't set this, to avoid the pause altogether
-     */
-    pauseTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * Duration of the fixation point phase, don't set this to avoid showing the fixation point altogether
-     */
-    fixationTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * Duration of the stimulus phase, don't set this to avoid hiding the stimulus altogether
-     */
-    stimulusTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * How long the response should be enabled, don't set this, to avoid the timeout altogether
-     */
-    responseTime: {
-      type: Number,
-      default: 0
     }
-  },
-  data() {
-    return { console };
   }
 };
 </script>

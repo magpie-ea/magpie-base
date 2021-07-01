@@ -18,7 +18,7 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
 
 <template>
   <!-- pass down props -->
-  <LifecycleScreen v-bind="$attrs">
+  <LifecycleScreen v-bind="$props">
     <!-- pass down slots -->
     <template slot="fixation">
       <slot name="fixation"></slot>
@@ -53,6 +53,9 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
         Next
       </button>
     </template>
+    <template #feedback>
+      <slot name="feedback"></slot>
+    </template>
   </LifecycleScreen>
 </template>
 
@@ -60,7 +63,9 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
 import Record from '../helpers/Record';
 import RatingInput from '../inputs/RatingInput';
 import LifecycleScreen from '../screens/LifecycleScreen';
-
+/**
+ * Inherits from LifecycleScreen
+ */
 export default {
   name: 'RatingScreen',
   components: {
@@ -68,6 +73,7 @@ export default {
     RatingInput,
     Record
   },
+  extends: LifecycleScreen,
   props: {
     /**
      * A question
@@ -96,41 +102,6 @@ export default {
     count: {
       type: Number,
       default: 7
-    },
-    /**
-     * Question under discussion. Always visible on the screen
-     */
-    qud: {
-      type: String,
-      default: ''
-    },
-    /**
-     * Duration of the pause phase, don't set this, to avoid the pause altogether
-     */
-    pauseTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * Duration of the fixation point phase, don't set this to avoid showing the fixation point altogether
-     */
-    fixationTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * Duration of the stimulus phase, don't set this to avoid hiding the stimulus altogether
-     */
-    stimulusTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * How long the response should be enabled, don't set this, to avoid the timeout altogether
-     */
-    responseTime: {
-      type: Number,
-      default: 0
     }
   }
 };

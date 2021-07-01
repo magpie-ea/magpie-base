@@ -33,7 +33,7 @@ This is a pre-built forced choice screen, with limited functionality, but simple
           <label
             >Gender
             <DropdownInput
-              :options="['male', 'female', 'other']"
+              :options="['', 'male', 'female', 'other']"
               :response.sync="$magpie.measurements.gender"
             />
           </label>
@@ -43,6 +43,7 @@ This is a pre-built forced choice screen, with limited functionality, but simple
             >Level of Eduction
             <DropdownInput
               :options="[
+                '',
                 'Graduated Highschool',
                 'Graduated Collage',
                 'Higher degree'
@@ -70,7 +71,14 @@ This is a pre-built forced choice screen, with limited functionality, but simple
         ></TextareaInput>
       </div>
 
-      <button @click="$magpie.saveAndNextScreen()">Next</button>
+      <button
+        @click="
+          $magpie.addExpData($magpie.measurements);
+          $magpie.nextScreen();
+        "
+      >
+        Next
+      </button>
     </Slide>
   </Screen>
 </template>

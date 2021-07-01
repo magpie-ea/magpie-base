@@ -39,10 +39,13 @@ This is a pre-built image selection screen, with limited functionality, but simp
           $magpie.measurements.response &&
           !$magpie.validateMeasurements.response.$invalid
         "
-        @click="$magpie.saveAndNextScreen()"
+        @click="nextAfterResponse"
       >
         Next
       </button>
+    </template>
+    <template #feedback>
+      <slot name="feedback"></slot>
     </template>
   </LifecycleScreen>
 </template>
@@ -52,6 +55,9 @@ import Record from '../helpers/Record';
 import TextareaInput from '../inputs/TextareaInput';
 import LifecycleScreen from '../screens/LifecycleScreen';
 
+/**
+ * Inherits from LifecycleScreen
+ */
 export default {
   name: 'TextareaScreen',
   components: {
@@ -59,6 +65,7 @@ export default {
     TextareaInput,
     Record
   },
+  extends: LifecycleScreen,
   props: {
     /**
      * A question
@@ -66,41 +73,6 @@ export default {
     question: {
       type: String,
       required: true
-    },
-    /**
-     * Question under discussion. Always visible on the screen
-     */
-    qud: {
-      type: String,
-      default: ''
-    },
-    /**
-     * Duration of the pause phase, don't set this, to avoid the pause altogether
-     */
-    pauseTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * Duration of the fixation point phase, don't set this to avoid showing the fixation point altogether
-     */
-    fixationTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * Duration of the stimulus phase, don't set this to avoid hiding the stimulus altogether
-     */
-    stimulusTime: {
-      type: Number,
-      default: 0
-    },
-    /**
-     * How long the response should be enabled, don't set this, to avoid the timeout altogether
-     */
-    responseTime: {
-      type: Number,
-      default: 0
     }
   }
 };
