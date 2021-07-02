@@ -42,7 +42,7 @@ export default {
     };
   },
   mounted() {
-    this.results = this.$magpie.getData();
+    this.results = this.$magpie.getAllData();
     this.csv = stringify(this.results, {
       columns: Object.keys(this.results[0]),
       header: true

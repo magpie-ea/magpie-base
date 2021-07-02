@@ -302,13 +302,18 @@ export default class Magpie extends EventEmitter {
     console.error(er);
   }
 
-  getData() {
-    this.addExpData({
-      experiment_end_time: Date.now(),
-      experiment_duration: Date.now() - this.expData.experiment_start_time
-    });
+  /**
+   * Returns an array of objects with all trial data that has been submitted so far, including experiment-wide data
+   * @instance
+   * @memberOf Magpie
+   * @public
+   * @returns {Object[]}
+   */
+  getAllData() {
     return flattenData({
       ...this.expData,
+      experiment_end_time: Date.now(),
+      experiment_duration: Date.now() - this.expData.experiment_start_time,
       trials: addEmptyColumns(
         _.flatten(Object.values(this.trialData)).map((o) =>
           Object.assign(
@@ -334,7 +339,7 @@ export default class Magpie extends EventEmitter {
     if (!this.submissionUrl) {
       throw new Error('No submission URL set');
     }
-    return this.submitResults(this.submissionUrl, this.getData());
+    return this.submitResults(this.submissionUrl, this.getAllData());
   }
 
   /**
@@ -347,7 +352,7 @@ export default class Magpie extends EventEmitter {
     if (!this.submissionUrl) {
       throw new Error('No submission URL set');
     }
-    return this.submitResults(this.submissionUrl, this.getData(), true);
+    return this.submitResults(this.submissionUrl, this.getAllData(), true);
   }
 
   async submitResults(submissionURL, data, intermediate) {
