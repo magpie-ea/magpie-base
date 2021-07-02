@@ -1,4 +1,9 @@
-import webgazer from 'webgazer/src/index.mjs';
+let webgazer;
+try {
+  webgazer = require('webgazer/src/index.mjs');
+} catch (e) {
+  console.log('Optional webgazer dependency not found. Eyetracking disabled.');
+}
 
 /**
  * @class Eyetracking
@@ -16,6 +21,9 @@ export default class Eyetracking {
   }
 
   async initialize() {
+    if (!webgazer) {
+      throw new Error('Could not find webgazer');
+    }
     webgazer.setRegression('ridge');
     webgazer.setGazeListener((data) => data && this.onGaze(data));
     return webgazer.begin();
@@ -58,6 +66,9 @@ export default class Eyetracking {
   }
 
   resume() {
+    if (!webgazer) {
+      throw new Error('Could not find webgazer');
+    }
     webgazer.resume();
   }
 

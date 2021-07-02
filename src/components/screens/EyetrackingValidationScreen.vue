@@ -1,5 +1,6 @@
 <docs>
 This screen is used to initialize and calibrate eye tracking.
+Eyetracking requires that you install `webgazer`.
 
 ```vue
 <Experiment wide>

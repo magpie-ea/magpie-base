@@ -41,6 +41,7 @@
     * [.saveAndNextScreen(index)](#Magpie+saveAndNextScreen)
     * [.addTrialData(data)](#Magpie+addTrialData)
     * [.addExpData(data)](#Magpie+addExpData)
+    * [.getAllData()](#Magpie+getAllData) ⇒ <code>Array.&lt;Object&gt;</code>
     * [.submit()](#Magpie+submit) ⇒ <code>Promise.&lt;void&gt;</code>
     * [.submitIntermediateResults()](#Magpie+submitIntermediateResults) ⇒ <code>Promise.&lt;void&gt;</code>
     * [.setProgress(percentage)](#Magpie+setProgress)
@@ -202,6 +203,13 @@ Add global facts that will be added to each result set
 | --- | --- | --- |
 | data | <code>Object</code> | a flat object whose data you want to add to the facts |
 
+<a name="Magpie+getAllData"></a>
+
+### magpie.getAllData() ⇒ <code>Array.&lt;Object&gt;</code>
+Returns an array of objects with all trial data that has been submitted so far, including experiment-wide data
+
+**Kind**: instance method of [<code>Magpie</code>](#Magpie)  
+**Access**: public  
 <a name="Magpie+submit"></a>
 
 ### magpie.submit() ⇒ <code>Promise.&lt;void&gt;</code>
