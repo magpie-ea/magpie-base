@@ -13,7 +13,37 @@ import Eyetracking from './Eyetracking';
  */
 export default class Magpie extends EventEmitter {
   /**
-   * Gives easy access to validators. Validation is based on [vuelidate](https://vuelidate.js.org). These are [the built-in validators](https://vuelidate.js.org/#sub-builtin-validators)
+   * Gives easy access to validators. Validation is based on [vuelidate](https://vuelidate.js.org).
+   *
+   *
+   * | Name | Meta parameters | Description |
+   * |---|---|---|
+   * | required | none | Requires non-empty data. Checks for empty arrays and strings containing only whitespaces. |
+   * | requiredIf | locator * | Requires non-empty data only if provided property or predicate is true. |
+   * | requiredUnless | locator * | Requires non-empty data only if provided property or predicate is false. |
+   * | minLength | min length | Requires the input to have a minimum specified length, inclusive. Works with arrays. |
+   * | maxLength | max length | Requires the input to have a maximum specified length, inclusive. Works with arrays. |
+   * | minValue | min | Requires entry to have a specified minimum numeric value or Date. |
+   * | maxValue | max | Requires entry to have a specified maximum numeric value or Date. |
+   * | between | min, max | Checks if a number or Date is in specified bounds. Min and max are both inclusive. |
+   * | alpha | none | Accepts only alphabet characters. |
+   * | alphaNum | none | Accepts only alphanumerics. |
+   * | numeric | none | Accepts only numerics. |
+   * | integer | none | Accepts positive and negative integers. |
+   * | decimal | none | Accepts positive and negative decimal numbers. |
+   * | email | none | Accepts valid email addresses. Keep in mind you still have to carefully verify it on your server, as it is impossible to tell if the address is real without sending verification email. |
+   * | ipAddress | none | Accepts valid IPv4 addresses in dotted decimal notation like 127.0.0.1. |
+   * | macAddress | separator=':' | Accepts valid MAC addresses like 00:ff:11:22:33:44:55. Don't forget to call it macAddress(), as it has optional parameter. You can specify your own separator instead of ':'. Provide empty separator macAddress('') to validate MAC addresses like 00ff1122334455. |
+   * | sameAs | locator * | Checks for equality with a given property. |
+   * | url | none | Accepts only URLs. |
+   * | or | validators... | Passes when at least one of provided validators passes. |
+   * | and | validators... | Passes when all of provided validators passes. |
+   * | not | validator | Passes when provided validator would not pass, fails otherwise. Can be chained with other validators like not(sameAs('field')). |
+   *
+   *
+   * \* Locator is a sibling property name.
+   *
+   *
    * @instance
    * @member validators
    * @memberOf Magpie
