@@ -39,17 +39,18 @@ This is a pre-built slider rating screen, with limited functionality, but simple
         }"
       />
       <p v-if="question" v-text="question"></p>
-      <SliderInput
+      <SliderRangesInput
         :left="optionLeft"
         :right="optionRight"
         :min="min"
         :max="max"
         :interval="interval"
         :ranges="ranges"
-        :response.sync="$magpie.measurements.response"
+        :responses.sync="$magpie.measurements.response"
+        :range-values.sync="$magpie.measurements.range_values"
       />
-      <ul v-if="$magpie.measurements.response">
-        <li v-for="(value, i) in $magpie.measurements.response" :key="i">
+      <ul v-if="$magpie.measurements.range_values">
+        <li v-for="(value, i) in $magpie.measurements.range_values" :key="i">
           {{ value }} {{ ranges[i] }}
         </li>
       </ul>
@@ -71,7 +72,7 @@ This is a pre-built slider rating screen, with limited functionality, but simple
 
 <script>
 import Record from '../helpers/Record';
-import SliderInput from '../inputs/SliderInput';
+import SliderRangesInput from '../inputs/SliderRangesInput';
 import LifecycleScreen from '../screens/LifecycleScreen';
 
 /**
@@ -81,7 +82,7 @@ export default {
   name: 'SliderRangesScreen',
   components: {
     LifecycleScreen,
-    SliderInput,
+    SliderRangesInput,
     Record
   },
   extends: LifecycleScreen,
