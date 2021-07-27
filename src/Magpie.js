@@ -2,7 +2,9 @@ import EventEmitter from 'events';
 import Vue from 'vue';
 import Socket from './Socket';
 import * as validators from '../src/validators';
-import _ from 'lodash';
+import merge from 'lodash/merge';
+import map from 'lodash/map';
+import flatten from 'lodash/flatten';
 import Mousetracking from './Mousetracking';
 import packageJSON from '../package.json';
 import Eyetracking from './Eyetracking';
@@ -345,7 +347,7 @@ export default class Magpie extends EventEmitter {
       experiment_end_time: Date.now(),
       experiment_duration: Date.now() - this.expData.experiment_start_time,
       trials: addEmptyColumns(
-        _.flatten(Object.values(this.trialData)).map((o) =>
+        flatten(Object.values(this.trialData)).map((o) =>
           Object.assign(
             {},
             Object.fromEntries(
@@ -479,7 +481,7 @@ const flattenData = function (data) {
     }
   }
 
-  return _.map(trials, function (t) {
+  return map(trials, function (t) {
     for (const key in t) {
       if (Array.isArray(t[key])) {
         // Turn arrays into strings
@@ -487,6 +489,6 @@ const flattenData = function (data) {
       }
     }
     // Here the data is the general informatoin besides the trials.
-    return _.merge(t, data);
+    return merge(t, data);
   });
 };

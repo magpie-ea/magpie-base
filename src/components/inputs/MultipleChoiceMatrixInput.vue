@@ -101,7 +101,7 @@ You can also randomize the question order. The response data will still be in th
 </template>
 
 <script>
-import _ from 'lodash';
+import shuffle from 'lodash/shuffle';
 import MultipleChoiceInput from './MultipleChoiceInput';
 import Vue from 'vue';
 /**
@@ -136,7 +136,7 @@ export default {
   data() {
     return {
       responses: [],
-      randomizedQuestions: _.shuffle(
+      randomizedQuestions: shuffle(
         this.questions.map((question, i) => [question, i])
       )
     };

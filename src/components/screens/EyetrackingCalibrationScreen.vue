@@ -60,7 +60,9 @@ Eyetracking requires that you install `webgazer`.
 </template>
 
 <script>
-import _ from 'lodash';
+import flatten from 'lodash/flatten';
+import times from 'lodash/times';
+import shuffle from 'lodash/shuffle';
 import Screen from '../Screen';
 import Slide from '../Slide';
 export default {
@@ -115,8 +117,8 @@ export default {
           this.calibrationSequence.push({ x, y });
         });
       });
-      this.calibrationSequence = _.flatten(
-        _.times(2, () => _.shuffle(this.calibrationSequence))
+      this.calibrationSequence = flatten(
+        times(2, () => shuffle(this.calibrationSequence))
       );
       this.nextPoint();
     }

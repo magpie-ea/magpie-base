@@ -72,7 +72,7 @@ This interactive component provides participants the opportunity to chat with ea
 
 <script>
 import Vue from 'vue';
-import _ from 'lodash';
+import difference from 'lodash/difference';
 const EVENT_CHAT_MESSAGE = '$magpie.chat_message';
 
 export default {
@@ -101,8 +101,8 @@ export default {
   },
   watch: {
     ['$magpie.socket.active'](newParticipants, oldParticipants) {
-      const joined = _.difference(newParticipants, oldParticipants);
-      const left = _.difference(oldParticipants, newParticipants);
+      const joined = difference(newParticipants, oldParticipants);
+      const left = difference(oldParticipants, newParticipants);
       left.forEach((participantId) => {
         this.messages.push({
           time: Date.now(),
