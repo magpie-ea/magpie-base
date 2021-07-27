@@ -96,7 +96,7 @@ export default {
 
   async created() {
     // We load tone.js lazily to avoid bloating up the bundle size
-    this.synth = import('tone').then((Tone) => {
+    this.synth = import(/* webpackPreload: true */ 'tone').then((Tone) => {
       const synth = new Tone.Synth({
         oscillator: {
           type: this.oscillator,
@@ -112,6 +112,7 @@ export default {
       synth.toDestination();
       return synth;
     });
+    await this.synth;
   },
 
   async mounted() {
