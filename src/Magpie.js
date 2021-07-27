@@ -143,10 +143,6 @@ export default class Magpie extends EventEmitter {
       ? new Socket(options.experimentId, options.socketUrl, this.onSocketError)
       : false;
 
-    if (this.socket) {
-      this.socket.initialize();
-    }
-
     this.trialData = window.magpie_trial_data = {};
     this.expData = window.magpie_exp_data = {};
     this.progress = -1;

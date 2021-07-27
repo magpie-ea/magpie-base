@@ -45,6 +45,7 @@ export default {
     }
   },
   mounted() {
+    this.$magpie.socket.initialize();
     if (this.$magpie.socket.state === states.READY) {
       this.$magpie.nextScreen();
     }
