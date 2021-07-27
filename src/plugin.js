@@ -1,8 +1,9 @@
 import * as components from './components';
-import Magpie from './Magpie';
 
 export default function (Vue, config) {
-  const magpie = !window.MAGPIE_STYLEGUIDIST ? new Magpie(config) : null;
+  // universal mock to cover up that fact that magpie object is not available from start
+  const magpie = new Proxy(() => magpie, { get: () => magpie });
+
   // auto-import all components
   Vue.mixin({
     components: { ...components },
