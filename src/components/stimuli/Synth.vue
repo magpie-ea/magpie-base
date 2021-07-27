@@ -25,8 +25,6 @@ The Synth component is a basic sound Synthesizer based on [Tone.js](https://tone
 <template><div /></template>
 
 <script>
-import * as Tone from 'tone';
-
 export default {
   name: 'Synth',
 
@@ -92,7 +90,14 @@ export default {
 
   data() {
     return {
-      synth: new Tone.Synth({
+      synth: null
+    };
+  },
+
+  async created() {
+    // We load tone.js lazily to avoid bloating up the bundle size
+    this.synth = import('tone').then((Tone) => {
+      const synth = new Tone.Synth({
         oscillator: {
           type: this.oscillator,
           volume: this.volume
@@ -103,20 +108,24 @@ export default {
           sustain: this.sustain,
           release: this.release
         }
-      }).toDestination()
-    };
+      });
+      synth.toDestination();
+      return synth;
+    });
   },
 
-  mounted() {
+  async mounted() {
+    const synth = await this.synth;
     if (this.duration !== Infinity) {
-      this.synth.triggerAttackRelease(this.frequency, this.duration);
+      synth.triggerAttackRelease(this.frequency, this.duration);
     } else {
-      this.synth.triggerAttack(this.frequency, Tone.now());
+      synth.triggerAttack(this.frequency, synth.now());
     }
   },
 
-  destroyed() {
-    this.synth.triggerRelease(Tone.now());
+  async destroyed() {
+    const synth = await this.synth;
+    synth.triggerRelease(synth.now());
   }
 };
 </script>
