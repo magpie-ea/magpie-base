@@ -2,7 +2,9 @@ import * as components from './components';
 
 export default function (Vue, config) {
   // universal mock to cover up that fact that magpie object is not available from start
-  const magpie = new Proxy(() => magpie, { get: () => magpie });
+  const obj = () => magpie;
+  obj.toString = () => '';
+  const magpie = new Proxy(obj, { get: () => magpie });
 
   // auto-import all components
   Vue.mixin({
