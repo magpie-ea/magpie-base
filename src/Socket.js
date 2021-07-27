@@ -22,6 +22,8 @@ export const states = {
 export default class Socket extends EventEmitter {
   constructor(experimentId, socketURL, errorhandler) {
     super();
+    this.socketURL = socketURL;
+
     this.errorHandler = (er) => {
       this.state = states.ERROR;
       errorhandler(er);
@@ -42,14 +44,6 @@ export default class Socket extends EventEmitter {
      * @type {string}
      */
     this.experimentId = experimentId;
-    this.phoenix = new PhoenixSocket(socketURL, {
-      params: {
-        participant_id: this.participantId,
-        experiment_id: experimentId
-      }
-    });
-    this.phoenix.onError(this.errorHandler);
-    this.phoenix.connect();
 
     /**
      * A reactive property with the state of the socket
@@ -85,7 +79,7 @@ export default class Socket extends EventEmitter {
      * @memberOf Socket
      * @type {Number}
      */
-    this.variant = 0;
+    this.variant = null;
 
     /**
      * The chain number of this session
@@ -94,7 +88,7 @@ export default class Socket extends EventEmitter {
      * @memberOf Socket
      * @type {Number}
      */
-    this.chain = 0;
+    this.chain = null;
 
     /**
      * The realization number of this session
@@ -103,7 +97,7 @@ export default class Socket extends EventEmitter {
      * @memberOf Socket
      * @type {Number}
      */
-    this.realization = 0;
+    this.realization = null;
 
     Vue.observable(this);
 
@@ -138,6 +132,19 @@ export default class Socket extends EventEmitter {
    * @memberOf Socket
    */
   initialize() {
+    if (this.variant !== null) {
+      return;
+    }
+
+    this.phoenix = new PhoenixSocket(this.socketURL, {
+      params: {
+        participant_id: this.participantId,
+        experiment_id: this.experimentId
+      }
+    });
+    this.phoenix.onError(this.errorHandler);
+    this.phoenix.connect();
+
     this.participantChannel = this.phoenix.channel(
       `participant:${this.participantId}`,
       {}
@@ -280,8 +287,7 @@ function hash(str) {
 
 function hashIdToArray(id, array) {
   var h = hash(id);
-  let animal = array[Math.abs(h % array.length)];
-  return animal;
+  return array[Math.abs(h % array.length)];
 }
 
 const COLORS = [
