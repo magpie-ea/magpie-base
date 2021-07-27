@@ -3,7 +3,7 @@ import * as components from './components';
 export default function (Vue, config) {
   // universal mock to cover up that fact that magpie object is not available from start
   const obj = () => magpie;
-  obj.toString = () => '';
+  obj.valueOf = () => '';
   const magpie = new Proxy(obj, { get: () => magpie });
 
   // auto-import all components
