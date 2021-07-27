@@ -1,6 +1,8 @@
 let webgazer;
 try {
-  webgazer = require('webgazer/src/index.mjs');
+  if (!window.MAGPIE_STYLEGUIDIST) {
+    webgazer = require('webgazer/src/index.mjs');
+  }
 } catch (e) {
   console.log('Optional webgazer dependency not found. Eyetracking disabled.');
 }
@@ -21,6 +23,15 @@ export default class Eyetracking {
   }
 
   async initialize() {
+    try {
+      if (window.MAGPIE_STYLEGUIDIST) {
+        webgazer = require('webgazer/src/index.mjs');
+      }
+    } catch (e) {
+      console.log(
+        'Optional webgazer dependency not found. Eyetracking disabled.'
+      );
+    }
     if (!webgazer) {
       throw new Error('Could not find webgazer');
     }
