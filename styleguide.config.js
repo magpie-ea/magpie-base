@@ -54,7 +54,7 @@ module.exports = {
       splitChunks: {
         // include all types of chunks
         chunks: 'all',
-        maxSize: 1000000
+        maxSize: 100000
       },
     },
   },
