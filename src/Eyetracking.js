@@ -1,4 +1,9 @@
 let webgazer;
+try {
+  webgazer = require('webgazer/src/index.mjs');
+} catch (e) {
+  console.log('Optional webgazer dependency not found. Eyetracking disabled.');
+}
 
 /**
  * @class Eyetracking
@@ -16,13 +21,6 @@ export default class Eyetracking {
   }
 
   async initialize() {
-    try {
-      webgazer = require('webgazer/src/index.mjs');
-    } catch (e) {
-      console.log(
-        'Optional webgazer dependency not found. Eyetracking disabled.'
-      );
-    }
     if (!webgazer) {
       throw new Error('Could not find webgazer');
     }
