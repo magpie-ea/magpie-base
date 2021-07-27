@@ -8,8 +8,8 @@
         <KeypressInput
             :response.sync= "$magpie.measurements.lunch"
             :keys="{
-              f: 'fries',
-              j: 'soup'
+              '~': 'fries',
+              '^': 'soup'
             }"
             @update:response="$magpie.saveAndNextScreen();" />
       </Slide>

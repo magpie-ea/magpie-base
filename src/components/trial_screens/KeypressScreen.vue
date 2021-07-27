@@ -7,8 +7,8 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
         question="Are fries healthy?"
         :feedback-time="1000"
         :keys="{
-              f: 'yes',
-              j: 'no'
+              '~': 'yes',
+              '^': 'no'
             }"
     >
       <template #stimulus>
