@@ -18,6 +18,9 @@ export { default as RankOrderInput } from './inputs/RankOrderInput';
 export { default as Rsvp } from './stimuli/Rsvp';
 export { default as FixationCross } from './stimuli/FixationCross';
 export { default as SelfPacedReading } from './stimuli/SelfPacedReading';
+export const Synth = () => {
+  return import('./stimuli/Synth');
+};
 
 export { default as Chat } from './interactive/Chat';
 
