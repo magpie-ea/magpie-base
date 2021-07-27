@@ -49,9 +49,15 @@ module.exports = {
       content: 'src/API.md'
     },
   ],
-  // webpackConfig: {
-  //   // custom config goes here
-  // },
+  webpackConfig: {
+    optimization: {
+      splitChunks: {
+        // include all types of chunks
+        chunks: 'all',
+        maxSize: 1000000
+      },
+    },
+  },
   exampleMode: 'expand',
   usageMode: 'expand'
 };
