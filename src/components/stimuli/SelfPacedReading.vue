@@ -7,6 +7,7 @@
             :chunks="['This', 'is', 'a', 'nice', 'text.']"
             word-pos="next"
             underline="sentence"
+            trigger="~"
             :response-times.sync="$magpie.measurements.times" />
     </Screen>
 
