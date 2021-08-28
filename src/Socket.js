@@ -91,13 +91,22 @@ export default class Socket extends EventEmitter {
     this.chain = null;
 
     /**
-     * The realization number of this session
+     * The generation number of this session
      * @instance
      * @member active
      * @memberOf Socket
      * @type {Number}
      */
-    this.realization = null;
+    this.generation = null;
+
+    /**
+     * The player id of this session
+     * @instance
+     * @member active
+     * @memberOf Socket
+     * @type {Number}
+     */
+    this.player = null;
 
     Vue.observable(this);
 
@@ -153,7 +162,8 @@ export default class Socket extends EventEmitter {
     this.participantChannel.on('experiment_available', (payload) => {
       this.variant = payload.variant;
       this.chain = payload.chain;
-      this.realization = payload.realization;
+      this.generation = payload.generation;
+      this.player = payload.player;
       this.state = states.CONNECTED;
       this.join();
     });
@@ -169,11 +179,11 @@ export default class Socket extends EventEmitter {
   }
 
   join() {
-    if (!this.chain || !this.realization) {
+    if (!this.chain || !this.generation) {
       return;
     }
     this.roomChannel = this.phoenix.channel(
-      `interactive_room:${this.experimentId}:${this.chain}:${this.realization}`,
+      `interactive_room:${this.experimentId}:${this.chain}:${this.variant}:${this.generation}`,
       { participant_id: this.participantId }
     );
 
