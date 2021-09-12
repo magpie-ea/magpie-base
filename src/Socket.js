@@ -55,6 +55,15 @@ export default class Socket extends EventEmitter {
     this.state = states.CONNECTING;
 
     /**
+     * A reactive property with the state of the socket
+     * @instance
+     * @member participantId
+     * @memberOf Socket
+     * @type {'WAITING'|'READY'|'ERROR'}
+     */
+    this.iteratedState = states.WAITING;
+
+    /**
      * A reactive list of online participants
      * @instance
      * @member participants
@@ -75,7 +84,7 @@ export default class Socket extends EventEmitter {
     /**
      * The variant number of this session
      * @instance
-     * @member active
+     * @member variant
      * @memberOf Socket
      * @type {Number}
      */
@@ -84,7 +93,7 @@ export default class Socket extends EventEmitter {
     /**
      * The chain number of this session
      * @instance
-     * @member active
+     * @member chain
      * @memberOf Socket
      * @type {Number}
      */
@@ -93,7 +102,7 @@ export default class Socket extends EventEmitter {
     /**
      * The generation number of this session
      * @instance
-     * @member active
+     * @member generation
      * @memberOf Socket
      * @type {Number}
      */
@@ -102,11 +111,20 @@ export default class Socket extends EventEmitter {
     /**
      * The player id of this session
      * @instance
-     * @member active
+     * @member player
      * @memberOf Socket
      * @type {Number}
      */
     this.player = null;
+
+    /**
+     * The results of the last iteration
+     * @instance
+     * @member lastIterationResults
+     * @memberOf Socket
+     * @type {Number}
+     */
+    this.lastIterationResults = null;
 
     Vue.observable(this);
 
@@ -230,6 +248,34 @@ export default class Socket extends EventEmitter {
         this.updateActiveParticipants();
       }, PRESENCE_TIMEOUT);
     });
+
+    // If this participant is one of the first generation, there should be no need to wait on any results.
+    if (this.generation === 1) {
+      this.iteratedState = states.READY;
+    } else {
+      // generation - 1 because we're waiting on the results of the last iteration.
+      // by specifying a different experimentID we can also wait on results from other experiments.
+      this.lobbyChannel = this.socket.channel(
+        `iterated_lobby:${this.experimentId}:${this.chain}:${this.variant}:${
+          this.generation - 1
+        }:${this.player}`,
+        { participant_id: this.participantId }
+      );
+
+      // Whenever the waited-on results are submitted (i.e. assignment finished) on the server, this participant will get the results.
+      this.lobbyChannel.on('finished', (payload) => {
+        this.lastIterationResults = payload.results;
+        // We're no longer waiting on that assignment if we already got its results.
+        this.lobbyChannel.leave();
+        this.iteratedState = states.READY;
+      });
+
+      // Check whether the interactive experiment can be started.
+      this.lobbyChannel
+        .join()
+        .receive('error', this.errorHandler)
+        .receive('timeout', this.errorHandler);
+    }
   }
 
   setCurrentScreen(index) {

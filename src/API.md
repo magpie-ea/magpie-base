@@ -272,11 +272,14 @@ Will display a progress bar if it's not visible, yet.
     * [.participantId](#Socket+participantId) : <code>string</code>
     * [.experimentId](#Socket+experimentId) : <code>string</code>
     * [.participantId](#Socket+participantId) : <code>&#x27;CONNECTING&#x27;</code> \| <code>&#x27;CONNECTED&#x27;</code> \| <code>&#x27;WAITING&#x27;</code> \| <code>&#x27;READY&#x27;</code> \| <code>&#x27;ERROR&#x27;</code>
+    * [.participantId](#Socket+participantId) : <code>&#x27;WAITING&#x27;</code> \| <code>&#x27;READY&#x27;</code> \| <code>&#x27;ERROR&#x27;</code>
     * [.participants](#Socket+participants) : <code>Array.&lt;string&gt;</code>
     * [.active](#Socket+active) : <code>Array.&lt;string&gt;</code>
-    * [.active](#Socket+active) : <code>Number</code>
-    * [.active](#Socket+active) : <code>Number</code>
-    * [.active](#Socket+active) : <code>Number</code>
+    * [.variant](#Socket+variant) : <code>Number</code>
+    * [.chain](#Socket+chain) : <code>Number</code>
+    * [.generation](#Socket+generation) : <code>Number</code>
+    * [.player](#Socket+player) : <code>Number</code>
+    * [.lastIterationResults](#Socket+lastIterationResults) : <code>Number</code>
     * [.getParticipantName(id)](#Socket+getParticipantName) ⇒ <code>String</code>
     * [.getParticipantColor(id)](#Socket+getParticipantColor) ⇒ <code>String</code>
     * [.initialize()](#Socket+initialize)
@@ -296,6 +299,12 @@ Will display a progress bar if it's not visible, yet.
 A reactive property with the state of the socket
 
 **Kind**: instance property of [<code>Socket</code>](#Socket)  
+<a name="Socket+participantId"></a>
+
+### socket.participantId : <code>&#x27;WAITING&#x27;</code> \| <code>&#x27;READY&#x27;</code> \| <code>&#x27;ERROR&#x27;</code>
+A reactive property with the state of the socket
+
+**Kind**: instance property of [<code>Socket</code>](#Socket)  
 <a name="Socket+participants"></a>
 
 ### socket.participants : <code>Array.&lt;string&gt;</code>
@@ -308,22 +317,34 @@ A reactive list of online participants
 A reactive list of participants currently active in the current screen
 
 **Kind**: instance property of [<code>Socket</code>](#Socket)  
-<a name="Socket+active"></a>
+<a name="Socket+variant"></a>
 
-### socket.active : <code>Number</code>
+### socket.variant : <code>Number</code>
 The variant number of this session
 
 **Kind**: instance property of [<code>Socket</code>](#Socket)  
-<a name="Socket+active"></a>
+<a name="Socket+chain"></a>
 
-### socket.active : <code>Number</code>
+### socket.chain : <code>Number</code>
 The chain number of this session
 
 **Kind**: instance property of [<code>Socket</code>](#Socket)  
-<a name="Socket+active"></a>
+<a name="Socket+generation"></a>
 
-### socket.active : <code>Number</code>
-The realization number of this session
+### socket.generation : <code>Number</code>
+The generation number of this session
+
+**Kind**: instance property of [<code>Socket</code>](#Socket)  
+<a name="Socket+player"></a>
+
+### socket.player : <code>Number</code>
+The player id of this session
+
+**Kind**: instance property of [<code>Socket</code>](#Socket)  
+<a name="Socket+lastIterationResults"></a>
+
+### socket.lastIterationResults : <code>Number</code>
+The results of the last iteration
 
 **Kind**: instance property of [<code>Socket</code>](#Socket)  
 <a name="Socket+getParticipantName"></a>
