@@ -7,9 +7,9 @@ You can provide the submission URL to the Experiment component.
   <Screen v-if="!$magpie.debug" title="Submitting">
     <Slide>
       <p>Hold on, while we submit your data.</p>
-      <Wait :time="0" @done="submit(nextSlide)" />
+      <Wait :time="0" @done="submit(() => $magpie.nextSlide())" />
     </Slide>
-    <template #1>
+    <Slide>
       <p v-if="!error">
         All done. Thank you!
         <Wait :time="3000" @done="redirectToCompletionUrl" />
@@ -24,7 +24,7 @@ You can provide the submission URL to the Experiment component.
         </p>
         <p v-text="error" />
       </div>
-    </template>
+    </Slide>
   </Screen>
   <DebugResultsScreen v-else />
 </template>
@@ -40,7 +40,6 @@ export default {
   props: {},
   data() {
     return {
-      results: this.$magpie.getAllData(),
       error: null
     };
   },
