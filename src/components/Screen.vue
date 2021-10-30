@@ -159,6 +159,11 @@ export default {
    */
   render(h) {
     const children = this.$slots.default;
+    if (!children) {
+      return h('div', { class: 'screen' }, [
+        this.title ? h('h2', this.title) : null
+      ]);
+    }
     let slide;
     const slides = children.filter((c) => !!c.componentOptions);
     if (
