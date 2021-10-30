@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import Vue from 'vue'
 import Experiment from "@/components/Experiment";
 
-test('CompletionInput', async () => {
+test('ForcedChoiceInput', async () => {
     const experiment = mount(Experiment, {
         slots: {
             default: [
