@@ -83,5 +83,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/magpie-ea/magpie-base.git"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=7.0.0"
   }
 }
