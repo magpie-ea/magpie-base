@@ -48,4 +48,4 @@ jobs:
 
       - name: Run tests
         run: |
-          npm run tests:unit
+          npm run test:unit
