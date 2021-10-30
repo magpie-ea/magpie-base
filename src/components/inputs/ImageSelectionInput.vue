@@ -25,7 +25,7 @@
         v-for="option in options"
         :key="option.label"
         class="option"
-        @click="onOptionClick(option)"
+        @click="onOptionClick(option.label)"
       >
         <img
           :src="option.src"
