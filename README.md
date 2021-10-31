@@ -37,6 +37,19 @@ and the css linter using
 npm run stylelint:fix
 ```
 
+### Tests
+Ideally every feature should be covered by at least one unit test. Unit tests are run on every commit and pull requests,
+so we can quickly detect whenever a change breaks something.
+
+Run the unit tests using
+
+```
+npm run test:unit
+```
+
+For implementing tests we're using [the jest framework](https://jestjs.io/docs/getting-started) in combination
+with [vue test utils](https://vue-test-utils.vuejs.org/).
+
 ### Docs
 In order to spin up a local web server with the docs run `npm run docs`.
 

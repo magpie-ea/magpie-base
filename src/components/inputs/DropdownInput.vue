@@ -23,7 +23,7 @@
 
 <template>
   <div class="dropdown-input">
-    <select ref="input" @input="$emit('update:response', $refs.input.value)">
+    <select ref="input" @change="$emit('update:response', $refs.input.value)">
       <option
         v-for="option of options"
         :key="option"

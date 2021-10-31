@@ -4,9 +4,10 @@
   "description": "Provides base components for _magpie frontend projects",
   "author": "_magpie project",
   "scripts": {
+    "test:unit": "vue-cli-service test:unit",
     "lint": "eslint --ext .js,.vue src",
     "docs": "jsdoc2md src/Magpie.js src/Socket.js src/Mousetracking.js src/Eyetracking.js > src/API.md; vue-cli-service styleguidist",
-    "docs:build": "vue-cli-service styleguidist:build",
+    "docs:build": "jsdoc2md src/Magpie.js src/Socket.js src/Mousetracking.js src/Eyetracking.js > src/API.md; vue-cli-service styleguidist:build",
     "jsdoc": "jsdoc2md src/Magpie.js src/Socket.js src/Mousetracking.js > src/API.md",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "stylelint": "stylelint src",
@@ -30,12 +31,15 @@
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "^4.5.13",
+    "@vue/test-utils": "^1.2.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^5.0.0",
+    "get-random-values": "^1.2.2",
     "jsdoc-to-markdown": "^7.0.1",
     "konva": "^7.2.5",
     "prettier": "^2.3.2",
@@ -79,5 +83,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/magpie-ea/magpie-base.git"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=7.0.0"
   }
 }

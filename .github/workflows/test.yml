@@ -1,4 +1,4 @@
-name: Build
+name: Test
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    name: node${{ matrix.node-versions }}
+    name: Tests
     steps:
       - uses: actions/checkout@v2
 
@@ -45,3 +45,7 @@ jobs:
         run: |
           npm ci
           npm run docs:build --if-present
+
+      - name: Run tests
+        run: |
+          npm run test:unit
