@@ -28,6 +28,40 @@ test('Two-screen Experiment', async () => {
     expect(experiment.text()).toBe('Bye World')
 })
 
+test('Many-screen Experiment', async () => {
+    const experiment = mount(Experiment, {
+        slots: {
+            default: [
+                '<template v-for="i in 3">' +
+                '<Screen>Hello World</Screen>'+
+                '<Screen>Bye World</Screen>' +
+                '</template>',
+            ]
+        }
+    })
+
+    expect(experiment.text()).toBe('Hello World')
+    experiment.vm.$magpie.nextScreen()
+    await Vue.nextTick()
+    expect(experiment.text()).toBe('Bye World')
+
+    experiment.vm.$magpie.nextScreen()
+    await Vue.nextTick()
+
+    expect(experiment.text()).toBe('Hello World')
+    experiment.vm.$magpie.nextScreen()
+    await Vue.nextTick()
+    expect(experiment.text()).toBe('Bye World')
+
+    experiment.vm.$magpie.nextScreen()
+    await Vue.nextTick()
+
+    expect(experiment.text()).toBe('Hello World')
+    experiment.vm.$magpie.nextScreen()
+    await Vue.nextTick()
+    expect(experiment.text()).toBe('Bye World')
+})
+
 test('Screen with next button', async () => {
     const experiment = mount(Experiment, {
         slots: {
