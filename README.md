@@ -15,6 +15,8 @@ For more information, please visit [the project homepage](https://magpie-ea.gith
 ## Documentation
 The API reference for the latest version is available at [magpie-reference.netlify.app](https://magpie-reference.netlify.app).
 
+A guided introduction to building experiments with magpie v3 is available at [magpie-manual.netlify.app](https://magpie-manual.netlify.app).
+
 
 ## Core Development
 
