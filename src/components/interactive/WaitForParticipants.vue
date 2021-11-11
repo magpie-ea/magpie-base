@@ -1,5 +1,5 @@
 <docs>
-This interactive component provides participants the opportunity to chat with each other, if they are in the same room.
+This interactive component allow waiting until a specified number of participants are on the current screen.
 
 ```vue
 <Experiment>
@@ -17,11 +17,11 @@ This interactive component provides participants the opportunity to chat with ea
     <Screen>
       <Slide>
         <p>You're on the second screen.</p>
-        <WaitForParticipants @done= "$magpie.nextSlide()" />
+        <WaitForParticipants :number="2" @done="$magpie.nextSlide()" />
       </Slide>
 
       <Slide>
-        <p>All participants are on the second screen now.</p>
+        <p>Both participants are on the second screen now.</p>
       </Slide>
 
     </Screen>
@@ -37,15 +37,20 @@ This interactive component provides participants the opportunity to chat with ea
 <script>
 export default {
   name: 'WaitForParticipants',
+  props: {
+    number: {
+      type: Number
+    }
+  },
   watch: {
     ['$magpie.socket.active'](newParticipants) {
-      if (newParticipants.length === this.$magpie.socket.chain) {
+      if (newParticipants.length === this.number) {
         this.$emit('done');
       }
     }
   },
   mounted() {
-    if (this.$magpie.socket.active.length === this.$magpie.socket.chain) {
+    if (this.$magpie.socket.active.length === this.number) {
       this.$emit('done');
     }
   }

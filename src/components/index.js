@@ -23,6 +23,7 @@ export const Synth = () => {
 };
 
 export { default as Chat } from './interactive/Chat';
+export { default as WaitForParticipants } from './interactive/WaitForParticipants';
 
 export { default as LifecycleScreen } from './screens/LifecycleScreen';
 export { default as ConnectInteractiveScreen } from './screens/ConnectInteractiveScreen';
