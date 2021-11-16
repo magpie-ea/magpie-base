@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
 const { program } = require('commander');
-program.version('0.1.0').usage('<command> [options]');
+const currentVersion = require('../package.json').version;
+program.version(currentVersion).usage('<command> [options]');
 
 program
   .command('new <name>')
   .description(
-    'create a new project based on _magpie, initialized with a sample experiment setup'
+    'create a new project based on magpie, initialized with a sample experiment setup'
   )
   .action((name) => {
     require('../lib/create')(name);
