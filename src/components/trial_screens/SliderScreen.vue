@@ -42,6 +42,7 @@ This is a pre-built slider rating screen, with limited functionality, but simple
         :min="min"
         :max="max"
         :interval="interval"
+        :initial="initial"
         :response.sync="$magpie.measurements.response"
       />
       <button
@@ -97,6 +98,14 @@ export default {
     optionRight: {
       type: String,
       default: ''
+    },
+    /**
+     * Initial slider position
+     */
+    initial: {
+      type: Number,
+      optional: true,
+      default: 0
     },
     /**
      * Minimal slider value
