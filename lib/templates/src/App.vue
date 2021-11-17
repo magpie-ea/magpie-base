@@ -87,8 +87,8 @@
         :pause-time="500"
         :stimulus-time="1500"
         :question="rating_task.question"
-        :left="rating_task.optionLeft"
-        :right="rating_task.optionRight"
+        :option-left="rating_task.optionLeft"
+        :option-right="rating_task.optionRight"
       >
         <template #stimulus>
           <img :src="rating_task.picture" alt="" />
