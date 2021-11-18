@@ -43,6 +43,7 @@ This is a pre-built slider rating screen, with limited functionality, but simple
         :max="max"
         :interval="interval"
         :initial="initial"
+        :disabled="disabled"
         :response.sync="$magpie.measurements.response"
       />
       <button
@@ -130,6 +131,11 @@ export default {
       type: Number,
       optional: true,
       default: 1
+    },
+    disabled: {
+      type: Boolean,
+      optional: true,
+      default: false
     }
   }
 };

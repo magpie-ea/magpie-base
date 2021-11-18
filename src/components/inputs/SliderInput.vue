@@ -30,6 +30,7 @@
         :min="min"
         :max="max"
         :interval="interval"
+        :disabled="disabled"
       />
       <div class="right">{{ right }}</div>
     </div>
@@ -102,6 +103,14 @@ export default {
       type: Boolean,
       optional: true,
       default: false
+    },
+    /**
+     * Whether to show the tooltip
+     */
+    disabled: {
+      type: Boolean,
+      optional: true,
+      default: false
     }
   },
   data() {
@@ -111,7 +120,9 @@ export default {
   },
   watch: {
     value() {
-      this.$emit('update:response', this.value);
+      if (!this.disabled) {
+        this.$emit('update:response', this.value);
+      }
     }
   }
 };
