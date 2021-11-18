@@ -39,7 +39,8 @@ export default {
   name: 'WaitForParticipants',
   props: {
     number: {
-      type: Number
+      type: Number,
+      required: true
     }
   },
   watch: {
