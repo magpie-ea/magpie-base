@@ -8,23 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "devDependencies": {
-    "@vue/cli-service": "~4.3.0",
-    "babel-eslint": "^10.1.0",
-    "csv-loader": "^3.0.3",
     "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "stylelint": "^13.7.2",
-    "vue-template-compiler": "^2.6.11",
     "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-prettier": "^3.1.4"
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^5.0.0",
+    "stylelint": "^13.7.2"
   },
   "dependencies": {
-    "konva": "^7.2.5",
-    "lodash": "^4.17.20",
-    "magpie-base": "^0.4.2",
-    "tone": "^14.7.77",
-    "vue": "^2.6.11",
-    "vue-konva": "^2.1.7"
+    "magpie-base": "^0.4.2"
   },
   "browserslist": [
     "> 1%",
