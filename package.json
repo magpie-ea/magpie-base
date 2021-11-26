@@ -1,6 +1,6 @@
 {
   "name": "magpie-base",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "Provides base components for _magpie frontend projects",
   "author": "_magpie project",
   "scripts": {
