@@ -21,7 +21,7 @@
 
 <template>
   <div class="keypress">
-    <div class="options">
+    <div v-if="showOptions" class="options">
       <span v-for="(option, key) in keys" :key="key"
         ><strong v-text="key"></strong> = {{ option }}
       </span>
@@ -42,6 +42,13 @@ export default {
     keys: {
       type: Object,
       required: true
+    },
+    /**
+     * Determines whether information about possible keypresses and their meaning is shown
+     */
+    showOptions: {
+      type: Boolean,
+      default: true
     }
   },
   mounted() {

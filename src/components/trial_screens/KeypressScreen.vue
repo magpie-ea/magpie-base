@@ -31,7 +31,7 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
     <!-- pass down slots -->
     <template slot="fixation">
       <slot name="fixation"><FixationCross /></slot>
-      <KeypressInput :keys="keys" />
+      <KeypressInput :keys="keys" :show-options="showOptions" />
     </template>
     <template slot="stimulus">
       <slot name="stimulus"></slot>
@@ -46,6 +46,7 @@ This is a pre-built keypress screen, with limited functionality, but simpler to 
       <p v-if="question" v-text="question"></p>
       <KeypressInput
         :keys="keys"
+        :show-options="showOptions"
         :response.sync="$magpie.measurements.response"
         @update:response="nextAfterResponse"
       />
@@ -89,6 +90,13 @@ export default {
     keys: {
       type: Object,
       required: true
+    },
+    /**
+     * Determines whether information about possible keypresses and their meaning is shown
+     */
+    showOptions: {
+      type: Boolean,
+      default: true
     }
   }
 };
