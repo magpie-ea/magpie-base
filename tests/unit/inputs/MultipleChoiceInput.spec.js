@@ -11,7 +11,7 @@ for (const labels of [null, true, false]) {
                     default: [
                         '<Screen>' +
                         '<MultipleChoiceInput\n' +
-                        (orientation? 'orientation="'+orientation+'"' : '') +
+                        (orientation !== null? 'orientation="'+orientation+'"' : '') +
                         (labels !== null? ':labels="'+labels+'"' : '') +
                         '            :response.sync= "$magpie.measurements.breakfast"\n' +
                         '            :options="[\'Not enjoyable\', \'Rather not enjoyable\', \'OK\', \'Rather enjoyable\', \'Really enjoyable\']" />' +
