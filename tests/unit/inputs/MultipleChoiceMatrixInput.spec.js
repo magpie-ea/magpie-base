@@ -12,7 +12,7 @@ for (const randomize of [null, true, false]) {
                     '<Screen>' +
                     '<MultipleChoiceMatrixInput\n' +
                     '            :options="[\'Not enjoyable\', \'Rather not enjoyable\', \'OK\', \'Rather enjoyable\', \'Really enjoyable\']"\n' +
-                    (randomize ? ':randomize="' + randomize + '"' : '') +
+                    (randomize !== null ? ':randomize="' + randomize + '"' : '') +
                     '            :questions="[\n' +
                     '              \'How is the weather today?\',\n' +
                     '              \'How was your breakfast today?\',\n' +
