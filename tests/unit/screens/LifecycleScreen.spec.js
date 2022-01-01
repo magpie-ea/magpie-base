@@ -25,6 +25,57 @@ test('LifecycleScreen', async () => {
     const results = experiment.vm.$magpie.getAllData()
     expect(results).toBeInstanceOf(Array)
     expect(results).toHaveLength(1)
+    expect(results[0].response_timeout).toBeUndefined()
+})
+
+test('LifecycleScreen with response time', async () => {
+    const experiment = mount(Experiment, {
+        slots: {
+            default: [
+                '<LifecycleScreen :responseTime="500">' +
+                '<template #task>' +
+                '<button @click="$magpie.saveAndNextScreen()">Click here</button>' +
+                '</template>' +
+                '</LifecycleScreen>',
+                '<Screen>Bye world</Screen>',
+            ]
+        }
+    })
+
+    expect(experiment.text()).toBe('Click here')
+
+    await experiment.find('button').trigger('click')
+
+    expect(experiment.text()).toBe('Bye world')
+    const results = experiment.vm.$magpie.getAllData()
+    expect(results).toBeInstanceOf(Array)
+    expect(results).toHaveLength(1)
+    expect(results[0].response_timeout).toEqual(false)
+})
+
+test('LifecycleScreen with response time', async () => {
+    const experiment = mount(Experiment, {
+        slots: {
+            default: [
+                '<LifecycleScreen :responseTime="500">' +
+                '<template #task>' +
+                '<button @click="$magpie.saveAndNextScreen()">Click here</button>' +
+                '</template>' +
+                '</LifecycleScreen>',
+                '<Screen>Bye world</Screen>',
+            ]
+        }
+    })
+
+    expect(experiment.text()).toBe('Click here')
+
+    await new Promise(resolve => setTimeout(resolve, 500))
+
+    expect(experiment.text()).toBe('Bye world')
+    const results = experiment.vm.$magpie.getAllData()
+    expect(results).toBeInstanceOf(Array)
+    expect(results).toHaveLength(1)
+    expect(results[0].response_timeout).toEqual(true)
 })
 
 test('LifecycleScreen with pause', async () => {

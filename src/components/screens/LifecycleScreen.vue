@@ -71,14 +71,11 @@ The last four phases can be completely customized using the corresponding slots,
       <p v-if="qud" v-text="qud"></p>
       <slot v-if="!stimulusTime" name="stimulus"></slot>
       <slot name="task"></slot>
-      <Wait
-        v-if="responseTime"
-        :time="responseTime"
-        @done="$magpie.nextSlide()"
-      />
+      <Wait v-if="responseTime" :time="responseTime" @done="nextAfterTimeout" />
       <Record
         :data="{
-          qud
+          qud,
+          ...(responseTime && { response_timeout: false })
         }"
       />
       <ResponseTimeStart />
@@ -144,7 +141,8 @@ export default {
       default: 0
     },
     /**
-     * How long the response should be enabled, don't set this, to avoid the timeout altogether
+     * How long the response should be enabled, don't set this, to avoid the timeout altogether.
+     * When this is set, a `response_timeout` boolean property will be added to the result, indicating whether timeout occurred
      */
     responseTime: {
       type: Number,
@@ -166,6 +164,12 @@ export default {
       } else {
         this.$magpie.saveAndNextScreen();
       }
+    },
+    nextAfterTimeout() {
+      if (this.$props.responseTime) {
+        this.$magpie.measurements.response_timeout = true;
+      }
+      this.nextAfterResponse();
     }
   }
 };
