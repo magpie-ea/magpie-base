@@ -1,5 +1,5 @@
 <template>
-  <Experiment title="_magpie demo">
+  <Experiment title="magpie demo">
     <InstructionScreen :title="'Welcome'">
       This is a sample introduction screen.
       <br />

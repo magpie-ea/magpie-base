@@ -219,7 +219,7 @@ export default class Magpie extends EventEmitter {
     this.timers = {};
 
     // Provide debug info
-    console.log('_magpie ' + packageJSON.version);
+    console.log('magpie ' + packageJSON.version);
     console.log('Experiment id: ' + this.id);
     console.log('Server: ' + this.serverUrl);
     console.log('Submission URL: ' + this.submissionUrl);

@@ -1,6 +1,6 @@
 # magpie-base
 
-Base components in Vue for _magpie-powered experiments.
+Base components in Vue for magpie-powered experiments.
 
 ## Installation
 
