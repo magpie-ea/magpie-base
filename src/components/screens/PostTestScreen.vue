@@ -40,12 +40,12 @@ This is a pre-built forced choice screen, with limited functionality, but simple
         </p>
         <p v-if="education">
           <label
-            >Level of Eduction
+            >Level of Education
             <DropdownInput
               :options="[
                 '',
-                'Graduated Highschool',
-                'Graduated Collage',
+                'Graduated High-school',
+                'Graduated College',
                 'Higher degree'
               ]"
               :response.sync="$magpie.measurements.education"
