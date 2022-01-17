@@ -1,8 +1,8 @@
 {
   "name": "magpie-base",
-  "version": "0.4.7",
-  "description": "Provides base components for _magpie frontend projects",
-  "author": "_magpie project",
+  "version": "0.5.0",
+  "description": "Provides base components for magpie frontend projects",
+  "author": "magpie project",
   "scripts": {
     "test:unit": "vue-cli-service test:unit",
     "lint": "eslint --ext .js,.vue src",

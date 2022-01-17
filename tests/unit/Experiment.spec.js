@@ -28,6 +28,26 @@ test('Two-screen Experiment', async () => {
     expect(experiment.text()).toBe('Bye World')
 })
 
+test('Two-Screen Experiment with record data', async () => {
+    const experiment = mount(Experiment, {
+        attrs: {
+            recordData: { foo: 'bar' },
+        },
+        slots: {
+            default: [
+                '<Screen>Hello World</Screen>',
+                '<Screen>Bye World</Screen>',
+            ]
+        }
+    })
+
+    expect(experiment.text()).toBe('Hello World')
+    experiment.vm.$magpie.saveAndNextScreen()
+    const results = experiment.vm.$magpie.getAllData()
+    expect(results).toHaveLength(1)
+    expect(results[0].foo).toEqual('bar')
+})
+
 test('Many-screen Experiment', async () => {
     const experiment = mount(Experiment, {
         slots: {

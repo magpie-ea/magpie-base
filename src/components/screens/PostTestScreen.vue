@@ -40,12 +40,12 @@ This is a pre-built forced choice screen, with limited functionality, but simple
         </p>
         <p v-if="education">
           <label
-            >Level of Eduction
+            >Level of Education
             <DropdownInput
               :options="[
                 '',
-                'Graduated Highschool',
-                'Graduated Collage',
+                'Graduated High-school',
+                'Graduated College',
                 'Higher degree'
               ]"
               :response.sync="$magpie.measurements.education"
@@ -54,11 +54,11 @@ This is a pre-built forced choice screen, with limited functionality, but simple
         </p>
         <p v-if="languages">
           <label
-            >Native langauges
+            >Native languages
             <input
               v-model="$magpie.measurements.languages"
               type="text"
-              placeholder="the langauge(s) spoken at home when you were a child"
+              placeholder="the language(s) spoken at home when you were a child"
           /></label>
         </p>
         <!-- @slot You can add additional questions here, storing data in measurements

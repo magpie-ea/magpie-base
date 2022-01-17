@@ -1,6 +1,6 @@
 # magpie-base
 
-Base components in Vue for _magpie-powered experiments.
+Base components in Vue for magpie-powered experiments.
 
 ## Installation
 
@@ -19,6 +19,21 @@ A guided introduction to building experiments with magpie v3 is available at [ma
 
 
 ## Core Development
+
+### Git branching model
+The `master` branch represents the latest release. Development of new features and pull requests happen on the `develop` branch.
+
+### Release procedure
+If a release should be done
+
+1. Review changes and determine new version number according to Semantic versioning
+2. Document new release in CHANGELOG.md file
+3. Bump package.json:version
+4. Commit and tag `vX.X.X`
+5. Merge into master
+6. Wait for CI to complete and pass
+7. `npm publish`
+8. Upgrade magpie in project repositories of this Github Organization
 
 ### Development principles
  * Components should not expose CSS classes for manipulation but instead offer customization either via unstyled slots or via props.

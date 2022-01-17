@@ -3,3 +3,4 @@
 !.eslintignore
 !.prettierrc.js
 !.github
+/package-lock.json

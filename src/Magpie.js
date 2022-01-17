@@ -219,7 +219,7 @@ export default class Magpie extends EventEmitter {
     this.timers = {};
 
     // Provide debug info
-    console.log('_magpie ' + packageJSON.version);
+    console.log('magpie ' + packageJSON.version);
     console.log('Experiment id: ' + this.id);
     console.log('Server: ' + this.serverUrl);
     console.log('Submission URL: ' + this.submissionUrl);
@@ -385,19 +385,28 @@ export default class Magpie extends EventEmitter {
 
   async submitResults(submissionURL, data, intermediate) {
     if (this.socket) {
-      const submissionType = intermediate
-        ? 'save_intermediate_results'
-        : 'submit_results';
+      try {
+        const submissionType = intermediate
+          ? 'save_intermediate_results'
+          : 'submit_results';
 
-      return new Promise((resolve, reject) =>
-        this.socket.participantChannel
-          .push(submissionType, {
-            results: data
-          })
-          .receive('ok', resolve)
-          .receive('error', reject)
-      );
+        return new Promise((resolve, reject) =>
+          this.socket.participantChannel
+            .push(submissionType, {
+              results: data
+            })
+            .receive('ok', resolve)
+            .receive('error', reject)
+        );
+      } catch (e) {
+        if (intermediate) {
+          throw e;
+        } else {
+          console.log('Submission via magpie socket failed, trying HTTP');
+        }
+      }
     }
+
     const resp = await fetch(submissionURL, {
       method: 'POST',
       mode: 'cors',

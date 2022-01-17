@@ -87,6 +87,13 @@ export default {
       type: String,
       default: ''
     },
+    /**
+     * Optionally specify variables that should be recorded for the whole experiment
+     */
+    recordData: {
+      type: Object,
+      default: () => ({})
+    },
 
     /**
      * Pass an array of paths to images that will be needed in this experiment to enable preloading
@@ -158,6 +165,8 @@ export default {
       preloadLink.as = 'video';
       document.head.appendChild(preloadLink);
     });
+
+    this.$magpie.addExpData(this.recordData);
 
     // Ask the user before closing the page
     window.addEventListener('beforeunload', (e) => {

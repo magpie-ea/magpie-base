@@ -31,17 +31,32 @@ import Vue from 'vue';
 export default {
   name: 'Record',
   props: {
+    /**
+     * The data you want to add
+     */
     data: {
       type: Object,
       required: true
+    },
+    /**
+     * If you set the global prop, the data will be added to the global experiment measurements instead of only to the current
+     * trial
+     */
+    global: {
+      type: Boolean,
+      default: false
     }
   },
   mounted() {
-    Object.keys(this.data).forEach((key) => {
-      if (typeof this.data[key] !== 'undefined') {
-        Vue.set(this.$magpie.measurements, key, this.data[key]);
-      }
-    });
+    if (this.global) {
+      this.$magpie.addExpData(this.data);
+    } else {
+      Object.keys(this.data).forEach((key) => {
+        if (typeof this.data[key] !== 'undefined') {
+          Vue.set(this.$magpie.measurements, key, this.data[key]);
+        }
+      });
+    }
   }
 };
 </script>
