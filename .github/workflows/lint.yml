@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - master
-      - stable*
+      - develop
 
 jobs:
   node:
