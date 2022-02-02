@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.2 - 2022-02-02
+
+### Fixes
+- Fix iterated experiment functionality
+
 ## 0.5.1 - 2022-02-02
 
 ### Fixes
