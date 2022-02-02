@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueKonva from 'vue-konva';
 import VueMagpie from '@/index';
-import magpieConfig from '../lib/templates/src/magpie.config.js';
+import magpieConfig from '../lib/templates/minimal/src/magpie.config.js';
 
 Vue.config.productionTip = false;
 
