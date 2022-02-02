@@ -39,8 +39,8 @@ export default {
   components: { Screen },
   props: {},
   watch: {
-    '$magpie.socket.iteratedState': function (state) {
-      if (state === states.READY) {
+    '$magpie.socket.iteratedState': function () {
+      if (this.$magpie.socket.iteratedState === states.READY) {
         this.$magpie.nextScreen();
       }
     }

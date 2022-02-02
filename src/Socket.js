@@ -255,7 +255,7 @@ export default class Socket extends EventEmitter {
     } else {
       // generation - 1 because we're waiting on the results of the last iteration.
       // by specifying a different experimentID we can also wait on results from other experiments.
-      this.lobbyChannel = this.socket.channel(
+      this.lobbyChannel = this.phoenix.channel(
         `iterated_lobby:${this.experimentId}:${this.chain}:${this.variant}:${
           this.generation - 1
         }:${this.player}`,
