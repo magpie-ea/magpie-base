@@ -1,6 +1,12 @@
 # Changelog
 
-## v0.5.0
+## 0.5.1 - 2022-02-02
+
+### Fixes
+
+- TextareaScreen: Fix button display condition
+
+## 0.5.0
 
 ### New
 
