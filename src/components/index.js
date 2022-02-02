@@ -27,6 +27,7 @@ export { default as WaitForParticipants } from './interactive/WaitForParticipant
 
 export { default as LifecycleScreen } from './screens/LifecycleScreen';
 export { default as ConnectInteractiveScreen } from './screens/ConnectInteractiveScreen';
+export { default as AwaitIteratedResultScreen } from './screens/AwaitIteratedResultScreen';
 export { default as DebugResultsScreen } from './screens/DebugResultsScreen';
 export { default as SubmitResultsScreen } from './screens/SubmitResultsScreen';
 export { default as PostTestScreen } from './screens/PostTestScreen';
