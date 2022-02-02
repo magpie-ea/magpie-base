@@ -37,7 +37,8 @@ This is a pre-built image selection screen, with limited functionality, but simp
       <button
         v-if="
           $magpie.measurements.response &&
-          !$magpie.validateMeasurements.response.$invalid
+          (!$magpie.validateMeasurements.response ||
+            !$magpie.validateMeasurements.response.$invalid)
         "
         @click="nextAfterResponse"
       >
