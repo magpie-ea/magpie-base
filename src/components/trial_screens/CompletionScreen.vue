@@ -81,7 +81,7 @@ export default {
      */
     question: {
       type: String,
-      required: true
+      default: undefined
     },
     /**
      * The text that is supposed to be completed. `%s` marks completions

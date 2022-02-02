@@ -30,8 +30,8 @@ This is a pre-built slider rating screen, with limited functionality, but simple
       <Record
         :data="{
           question,
-          optionLeft,
-          optionRight,
+          ...(optionLeft && { optionLeft }),
+          ...(optionRight && { optionRight }),
           interval,
           ranges,
           min,

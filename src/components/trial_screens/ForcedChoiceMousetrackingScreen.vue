@@ -144,7 +144,7 @@ export default {
      */
     qud: {
       type: String,
-      default: ''
+      default: undefined
     },
     /**
      * Duration of the pause phase, don't set this, to avoid the pause altogether

@@ -36,7 +36,7 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
         :data="{
           questions,
           options,
-          randomize
+          ...(randomize && { randomize })
         }"
       />
       <MultipleChoiceMatrixInput

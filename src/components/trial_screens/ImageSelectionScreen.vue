@@ -71,7 +71,7 @@ export default {
      */
     question: {
       type: String,
-      default: ''
+      default: undefined
     },
     /**
      * Forced choice options. Each option must be an object looking as follows `{src: 'image path', label: 'my label'}`

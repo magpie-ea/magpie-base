@@ -31,8 +31,12 @@ This is a pre-built slider rating screen, with limited functionality, but simple
       <Record
         :data="{
           question,
-          optionLeft,
-          optionRight
+          ...(optionLeft && { optionLeft }),
+          ...(optionRight && { optionRight }),
+          interval,
+          max,
+          min,
+          initial
         }"
       />
       <p v-if="question" v-text="question"></p>

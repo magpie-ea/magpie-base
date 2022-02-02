@@ -82,7 +82,7 @@ export default {
      */
     question: {
       type: String,
-      default: ''
+      default: undefined
     },
     /**
      * An object with keys mapped to option labels

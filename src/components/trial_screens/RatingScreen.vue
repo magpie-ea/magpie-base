@@ -31,8 +31,8 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
       <Record
         :data="{
           question,
-          optionLeft,
-          optionRight,
+          ...(optionLeft && { optionLeft }),
+          ...(optionRight && { optionRight }),
           count
         }"
       />

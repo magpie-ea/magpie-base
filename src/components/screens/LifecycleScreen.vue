@@ -74,8 +74,13 @@ The last four phases can be completely customized using the corresponding slots,
       <Wait v-if="responseTime" :time="responseTime" @done="nextAfterTimeout" />
       <Record
         :data="{
-          qud,
-          ...(responseTime && { response_timeout: false })
+          ...(qud && { qud }),
+          ...(responseTime && { response_timeout: false }),
+          ...(pauseTime && { pauseTime }),
+          ...(fixationTime && { fixationTime }),
+          ...(stimulusTime && { stimulusTime }),
+          ...(responseTime && { responseTime }),
+          ...(feedbackTime && { feedbackTime })
         }"
       />
       <ResponseTimeStart />
