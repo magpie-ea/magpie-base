@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import Vue from 'vue'
 import Experiment from "@/components/Experiment";
 
-test.skip('Slide with Wait', async () => {
+test('Slide with Wait', async () => {
     const experiment = mount(Experiment, {
         slots: {
             default: [
