@@ -21,7 +21,7 @@
   <div>
     <div v-if="slide === 0">
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->
-      <slot name="prep" :done="nextSlide()">
+      <slot name="prep" :done="() => nextSlide()">
         <Wait :time="1" @done="nextSlide()" />
       </slot>
     </div>
