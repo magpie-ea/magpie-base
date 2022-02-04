@@ -279,7 +279,7 @@ Will display a progress bar if it's not visible, yet.
     * [.chain](#Socket+chain) : <code>Number</code>
     * [.generation](#Socket+generation) : <code>Number</code>
     * [.player](#Socket+player) : <code>Number</code>
-    * [.lastIterationResults](#Socket+lastIterationResults) : <code>Number</code>
+    * [.lastIterationResults](#Socket+lastIterationResults) : <code>Array</code>
     * [.getParticipantName(id)](#Socket+getParticipantName) ⇒ <code>String</code>
     * [.getParticipantColor(id)](#Socket+getParticipantColor) ⇒ <code>String</code>
     * [.initialize()](#Socket+initialize)
@@ -343,7 +343,7 @@ The player id of this session
 **Kind**: instance property of [<code>Socket</code>](#Socket)  
 <a name="Socket+lastIterationResults"></a>
 
-### socket.lastIterationResults : <code>Number</code>
+### socket.lastIterationResults : <code>Array</code>
 The results of the last iteration
 
 **Kind**: instance property of [<code>Socket</code>](#Socket)  
