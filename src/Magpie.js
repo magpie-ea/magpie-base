@@ -8,6 +8,7 @@ import flatten from 'lodash/flatten';
 import Mousetracking from './Mousetracking';
 import packageJSON from '../package.json';
 import Eyetracking from './Eyetracking';
+import NoopObject from './NoopObject';
 
 /**
  * Magpie specific vue tools exposed as $magpie
@@ -127,7 +128,7 @@ export default class Magpie extends EventEmitter {
     this.mode = options.mode;
     /**
      * @instance
-     * @member contactEmail
+     * @member debug
      * @memberOf Magpie
      * @type {boolean}
      */
@@ -141,7 +142,11 @@ export default class Magpie extends EventEmitter {
      */
     this.socket = options.socketUrl
       ? new Socket(options.experimentId, options.socketUrl, this.onSocketError)
-      : false;
+      : NoopObject(
+          () =>
+            (this.warning =
+              'You are making use of Socket functionality, but no socket URL is set in magpie.config.js')
+        );
 
     this.trialData = window.magpie_trial_data = {};
     this.expData = window.magpie_exp_data = {};
@@ -217,6 +222,8 @@ export default class Magpie extends EventEmitter {
      * @type {object}
      */
     this.timers = {};
+
+    this.warning = null;
 
     // Provide debug info
     console.log('magpie ' + packageJSON.version);
