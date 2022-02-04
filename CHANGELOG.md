@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.3 - 2022-02-04
+
+### Fixes
+ - Avoid reusing components across Slide and Screen boundaries
+ - Fix SelfPacedReading #prep="{done}" callback
+ - Fix Socket#lastIterationResults type docs
+
 ## 0.5.2 - 2022-02-02
 
 ### Fixes
