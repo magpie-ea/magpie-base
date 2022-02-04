@@ -40,7 +40,7 @@ This is a pre-built completion screen, with limited functionality, but simpler t
       <CompletionInput
         :text="text"
         :options="options"
-        :response.sync="$magpie.measurements.completed_text"
+        :response.sync="$magpie.measurements.response"
         :responses.sync="$magpie.measurements.responses"
       />
       <button
