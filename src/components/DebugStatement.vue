@@ -32,6 +32,7 @@ export default {
   bottom: 10px;
   width: 830px;
 }
+
 .debug-statement,
 .debug-statement * {
   color: #aa2935;

@@ -1,7 +1,9 @@
 export default (cb) => {
   const obj = new Proxy(() => obj, {
     get: (target, prop) => {
-      cb();
+      if (cb) {
+        cb();
+      }
       if (
         prop === 'valueOf' ||
         prop === 'toString' ||

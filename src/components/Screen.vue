@@ -166,7 +166,6 @@ export default {
       ]);
     }
     let slide;
-    let mixedScreenContentWarning = false;
     const slides = children.filter((c) => !!c.componentOptions);
     if (
       slides.length &&
@@ -176,7 +175,7 @@ export default {
     } else {
       slide = this.$slots.default;
       if (slides.some((c) => c.componentOptions.tag === 'Slide')) {
-        $magpie.warning =
+        this.$magpie.warning =
           'This screen received mixed contents. Either provide only <Slide> elements inside your <Screen> or provide the contents of the first and only slide directly.';
       }
     }
@@ -185,10 +184,10 @@ export default {
     return h('div', { class: 'screen' }, [
       this.title ? h('h2', this.title) : null,
       slide,
-      $magpie.warning
+      this.$magpie.warning
         ? h(DebugStatement, {
             props: {
-              text: $magpie.warning,
+              text: this.$magpie.warning,
               type: 'warning'
             }
           })
