@@ -45,6 +45,7 @@ export { default as CompletionScreen } from './trial_screens/CompletionScreen';
 export { default as KeypressScreen } from './trial_screens/KeypressScreen';
 export { default as ForcedChoiceMousetrackingScreen } from './trial_screens/ForcedChoiceMousetrackingScreen';
 export { default as MultipleChoiceScreen } from './trial_screens/MultipleChoiceScreen';
+export { default as MultipleChoiceMatrixScreen } from './trial_screens/MultipleChoiceMatrixScreen';
 
 export { default as Wait } from './helpers/Wait';
 export { default as TimerStop } from './helpers/TimerStop';
