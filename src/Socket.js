@@ -122,7 +122,7 @@ export default class Socket extends EventEmitter {
      * @instance
      * @member lastIterationResults
      * @memberOf Socket
-     * @type {Number}
+     * @type {Array}
      */
     this.lastIterationResults = null;
 
