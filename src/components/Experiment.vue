@@ -200,6 +200,8 @@ export default {
           this.$magpie.currentScreenIndex
         ]
       : null;
+    // Avoid reusing children
+    screen.key = this.$magpie.currentScreenIndex;
     return h('div', { class: 'experiment' + (this.wide ? ' wide' : '') }, [
       h('div', { class: 'header' }, [
         h('div', { class: 'col title' }, this.$slots.title),

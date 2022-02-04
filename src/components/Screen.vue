@@ -174,6 +174,8 @@ export default {
     } else {
       slide = this.$slots.default;
     }
+    // Avoid reusing children
+    slide.key = this.$magpie.currentSlideIndex;
     return h('div', { class: 'screen' }, [
       this.title ? h('h2', this.title) : null,
       slide
