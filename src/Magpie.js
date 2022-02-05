@@ -455,7 +455,10 @@ const addEmptyColumns = function (trialData) {
 
   for (var i = 0; i < trialData.length; i++) {
     for (var prop in trialData[i]) {
-      if (trialData[i].hasOwnProperty(prop) && columns.indexOf(prop) === -1) {
+      if (
+        Object.prototype.hasOwnProperty.call(trialData[i], prop) &&
+        columns.indexOf(prop) === -1
+      ) {
         columns.push(prop);
       }
     }
@@ -464,7 +467,7 @@ const addEmptyColumns = function (trialData) {
   for (var j = 0; j < trialData.length; j++) {
     for (var k = 0; k < columns.length; k++) {
       if (
-        !trialData[j].hasOwnProperty(columns[k]) ||
+        !Object.prototype.hasOwnProperty.call(trialData[j], columns[k]) ||
         typeof trialData[j] === 'undefined'
       ) {
         trialData[j][columns[k]] = 'NA';
@@ -483,8 +486,8 @@ const flattenData = function (data) {
   // Though I think it's also the user's responsibility to avoid such scenarios...
   var sample_trial = trials[0];
   for (var trial_key in sample_trial) {
-    if (sample_trial.hasOwnProperty(trial_key)) {
-      if (data.hasOwnProperty(trial_key)) {
+    if (Object.prototype.hasOwnProperty.call(sample_trial, trial_key)) {
+      if (Object.prototype.hasOwnProperty.call(data, trial_key)) {
         // Much easier to just operate it once on the data, since if we also want to operate on the trials we'd need to loop through each one of them.
         var new_data_key = 'glb_' + trial_key;
         data[new_data_key] = data[trial_key];
