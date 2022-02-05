@@ -61,7 +61,7 @@
     "stylelint": "^14.3.0",
     "stylelint-config-recommended-vue": "^1.1.0",
     "tone": "^14.7.77",
-    "vue-cli-plugin-styleguidist": "~4.40.0",
+    "vue-cli-plugin-styleguidist": "~4.44.15",
     "vue-konva": "^2.1.7",
     "vue-styleguidist": "^4.40.0",
     "vue-template-compiler": "^2.6.14"
