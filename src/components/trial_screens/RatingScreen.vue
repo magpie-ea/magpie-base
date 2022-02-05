@@ -46,7 +46,8 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
       <button
         v-if="
           $magpie.measurements.response &&
-          !$magpie.validateMeasurements.response.$invalid
+          (!$magpie.validateMeasurements.response ||
+            !$magpie.validateMeasurements.response.$invalid)
         "
         @click="$magpie.saveAndNextScreen()"
       >
