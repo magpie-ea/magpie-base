@@ -233,14 +233,16 @@ export default {
   border-radius: 10px;
   border: 1px solid #ababab;
   padding: 20px;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   position: relative;
   display: flex;
   flex-direction: column;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 17px;
+  line-height: 27px;
+  font-family: 'Lato', 'Noto Sans', sans-serif;
 }
 
 .experiment.wide {
@@ -290,13 +292,6 @@ h4 {
 
 h1 {
   font-size: 34px;
-}
-
-.experiment {
-  color: rgba(0, 0, 0, 0.87);
-  font-size: 17px;
-  line-height: 27px;
-  font-family: 'Lato', 'Noto Sans', sans-serif;
 }
 
 button {

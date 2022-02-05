@@ -1,4 +1,6 @@
 module.exports = {
+  customSyntax: 'postcss-html',
+  extends: 'stylelint-config-recommended-vue',
   rules: {
     indentation: 2,
     'selector-type-no-unknown': null,
@@ -15,6 +17,7 @@ module.exports = {
         ignore: ['after-declaration']
       }
     ],
+    'no-empty-source': null,
     'comment-empty-line-before': null,
     'selector-type-case': null,
     'selector-list-comma-newline-after': null,
