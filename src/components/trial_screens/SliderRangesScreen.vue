@@ -57,7 +57,8 @@ This is a pre-built slider rating screen, with limited functionality, but simple
       <button
         v-if="
           $magpie.measurements.response &&
-          !$magpie.validateMeasurements.response.$invalid
+          (!$magpie.validateMeasurements.response ||
+            !$magpie.validateMeasurements.response.$invalid)
         "
         @click="nextAfterResponse"
       >
