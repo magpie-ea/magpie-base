@@ -3,7 +3,7 @@ import Vue from 'vue'
 import Experiment from "@/components/Experiment";
 import FixationCross from "@/components/stimuli/FixationCross";
 
-test('MultipleChoiceScreen', async () => {
+test('RatingScreen', async () => {
     const experiment = mount(Experiment, {
         slots: {
             default: [
