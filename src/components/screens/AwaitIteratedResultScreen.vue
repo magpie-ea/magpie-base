@@ -25,8 +25,7 @@ By default it looks like this:
 <template>
   <Screen v-bind="$attrs">
     <slot>
-      This screen waits for the results of the previous iteration of this
-      experiment.
+      {{ $t('screens.AwaitIteratedResultScreen.description') }}
     </slot>
   </Screen>
 </template>

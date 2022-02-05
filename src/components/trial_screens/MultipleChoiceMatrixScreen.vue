@@ -52,7 +52,7 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
         "
         @click="nextAfterResponse"
       >
-        Submit
+        {{ $t('general.nextButton') }}
       </button>
     </template>
     <template #feedback>

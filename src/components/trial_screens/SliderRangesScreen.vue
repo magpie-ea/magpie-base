@@ -62,7 +62,7 @@ This is a pre-built slider rating screen, with limited functionality, but simple
         "
         @click="nextAfterResponse"
       >
-        Next
+        {{ $t('general.nextButton') }}
       </button>
     </template>
     <template #feedback>

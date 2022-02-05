@@ -23,9 +23,7 @@ By default it looks like this:
 <template>
   <Screen v-bind="$attrs">
     <slot>
-      This screen sets up the socket connection for the interactive experiment
-      and waits for other participants to join so that the number of required
-      participants to start an interactive experiment is met.
+      {{ $t('screens.ConnectInteractiveScreen.description') }}
     </slot>
   </Screen>
 </template>

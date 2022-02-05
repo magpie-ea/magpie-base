@@ -51,7 +51,7 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
         "
         @click="$magpie.saveAndNextScreen()"
       >
-        Next
+        {{ $t('general.nextButton') }}
       </button>
     </template>
     <template #feedback>

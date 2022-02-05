@@ -6,20 +6,21 @@ You can provide the submission URL to the Experiment component.
 <template>
   <Screen v-if="!$magpie.debug" title="Submitting">
     <Slide>
-      <p>Hold on, while we submit your data.</p>
+      <p>{{ $t('screens.SubmitResultsScreen.waiting') }}</p>
       <Wait :time="0" @done="submit(() => $magpie.nextSlide())" />
     </Slide>
     <Slide>
       <p v-if="!error">
-        All done. Thank you!
+        {{ $t('screens.SubmitResultsScreen.done') }}
         <Wait :time="3000" @done="redirectToCompletionUrl" />
       </p>
       <div v-else>
-        <p>Oh, no. There was a problem submitting your results.</p>
+        <p>{{ $t('screens.SubmitResultsScreen.error') }}</p>
         <p>
-          Please contact
-          <a :href="'mailto:' + $magpie.contactEmail"
-            >the author of this experiment</a
+          {{ $t('screens.SubmitResultsScreen.contact') }}
+          <a :href="'mailto:' + $magpie.contactEmail">{{
+            $magpie.contactEmail
+          }}</a
           >.
         </p>
         <p v-text="error" />

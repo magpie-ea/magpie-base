@@ -48,13 +48,20 @@ This interactive component provides participants the opportunity to chat with ea
         v-text="
           message.message ||
           (message.participantId === $magpie.socket.participantId
-            ? 'You'
-            : $magpie.socket.getParticipantName(message.participantId)) +
-            (message.event === 'join'
-              ? ' joined'
+            ? message.event === 'join'
+              ? $t('interactive.Chat.statusYouJoined')
               : message.event === 'leave'
-              ? ' left'
-              : '')
+              ? $t('interactive.Chat.statusYouLeft')
+              : ''
+            : message.event === 'join'
+            ? $t('interactive.Chat.statusParticipantJoined', {
+                user: $magpie.socket.getParticipantName(message.participantId)
+              })
+            : message.event === 'leave'
+            ? $t('interactive.Chat.statusParticipantLeft', {
+                user: $magpie.socket.getParticipantName(message.participantId)
+              })
+            : '')
         "
       ></p>
     </div>
@@ -62,10 +69,10 @@ This interactive component provides participants the opportunity to chat with ea
       <textarea
         ref="text"
         cols="50"
-        placeholder="Type your message to the other participant here."
+        :placeholder="$t('interactive.Chat.messageLabel')"
         @keydown.enter.prevent="send"
       ></textarea>
-      <button @click.stop="send()">Send</button>
+      <button @click.stop="send()">{{ $t('general.send') }}</button>
     </div>
   </div>
 </template>

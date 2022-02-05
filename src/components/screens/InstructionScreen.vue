@@ -8,7 +8,7 @@ This is a pre-built instruction screen, with limited functionality, but simpler 
       Below the instructions is a button to continue.
     </InstructionScreen>
 
-    <InstructionScreen>
+    <InstructionScreen
       This is another instruction screen.<br />
       Below the instructions is a button to continue.
     </InstructionScreen>
@@ -23,7 +23,7 @@ This is a pre-built instruction screen, with limited functionality, but simpler 
       <div class="instructions">
         <slot name="default" />
       </div>
-      <button @click="$magpie.nextScreen()">Next</button>
+      <button @click="$magpie.nextScreen()">{{$t('general.nextButton')}}</button>
     </Slide>
   </Screen>
 </template>

@@ -30,7 +30,7 @@ Eyetracking requires that you install `webgazer`.
   <Screen v-bind="$attrs">
     <!-- Check accuracy -->
     <Slide>
-      <p>Please stare at the blue dot in the center.</p>
+      <p>{{ $t('screens.EyetrackingValidationScreen.instruction') }}</p>
       <Wait :time="5000" @done="measureAccuracy" />
       <EyetrackingStart />
       <CanvasStage
@@ -54,7 +54,7 @@ Eyetracking requires that you install `webgazer`.
       </CanvasStage>
     </Slide>
     <Slide>
-      <p>Something went wrong. Please reload the page.</p>
+      <p>{{ $t('screens.EyetrackingValidationScreen.error') }}</p>
     </Slide>
   </Screen>
 </template>

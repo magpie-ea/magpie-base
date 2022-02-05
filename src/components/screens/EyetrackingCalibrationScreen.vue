@@ -28,11 +28,11 @@ Eyetracking requires that you install `webgazer`.
   <Screen v-bind="$attrs">
     <Slide>
       <Wait key="start" :time="0" @done="onStart" />
-      <p>Please wait while eye tracking is set up.</p>
+      <p>{{ $t('screens.EyetrackingCalibrationScreen.start') }}</p>
     </Slide>
     <Slide>
       <Wait key="calibration" :time="0" @done="runCalibration" />
-      <p>Please follow and click on the red dot.</p>
+      <p>{{ $t('screens.EyetrackingCalibrationScreen.instruction') }}</p>
       <CanvasStage
         :config="{ width: 26, height: 26 }"
         :style="{ left: x + 'px', top: y + 'px' }"
@@ -54,7 +54,7 @@ Eyetracking requires that you install `webgazer`.
       </CanvasStage>
     </Slide>
     <Slide>
-      <p>Something went wrong. Please reload the page.</p>
+      <p>{{ $t('screens.EyetrackingCalibrationScreen.error') }}</p>
     </Slide>
   </Screen>
 </template>
