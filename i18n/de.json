@@ -1,55 +1,55 @@
 {
   "screens": {
     "AwaitIteratedResultScreen": {
-      "description": "This screen waits for the results of the previous iteration of this experiment."
+      "description": "Warte auf die Resultate der vorherigen iteration dieses Experiments."
     },
     "ConnectInteractiveScreen": {
-      "description": "This screen sets up the socket connection for the interactive experiment and waits for other participants to join so that the number of required participants to start an interactive experiment is met."
+      "description": "Die Verbindung mit dem Echtzeit-Server wird aufgebaut und auf andere Teilnehmer für dieses interaktive Experiment wird gewartet."
     },
     "EyetrackingCalibrationScreen": {
-      "start": "Please wait while eye tracking is set up.",
-      "instruction": "Please follow and click on the red dot.",
-      "error": "Something went wrong. Please reload the page."
+      "start": "Augentracking wird geladen.",
+      "instruction": "Bitte folgen Sie dem roten Punkt.",
+      "error": "Etwas ist schief gelaufen. Bitte laden Sie die Seite neu."
     },
     "EyetrackingValidationScreen": {
-      "instruction": "Please stare at the blue dot in the center.",
-      "error": "Something went wrong. Please reload the page."
+      "instruction": "Bitte schauen Sie auf den blauen Punkt in der Mitte des Bildschirms",
+      "error": "Etwas ist schief gelaufen. Bitte laden Sie die Seite neu."
     },
     "PostTestScreen": {
-      "instruction": "Answering the following questions is optional, but your answers will help us analyze our results.",
-      "age": "Age",
-      "gender": "Gender",
-      "male": "male",
-      "female": "female",
-      "otherGender": "other",
-      "education": "Level of Education",
-      "educationHighschool": "Graduated High-school",
-      "educationCollege": "Graduated College",
-      "educationHigher": "Higher degree",
-      "nativeLanguages": "Native languages",
-      "nativeLanguagesExplanation": "the language(s) spoken at home when you were a child",
-      "comments": "Further comments"
+      "instruction": "Das Beantworten der folgenden fragen ist optional, aber Ihre Antworten helfen uns die Ergebnisse auszuwerten.",
+      "age": "Alter",
+      "gender": "Geschlecht",
+      "male": "männlich",
+      "female": "weiblich",
+      "otherGender": "divers",
+      "education": "Bildungsgrad",
+      "educationHighschool": "Abitur",
+      "educationCollege": "Bachelor",
+      "educationHigher": "Höherer Abschluss",
+      "nativeLanguages": "Muttersprachen",
+      "nativeLanguagesExplanation": "die Sprache(n) die bei Ihnen als Kind zu Hause gesprochen wurde(n)",
+      "comments": "Sonstige Kommentare"
     },
     "SubmitResultsScreen": {
-      "waiting": "Hold on, while we submit your data.",
-      "done": "All done. Thank you!",
-      "error": "Oh, no. There was a problem submitting your results.",
-      "contact": "Please contact the author of this experiment via email:"
+      "waiting": "Bitte kurz warten, während die Daten hochgeladen werden.",
+      "done": "Alles fertig. Vielen Dank!",
+      "error": "Oh nein. Es gab ein Problem beim Hochladen Ihrer Ergebnisse.",
+      "contact": "Bitte informieren Sie die Autor:innen dieses Experiments via E-Mail:"
     }
   },
   "general": {
     "nextButton": "Weiter",
     "start": "Start",
-    "go": "Go",
-    "send": "Send"
+    "go": "Los",
+    "send": "Senden"
   },
   "interactive": {
     "Chat": {
-      "messageLabel": "Type your message to the other participant here.",
-      "statusYouJoined": "You joined",
-      "statusYouLeft": "You left",
-      "statusParticipantJoined": "{user} joined",
-      "statusParticipantLeft": "{user} left"
+      "messageLabel": "Schreiben Sie Ihre Nachricht an die anderen Teilnehmenden hier.",
+      "statusYouJoined": "Sie sind dem Chat beigetreten",
+      "statusYouLeft": "Sie haben den Chat verlassen",
+      "statusParticipantJoined": "{user} ist dem Chat beigetreten",
+      "statusParticipantLeft": "{user} hat den Chat verlassen"
     }
   }
 }
