@@ -2,6 +2,8 @@ import { mount } from '@vue/test-utils'
 import Vue from 'vue'
 import Experiment from "@/components/Experiment";
 
+jest.useFakeTimers();
+
 test('Slide with Wait', async () => {
     const experiment = mount(Experiment, {
         slots: {
@@ -16,9 +18,11 @@ test('Slide with Wait', async () => {
     })
 
     expect(experiment.text()).toBe('Hello world')
-    await new Promise(resolve => setTimeout(resolve, 600))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
     expect(experiment.text()).toBe('Hello you')
-    await new Promise(resolve => setTimeout(resolve, 600))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
     expect(experiment.text()).toBe('Bye world')
 })
 
@@ -36,8 +40,10 @@ test('Slide with Wait with key', async () => {
     })
 
     expect(experiment.text()).toBe('Hello world')
-    await new Promise(resolve => setTimeout(resolve, 600))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
     expect(experiment.text()).toBe('Hello you')
-    await new Promise(resolve => setTimeout(resolve, 600))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
     expect(experiment.text()).toBe('Bye world')
 })

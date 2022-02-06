@@ -3,6 +3,8 @@ import Vue from 'vue'
 import Experiment from "@/components/Experiment";
 import FixationCross from "@/components/stimuli/FixationCross";
 
+jest.useFakeTimers();
+
 test('LifecycleScreen', async () => {
     const experiment = mount(Experiment, {
         slots: {
@@ -69,7 +71,8 @@ test('LifecycleScreen with response time', async () => {
 
     expect(experiment.text()).toBe('Click here')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Bye world')
     const results = experiment.vm.$magpie.getAllData()
@@ -94,7 +97,8 @@ test('LifecycleScreen with pause', async () => {
 
     expect(experiment.text()).toBe('')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Click here')
 
@@ -156,7 +160,8 @@ test('LifecycleScreen with fixation time', async () => {
 
     expect(experiment.text()).toBe('Fixation')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Click here')
 
@@ -246,7 +251,8 @@ test('LifecycleScreen with stimulus time', async () => {
 
     expect(experiment.text()).toBe('Stimulus')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Click here')
 
@@ -282,7 +288,8 @@ test('LifecycleScreen with feedback time', async () => {
 
     expect(experiment.text()).toBe('Feedback')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Bye world')
     const results = experiment.vm.$magpie.getAllData()
@@ -346,7 +353,8 @@ test('LifecycleScreen with pause, and buttons for fixation, stimulus and feedbac
 
     expect(experiment.text()).toBe('')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Fixation')
 
@@ -396,15 +404,18 @@ test('LifecycleScreen with times for pause, fixation, stimulus and feedback', as
 
     expect(experiment.text()).toBe('')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Fixation')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Stimulus')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Click here')
 
@@ -412,7 +423,8 @@ test('LifecycleScreen with times for pause, fixation, stimulus and feedback', as
 
     expect(experiment.text()).toBe('Feedback')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Bye world')
     const results = experiment.vm.$magpie.getAllData()
@@ -443,13 +455,17 @@ test('LifecycleScreen with stimulus, and times for pause, fixation and feedback'
         }
     })
 
+    await Vue.nextTick()
+
     expect(experiment.text()).toBe('')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Fixation')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toContain('Stimulus')
 
@@ -459,7 +475,8 @@ test('LifecycleScreen with stimulus, and times for pause, fixation and feedback'
 
     expect(experiment.text()).toBe('Feedback')
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    jest.advanceTimersByTime(600);
+    await Vue.nextTick()
 
     expect(experiment.text()).toBe('Bye world')
     const results = experiment.vm.$magpie.getAllData()
