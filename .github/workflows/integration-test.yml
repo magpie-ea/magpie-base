@@ -36,7 +36,7 @@ jobs:
           DATABASE_URL: 'postgresql://magpie:magpie@postgres:5432/magpie'
           SECRET_KEY_BASE: "secret"
           MAGPIE_NO_BASIC_AUTH: "true"
-          HOST: backend
+          HOST: localhost
           URL_SCHEME: http
           DATABASE_SSL: 'false'
 
