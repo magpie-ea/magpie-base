@@ -79,6 +79,6 @@ jobs:
       - name: Run tests
         env:
           MAGPIE_INTEGRATION_TESTS: 'true'
-          MAGPIE_BACKEND_HOST: backend
+          MAGPIE_BACKEND_HOST: localhost
         run: |
           npm run test:unit
