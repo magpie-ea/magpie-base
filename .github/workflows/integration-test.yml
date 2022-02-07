@@ -12,19 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      backend:
-        image: "ghcr.io/magpie-ea/magpie-docker:master"
-        ports:
-          - "80:4000"
-        env:
-          MIX_ENV: prod
-          PORT: 4000
-          DATABASE_URL: 'postgresql://magpie:magpie@postgres:5432/magpie'
-          SECRET_KEY_BASE: "secret"
-          MAGPIE_NO_BASIC_AUTH: "true"
-          HOST: backend
-          URL_SCHEME: http
-          DATABASE_SSL: 'false'
       postgres:
         # Docker Hub image
         image: postgres:10
@@ -39,6 +26,19 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      backend:
+        image: "ghcr.io/magpie-ea/magpie-docker:master"
+        ports:
+          - "80:4000"
+        env:
+          MIX_ENV: prod
+          PORT: 4000
+          DATABASE_URL: 'postgresql://magpie:magpie@postgres:5432/magpie'
+          SECRET_KEY_BASE: "secret"
+          MAGPIE_NO_BASIC_AUTH: "true"
+          HOST: backend
+          URL_SCHEME: http
+          DATABASE_SSL: 'false'
 
     name: Tests
     steps:
