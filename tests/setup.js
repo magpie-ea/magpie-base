@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueKonva from 'vue-konva';
 import VueMagpie from '@/index';
-import magpieConfig from '../lib/templates/minimal/src/magpie.config.js';
 
 Vue.config.productionTip = false;
 
@@ -9,7 +8,14 @@ Vue.config.productionTip = false;
 Vue.use(VueKonva, { prefix: 'Canvas' });
 
 // Load magpie components
-Vue.use(VueMagpie, magpieConfig);
+Vue.use(VueMagpie, {
+    experimentId: '9',
+    serverUrl: typeof process.env.MAGPIE_BACKEND_HOST !== 'undefined'? 'http://'+process.env.MAGPIE_BACKEND_HOST+'/' : 'https://magpie-refactored-2.herokuapp.com/',
+    socketUrl: typeof process.env.MAGPIE_BACKEND_HOST !== 'undefined'? 'ws://'+process.env.MAGPIE_BACKEND_HOST+'/socket' : 'wss://magpie-refactored-2.herokuapp.com/socket',
+    contactEmail: 'test@random.com'
+});
+
+// shims
 
 const nodeCrypto = require('crypto');
 window.crypto = {
@@ -17,6 +23,9 @@ window.crypto = {
         return nodeCrypto.randomFillSync(buffer);
     }
 };
+
+global.self = window
+global.WebSocket = window.WebSocket = require('websocket').w3cwebsocket
 
 window.scrollTo = () => {}
 console.log = () => {}
