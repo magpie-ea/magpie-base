@@ -39,6 +39,12 @@ jobs:
           HOST: localhost
           URL_SCHEME: http
           DATABASE_SSL: 'false'
+        options: >-
+          --health-cmd "curl --fail http://localhost:4000"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 15
+          
 
     name: Tests
     steps:
