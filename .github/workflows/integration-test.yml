@@ -34,7 +34,7 @@ jobs:
           MIX_ENV: prod
           PORT: 4000
           DATABASE_URL: 'postgresql://magpie:magpie@postgres:5432/magpie'
-          SECRET_KEY_BASE: "secret"
+          SECRET_KEY_BASE: "secretsecretsecretsecretsecretsecretsecretsecretsecretsecret"
           MAGPIE_NO_BASIC_AUTH: "true"
           HOST: localhost
           URL_SCHEME: http
