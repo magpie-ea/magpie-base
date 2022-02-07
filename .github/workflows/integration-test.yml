@@ -13,7 +13,7 @@ jobs:
 
     services:
       backend:
-        image: ghcr.io/magpie-ea/magpie-docker
+        image: "ghcr.io/magpie-ea/magpie-docker:master"
         ports:
           - "80:4000"
         env:
