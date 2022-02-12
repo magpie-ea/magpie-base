@@ -284,7 +284,10 @@ export default class Socket extends EventEmitter {
   }
 
   updateActiveParticipants() {
-    this.active = Object.entries(this.participantsPerScreen)
+    this.active = Object.entries({
+      ...this.participantsPerScreen,
+      [this.participantId]: this.currentScreen
+    })
       .filter(([, value]) => value === this.currentScreen)
       .map(([key]) => key);
   }
