@@ -64,7 +64,7 @@ test('ConnectInteractiveScreen with two clients', async () => {
     expect(experiment2.text()).toBe('Connecting')
 
     while(
-        experiment1.vm.$magpie.socket.state !== states.READY &&
+        experiment1.vm.$magpie.socket.state !== states.READY ||
         experiment2.vm.$magpie.socket.state !== states.READY
         ) {
         await new Promise(resolve => setTimeout(resolve, 200))
