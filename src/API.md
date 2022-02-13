@@ -26,7 +26,7 @@
     * [.submissionUrl](#Magpie+submissionUrl) : <code>string</code>
     * [.contactEmail](#Magpie+contactEmail) : <code>string</code>
     * [.mode](#Magpie+mode) : <code>string</code>
-    * [.contactEmail](#Magpie+contactEmail) : <code>boolean</code>
+    * [.debug](#Magpie+debug) : <code>boolean</code>
     * [.socket](#Magpie+socket) : [<code>Socket</code>](#Socket)
     * [.mousetracking](#Magpie+mousetracking) : [<code>Mousetracking</code>](#Mousetracking)
     * [.eyetracking](#Magpie+eyetracking) : [<code>Eyetracking</code>](#Eyetracking)
@@ -117,9 +117,9 @@ The ID of the experiment
 
 ### magpie.mode : <code>string</code>
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
-<a name="Magpie+contactEmail"></a>
+<a name="Magpie+debug"></a>
 
-### magpie.contactEmail : <code>boolean</code>
+### magpie.debug : <code>boolean</code>
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
 <a name="Magpie+socket"></a>
 
