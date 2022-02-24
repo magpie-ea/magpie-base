@@ -17,6 +17,14 @@ The API reference for the latest version is available at [magpie-reference.netli
 
 A guided introduction to building experiments with magpie v3 is available at [magpie-manual.netlify.app](https://magpie-manual.netlify.app).
 
+## How to update existing projects
+
+```sh
+$ cd your-project
+$ npm update magpie-base
+```
+
+Read more on [maintaining npm dependencies](https://www.carlrippon.com/upgrading-npm-dependencies/).
 
 ## Core Development
 

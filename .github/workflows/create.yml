@@ -5,12 +5,17 @@ on:
   push:
     branches:
       - master
+      - develop
 
 jobs:
-  build:
+  create:
     runs-on: ubuntu-latest
 
-    name: Test project template
+    strategy:
+      matrix:
+        template: ['minimal', 'showroom']
+
+    name: Test project template ${{matrix.template}}
     steps:
       - uses: actions/checkout@v2
 
@@ -46,7 +51,7 @@ jobs:
           npm pack
           npm install -g magpie-base-*.tgz
           cd ../
-          magpie new my-project
+          magpie new my-project --template=${{matrix.template}}
           cd my-project
           npm install
           npm install ../magpie-base/magpie-base-*.tgz

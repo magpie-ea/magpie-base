@@ -39,12 +39,13 @@ export default {
   name: 'WaitForParticipants',
   props: {
     number: {
-      type: Number
+      type: Number,
+      required: true
     }
   },
   watch: {
-    ['$magpie.socket.active'](newParticipants) {
-      if (newParticipants.length === this.number) {
+    ['$magpie.socket.active']() {
+      if (this.$magpie.socket.active.length === this.number) {
         this.$emit('done');
       }
     }

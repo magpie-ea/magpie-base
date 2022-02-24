@@ -42,7 +42,7 @@ This is a pre-built image selection screen, with limited functionality, but simp
         "
         @click="nextAfterResponse"
       >
-        Next
+        {{ $t('general.nextButton') }}
       </button>
     </template>
     <template #feedback>

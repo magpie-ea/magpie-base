@@ -30,8 +30,8 @@ This is a pre-built slider rating screen, with limited functionality, but simple
       <Record
         :data="{
           question,
-          optionLeft,
-          optionRight,
+          ...(optionLeft && { optionLeft }),
+          ...(optionRight && { optionRight }),
           interval,
           ranges,
           min,
@@ -57,11 +57,12 @@ This is a pre-built slider rating screen, with limited functionality, but simple
       <button
         v-if="
           $magpie.measurements.response &&
-          !$magpie.validateMeasurements.response.$invalid
+          (!$magpie.validateMeasurements.response ||
+            !$magpie.validateMeasurements.response.$invalid)
         "
         @click="nextAfterResponse"
       >
-        Next
+        {{ $t('general.nextButton') }}
       </button>
     </template>
     <template #feedback>

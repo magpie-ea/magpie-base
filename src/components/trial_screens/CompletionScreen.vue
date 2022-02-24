@@ -40,7 +40,7 @@ This is a pre-built completion screen, with limited functionality, but simpler t
       <CompletionInput
         :text="text"
         :options="options"
-        :response.sync="$magpie.measurements.completed_text"
+        :response.sync="$magpie.measurements.response"
         :responses.sync="$magpie.measurements.responses"
       />
       <button
@@ -51,7 +51,7 @@ This is a pre-built completion screen, with limited functionality, but simpler t
         "
         @click="nextAfterResponse"
       >
-        Next
+        {{ $t('general.nextButton') }}
       </button>
     </template>
 
@@ -81,7 +81,7 @@ export default {
      */
     question: {
       type: String,
-      required: true
+      default: undefined
     },
     /**
      * The text that is supposed to be completed. `%s` marks completions

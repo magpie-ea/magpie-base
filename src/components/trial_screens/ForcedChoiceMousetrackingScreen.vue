@@ -90,7 +90,9 @@
         <slot v-if="playing" name="stimulus" :coordinates="buttonCoordinates" />
         <slot v-if="$magpie.measurements.response" name="feedback" />
       </div>
-      <button v-if="!playing" ref="button" @click="onPressPlay">Go</button>
+      <button v-if="!playing" ref="button" @click="onPressPlay">
+        {{ $t('general.go') }}
+      </button>
       <Wait
         v-if="playing && responseTime"
         :time="responseTime"
@@ -144,7 +146,7 @@ export default {
      */
     qud: {
       type: String,
-      default: ''
+      default: undefined
     },
     /**
      * Duration of the pause phase, don't set this, to avoid the pause altogether

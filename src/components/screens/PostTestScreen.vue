@@ -15,13 +15,12 @@ This is a pre-built forced choice screen, with limited functionality, but simple
   <Screen v-bind="$attrs" title="Additional information">
     <Slide>
       <p>
-        Answering the following questions is optional, but your answers will
-        help us analyze our results.
+        {{ $t('screens.PostTestScreen.instruction') }}
       </p>
       <div style="text-align: left; width: 200px; margin: 0 auto">
         <p v-if="age">
           <label
-            >Age
+            >{{ $t('screens.PostTestScreen.age') }}
             <input
               v-model="$magpie.measurements.age"
               type="number"
@@ -31,22 +30,27 @@ This is a pre-built forced choice screen, with limited functionality, but simple
         </p>
         <p v-if="gender">
           <label
-            >Gender
+            >{{ $t('screens.PostTestScreen.gender') }}
             <DropdownInput
-              :options="['', 'male', 'female', 'other']"
+              :options="[
+                '',
+                $t('screens.PostTestScreen.male'),
+                $t('screens.PostTestScreen.female'),
+                $t('screens.PostTestScreen.otherGender')
+              ]"
               :response.sync="$magpie.measurements.gender"
             />
           </label>
         </p>
         <p v-if="education">
           <label
-            >Level of Education
+            >{{ $t('screens.PostTestScreen.education') }}
             <DropdownInput
               :options="[
                 '',
-                'Graduated High-school',
-                'Graduated College',
-                'Higher degree'
+                $t('screens.PostTestScreen.educationHighschool'),
+                $t('screens.PostTestScreen.educationCollege'),
+                $t('screens.PostTestScreen.educationHigher')
               ]"
               :response.sync="$magpie.measurements.education"
             />
@@ -54,18 +58,20 @@ This is a pre-built forced choice screen, with limited functionality, but simple
         </p>
         <p v-if="languages">
           <label
-            >Native languages
+            >{{ $t('screens.PostTestScreen.nativeLanguages') }}
             <input
               v-model="$magpie.measurements.languages"
               type="text"
-              placeholder="the language(s) spoken at home when you were a child"
+              :placeholder="
+                $t('screens.PostTestScreen.nativeLanguagesExplanation')
+              "
           /></label>
         </p>
         <!-- @slot You can add additional questions here, storing data in measurements
            @binding {object} measurements a temporary object to store your responses before adding them to the results
            -->
         <slot :measurements="$magpie.measurements" />
-        Further comments
+        {{ $t('screens.PostTestScreen.comments') }}
         <TextareaInput
           :response.sync="$magpie.measurements.comments"
         ></TextareaInput>
@@ -77,7 +83,7 @@ This is a pre-built forced choice screen, with limited functionality, but simple
           $magpie.nextScreen();
         "
       >
-        Next
+        {{ $t('general.nextButton') }}
       </button>
     </Slide>
   </Screen>
@@ -85,8 +91,8 @@ This is a pre-built forced choice screen, with limited functionality, but simple
 
 <script>
 import Screen from '../Screen';
-import TextareaInput from '..//inputs/TextareaInput';
-import DropdownInput from '..//inputs/DropdownInput';
+import TextareaInput from '../inputs/TextareaInput';
+import DropdownInput from '../inputs/DropdownInput';
 import Slide from '../Slide';
 
 export default {

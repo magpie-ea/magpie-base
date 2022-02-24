@@ -1,0 +1,90 @@
+name: Integration Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        # Docker Hub image
+        image: postgres:10
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: magpie
+          POSTGRES_USER: magpie
+          POSTGRES_DB: magpie
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      backend:
+        image: "ghcr.io/magpie-ea/magpie-docker:master"
+        ports:
+          - "80:4000"
+        env:
+          MIX_ENV: prod
+          PORT: 4000
+          DATABASE_URL: 'postgresql://magpie:magpie@postgres:5432/magpie?ssl=false'
+          SECRET_KEY_BASE: "secretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecret"
+          MAGPIE_NO_BASIC_AUTH: "true"
+          HOST: localhost
+          URL_SCHEME: http
+          DATABASE_SSL: 'false'
+        options: >-
+          --health-cmd "curl --fail http://localhost:4000"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 15
+          
+
+    name: Tests
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Read package.json node and npm engines version
+        uses: skjnldsv/read-package-engines-version-actions@v1.1
+        id: versions
+        with:
+          fallbackNode: '^12'
+          fallbackNpm: '^6'
+
+      - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.versions.outputs.nodeVersion }}
+
+      - name: Set up npm ${{ steps.versions.outputs.npmVersion }}
+        run: npm i -g npm@"${{ steps.versions.outputs.npmVersion }}"
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies & build
+        run: |
+          npm ci
+          npm run docs:build --if-present
+
+      - name: Run tests
+        env:
+          MAGPIE_INTEGRATION_TESTS: 'true'
+          MAGPIE_BACKEND_HOST: localhost
+        run: |
+          npm run test:unit

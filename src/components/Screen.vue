@@ -93,6 +93,7 @@ The screen can also be used to validate observations.
 
 <script>
 import { validationMixin } from 'vuelidate';
+import DebugStatement from './DebugStatement';
 
 /**
  * This component lets you create experiment sections that appear one after the other like a slideshow.
@@ -173,12 +174,24 @@ export default {
       slide = slides[this.$magpie.currentSlideIndex];
     } else {
       slide = this.$slots.default;
+      if (slides.some((c) => c.componentOptions.tag === 'Slide')) {
+        this.$magpie.warning =
+          'This screen received mixed contents. Either provide only <Slide> elements inside your <Screen> or provide the contents of the first and only slide directly.';
+      }
     }
     // Avoid reusing children
     slide.key = this.$magpie.currentSlideIndex;
     return h('div', { class: 'screen' }, [
       this.title ? h('h2', this.title) : null,
-      slide
+      slide,
+      this.$magpie.warning
+        ? h(DebugStatement, {
+            props: {
+              text: this.$magpie.warning,
+              type: 'warning'
+            }
+          })
+        : null
     ]);
   }
 };

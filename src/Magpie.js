@@ -8,6 +8,7 @@ import flatten from 'lodash/flatten';
 import Mousetracking from './Mousetracking';
 import packageJSON from '../package.json';
 import Eyetracking from './Eyetracking';
+import NoopObject from './NoopObject';
 
 /**
  * Magpie specific vue tools exposed as $magpie
@@ -127,7 +128,7 @@ export default class Magpie extends EventEmitter {
     this.mode = options.mode;
     /**
      * @instance
-     * @member contactEmail
+     * @member debug
      * @memberOf Magpie
      * @type {boolean}
      */
@@ -141,7 +142,11 @@ export default class Magpie extends EventEmitter {
      */
     this.socket = options.socketUrl
       ? new Socket(options.experimentId, options.socketUrl, this.onSocketError)
-      : false;
+      : NoopObject(
+          () =>
+            (this.warning =
+              'You are making use of Socket functionality, but no socket URL is set in magpie.config.js')
+        );
 
     this.trialData = window.magpie_trial_data = {};
     this.expData = window.magpie_exp_data = {};
@@ -217,6 +222,8 @@ export default class Magpie extends EventEmitter {
      * @type {object}
      */
     this.timers = {};
+
+    this.warning = null;
 
     // Provide debug info
     console.log('magpie ' + packageJSON.version);
@@ -448,7 +455,10 @@ const addEmptyColumns = function (trialData) {
 
   for (var i = 0; i < trialData.length; i++) {
     for (var prop in trialData[i]) {
-      if (trialData[i].hasOwnProperty(prop) && columns.indexOf(prop) === -1) {
+      if (
+        Object.prototype.hasOwnProperty.call(trialData[i], prop) &&
+        columns.indexOf(prop) === -1
+      ) {
         columns.push(prop);
       }
     }
@@ -457,7 +467,7 @@ const addEmptyColumns = function (trialData) {
   for (var j = 0; j < trialData.length; j++) {
     for (var k = 0; k < columns.length; k++) {
       if (
-        !trialData[j].hasOwnProperty(columns[k]) ||
+        !Object.prototype.hasOwnProperty.call(trialData[j], columns[k]) ||
         typeof trialData[j] === 'undefined'
       ) {
         trialData[j][columns[k]] = 'NA';
@@ -476,8 +486,8 @@ const flattenData = function (data) {
   // Though I think it's also the user's responsibility to avoid such scenarios...
   var sample_trial = trials[0];
   for (var trial_key in sample_trial) {
-    if (sample_trial.hasOwnProperty(trial_key)) {
-      if (data.hasOwnProperty(trial_key)) {
+    if (Object.prototype.hasOwnProperty.call(sample_trial, trial_key)) {
+      if (Object.prototype.hasOwnProperty.call(data, trial_key)) {
         // Much easier to just operate it once on the data, since if we also want to operate on the trials we'd need to loop through each one of them.
         var new_data_key = 'glb_' + trial_key;
         data[new_data_key] = data[trial_key];

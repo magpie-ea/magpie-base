@@ -42,11 +42,12 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
       <button
         v-if="
           $magpie.measurements.response &&
-          !$magpie.validateMeasurements.response.$invalid
+          (!$magpie.validateMeasurements.response ||
+            !$magpie.validateMeasurements.response.$invalid)
         "
         @click="$magpie.saveAndNextScreen()"
       >
-        Next
+        {{ $t('general.nextButton') }}
       </button>
     </template>
     <template #feedback>

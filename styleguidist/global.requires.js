@@ -5,9 +5,9 @@ import VueKonva from 'vue-konva';
 Vue.use(VueKonva, { prefix: 'Canvas' });
 
 Vue.use(MagpieVue, {
-  experimentId: '171',
-  serverUrl: 'https://magpie-demo.herokuapp.com/',
-  socketUrl: 'wss://magpie-demo.herokuapp.com/socket',
+  experimentId: '9',
+  serverUrl: 'https://magpie-refactored-2.herokuapp.com/',
+  socketUrl: 'wss://magpie-refactored-2.herokuapp.com/socket',
   contactEmail: 'test@random.com'
 });
 

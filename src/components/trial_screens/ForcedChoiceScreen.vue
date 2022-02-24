@@ -67,7 +67,7 @@ export default {
      */
     question: {
       type: String,
-      default: ''
+      default: undefined
     },
     /**
      * Forced choice options
