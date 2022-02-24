@@ -125,21 +125,21 @@ export default {
       default: ''
     },
     /**
-     * Duration of the pause phase, don't set this, to avoid the pause altogether
+     * Duration of the pause phase. Don't set this, to avoid the pause altogether.
      */
     pauseTime: {
       type: Number,
       default: 0
     },
     /**
-     * Duration of the fixation point phase, don't set this to avoid showing the fixation point altogether
+     * Duration of the fixation point phase. Don't set this to avoid showing the fixation point altogether. Set to -1 to call nextSlide manually
      */
     fixationTime: {
       type: Number,
       default: 0
     },
     /**
-     * Duration of the stimulus phase, don't set this to avoid hiding the stimulus altogether
+     * Duration of the stimulus phase. Don't set this to avoid hiding the stimulus altogether. Set to -1 to call nextSlide manually
      */
     stimulusTime: {
       type: Number,
@@ -154,7 +154,7 @@ export default {
       default: 0
     },
     /**
-     * How long feedback should be displayed, don't set this, to avoid displaying feedback altogether
+     * How long feedback should be displayed. Don't set this, to avoid displaying feedback altogether; set to -1 if you want to call nextScreen manually
      */
     feedbackTime: {
       type: Number,
