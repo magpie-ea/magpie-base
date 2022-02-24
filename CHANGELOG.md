@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.6.0
+
+### New
+- Magpie new command: add --template option with 'minimal' as default
+- Don't record unset props in built-in screens
+- CompletionScreen: Fix result property: "completed_text" => "response"
+- Allow displaying debug warnings on screen by setting $magpie.warning
+- Implement i18n (set language in magpie.config.js)
+
+### Fixes
+- LifecycleScreen: Improve docs for time props
+- Test and fix SelfPacedReading
+- SliderRangesScreen: Fix submit button
+- RatingScreen: Add test and fix submit button
+- index: Expose MultipleChoiceMatrixScreen as global
+- MultipleChoiceScreen: Add test and fix component
+- create.js:README: Add note about updating
+
 ## 0.5.3 - 2022-02-04
 
 ### Fixes
