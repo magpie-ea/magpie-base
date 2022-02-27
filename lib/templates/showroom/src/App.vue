@@ -111,9 +111,9 @@
 
     <PostTestScreen />
 
-    <!-- While developing your experiment, using the DebugResults screen is fine,
-      once you're going live, you can use the <SubmitResults> screen to automatically send your experimental data to the server. -->
-    <DebugResultsScreen />
+    <!-- While developing your experiment, when debug mode is enabled in the magpie config, this will display the results directly on screen
+       once you set your experiment to a different mode, this screen will send the data to the server you configured. -->
+    <SubmitResultsScreen />
   </Experiment>
 </template>
 
