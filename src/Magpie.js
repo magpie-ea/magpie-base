@@ -242,6 +242,16 @@ export default class Magpie extends EventEmitter {
     }
 
     this.addExpData({ experiment_start_time: Date.now() });
+
+    if (this.mode === 'debug') {
+      window.onunhandledrejection = (event) => {
+        this.warning = event.reason;
+      };
+
+      window.onerror = function (message) {
+        this.warning = message;
+      };
+    }
   }
 
   /**
