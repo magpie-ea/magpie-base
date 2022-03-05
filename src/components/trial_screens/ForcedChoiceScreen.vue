@@ -52,6 +52,23 @@ import LifecycleScreen from '../screens/LifecycleScreen';
 
 /**
  * Inherits from LifecycleScreen
+ *
+ * **Screen Measurements**
+ *
+ * |Measurement|Type|Description|
+ * |--|---|---|
+ * |response_time|int|Time between display of this screen until the screen is left|
+ * |response_timeout|boolean|Whether the response time limit was reached|
+ * |qud *(optional)*|string||
+ * |pauseTime *(optional)*|int||
+ * |fixationTime *(optional)*|int||
+ * |stimulusTime *(optional)*|int||
+ * |responseTime *(optional)*|int|The response time limit|
+ * |feedbackTime *(optional)*|int||
+ * |question|string||
+ * |options|array||
+ * |response|string|The chosen option|
+ *
  */
 export default {
   name: 'ForcedChoiceScreen',

@@ -64,6 +64,17 @@ import Screen from '../Screen';
 import Slide from '../Slide';
 import EyetrackingStart from '../helpers/EyetrackingStart';
 import Wait from '../helpers/Wait';
+
+/**
+ * Inherits from LifecycleScreen
+ *
+ * **Global Measurements**
+ *
+ * |Measurement|Type|Description|
+ * |--|---|---|
+ * |et_accuracy|float|The measured accuracy|
+ *
+ */
 export default {
   name: 'EyetrackingValidationScreen',
   components: { Wait, EyetrackingStart, Slide, Screen },
