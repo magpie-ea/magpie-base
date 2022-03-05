@@ -64,8 +64,30 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
 import Record from '../helpers/Record';
 import RatingInput from '../inputs/RatingInput';
 import LifecycleScreen from '../screens/LifecycleScreen';
+
 /**
+ * Have participants choose answer from multiple options
+ *
  * Inherits from LifecycleScreen
+ *
+ * **Screen Measurements**
+ *
+ * |Measurement|Type|Description|
+ * |--|---|---|
+ * |response_time|int|Time between display of this screen until the screen is left|
+ * |response_timeout|boolean|Whether the response time limit was reached|
+ * |qud *(optional)*|string||
+ * |pauseTime *(optional)*|int||
+ * |fixationTime *(optional)*|int||
+ * |stimulusTime *(optional)*|int||
+ * |responseTime *(optional)*|int|The response time limit|
+ * |feedbackTime *(optional)*|int||
+ * |question|string||
+ * |optionLeft?|string||
+ * |optionRight?|string||
+ * |count|int||
+ * |response|int|The chosen option|
+ *
  */
 export default {
   name: 'RatingScreen',

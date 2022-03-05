@@ -1,6 +1,4 @@
 <docs>
-This is a pre-built forced choice screen, with limited functionality, but simpler to use.
-
 ```vue
 <Experiment>
     <PostTestScreen />
@@ -95,6 +93,17 @@ import TextareaInput from '../inputs/TextareaInput';
 import DropdownInput from '../inputs/DropdownInput';
 import Slide from '../Slide';
 
+/**
+ * **Global Measurements**
+ *
+ * |Measurement|Type|Description|
+ * |--|---|---|
+ * |age|int||
+ * |gender|'' \| 'male' \| 'female' \| 'other'||
+ * |education|'' \| 'highschool' \| 'college' \| 'higher'||
+ * |languages|string||
+ * |comments|string||
+ */
 export default {
   name: 'PostTestScreen',
   components: {
