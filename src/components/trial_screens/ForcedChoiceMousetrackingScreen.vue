@@ -116,6 +116,19 @@ import Slide from '../Slide';
 import TimerStop from '../helpers/TimerStop';
 import TimerStart from '../helpers/TimerStart';
 
+/**
+ * **Screen Measurements**
+ *
+ * |Measurement|Type|Description|
+ * |--|---|---|
+ * |response_time|int|Time between click on 'Go' and response|
+ * |response_timeout|boolean|Whether the response time limit was reached|
+ * |mt_time|array|Mouse tracking time coordinates|
+ * |mt_x|array|Mouse tracking x coordinates (origin is at the 'Go' button, positive goes right)|
+ * |mt_y|array|Mouse tracking y coordinates (origin is at the 'Go' button, positive goes down)|
+ * |mt_start_time|int|Time stamp of when mouse tracking started|
+ *
+ */
 export default {
   name: 'ForcedChoiceMousetrackingScreen',
   components: { TimerStart, TimerStop, Slide, Screen, Wait },
