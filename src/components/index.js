@@ -14,10 +14,11 @@ export { default as MultipleChoiceInput } from './inputs/MultipleChoiceInput';
 export { default as MultipleChoiceMatrixInput } from './inputs/MultipleChoiceMatrixInput';
 export { default as SliderRangesInput } from './inputs/SliderRangesInput';
 export { default as RankOrderInput } from './inputs/RankOrderInput';
+export { default as MazeInput } from './inputs/MazeInput';
+export { default as SerialInput } from './inputs/SerialInput';
 
 export { default as Rsvp } from './stimuli/Rsvp';
 export { default as FixationCross } from './stimuli/FixationCross';
-export { default as SelfPacedReading } from './stimuli/SelfPacedReading';
 export const Synth = () => {
   return import(/* webpackPreload: true */ './stimuli/Synth');
 };
