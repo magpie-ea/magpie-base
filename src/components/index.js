@@ -16,6 +16,7 @@ export { default as SliderRangesInput } from './inputs/SliderRangesInput';
 export { default as RankOrderInput } from './inputs/RankOrderInput';
 export { default as MazeInput } from './inputs/MazeInput';
 export { default as SerialInput } from './inputs/SerialInput';
+export { default as SelfPacedReadingInput } from './inputs/SelfPacedReadingInput';
 
 export { default as Rsvp } from './stimuli/Rsvp';
 export { default as FixationCross } from './stimuli/FixationCross';
@@ -47,6 +48,8 @@ export { default as KeypressScreen } from './trial_screens/KeypressScreen';
 export { default as ForcedChoiceMousetrackingScreen } from './trial_screens/ForcedChoiceMousetrackingScreen';
 export { default as MultipleChoiceScreen } from './trial_screens/MultipleChoiceScreen';
 export { default as MultipleChoiceMatrixScreen } from './trial_screens/MultipleChoiceMatrixScreen';
+export { default as MazeScreen } from './trial_screens/MazeScreen';
+export { default as SelfPacedReadingScreen } from './trial_screens/SelfPacedReadingScreen';
 
 export { default as Wait } from './helpers/Wait';
 export { default as TimerStop } from './helpers/TimerStop';
