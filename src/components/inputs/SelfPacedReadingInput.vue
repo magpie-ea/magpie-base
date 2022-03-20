@@ -4,7 +4,7 @@
 <Experiment>
     <Screen>
         <SelfPacedReadingInput
-            :chunks="['This', 'is', 'a', 'nice', 'and', 'very', 'long', 'text.']"
+            :chunks="['This', 'is', 'a', 'nice', 'and', 'very', 'long', 'text']"
             word-pos="next"
             underline="sentence"
             trigger="$"
@@ -22,6 +22,15 @@
 <template>
   <div>
     <!-- length + 2, because we have an initial empty slice and a last empty slice to record the rt -->
+    <!--
+    Emitted after the trigger has been pressed on the last chunk
+    @event end
+    -->
+    <!--
+    The list of response times per chunk
+    @property {array}
+    @event update:response-times
+    -->
     <SerialInput
       :iterations="chunks.length + 2"
       @end="
