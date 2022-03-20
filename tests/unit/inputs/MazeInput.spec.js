@@ -13,6 +13,7 @@ test('MazeInput', async () => {
                 '            :targets="[\'This\', \'is\', \'a\', \'nice\', \'text.\']"\n' +
                 '            :competitors="[\'Camels\', \'are\', \'in\', \'a\', \'way\']"\n' +
                 '            :response-times.sync="$magpie.measurements.times"\n' +
+                '            :target-positions.sync="$magpie.measurements.target_positions"\n' +
                 '            :responses.sync="$magpie.measurements.responses"\n' +
                 '            :timeout.sync="$magpie.measurements.timeout"\n' +
                 '            :correct.sync="$magpie.measurements.correct"\n' +
@@ -26,8 +27,9 @@ test('MazeInput', async () => {
 
     await Vue.nextTick()
     expect(experiment.text()).toContain('This')
+    expect(experiment.text()).toContain('Camels')
 
-    await experiment.trigger('keydown', {key: 'f'})
+    await experiment.trigger('keydown', {key: (experiment.text().startsWith('This')? 'f' : 'j')})
     await Vue.nextTick()
     expect(experiment.text()).toContain('is')
     expect(experiment.text()).toContain('are')
@@ -60,6 +62,7 @@ test('MazeInput', async () => {
     expect(results[0].experiment_duration).toBe(results[0].experiment_end_time - results[0].experiment_start_time)
     expect(results[0].times.split('|')).toHaveLength(5)
     expect(results[0].responses.split('|')).toHaveLength(5)
+    expect(results[0].target_positions.split('|')).toHaveLength(5)
     expect(results[0].correct).toBe(true)
     expect(results[0].timeout).toBe(false)
 })
@@ -73,6 +76,7 @@ test('MazeInput with timeout', async () => {
                 '            :targets="[\'This\', \'is\', \'a\', \'nice\', \'text.\']"\n' +
                 '            :competitors="[\'Camels\', \'are\', \'in\', \'a\', \'way\']"\n' +
                 '            :response-times.sync="$magpie.measurements.times"\n' +
+                '            :target-positions.sync="$magpie.measurements.target_positions"\n' +
                 '            :responses.sync="$magpie.measurements.responses"\n' +
                 '            :timeout.sync="$magpie.measurements.timeout"\n' +
                 '            :correct.sync="$magpie.measurements.correct"\n' +
@@ -88,7 +92,7 @@ test('MazeInput with timeout', async () => {
     await Vue.nextTick()
     expect(experiment.text()).toContain('This')
 
-    await experiment.trigger('keydown', {key: 'f'})
+    await experiment.trigger('keydown', {key: (experiment.text().startsWith('This')? 'f' : 'j')})
     await Vue.nextTick()
     expect(experiment.text()).toContain('is')
     expect(experiment.text()).toContain('are')
@@ -118,6 +122,7 @@ test('MazeInput with timeout', async () => {
     expect(results[0].experiment_duration).toBe(results[0].experiment_end_time - results[0].experiment_start_time)
     expect(results[0].times.split('|')).toHaveLength(3)
     expect(results[0].responses.split('|')).toHaveLength(3)
+    expect(results[0].target_positions.split('|')).toHaveLength(5)
     expect(results[0].correct).toBe(true)
     expect(results[0].timeout).toBe(true)
 })
@@ -131,6 +136,7 @@ test('MazeInput with incorrect response', async () => {
                 '            :targets="[\'This\', \'is\', \'a\', \'nice\', \'text.\']"\n' +
                 '            :competitors="[\'Camels\', \'are\', \'in\', \'a\', \'way\']"\n' +
                 '            :response-times.sync="$magpie.measurements.times"\n' +
+                '            :target-positions.sync="$magpie.measurements.target_positions"\n' +
                 '            :responses.sync="$magpie.measurements.responses"\n' +
                 '            :timeout.sync="$magpie.measurements.timeout"\n' +
                 '            :correct.sync="$magpie.measurements.correct"\n' +
@@ -145,7 +151,7 @@ test('MazeInput with incorrect response', async () => {
     await Vue.nextTick()
     expect(experiment.text()).toContain('This')
 
-    await experiment.trigger('keydown', {key: 'f'})
+    await experiment.trigger('keydown', {key: (experiment.text().startsWith('This')? 'f' : 'j')})
     await Vue.nextTick()
     expect(experiment.text()).toContain('is')
     expect(experiment.text()).toContain('are')
@@ -170,6 +176,7 @@ test('MazeInput with incorrect response', async () => {
     expect(results[0].experiment_duration).toBe(results[0].experiment_end_time - results[0].experiment_start_time)
     expect(results[0].times.split('|')).toHaveLength(3)
     expect(results[0].responses.split('|')).toHaveLength(3)
+    expect(results[0].target_positions.split('|')).toHaveLength(5)
     expect(results[0].correct).toBe(false)
     expect(results[0].timeout).toBe(false)
 })
