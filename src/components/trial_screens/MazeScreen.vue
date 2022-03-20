@@ -6,7 +6,7 @@ This is a pre-built maze task screen.
   <MazeScreen
       question="Are fries healthy?"
       :targets="['Fries', 'are', 'very', 'healthy', 'indeed.']"
-      :competitors="['Camels', 'can', 'usually', 'quite', 'yummy.']">
+      :competitors="['xxx-xxx', 'can', 'usually', 'quite', 'yummy']">
     <template #stimulus>
       <img src="img/fries.jpg" />
     </template>

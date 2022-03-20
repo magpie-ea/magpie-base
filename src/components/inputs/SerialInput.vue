@@ -17,7 +17,8 @@ This is a simple implementation of a Self-paced reading task.
                 @update:time="record('responseTimes', $event)"
             />
             <TimerStart id="responseTime" />
-            <KeypressInput :keys="{'f': 'Continue Left', 'j': 'Continue Right'}" @update:response="record('pressedKey', $event); next()" />
+            Does the sentence it the picture?
+            <KeypressInput :keys="{'f': 'yes', 'j': 'no', 'b' : 'maybe'}" @update:response="record('pressedKey', $event); next()" />
             <p>{{ 'Hello world, how are you?'.split(' ')[i] }}</p>
           </template>
         </SerialInput>
@@ -34,6 +35,13 @@ This is a simple implementation of a Self-paced reading task.
 <template>
   <div class="serial_input">
     <div :key="i" class="slice">
+      <!--
+      @slot Your content for each iteration
+      @binding i {Number} The number of the current iteration, starting at 0, thus this will always be strictly lower than `iterations`
+      @binding iterations {Number} The overall number of iterations
+      @binding record {fn(variable:string, value:mixed)} A function to record trial measurements per iteration resulting in an array of values stored at $magpie.measurements.{variable}
+      @binding next {fn()} A function to go to the next iteration
+      -->
       <slot
         name="default"
         :i="i"
@@ -76,6 +84,9 @@ export default {
   watch: {
     i() {
       if (this.i >= this.iterations) {
+        /**
+         * Emitted when next() has been called on the last iteration
+         */
         this.$emit('end');
       }
     }
