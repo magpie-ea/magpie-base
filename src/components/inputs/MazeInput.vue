@@ -49,7 +49,7 @@
 
           <KeypressInput
             :keys="{ [leftKey]: 'left', [rightKey]: 'right' }"
-            :show-options="false"
+            :show-options="showKeypressOptions"
             @update:response="
               correct = targets[i] === getOption($event, i);
               responses.push(getOption($event, i));
@@ -117,6 +117,13 @@ export default {
     rightKey: {
       type: String,
       default: 'j'
+    },
+    /**
+     * Whether to show the options for the KeypressInput
+     */
+    showKeypressOptions: {
+      type: Boolean,
+      default: true
     },
     /**
      * Maximum time alotted for a single response
