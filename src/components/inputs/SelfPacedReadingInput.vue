@@ -147,13 +147,13 @@ export default {
     end() {
       /**
        * List of response times
-       * @property array
+       * @property {array}
        */
       this.$emit('update:response-times', this.responseTimes);
 
       /**
        * Whether the user took more time on one item than the set response time
-       * @property array
+       * @property {array}
        */
       this.$emit('update:timeout', this.timeout);
 
