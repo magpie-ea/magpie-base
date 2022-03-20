@@ -10,6 +10,7 @@
             :responses.sync="$magpie.measurements.responses"
             :timeout.sync="$magpie.measurements.timeout"
             :correct.sync="$magpie.measurements.correct"
+            :target-positions.sync="$magpie.measurements.target_positions"
             @end="$magpie.saveAndNextScreen()" />
     </Screen>
 
@@ -127,10 +128,12 @@ export default {
   },
   data() {
     const length = this.targets.length;
+    const targetOnLeft = _.map(_.range(length), () => _.random());
     return {
       responseTimes: [],
       responses: [],
-      targetOnLeft: _.map(_.range(length), () => _.random()),
+      targetOnLeft,
+      targetPositions: targetOnLeft.map((left) => (left ? 'left' : 'right')),
       timeout: false,
       correct: true
     };
@@ -157,6 +160,11 @@ export default {
        * @property {array}
        */
       this.$emit('update:responses', this.responses);
+      /**
+       * The list of target positions (either 'left' or 'right')
+       * @property {array}
+       */
+      this.$emit('update:target-positions', this.targetPositions);
       /**
        * Whether all responses selected the target word
        * @property boolean
