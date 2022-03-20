@@ -31,43 +31,51 @@
     @property {array}
     @event update:response-times
     -->
-    <SerialInput
-      :iterations="chunks.length + 2"
-      @end="
-        $emit('update:response-times', responseTimes);
-        $emit('end');
-      "
-    >
+    <SerialInput :iterations="chunks.length + 2" @end="end">
       <template #default="{ i, next }">
-        <TimerStop
-          v-if="i > 1"
-          id="responseTime"
-          @update:time="
-            responseTimes.push($event);
-            i > chunks.length ? next() : null;
-          "
-        />
-        <TimerStart v-if="i > 0" id="responseTime" />
-        <KeypressInput
-          :keys="{ [trigger]: instructions }"
-          :show-options="showKeypressOptions"
-          @update:response="next"
-        />
-        <div
-          :class="{
-            text: true,
-            'underline-words': underline === 'words',
-            'underline-sentence': underline === 'sentence',
-            'show-all': wordPos === 'next'
-          }"
-        >
-          <span
-            v-for="(chunk, j) in chunks"
-            :key="j"
-            :class="{ current: i - 1 === j }"
-            v-text="chunk"
-          ></span>
-        </div>
+        <template v-if="timeout">
+          <TimerStop
+            id="responseTime"
+            @update:time="responseTimes.push($event)"
+          />
+          <Wait :time="0" @done="end" />
+        </template>
+        <template v-else>
+          <TimerStop
+            v-if="i > 1"
+            id="responseTime"
+            @update:time="
+              responseTimes.push($event);
+              i > chunks.length ? next() : null;
+            "
+          />
+          <TimerStart v-if="i > 0" id="responseTime" />
+          <KeypressInput
+            :keys="{ [trigger]: instructions }"
+            :show-options="showKeypressOptions"
+            @update:response="next"
+          />
+          <Wait
+            v-if="responseTime !== -1"
+            :time="responseTime"
+            @done="timeout = true"
+          />
+          <div
+            :class="{
+              text: true,
+              'underline-words': underline === 'words',
+              'underline-sentence': underline === 'sentence',
+              'show-all': wordPos === 'next'
+            }"
+          >
+            <span
+              v-for="(chunk, j) in chunks"
+              :key="j"
+              :class="{ current: i - 1 === j }"
+              v-text="chunk"
+            ></span>
+          </div>
+        </template>
       </template>
     </SerialInput>
   </div>
@@ -128,12 +136,40 @@ export default {
     showKeypressOptions: {
       type: Boolean,
       default: true
+    },
+    /**
+     * Maximum time alotted for a single response
+     */
+    responseTime: {
+      type: Number,
+      default: -1
     }
   },
   data() {
     return {
-      responseTimes: []
+      responseTimes: [],
+      timeout: false
     };
+  },
+  methods: {
+    end() {
+      /**
+       * List of response times
+       * @property array
+       */
+      this.$emit('update:response-times', this.responseTimes);
+
+      /**
+       * Whether the user took more time on one item than the set response time
+       * @property array
+       */
+      this.$emit('update:timeout', this.timeout);
+
+      /**
+       * Emitted either when the user takes longer than the set response time, or they finish until the end of chunks.
+       */
+      this.$emit('end');
+    }
   }
 };
 </script>
