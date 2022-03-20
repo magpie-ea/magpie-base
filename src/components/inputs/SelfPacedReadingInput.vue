@@ -77,7 +77,7 @@ import KeypressInput from '../inputs/KeypressInput';
 import SerialInput from '../inputs/SerialInput';
 import TimerStop from '../helpers/TimerStop';
 import TimerStart from '../helpers/TimerStart';
-import Wait from '@/components/helpers/Wait';
+import Wait from '../helpers/Wait';
 
 export default {
   name: 'SelfPacedReadingInput',
