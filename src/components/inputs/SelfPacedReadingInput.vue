@@ -22,15 +22,6 @@
 <template>
   <div>
     <!-- length + 2, because we have an initial empty slice and a last empty slice to record the rt -->
-    <!--
-    Emitted after the trigger has been pressed on the last chunk
-    @event end
-    -->
-    <!--
-    The list of response times per chunk
-    @property {array}
-    @event update:response-times
-    -->
     <SerialInput :iterations="chunks.length + 2" @end="end">
       <template #default="{ i, next }">
         <template v-if="timeout">
@@ -56,7 +47,7 @@
             @update:response="next"
           />
           <Wait
-            v-if="responseTime !== -1"
+            v-if="responseTime !== -1 && i > 1"
             :time="responseTime"
             @done="timeout = true"
           />
@@ -86,10 +77,11 @@ import KeypressInput from '../inputs/KeypressInput';
 import SerialInput from '../inputs/SerialInput';
 import TimerStop from '../helpers/TimerStop';
 import TimerStart from '../helpers/TimerStart';
+import Wait from '@/components/helpers/Wait';
 
 export default {
   name: 'SelfPacedReadingInput',
-  components: { TimerStart, TimerStop, SerialInput, KeypressInput },
+  components: { Wait, TimerStart, TimerStop, SerialInput, KeypressInput },
   props: {
     /**
      * Self-paced reading text chunks
