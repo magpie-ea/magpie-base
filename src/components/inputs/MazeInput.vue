@@ -4,8 +4,8 @@
 <Experiment>
     <Screen>
         <MazeInput
-            :targets="['This', 'is', 'a', 'nice', 'text.']"
-            :competitors="['Camels', 'are', 'in', 'a', 'way']"
+            :targets="['This', 'is', 'a', 'nice', 'text']"
+            :competitors="['xxx-xxx', 'can', 'usually', 'quite', 'yummy']"
             :response-times.sync="$magpie.measurements.times"
             :responses.sync="$magpie.measurements.responses"
             :timeout.sync="$magpie.measurements.timeout"
@@ -57,13 +57,10 @@
           />
 
           <div class="options">
-            <div v-if="i === 0" class="option">
-              {{ targets[i] }}
-            </div>
-            <div v-if="i > 0" class="option">
+            <div class="option">
               {{ getLeftOption(i) }}
             </div>
-            <div v-if="i > 0" class="option">
+            <div class="option">
               {{ getRightOption(i) }}
             </div>
           </div>
@@ -146,16 +143,33 @@ export default {
       return this.targetOnLeft[i] === 0 ? this.targets[i] : this.competitors[i];
     },
     getOption(side, i) {
-      if (i === 0) {
-        return this.targets[0];
-      }
       return side === 'left' ? this.getLeftOption(i) : this.getRightOption(i);
     },
     end() {
+      /**
+       * The list of response times per item
+       * @property {array}
+       */
       this.$emit('update:response-times', this.responseTimes);
+
+      /**
+       * The list of selected options
+       * @property {array}
+       */
       this.$emit('update:responses', this.responses);
+      /**
+       * Whether all responses selected the target word
+       * @property boolean
+       */
       this.$emit('update:correct', this.correct);
+      /**
+       * Whether the participant took longer than the timeout for one item and the task was aborted
+       * @property boolean
+       */
       this.$emit('update:timeout', this.timeout);
+      /**
+       * Emitted when the task was aborted due to timeout or incorrect response, or after selecting the last correct option
+       */
       this.$emit('end');
     }
   }
