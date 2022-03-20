@@ -47,6 +47,7 @@ This is a pre-built self-paced reading task screen.
         :underline="underline"
         :trigger="trigger"
         :response-times.sync="$magpie.measurements.response_times"
+        :timeout.sync="$magpie.measurements.spr_timeout"
         :show-keypress-options="false"
         @end="nextAfterResponse"
       />
@@ -80,6 +81,8 @@ import SelfPacedReadingInput from '../inputs/SelfPacedReadingInput';
  * |question|string||
  * |responses|string|The selected responses|
  * |response_times|string|The response times per selectable option|
+ * |spr_timeout|boolean|Whether the participant took longer than the set time limit per chunk|
+ * |sprTimeLimit|int|Time limit per chunk|
  *
  */
 export default {
@@ -132,6 +135,13 @@ export default {
     wordPos: {
       type: String,
       default: 'same'
+    },
+    /**
+     * Time limit per chunk
+     */
+    sprTimeLimit: {
+      type: Number,
+      default: -1
     }
   },
   data() {
