@@ -10,11 +10,12 @@ test('MazeInput', async () => {
             default: [
                 '<Screen>\n' +
                 '        <MazeInput\n' +
-                '            :targets="[\'This\', \'is\', \'a\', \'nice\', \'text.\']"\n' +
+                '            :targets="[\'This\', \'is\', \'a\', \'nice\', \'text\']"\n' +
                 '            :competitors="[\'Camels\', \'are\', \'in\', \'a\', \'way\']"\n' +
                 '            :response-times.sync="$magpie.measurements.times"\n' +
                 '            :target-positions.sync="$magpie.measurements.target_positions"\n' +
                 '            :responses.sync="$magpie.measurements.responses"\n' +
+                '            :showKeypressOptions="false"\n' +
                 '            :timeout.sync="$magpie.measurements.timeout"\n' +
                 '            :correct.sync="$magpie.measurements.correct"\n' +
                 '            @end="$magpie.saveAndNextScreen()" />' +
@@ -46,10 +47,10 @@ test('MazeInput', async () => {
 
     await experiment.trigger('keydown', {key: (experiment.text().startsWith('nice')? 'f' : 'j')})
     await Vue.nextTick()
-    expect(experiment.text()).toContain('text.')
+    expect(experiment.text()).toContain('text')
     expect(experiment.text()).toContain('way')
 
-    await experiment.trigger('keydown', {key: (experiment.text().startsWith('text.')? 'f' : 'j')})
+    await experiment.trigger('keydown', {key: (experiment.text().startsWith('text')? 'f' : 'j')})
     await Vue.nextTick()
     expect(experiment.text()).toBe('Bye world')
 
@@ -73,11 +74,12 @@ test('MazeInput with timeout', async () => {
             default: [
                 '<Screen>\n' +
                 '        <MazeInput\n' +
-                '            :targets="[\'This\', \'is\', \'a\', \'nice\', \'text.\']"\n' +
+                '            :targets="[\'This\', \'is\', \'a\', \'nice\', \'text\']"\n' +
                 '            :competitors="[\'Camels\', \'are\', \'in\', \'a\', \'way\']"\n' +
                 '            :response-times.sync="$magpie.measurements.times"\n' +
                 '            :target-positions.sync="$magpie.measurements.target_positions"\n' +
-                '            :responses.sync="$magpie.measurements.responses"\n' +
+                '            :responses.sync="$magpie.measurements.responses"\n'+
+                '            :showKeypressOptions="false"\n' +
                 '            :timeout.sync="$magpie.measurements.timeout"\n' +
                 '            :correct.sync="$magpie.measurements.correct"\n' +
                 '            :response-time="5000"' +
@@ -133,9 +135,10 @@ test('MazeInput with incorrect response', async () => {
             default: [
                 '<Screen>\n' +
                 '        <MazeInput\n' +
-                '            :targets="[\'This\', \'is\', \'a\', \'nice\', \'text.\']"\n' +
+                '            :targets="[\'This\', \'is\', \'a\', \'nice\', \'text\']"\n' +
                 '            :competitors="[\'Camels\', \'are\', \'in\', \'a\', \'way\']"\n' +
                 '            :response-times.sync="$magpie.measurements.times"\n' +
+                '            :showKeypressOptions="false"\n' +
                 '            :target-positions.sync="$magpie.measurements.target_positions"\n' +
                 '            :responses.sync="$magpie.measurements.responses"\n' +
                 '            :timeout.sync="$magpie.measurements.timeout"\n' +
