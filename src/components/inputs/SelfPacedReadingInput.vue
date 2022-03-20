@@ -21,8 +21,9 @@
 
 <template>
   <div>
+    <!-- length + 2, because we have an initial empty slice and a last empty slice to record the rt -->
     <SerialInput
-      :iterations="chunks.length + 1"
+      :iterations="chunks.length + 2"
       @end="
         $emit('update:response-times', responseTimes);
         $emit('end');
@@ -30,14 +31,14 @@
     >
       <template #default="{ i, next }">
         <TimerStop
-          v-if="i > 0"
+          v-if="i > 1"
           id="responseTime"
           @update:time="
             responseTimes.push($event);
-            i === chunks.length ? next() : null;
+            i > chunks.length ? next() : null;
           "
         />
-        <TimerStart id="responseTime" />
+        <TimerStart v-if="i > 0" id="responseTime" />
         <KeypressInput
           :keys="{ [trigger]: instructions }"
           :show-options="showKeypressOptions"
@@ -54,7 +55,7 @@
           <span
             v-for="(chunk, j) in chunks"
             :key="j"
-            :class="{ current: i === j }"
+            :class="{ current: i - 1 === j }"
             v-text="chunk"
           ></span>
         </div>
