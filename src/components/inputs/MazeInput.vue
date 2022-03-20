@@ -82,11 +82,11 @@
 
 <script>
 import KeypressInput from '../inputs/KeypressInput';
-import SerialInput from '@/components/inputs/SerialInput';
-import TimerStop from '@/components/helpers/TimerStop';
-import TimerStart from '@/components/helpers/TimerStart';
+import SerialInput from '../inputs/SerialInput';
+import TimerStop from '../helpers/TimerStop';
+import TimerStart from '../helpers/TimerStart';
 import _ from 'lodash';
-import Wait from '@/components/helpers/Wait';
+import Wait from '../helpers/Wait';
 
 export default {
   name: 'MazeInput',
