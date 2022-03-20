@@ -174,12 +174,12 @@ export default {
       this.$emit('update:target-positions', this.targetPositions);
       /**
        * Whether all responses selected the target word
-       * @property boolean
+       * @property {boolean}
        */
       this.$emit('update:correct', this.correct);
       /**
        * Whether the participant took longer than the timeout for one item and the task was aborted
-       * @property boolean
+       * @property {boolean}
        */
       this.$emit('update:timeout', this.timeout);
       /**
