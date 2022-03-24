@@ -13,9 +13,9 @@ To initialize a new experiment based on magpie (after installing the package), r
 For more information, please visit [the project homepage](https://magpie-ea.github.io/magpie-site/)
 
 ## Documentation
-The API reference for the latest version is available at [magpie-reference.netlify.app](https://magpie-reference.netlify.app).
+The API reference for the latest version is available at [reference.magpie-experiments.org](https://reference.magpie-experiments.org).
 
-A guided introduction to building experiments with magpie v3 is available at [magpie-manual.netlify.app](https://magpie-manual.netlify.app).
+A guided introduction to building experiments with magpie v3 is available at [magpie-experiments.org](https://magpie-experiments.org).
 
 ## How to update existing projects
 
