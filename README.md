@@ -46,6 +46,7 @@ If a release should be done
 ### Development principles
  * Components should not expose CSS classes for manipulation but instead offer customization either via unstyled slots or via props.
  * Pre-packaged screens are more of a convenience should be rather easy to replicate with normal userland code
+ * Always use camelCase for measurements
 
 ### Linting
 Before committing changes it is recommended to run the linter to make sure the changes adhere to the general coding style.
