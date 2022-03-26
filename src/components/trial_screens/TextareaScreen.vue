@@ -69,7 +69,7 @@ import LifecycleScreen from '../screens/LifecycleScreen';
  * |pauseTime *(optional)*|int||
  * |fixationTime *(optional)*|int||
  * |stimulusTime *(optional)*|int||
- * |responseTime *(optional)*|int|The response time limit|
+ * |responseTimeLimit *(optional)*|int|The response time limit|
  * |feedbackTime *(optional)*|int||
  * |question|string||
  * |response|string|The entered response text|

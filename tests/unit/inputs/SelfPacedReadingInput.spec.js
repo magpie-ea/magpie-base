@@ -15,7 +15,7 @@ test('SelfPacedReadingInput', async () => {
                 '            trigger=" "\n' +
                 '            instructions="Press space"' +
                 '            :response-times.sync="$magpie.measurements.times"' +
-                '            :responseTime="5000"' +
+                '            :responseTimeLimit="5000"' +
                 '            :timeout.sync="$magpie.measurements.timeout"' +
                 '            @end="$magpie.saveAndNextScreen()" />\n' +
                 '    </Screen>',
@@ -78,7 +78,7 @@ test('SelfPacedReadingInput with timeout', async () => {
                 '            trigger=" "\n' +
                 '            instructions="Press space"' +
                 '            :response-times.sync="$magpie.measurements.times"' +
-                '            :responseTime="5000"' +
+                '            :responseTimeLimit="5000"' +
                 '            :timeout.sync="$magpie.measurements.timeout"' +
                 '            @end="$magpie.saveAndNextScreen()" />\n' +
                 '    </Screen>',

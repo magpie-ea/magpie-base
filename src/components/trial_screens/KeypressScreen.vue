@@ -77,7 +77,7 @@ import FixationCross from '../stimuli/FixationCross';
  * |pauseTime *(optional)*|int||
  * |fixationTime *(optional)*|int||
  * |stimulusTime *(optional)*|int||
- * |responseTime *(optional)*|int|The response time limit|
+ * |responseTimeLimit *(optional)*|int|The response time limit|
  * |feedbackTime *(optional)*|int||
  * |question|string||
  * |response|string|The label of the pressed key|

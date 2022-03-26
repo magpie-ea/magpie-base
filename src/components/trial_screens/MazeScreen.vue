@@ -45,7 +45,7 @@ This is a pre-built maze task screen.
       <MazeInput
         :targets="targets"
         :competitors="competitors"
-        :response-time="mazeTimeLimit"
+        :response-time-limit="mazeTimeLimit"
         :response-times.sync="$magpie.measurements.times"
         :target-positions.sync="$magpie.measurements.target_positions"
         :responses.sync="$magpie.measurements.responses"
@@ -79,7 +79,7 @@ import MazeInput from '../inputs/MazeInput';
  * |pauseTime *(optional)*|int||
  * |fixationTime *(optional)*|int||
  * |stimulusTime *(optional)*|int||
- * |responseTime *(optional)*|int|The response time limit|
+ * |responseTimeLimit *(optional)*|int|The response time limit|
  * |feedbackTime *(optional)*|int||
  * |question|string||
  * |responses|array|The selected responses|

@@ -42,8 +42,8 @@
           />
           <TimerStart id="responseTime" />
           <Wait
-            v-if="responseTime !== -1"
-            :time="responseTime"
+            v-if="responseTimeLimit !== -1"
+            :time="responseTimeLimit"
             @done="timeout = true"
           />
 
@@ -128,7 +128,7 @@ export default {
     /**
      * Maximum time alotted for a single response
      */
-    responseTime: {
+    responseTimeLimit: {
       type: Number,
       default: -1
     }

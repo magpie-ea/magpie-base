@@ -34,7 +34,7 @@ test('LifecycleScreen with response time', async () => {
     const experiment = mount(Experiment, {
         slots: {
             default: [
-                '<LifecycleScreen :responseTime="500">' +
+                '<LifecycleScreen :responseTimeLimit="500">' +
                 '<template #task>' +
                 '<button @click="$magpie.saveAndNextScreen()">Click here</button>' +
                 '</template>' +
@@ -59,7 +59,7 @@ test('LifecycleScreen with response time', async () => {
     const experiment = mount(Experiment, {
         slots: {
             default: [
-                '<LifecycleScreen :responseTime="500">' +
+                '<LifecycleScreen :responseTimeLimit="500">' +
                 '<template #task>' +
                 '<button @click="$magpie.saveAndNextScreen()">Click here</button>' +
                 '</template>' +

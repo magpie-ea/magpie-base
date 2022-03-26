@@ -47,8 +47,8 @@
             @update:response="next"
           />
           <Wait
-            v-if="responseTime !== -1 && i > 1"
-            :time="responseTime"
+            v-if="responseTimeLimit !== -1 && i > 1"
+            :time="responseTimeLimit"
             @done="timeout = true"
           />
           <div
@@ -132,7 +132,7 @@ export default {
     /**
      * Maximum time alotted for a single response
      */
-    responseTime: {
+    responseTimeLimit: {
       type: Number,
       default: -1
     }

@@ -82,7 +82,7 @@ test('MazeInput with timeout', async () => {
                 '            :showKeypressOptions="false"\n' +
                 '            :timeout.sync="$magpie.measurements.timeout"\n' +
                 '            :correct.sync="$magpie.measurements.correct"\n' +
-                '            :response-time="5000"' +
+                '            :responseTimeLimit="5000"' +
                 '            @end="$magpie.saveAndNextScreen()" />' +
                 '    </Screen>',
                 '<Screen>Bye world</Screen>',

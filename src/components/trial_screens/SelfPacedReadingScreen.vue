@@ -76,7 +76,7 @@ import SelfPacedReadingInput from '../inputs/SelfPacedReadingInput';
  * |pauseTime *(optional)*|int||
  * |fixationTime *(optional)*|int||
  * |stimulusTime *(optional)*|int||
- * |responseTime *(optional)*|int|The response time limit|
+ * |responseTimeLimit *(optional)*|int|The response time limit|
  * |feedbackTime *(optional)*|int||
  * |question|string||
  * |responses|string|The selected responses|

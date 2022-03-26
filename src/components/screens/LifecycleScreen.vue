@@ -71,15 +71,19 @@ The last four phases can be completely customized using the corresponding slots,
       <p v-if="qud" v-text="qud"></p>
       <slot v-if="!stimulusTime" name="stimulus"></slot>
       <slot name="task"></slot>
-      <Wait v-if="responseTime" :time="responseTime" @done="nextAfterTimeout" />
+      <Wait
+        v-if="responseTimeLimit"
+        :time="responseTimeLimit"
+        @done="nextAfterTimeout"
+      />
       <Record
         :data="{
           ...(qud && { qud }),
-          ...(responseTime && { response_timeout: false }),
+          ...(responseTimeLimit && { response_timeout: false }),
           ...(pauseTime && { pauseTime }),
           ...(fixationTime && { fixationTime }),
           ...(stimulusTime && { stimulusTime }),
-          ...(responseTime && { responseTime }),
+          ...(responseTimeLimit && { responseTimeLimit }),
           ...(feedbackTime && { feedbackTime })
         }"
       />
@@ -117,7 +121,7 @@ import Record from '../helpers/Record';
  * |pauseTime *(optional)*|int||
  * |fixationTime *(optional)*|int||
  * |stimulusTime *(optional)*|int||
- * |responseTime *(optional)*|int|The response time limit|
+ * |responseTimeLimit *(optional)*|int|The response time limit|
  * |feedbackTime *(optional)*|int||
  *
  */
@@ -164,7 +168,7 @@ export default {
      * How long the response should be enabled, don't set this, to avoid the timeout altogether.
      * When this is set, a `response_timeout` boolean property will be added to the result, indicating whether timeout occurred
      */
-    responseTime: {
+    responseTimeLimit: {
       type: Number,
       default: 0
     },
@@ -186,7 +190,7 @@ export default {
       }
     },
     nextAfterTimeout() {
-      if (this.$props.responseTime) {
+      if (this.$props.responseTimeLimit) {
         this.$magpie.measurements.response_timeout = true;
       }
       this.nextAfterResponse();

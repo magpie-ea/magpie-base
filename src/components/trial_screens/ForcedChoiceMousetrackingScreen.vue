@@ -94,8 +94,8 @@
         {{ $t('general.go') }}
       </button>
       <Wait
-        v-if="playing && responseTime"
-        :time="responseTime"
+        v-if="playing && responseTimeLimit"
+        :time="responseTimeLimit"
         @done="$magpie.nextSlide()"
       />
       <TimerStart v-if="playing" id="fcmt-response-time" />
@@ -171,7 +171,7 @@ export default {
     /**
      * How long the response should be enabled, don't set this, to avoid the timeout altogether
      */
-    responseTime: {
+    responseTimeLimit: {
       type: Number,
       default: 0
     }
