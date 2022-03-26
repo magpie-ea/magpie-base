@@ -55,7 +55,7 @@
 
  - Record component: Add global prop
  - Experiment: Add record prop for declaratively recording expData
- - Lifecycle Screen: Automatically set response_timeout boolean if responseTime is set
+ - Lifecycle Screen: Automatically set responseTimeout boolean if responseTime is set
  - KeypressInput: Allow hiding options
 
 ### Fixes

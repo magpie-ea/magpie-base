@@ -79,7 +79,7 @@ The last four phases can be completely customized using the corresponding slots,
       <Record
         :data="{
           ...(qud && { qud }),
-          ...(responseTimeLimit && { response_timeout: false }),
+          ...(responseTimeLimit && { responseTimeout: false }),
           ...(pauseTime && { pauseTime }),
           ...(fixationTime && { fixationTime }),
           ...(stimulusTime && { stimulusTime }),
@@ -116,7 +116,7 @@ import Record from '../helpers/Record';
  * |Measurement|Type|Description|
  * |--|---|---|
  * |responseTime|int|Time between display of this screen until the screen is left|
- * |response_timeout|boolean|Whether the response time limit was reached|
+ * |responseTimeout|boolean|Whether the response time limit was reached|
  * |qud *(optional)*|string||
  * |pauseTime *(optional)*|int||
  * |fixationTime *(optional)*|int||
@@ -166,7 +166,7 @@ export default {
     },
     /**
      * How long the response should be enabled, don't set this, to avoid the timeout altogether.
-     * When this is set, a `response_timeout` boolean property will be added to the result, indicating whether timeout occurred
+     * When this is set, a `responseTimeout` boolean property will be added to the result, indicating whether timeout occurred
      */
     responseTimeLimit: {
       type: Number,
@@ -191,7 +191,7 @@ export default {
     },
     nextAfterTimeout() {
       if (this.$props.responseTimeLimit) {
-        this.$magpie.measurements.response_timeout = true;
+        this.$magpie.measurements.responseTimeout = true;
       }
       this.nextAfterResponse();
     }

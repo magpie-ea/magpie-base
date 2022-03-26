@@ -79,7 +79,7 @@ import LifecycleScreen from '../screens/LifecycleScreen';
  * |Measurement|Type|Description|
  * |--|---|---|
  * |responseTime|int|Time between display of this screen until the screen is left|
- * |response_timeout|boolean|Whether the response time limit was reached|
+ * |responseTimeout|boolean|Whether the response time limit was reached|
  * |qud *(optional)*|string||
  * |pauseTime *(optional)*|int||
  * |fixationTime *(optional)*|int||

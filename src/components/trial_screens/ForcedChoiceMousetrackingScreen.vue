@@ -122,7 +122,7 @@ import TimerStart from '../helpers/TimerStart';
  * |Measurement|Type|Description|
  * |--|---|---|
  * |responseTime|int|Time between click on 'Go' and response|
- * |response_timeout|boolean|Whether the response time limit was reached|
+ * |responseTimeout|boolean|Whether the response time limit was reached|
  * |mt_time|array|Mouse tracking time coordinates|
  * |mt_x|array|Mouse tracking x coordinates (origin is at the 'Go' button, positive goes right)|
  * |mt_y|array|Mouse tracking y coordinates (origin is at the 'Go' button, positive goes down)|

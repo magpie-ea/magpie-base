@@ -27,7 +27,7 @@ test('LifecycleScreen', async () => {
     const results = experiment.vm.$magpie.getAllData()
     expect(results).toBeInstanceOf(Array)
     expect(results).toHaveLength(1)
-    expect(results[0].response_timeout).toBeUndefined()
+    expect(results[0].responseTimeout).toBeUndefined()
 })
 
 test('LifecycleScreen with response time', async () => {
@@ -52,7 +52,7 @@ test('LifecycleScreen with response time', async () => {
     const results = experiment.vm.$magpie.getAllData()
     expect(results).toBeInstanceOf(Array)
     expect(results).toHaveLength(1)
-    expect(results[0].response_timeout).toEqual(false)
+    expect(results[0].responseTimeout).toEqual(false)
 })
 
 test('LifecycleScreen with response time', async () => {
@@ -78,7 +78,7 @@ test('LifecycleScreen with response time', async () => {
     const results = experiment.vm.$magpie.getAllData()
     expect(results).toBeInstanceOf(Array)
     expect(results).toHaveLength(1)
-    expect(results[0].response_timeout).toEqual(true)
+    expect(results[0].responseTimeout).toEqual(true)
 })
 
 test('LifecycleScreen with pause', async () => {
