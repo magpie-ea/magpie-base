@@ -73,7 +73,7 @@ import MazeInput from '../inputs/MazeInput';
  *
  * |Measurement|Type|Description|
  * |--|---|---|
- * |response_time|int|Time between display of this screen until the screen is left|
+ * |responseTime|int|Time between display of this screen until the screen is left|
  * |response_timeout|boolean|Whether the response time limit was reached|
  * |qud *(optional)*|string||
  * |pauseTime *(optional)*|int||

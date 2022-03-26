@@ -148,7 +148,7 @@ The id of the current slide
 <a name="Magpie+responseTimeStart"></a>
 
 ### magpie.responseTimeStart : <code>number</code>
-The start time of the response_time measurement
+The start time of the responseTime measurement
 
 **Kind**: instance property of [<code>Magpie</code>](#Magpie)  
 <a name="Magpie+measurements"></a>
@@ -210,7 +210,7 @@ SaveMeasurements and go to the next screen. (Will also reset scroll position.)
 
 ### magpie.addTrialData(data)
 Add a result set
-This method will automatically add a response_time key to your data with time measured from the start of the current screen
+This method will automatically add a responseTime key to your data with time measured from the start of the current screen
 
 **Kind**: instance method of [<code>Magpie</code>](#Magpie)  
 **Access**: public  

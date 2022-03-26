@@ -102,7 +102,7 @@
       <TimerStop
         v-if="$magpie.measurements.response"
         id="fcmt-response-time"
-        :time.sync="$magpie.measurements.response_time"
+        :time.sync="$magpie.measurements.responseTime"
       />
     </Slide>
   </Screen>
@@ -121,7 +121,7 @@ import TimerStart from '../helpers/TimerStart';
  *
  * |Measurement|Type|Description|
  * |--|---|---|
- * |response_time|int|Time between click on 'Go' and response|
+ * |responseTime|int|Time between click on 'Go' and response|
  * |response_timeout|boolean|Whether the response time limit was reached|
  * |mt_time|array|Mouse tracking time coordinates|
  * |mt_x|array|Mouse tracking x coordinates (origin is at the 'Go' button, positive goes right)|

@@ -187,7 +187,7 @@ export default class Magpie extends EventEmitter {
     this.currentSlideIndex = 0;
 
     /**
-     * The start time of the response_time measurement
+     * The start time of the responseTime measurement
      * @instance
      * @member responseTimeStart
      * @memberOf Magpie
@@ -309,7 +309,7 @@ export default class Magpie extends EventEmitter {
 
   /**
    * Add a result set
-   * This method will automatically add a response_time key to your data with time measured from the start of the current screen
+   * This method will automatically add a responseTime key to your data with time measured from the start of the current screen
    * @instance
    * @memberOf Magpie
    * @public
@@ -320,7 +320,7 @@ export default class Magpie extends EventEmitter {
       this.trialData[this.currentScreenIndex] = [];
     }
     this.trialData[this.currentScreenIndex].push({
-      response_time: Date.now() - this.responseTimeStart,
+      responseTime: Date.now() - this.responseTimeStart,
       ...data
     });
   }
@@ -338,7 +338,7 @@ export default class Magpie extends EventEmitter {
 
   saveMeasurements() {
     this.addTrialData({
-      response_time: Date.now() - this.responseTimeStart,
+      responseTime: Date.now() - this.responseTimeStart,
       ...this.measurements
     });
   }

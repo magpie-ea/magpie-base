@@ -22,5 +22,5 @@ test('ResponseTimeStart', async () => {
     experiment.vm.$magpie.saveAndNextScreen()
     const results = experiment.vm.$magpie.getAllData()
     expect(results).toHaveLength(1)
-    expect(results[0].response_time / 1000).toBeCloseTo(200 / 1000, 1)
+    expect(results[0].responseTime / 1000).toBeCloseTo(200 / 1000, 1)
 })
