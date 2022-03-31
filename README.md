@@ -15,7 +15,7 @@ For more information, please visit [the project homepage](https://magpie-ea.gith
 ## Documentation
 The API reference for the latest version is available at [reference.magpie-experiments.org](https://reference.magpie-experiments.org).
 
-A guided introduction to building experiments with magpie v3 is available at [magpie-experiments.org](https://magpie-experiments.org).
+A guided introduction to building experiments with magpie is available at [magpie-experiments.org](https://magpie-experiments.org).
 
 ## How to update existing projects
 
