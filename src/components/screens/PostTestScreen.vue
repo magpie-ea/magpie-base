@@ -46,6 +46,7 @@
             <DropdownInput
               :options="[
                 '',
+                $t('screens.PostTestScreen.educationBelowHighschool'),
                 $t('screens.PostTestScreen.educationHighschool'),
                 $t('screens.PostTestScreen.educationCollege'),
                 $t('screens.PostTestScreen.educationHigher')
@@ -63,6 +64,7 @@
               :placeholder="
                 $t('screens.PostTestScreen.nativeLanguagesExplanation')
               "
+              :title="$t('screens.PostTestScreen.nativeLanguagesExplanation')"
           /></label>
         </p>
         <!-- @slot You can add additional questions here, storing data in measurements
@@ -100,7 +102,7 @@ import Slide from '../Slide';
  * |--|---|---|
  * |age|int||
  * |gender|'' \| 'male' \| 'female' \| 'other'||
- * |education|'' \| 'highschool' \| 'college' \| 'higher'||
+ * |education|'' \| 'below highschool' \| 'highschool' \| 'college' \| 'higher'||
  * |languages|string||
  * |comments|string||
  */

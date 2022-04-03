@@ -23,12 +23,14 @@
       "female": "female",
       "otherGender": "other",
       "education": "Level of Education",
+      "educationBelowHighschool": "Did not graduate High-school",
       "educationHighschool": "Graduated High-school",
       "educationCollege": "Graduated College",
       "educationHigher": "Higher degree",
       "nativeLanguages": "Native languages",
       "nativeLanguagesExplanation": "the language(s) spoken at home when you were a child",
-      "comments": "Further comments"
+      "comments": "Further comments",
+      "belowHighschool": "screens.PostTestScreen.belowHighschool"
     },
     "SubmitResultsScreen": {
       "waiting": "Hold on, while we submit your data.",

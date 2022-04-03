@@ -23,6 +23,7 @@
       "female": "weiblich",
       "otherGender": "divers",
       "education": "Bildungsgrad",
+      "educationBelowHighschool": "kein Abitur",
       "educationHighschool": "Abitur",
       "educationCollege": "Bachelor",
       "educationHigher": "Höherer Abschluss",
