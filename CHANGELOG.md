@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.0.0
+This is the first production release of magpie-base.
+
+### New
+- Create MazeInput and MazeScreen
+- Create abstract serial input component
+- Create 'Magpie.warning's upon unhandled rejections
+- PostTestScreen: add belowHighschool education level
+
+### Changed
+- SelfPacedReading: New interface **BREAKING CHANGE**
+- Rename response_timeout to responseTimeout **BREAKING CHANGE**
+- Rename response_time to responseTime **BREAKING CHANGE**
+- Rename responseTime to responseTimeLimit **BREAKING CHANGE**
+
+### Fixed
+- Fix showroom template
+- Fix vue.config.js: Find out dynamically whether we're on github actions
+
 ## 0.6.0
 
 ### New
