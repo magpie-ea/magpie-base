@@ -34,6 +34,32 @@
 </Experiment>
 ```
 
+```vue
+<Experiment>
+  <Screen>
+      <p>Which sentence is ungrammatical?</p>
+      <MultipleChoiceInput
+          :response.sync= "$magpie.measurements.grammatical"
+          :options="['banana', 'bear', 'horse', 'bread']">
+        <template #banana>
+          The <strong>banana</strong> went out to buy some groceries.
+        </template>
+        <template #bear>
+          The <strong>bear</strong> raced past the barn froze.
+        </template>
+        <template #horse>
+          The <strong>horse</strong> could not have been eaten why it was racing.
+        </template>
+        <template #bread>
+          The <strong>bread</strong> was sour before it was made.
+        </template>
+      </MultipleChoiceInput>
+      <button @click="$magpie.saveAndNextScreen();">Submit</button>
+  </Screen>
+  <DebugResultsScreen />
+</Experiment>
+```
+
 </docs>
 
 <template>
@@ -47,7 +73,9 @@
             name="options"
             @input="$emit('update:response', option)"
           />
-          <template v-if="labels">{{ option }}</template></label
+          <template v-if="labels"
+            ><slot :name="option">{{ option }}</slot></template
+          ></label
         >
       </div>
     </form>
