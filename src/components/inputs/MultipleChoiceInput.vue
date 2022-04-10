@@ -40,19 +40,14 @@
       <p>Which sentence is ungrammatical?</p>
       <MultipleChoiceInput
           :response.sync= "$magpie.measurements.grammatical"
-          :options="['banana', 'bear', 'horse', 'bread']">
-        <template #banana>
-          The <strong>banana</strong> went out to buy some groceries.
-        </template>
-        <template #bear>
-          The <strong>bear</strong> raced past the barn froze.
-        </template>
-        <template #horse>
-          The <strong>horse</strong> could not have been eaten why it was racing.
-        </template>
-        <template #bread>
-          The <strong>bread</strong> was sour before it was made.
-        </template>
+          :randomize="true"
+          :options="['banana', 'bear', 'horse', 'bread']"
+          :options-html="[
+              'The <strong>banana</strong> went out to buy some groceries.',
+              'The <strong>bear</strong> raced past the barn froze.',
+              'The <strong>horse</strong> could not have been eaten why it was racing.',
+              'The <strong>bread</strong> was sour before it was made.'
+              ]">
       </MultipleChoiceInput>
       <button @click="$magpie.saveAndNextScreen();">Submit</button>
   </Screen>
@@ -66,17 +61,16 @@
   <div :class="['multiple-choice', orientation]">
     <form>
       <div class="options">
-        <label v-for="(option, i) in options" :key="i"
+        <label v-for="i in order" :key="i"
           ><input
-            :value="option"
+            :value="options[i]"
             type="radio"
             name="options"
-            @input="$emit('update:response', option)"
-          />
+            @input="$emit('update:response', options[i])" />
           <template v-if="labels"
-            ><slot :name="option">{{ option }}</slot></template
-          ></label
-        >
+            ><span v-if="!optionsHtml.length">{{ options[i] }}</span
+            ><span v-else v-html="optionsHtml[i]" /></template
+        ></label>
       </div>
     </form>
   </div>
@@ -86,6 +80,8 @@
 /**
  * Have the participant choose between multiple options.
  */
+import shuffle from 'lodash/shuffle';
+
 export default {
   name: 'MultipleChoiceInput',
   props: {
@@ -95,6 +91,13 @@ export default {
     options: {
       type: Array,
       required: true
+    },
+    /**
+     * The possible options to choose from as HTML strings
+     */
+    optionsHtml: {
+      type: Array,
+      default: () => []
     },
     /**
      * Whether to display 'vertical' or 'horizontal'
@@ -109,7 +112,23 @@ export default {
     labels: {
       type: Boolean,
       default: true
+    },
+    /**
+     * Whether to randomize the option order
+     */
+    randomize: {
+      type: Boolean,
+      default: false
     }
+  },
+  data() {
+    let order = Object.keys(this.options);
+    if (this.randomize) {
+      order = shuffle(order);
+    }
+    return {
+      order
+    };
   },
   methods: {
     onOptionClick(option) {
