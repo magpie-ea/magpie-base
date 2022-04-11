@@ -31,6 +31,7 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
           question,
           options,
           orientation,
+          randomize,
           ...(optionsHtml.length && { optionsHtml })
         }"
       />
@@ -39,6 +40,7 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
         :options="options"
         :options-html="optionsHtml"
         :orientation="orientation"
+        :randomize="randomize"
         :response.sync="$magpie.measurements.response"
       />
       <button
@@ -83,6 +85,7 @@ import LifecycleScreen from '../screens/LifecycleScreen';
  * |question|string||
  * |options|array||
  * |optionsHtml *(optional)*|array||
+ * |randomize|boolean||
  * |orientation|string||
  * |response|string|The chosen option|
  *
@@ -123,6 +126,13 @@ export default {
     orientation: {
       type: String,
       default: 'vertical'
+    },
+    /**
+     * Whether to randomize the option order
+     */
+    randomize: {
+      type: Boolean,
+      default: false
     }
   }
 };
