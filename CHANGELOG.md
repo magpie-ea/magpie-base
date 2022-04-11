@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.0
+
+### New
+
+- Extend MultipleChoiceScreen and MultipleChoiceInput with `optionsHtml` and `randomize`
+
 ## 3.0.0
 This is the first production release of magpie-base.
 
