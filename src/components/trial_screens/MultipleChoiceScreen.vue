@@ -30,12 +30,14 @@ This is a pre-built multiple choice screen, with limited functionality, but easi
         :data="{
           question,
           options,
-          orientation
+          orientation,
+          ...(optionsHtml.length && { optionsHtml })
         }"
       />
       <p v-if="question" v-text="question"></p>
       <MultipleChoiceInput
         :options="options"
+        :options-html="optionsHtml"
         :orientation="orientation"
         :response.sync="$magpie.measurements.response"
       />
@@ -80,6 +82,7 @@ import LifecycleScreen from '../screens/LifecycleScreen';
  * |feedbackTime *(optional)*|int||
  * |question|string||
  * |options|array||
+ * |optionsHtml *(optional)*|array||
  * |orientation|string||
  * |response|string|The chosen option|
  *
@@ -106,6 +109,13 @@ export default {
     options: {
       type: Array,
       required: true
+    },
+    /**
+     * The possible options to choose from as HTML strings
+     */
+    optionsHtml: {
+      type: Array,
+      default: () => []
     },
     /**
      * Whether to display 'vertical' or 'horizontal'
