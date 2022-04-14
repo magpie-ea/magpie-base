@@ -1,8 +1,9 @@
 const path = require('path');
+const { version } = require('./package.json')
 
 module.exports = {
   // set your styleguidist configuration here
-  title: 'Magpie reference',
+  title: 'Magpie reference ('+version+')',
   require: [path.join(__dirname, 'styleguidist/global.requires.js')],
   // components: 'src/components/**/[A-Z]*.vue',
   // defaultExample: true,
