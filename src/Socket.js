@@ -194,6 +194,11 @@ export default class Socket extends EventEmitter {
       .receive('ok', () => {})
       .receive('error', this.errorHandler)
       .receive('timeout', this.errorHandler);
+
+    // Send heartbeat every 30s
+    setInterval(() => {
+      this.participantChannel.push('report_heartbeat');
+    }, 30000);
   }
 
   join() {
