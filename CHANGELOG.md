@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.1
+
+### Fixed
+
+ - Socket: Do not warn when checking for socket existence
+ - Socket: Implement heartbeat to avoid session timeout
+
 ## 3.1.0
 
 ### New
