@@ -134,6 +134,8 @@ export default class Magpie extends EventEmitter {
      */
     this.debug = options.mode === 'debug';
 
+    this.socketUrl = options.socketUrl;
+
     /**
      * @instance
      * @member socket
@@ -285,7 +287,7 @@ export default class Magpie extends EventEmitter {
     this.currentSlideIndex = 0;
     this.measurements = {};
     this.currentVarsData = {};
-    if (this.socket) {
+    if (this.socketUrl) {
       this.socket.setCurrentScreen(this.currentScreenIndex);
     }
     // Start new trial data and restart response timer
@@ -401,7 +403,7 @@ export default class Magpie extends EventEmitter {
   }
 
   async submitResults(submissionURL, data, intermediate) {
-    if (this.socket) {
+    if (this.socketUrl) {
       try {
         const submissionType = intermediate
           ? 'save_intermediate_results'
