@@ -28,4 +28,5 @@ global.self = window
 global.WebSocket = window.WebSocket = require('websocket').w3cwebsocket
 
 window.scrollTo = () => {}
+window.alert = (...args) => {console.log(...args)}
 console.log = () => {}
