@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.2
+
+### Fixed
+
+ - Handle dropouts in interactive experiments
+ - Fix github pages builds in project templates
+
 ## 3.1.1
 
 ### Fixed
