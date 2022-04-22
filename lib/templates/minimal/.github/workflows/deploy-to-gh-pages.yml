@@ -40,6 +40,8 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install and Build 🔧
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
         run: |
           npm install
           npm run build
