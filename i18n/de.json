@@ -51,6 +51,9 @@
       "statusYouLeft": "Sie haben den Chat verlassen",
       "statusParticipantJoined": "{user} ist dem Chat beigetreten",
       "statusParticipantLeft": "{user} hat den Chat verlassen"
+    },
+    "general": {
+      "aborted": "Das Experiment kann leider nicht zu Ende geführt werden, weil eine*r der Teilnehmenden die Sitzung verlassen hat. Sie springen nun zum Ende des Experiments."
     }
   }
 }

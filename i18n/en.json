@@ -52,6 +52,9 @@
       "statusYouLeft": "You left",
       "statusParticipantJoined": "{user} joined",
       "statusParticipantLeft": "{user} left"
+    },
+    "general": {
+      "aborted": "The experiment cannot be continued, because a collaborator has left the session. Please proceed to result submission."
     }
   }
 }

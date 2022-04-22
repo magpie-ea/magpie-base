@@ -135,6 +135,20 @@ export default {
     this.$magpie.experiment = this;
     window.$magpie = this.$magpie;
 
+    if (this.$magpie.socketUrl) {
+      let previousParticipantCount = 0;
+      this.$watch('$magpie.socket.participants', (val) => {
+        if (val.length - previousParticipantCount < 0) {
+          window.alert(this.$t('interactive.general.aborted'));
+          const screens = this.$slots.default.filter(
+            (c) => !!c.componentOptions
+          );
+          this.$magpie.nextScreen(screens.length - 1);
+        }
+        previousParticipantCount = val.length;
+      });
+    }
+
     if (this.title) {
       document.title = this.title;
     }
@@ -185,6 +199,7 @@ export default {
       window.scrollTo(0, window.scrollY + expPos.top);
     }
   },
+
   /**
    * The contents of this slot will be visible during the entire experiment
    * @slot title

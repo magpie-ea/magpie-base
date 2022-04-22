@@ -228,9 +228,10 @@ export default class Socket extends EventEmitter {
 
     this.roomChannel.on('presence_diff', (diff) => {
       Object.keys(diff.joins).forEach((id) => this.participants.push(id));
-      Object.keys(diff.leaves).forEach((id) =>
-        this.participants.splice(this.participants.indexOf(id), 1)
-      );
+      Object.keys(diff.leaves).forEach((id) => {
+        this.participants.splice(this.participants.indexOf(id), 1);
+        this.leaveHandler && this.leaveHandler();
+      });
     });
 
     setInterval(() => {
