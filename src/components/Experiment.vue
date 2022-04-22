@@ -138,11 +138,12 @@ export default {
     if (this.$magpie.socketUrl) {
       let previousParticipantCount = 0;
       this.$watch('$magpie.socket.participants', (val) => {
-        if (val.length - previousParticipantCount < 0) {
+        const screens = this.$slots.default.filter((c) => !!c.componentOptions);
+        if (
+          val.length - previousParticipantCount < 0 &&
+          screens.length - 1 !== this.$magpie.currentScreenIndex
+        ) {
           window.alert(this.$t('interactive.general.aborted'));
-          const screens = this.$slots.default.filter(
-            (c) => !!c.componentOptions
-          );
           this.$magpie.nextScreen(screens.length - 1);
         }
         previousParticipantCount = val.length;
