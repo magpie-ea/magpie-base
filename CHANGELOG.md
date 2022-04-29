@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2.0
+
+### Fixed
+
+ - Receive groupLabel from backend and add to results
+ - Fix collaborator dropout handling
+
 ## 3.1.2
 
 ### Fixed
