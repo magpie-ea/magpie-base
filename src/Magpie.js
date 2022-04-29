@@ -361,6 +361,8 @@ export default class Magpie extends EventEmitter {
       ...this.expData,
       experiment_end_time: Date.now(),
       experiment_duration: Date.now() - this.expData.experiment_start_time,
+      ...(this.socketUrl && { participantId: this.socket.participantId }),
+      ...(this.socketUrl && { groupLabel: this.socket.groupLabel }),
       trials: addEmptyColumns(
         flatten(Object.values(this.trialData)).map((o) =>
           Object.assign(

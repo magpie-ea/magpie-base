@@ -118,6 +118,15 @@ export default class Socket extends EventEmitter {
     this.player = null;
 
     /**
+     * The group id of this session
+     * @instance
+     * @member groupLabel
+     * @memberOf Socket
+     * @type {String}
+     */
+    this.groupLabel = null;
+
+    /**
      * The results of the last iteration
      * @instance
      * @member lastIterationResults
@@ -182,6 +191,7 @@ export default class Socket extends EventEmitter {
       this.chain = payload.chain;
       this.generation = payload.generation;
       this.player = payload.player;
+      this.groupLabel = payload.group_label;
       this.state = states.CONNECTED;
       this.join();
     });
@@ -218,7 +228,8 @@ export default class Socket extends EventEmitter {
       .receive('error', this.errorHandler)
       .receive('timeout', this.errorHandler);
 
-    this.roomChannel.on('start_game', () => {
+    this.roomChannel.on('start_game', ({ group_label }) => {
+      this.groupLabel = group_label;
       this.state = states.READY;
     });
 
