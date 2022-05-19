@@ -84,6 +84,12 @@ export const EVENT_CHAT_MESSAGE = '$magpie.chat_message';
 
 export default {
   name: 'Chat',
+  props: {
+    participantLabel: {
+      type: String,
+      default: null
+    }
+  },
   data() {
     return {
       messages: [],
@@ -99,11 +105,17 @@ export default {
       /**
        * Messages contains all chat messages as objects: `[{message: '', participantId: '', time: 2345678765}, ...]`
        */
-      this.$emit('update:messages', this.messages);
+      this.$emit(
+        'update:messages',
+        this.messages.filter((m) => m.event === 'message')
+      );
       /**
        * Data contains all chat messages in tabular form: `{chatMessage: [], chatParticipantId: [], chatTime: []}`
        */
-      this.$emit('update:data', this.flattenData(this.messages));
+      this.$emit(
+        'update:data',
+        this.flattenData(this.messages.filter((m) => m.event === 'message'))
+      );
     }
   },
   watch: {
@@ -149,6 +161,7 @@ export default {
         event: 'message',
         message,
         participantId: this.$magpie.socket.participantId,
+        participantLabel: this.participantLabel,
         time: Date.now()
       });
       this.$refs.text.value = '';
@@ -158,8 +171,8 @@ export default {
       return {
         chatMessage: messages.map((m) => m.message),
         chatParticipantId: messages.map((m) => m.participantId),
-        chatTime: messages.map((m) => m.time),
-        chatEvent: messages.map((m) => m.event)
+        chatParticipantLabel: messages.map((m) => m.participantId),
+        chatTime: messages.map((m) => m.time)
       };
     }
   }
