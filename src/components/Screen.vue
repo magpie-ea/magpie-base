@@ -100,7 +100,7 @@ The screen can also be used to validate observations.
   </Screen>
   <Screen label="end">
     World's End.
-    <button @click="$magpie.nextScreen('screen-0')">Abort</button>
+    <button @click="$magpie.nextScreen('screen-1')">Restart</button>
   </Screen>
 </Experiment>
 ```
