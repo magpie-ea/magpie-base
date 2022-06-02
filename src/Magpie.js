@@ -283,13 +283,13 @@ export default class Magpie extends EventEmitter {
       this.currentScreenIndex = index;
     } else if (typeof index === 'string') {
       const children = this.experiment.$slots.default;
-      const index = children
+      const idx = children
         .filter((c) => !!c.componentOptions)
         .findIndex((c) => c.componentOptions.propsData.label === index);
-      if (index === -1) {
+      if (idx === -1) {
         throw new Error('Could not find screen with label "' + index + '"');
       }
-      this.currentScreenIndex = index;
+      this.currentScreenIndex = idx;
     } else {
       this.currentScreenIndex += 1;
     }
