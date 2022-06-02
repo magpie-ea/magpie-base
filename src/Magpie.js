@@ -276,10 +276,19 @@ export default class Magpie extends EventEmitter {
    * @instance
    * @memberOf Magpie
    * @public
-   * @param index{int} the index of the screen to go to (optional; default is next screen)
+   * @param index{int|String} the index or label of the screen to go to (optional; default is next screen)
    */
   nextScreen(index) {
     if (typeof index === 'number') {
+      this.currentScreenIndex = index;
+    } else if (typeof index === 'string') {
+      const children = this.experiment.$slots.default;
+      const index = children
+        .filter((c) => !!c.componentOptions)
+        .findIndex((c) => c.componentOptions.propsData.label === index);
+      if (index === -1) {
+        throw new Error('Could not find screen with label "' + index + '"');
+      }
       this.currentScreenIndex = index;
     } else {
       this.currentScreenIndex += 1;
@@ -302,7 +311,7 @@ export default class Magpie extends EventEmitter {
    * @instance
    * @memberOf Magpie
    * @public
-   * @param index{int} the index of the screen to go to (optional; default is next screen)
+   * @param index{int|String} the index or label of the screen to go to (optional; default is next screen)
    */
   saveAndNextScreen(index) {
     this.saveMeasurements();

@@ -96,3 +96,25 @@ test('Screen with next button', async () => {
     await experiment.find('button').trigger('click')
     expect(experiment.text()).toBe('Bye World')
 })
+
+test('Two-screen Experiment with labels', async () => {
+    const experiment = mount(Experiment, {
+        slots: {
+            default: [
+                '<Screen>Hello World</Screen>',
+                '<Screen>Oops</Screen>',
+                '<Screen label="bye">Bye World</Screen>',
+                '<Screen :label="\'bye-\'+i" v-for="i in 10" :key="i">Bye {{i}}th World</Screen>',
+                '<Screen>Unseen</Screen>',
+            ]
+        }
+    })
+
+    expect(experiment.text()).toBe('Hello World')
+    experiment.vm.$magpie.nextScreen('bye')
+    await Vue.nextTick()
+    expect(experiment.text()).toBe('Bye World')
+    experiment.vm.$magpie.nextScreen('bye-9')
+    await Vue.nextTick()
+    expect(experiment.text()).toBe('Bye 9th World')
+})

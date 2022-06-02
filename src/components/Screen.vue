@@ -89,6 +89,22 @@ The screen can also be used to validate observations.
 </Experiment>
 ```
 
+### Jump using labels
+
+```vue
+<Experiment>
+  <Screen v-for="i in 10" :key="i" :progress="i/10" :label="'screen-'+i">
+    Hello {{i}}th World.
+    <button @click="$magpie.nextScreen()">Next</button>
+    <button @click="$magpie.nextScreen('end')">Abort</button>
+  </Screen>
+  <Screen label="end">
+    World's End.
+    <button @click="$magpie.nextScreen('screen-0')">Abort</button>
+  </Screen>
+</Experiment>
+```
+
 </docs>
 
 <script>
@@ -117,6 +133,13 @@ export default {
     progress: {
       type: Number,
       default: -1
+    },
+    /**
+     * A label that can be used to jump to this screen
+     */
+    label: {
+      type: String,
+      default: ''
     },
     /**
      * Define validators for measurements
