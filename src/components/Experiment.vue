@@ -60,6 +60,25 @@ Besides the `screens` slot, the Experiment component also provides an optional `
   </template>
 </Experiment>
 ```
+
+### Validate entered data
+The Experiment component also allows specifying a function that will be used to validate the to-be-submitted data before sending it to the server.
+
+```vue
+<Experiment :validate-submission="data => data.length === 3">
+  <Screen>
+    blue
+    <button @click="$magpie.nextScreen()">next</button>
+  </Screen>
+  <Screen>
+    green
+    <button @click="$magpie.nextScreen()">next</button>
+  </Screen>
+  <Screen>
+    yellow
+  </Screen>
+</Experiment>
+```
 </docs>
 
 <script>
