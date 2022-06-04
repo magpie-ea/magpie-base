@@ -106,6 +106,16 @@ export default class Magpie extends EventEmitter {
 
     /**
      * @instance
+     * @method validateSubmission
+     * @methodOf Magpie
+     * @param data{Object[]}
+     * @returns {boolean}
+     */
+    // eslint-disable-next-line no-unused-vars
+    this.validateSubmission = (data) => true;
+
+    /**
+     * @instance
      * @member submissionUrl
      * @memberOf Magpie
      * @type {string}
@@ -397,7 +407,11 @@ export default class Magpie extends EventEmitter {
     if (!this.submissionUrl) {
       throw new Error('No submission URL set');
     }
-    return this.submitResults(this.submissionUrl, this.getAllData());
+    const data = this.getAllData();
+    if (!this.validateSubmission(data)) {
+      throw new Error('Submission failed validation');
+    }
+    return this.submitResults(this.submissionUrl, data);
   }
 
   /**

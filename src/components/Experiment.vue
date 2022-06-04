@@ -123,6 +123,16 @@ export default {
       default() {
         return [];
       }
+    },
+    /**
+     * This function is called before data is submitted to the server. It will receive the submitted csv data as an array of objects
+     * as its only argument.
+     */
+    validateSubmission: {
+      type: Function,
+      default() {
+        return () => true;
+      }
     }
   },
   data() {
@@ -180,6 +190,8 @@ export default {
       preloadLink.as = 'video';
       document.head.appendChild(preloadLink);
     });
+
+    this.$magpie.validateSubmission = this.validateSubmission;
 
     this.$magpie.addExpData(this.recordData);
 
