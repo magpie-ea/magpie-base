@@ -6,8 +6,8 @@ Vue.use(VueKonva, { prefix: 'Canvas' });
 
 Vue.use(MagpieVue, {
   experimentId: '9',
-  serverUrl: 'https://magpie-refactored-2.herokuapp.com/',
-  socketUrl: 'wss://magpie-refactored-2.herokuapp.com/socket',
+  serverUrl: 'https://magpie-demo.herokuapp.com/',
+  socketUrl: 'wss://magpie-demo.herokuapp.com/socket',
   contactEmail: 'test@random.com'
 });
 

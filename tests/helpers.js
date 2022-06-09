@@ -2,8 +2,8 @@ import fetch from "node-fetch";
 import FormData from "form-data";
 
 exports.magpieConfig = {
-    serverUrl: typeof process.env.MAGPIE_BACKEND_HOST !== 'undefined'? 'http://'+process.env.MAGPIE_BACKEND_HOST+'/' : 'https://magpie-refactored-2.herokuapp.com/',
-    socketUrl: typeof process.env.MAGPIE_BACKEND_HOST !== 'undefined'? 'ws://'+process.env.MAGPIE_BACKEND_HOST+'/socket' : 'wss://magpie-refactored-2.herokuapp.com/socket',
+    serverUrl: typeof process.env.MAGPIE_BACKEND_HOST !== 'undefined'? 'http://'+process.env.MAGPIE_BACKEND_HOST+'/' : 'https://magpie-demo.herokuapp.com/',
+    socketUrl: typeof process.env.MAGPIE_BACKEND_HOST !== 'undefined'? 'ws://'+process.env.MAGPIE_BACKEND_HOST+'/socket' : 'wss://magpie-demo.herokuapp.com/socket',
     contactEmail: 'test@random.com'
 }
 
