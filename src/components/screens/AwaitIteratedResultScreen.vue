@@ -23,7 +23,7 @@ By default it looks like this:
 
 </docs>
 <template>
-  <Screen v-bind="$attrs">
+  <Screen v-bind="{ ...$attrs, ...$props }">
     <slot>
       {{ $t('screens.AwaitIteratedResultScreen.description') }}
     </slot>

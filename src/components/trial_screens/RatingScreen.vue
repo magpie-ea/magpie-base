@@ -18,7 +18,7 @@ This is a pre-built rating screen, with limited functionality, but simpler to us
 
 <template>
   <!-- pass down props -->
-  <LifecycleScreen v-bind="$props">
+  <LifecycleScreen v-bind="{ ...$attrs, ...$props }">
     <!-- pass down slots -->
     <template slot="fixation">
       <slot name="fixation"></slot>

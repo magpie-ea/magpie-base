@@ -22,7 +22,7 @@ This is a pre-built multiple choice matrix screen, with limited functionality, b
 
 <template>
   <!-- pass down props -->
-  <LifecycleScreen v-bind="$props">
+  <LifecycleScreen v-bind="{ ...$attrs, ...$props }">
     <!-- pass down slots -->
     <template slot="fixation">
       <slot name="fixation"></slot>

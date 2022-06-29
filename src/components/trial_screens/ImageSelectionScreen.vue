@@ -20,7 +20,7 @@ This is a pre-built image selection screen, with limited functionality, but simp
 
 <template>
   <!-- pass down props -->
-  <LifecycleScreen v-bind="$props">
+  <LifecycleScreen v-bind="{ ...$attrs, ...$props }">
     <!-- pass down slots -->
     <template slot="fixation">
       <slot name="fixation"></slot>

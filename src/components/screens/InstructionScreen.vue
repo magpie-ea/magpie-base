@@ -18,7 +18,7 @@ This is a pre-built instruction screen, with limited functionality, but simpler 
 </docs>
 
 <template>
-  <Screen v-bind="$attrs">
+  <Screen v-bind="{ ...$attrs, ...$props }">
     <Slide>
       <div class="instructions">
         <slot name="default" />

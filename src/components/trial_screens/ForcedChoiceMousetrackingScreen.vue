@@ -38,7 +38,7 @@
 </docs>
 
 <template>
-  <Screen v-bind="$attrs">
+  <Screen v-bind="{ ...$attrs, ...$props }">
     <Slide>
       <p v-if="qud" class="qud" v-text="qud" />
       <!-- @slot provide a preparation stimulus, i.e. a text or an audio explanation-->

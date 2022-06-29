@@ -19,7 +19,7 @@ This is a pre-built self-paced reading task screen.
 
 <template>
   <!-- pass down props -->
-  <LifecycleScreen v-bind="$props">
+  <LifecycleScreen v-bind="{ ...$attrs, ...$props }">
     <!-- pass down slots -->
     <template #fixation>
       <slot name="fixation"><FixationCross /></slot>

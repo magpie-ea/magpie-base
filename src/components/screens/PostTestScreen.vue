@@ -10,7 +10,7 @@
 </docs>
 
 <template>
-  <Screen v-bind="$attrs" title="Additional information">
+  <Screen v-bind="{ ...$attrs, ...$props }" title="Additional information">
     <Slide>
       <p>
         {{ $t('screens.PostTestScreen.instruction') }}

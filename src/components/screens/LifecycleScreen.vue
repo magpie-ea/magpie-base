@@ -36,7 +36,7 @@ The last four phases can be completely customized using the corresponding slots,
 </docs>
 
 <template>
-  <Screen v-bind="$attrs">
+  <Screen v-bind="{ ...$attrs, ...$props }">
     <Slide v-if="pauseTime">
       <!-- Pause -->
       <p v-if="qud" v-text="qud"></p>

@@ -27,7 +27,7 @@ Eyetracking requires that you install `webgazer`.
 </docs>
 
 <template>
-  <Screen v-bind="$attrs">
+  <Screen v-bind="{ ...$attrs, ...$props }">
     <!-- Check accuracy -->
     <Slide>
       <p>{{ $t('screens.EyetrackingValidationScreen.instruction') }}</p>

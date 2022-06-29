@@ -17,7 +17,7 @@ This is a pre-built slider rating screen, with limited functionality, but simple
 
 <template>
   <!-- pass down props -->
-  <LifecycleScreen v-bind="$props">
+  <LifecycleScreen v-bind="{ ...$attrs, ...$props }">
     <!-- pass down slots -->
     <template slot="fixation">
       <slot name="fixation"></slot>
