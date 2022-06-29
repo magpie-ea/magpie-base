@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.3.0
+
+### New
+
+ - Experiment: Implement validateSubmission
+ - Screen: Add jump labels
+ - Chat: Only emit message events & add participantLabel
+
+### Fixed
+
+ - Built-in Screens: Fix passing through of progress prop to basic Screen component
+ - Chore: Change URL magpie-refactored-2.herokuapp.com -> magpie-demo.herokuapp.com
+
 ## 3.2.0
 
 ### Fixed
