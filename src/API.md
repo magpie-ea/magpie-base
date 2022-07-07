@@ -192,7 +192,7 @@ Go to the next screen. (Will also reset scroll position.)
 
 | Param | Type | Description |
 | --- | --- | --- |
-| index | <code>int</code> | the index of the screen to go to (optional; default is next screen) |
+| index | <code>int</code> \| <code>String</code> | the index or label of the screen to go to (optional; default is next screen) |
 
 <a name="Magpie+saveAndNextScreen"></a>
 
@@ -204,7 +204,7 @@ SaveMeasurements and go to the next screen. (Will also reset scroll position.)
 
 | Param | Type | Description |
 | --- | --- | --- |
-| index | <code>int</code> | the index of the screen to go to (optional; default is next screen) |
+| index | <code>int</code> \| <code>String</code> | the index or label of the screen to go to (optional; default is next screen) |
 
 <a name="Magpie+addTrialData"></a>
 
@@ -279,6 +279,7 @@ Will display a progress bar if it's not visible, yet.
     * [.chain](#Socket+chain) : <code>Number</code>
     * [.generation](#Socket+generation) : <code>Number</code>
     * [.player](#Socket+player) : <code>Number</code>
+    * [.groupLabel](#Socket+groupLabel) : <code>String</code>
     * [.lastIterationResults](#Socket+lastIterationResults) : <code>Array</code>
     * [.getParticipantName(id)](#Socket+getParticipantName) ⇒ <code>String</code>
     * [.getParticipantColor(id)](#Socket+getParticipantColor) ⇒ <code>String</code>
@@ -339,6 +340,12 @@ The generation number of this session
 
 ### socket.player : <code>Number</code>
 The player id of this session
+
+**Kind**: instance property of [<code>Socket</code>](#Socket)  
+<a name="Socket+groupLabel"></a>
+
+### socket.groupLabel : <code>String</code>
+The group id of this session
 
 **Kind**: instance property of [<code>Socket</code>](#Socket)  
 <a name="Socket+lastIterationResults"></a>
@@ -461,4 +468,14 @@ Get the eye gaze track since the appearance of the current screen
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | rate | <code>int</code> | <code>15</code> | Time resolution in ms (optional; defaults to 15ms) |
+
+<a name="validateSubmission"></a>
+
+## .validateSubmission(data) ⇒ <code>boolean</code>
+**Kind**: instance function  
+**Methodof**: Magpie  
+
+| Param | Type |
+| --- | --- |
+| data | <code>Array.&lt;Object&gt;</code> | 
 
