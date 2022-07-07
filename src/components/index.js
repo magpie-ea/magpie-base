@@ -59,3 +59,4 @@ export { default as ResponseTimeStart } from './helpers/ResponseTimeStart';
 export { default as MousetrackingStart } from './helpers/MousetrackingStart';
 export { default as EyetrackingStart } from './helpers/EyetrackingStart';
 export { default as FullscreenStart } from './helpers/FullscreenStart';
+export { default as HideCursor } from './helpers/HideCursor';
