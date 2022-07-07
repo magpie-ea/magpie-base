@@ -36,6 +36,10 @@ export default {
 </script>
 
 <style scoped>
+.textarea {
+  position: relative;
+  max-width: 95%;
+}
 textarea {
   border: 2px solid #5187ba;
   border-radius: 10px;
@@ -44,5 +48,7 @@ textarea {
   margin: 0 auto;
   outline: none;
   padding: 10px 20px;
+  height: 100%;
+  width: 100%;
 }
 </style>
