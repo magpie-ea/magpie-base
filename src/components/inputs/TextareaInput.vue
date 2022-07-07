@@ -40,6 +40,7 @@ export default {
   position: relative;
   max-width: 95%;
 }
+
 textarea {
   border: 2px solid #5187ba;
   border-radius: 10px;
