@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 import Vue from 'vue';
-import Socket from './Socket';
+import Socket, { states } from './Socket';
 import * as validators from '../src/validators';
 import merge from 'lodash/merge';
 import map from 'lodash/map';
@@ -306,7 +306,10 @@ export default class Magpie extends EventEmitter {
     this.currentSlideIndex = 0;
     this.measurements = {};
     this.currentVarsData = {};
-    if (this.socketUrl) {
+    if (
+      this.socket.state === states.CONNECTED ||
+      this.socket.state === states.READY
+    ) {
       this.socket.setCurrentScreen(this.currentScreenIndex);
     }
     // Start new trial data and restart response timer
@@ -380,8 +383,14 @@ export default class Magpie extends EventEmitter {
       ...this.expData,
       experiment_end_time: Date.now(),
       experiment_duration: Date.now() - this.expData.experiment_start_time,
-      ...(this.socketUrl && { participantId: this.socket.participantId }),
-      ...(this.socketUrl && { groupLabel: this.socket.groupLabel }),
+      ...((this.socket.state === states.CONNECTED ||
+        this.socket.state === states.READY) && {
+        participantId: this.socket.participantId
+      }),
+      ...((this.socket.state === states.CONNECTED ||
+        this.socket.state === states.READY) && {
+        groupLabel: this.socket.groupLabel
+      }),
       trials: addEmptyColumns(
         flatten(Object.values(this.trialData)).map((o) =>
           Object.assign(
@@ -428,13 +437,16 @@ export default class Magpie extends EventEmitter {
   }
 
   async submitResults(submissionURL, data, intermediate) {
-    if (this.socketUrl) {
+    if (
+      this.socket.state === states.CONNECTED ||
+      this.socket.state === states.READY
+    ) {
       try {
         const submissionType = intermediate
           ? 'save_intermediate_results'
           : 'submit_results';
 
-        return new Promise((resolve, reject) =>
+        return await new Promise((resolve, reject) =>
           this.socket.participantChannel
             .push(submissionType, {
               results: data
