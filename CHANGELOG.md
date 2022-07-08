@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.4.0
+
+### New
+
+ - Implement PreventCopyPaste helper component
+ - Implement HideCursor component
+
+### Fixed
+ - Allow setting socketURL in magpie.config.js without connecting socket in experiment
+ - TextareaInput: Allow setting width and height styles
+ - Fix magpie new command: Do not override package.json edits
+
 ## 3.3.0
 
 ### New
