@@ -243,6 +243,8 @@ export default class Socket extends EventEmitter {
     if (!this.chain || !this.generation) {
       return;
     }
+    this.state = states.READY;
+
     /*this.roomChannel = this.phoenix.channel(
       `interactive_room:${this.experimentId}:${this.chain}:${this.variant}:${this.generation}`,
       { participant_id: this.participantId }
