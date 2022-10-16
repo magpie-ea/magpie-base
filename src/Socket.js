@@ -82,6 +82,15 @@ export default class Socket extends EventEmitter {
     this.active = [];
 
     /**
+     * The copy count number of this session
+     * @instance
+     * @member copyCount
+     * @memberOf Socket
+     * @type {Number}
+     */
+    this.copyCount = null;
+
+    /**
      * The variant number of this session
      * @instance
      * @member variant
@@ -186,14 +195,33 @@ export default class Socket extends EventEmitter {
       {}
     );
 
-    this.participantChannel.on('experiment_available', (payload) => {
-      this.variant = payload.variant;
-      this.chain = payload.chain;
-      this.generation = payload.generation;
-      this.player = payload.player;
-      this.groupLabel = payload.group_label;
+    this.participantChannel.on('slot_available', ({ slot_identifier }) => {
+      // slot_identifier looks like this: "${copy_count}_${chain}:${variant}:${generation}_${player}"
+      const match = slot_identifier.match(
+        /([0-9]+)_([0-9]+):([0-9]+):([0-9]+)_([0-9]+)/
+      );
+
+      if (!match) {
+        this.errorHandler(new Error('slot_identifier could not be parsed'));
+      }
+
+      this.copyCount = parseInt(match[1]);
+      this.variant = parseInt(match[3]);
+      this.chain = parseInt(match[2]);
+      this.generation = parseInt(match[4]);
+      this.player = parseInt(match[5]);
       this.state = states.CONNECTED;
-      this.join();
+
+      // Tell the server we've taken the slot so that we're taken off the queue.
+      this.participantChannel
+        .push('take_free_slot', { slot_identifier })
+        .receive('ok', (payload) => {
+          this.join();
+        });
+    });
+
+    this.participantChannel.on('waiting_in_queue', (payload) => {
+      this.state = states.WAITING;
     });
 
     this.participantChannel
