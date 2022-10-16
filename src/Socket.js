@@ -243,7 +243,7 @@ export default class Socket extends EventEmitter {
     if (!this.chain || !this.generation) {
       return;
     }
-    this.roomChannel = this.phoenix.channel(
+    /*this.roomChannel = this.phoenix.channel(
       `interactive_room:${this.experimentId}:${this.chain}:${this.variant}:${this.generation}`,
       { participant_id: this.participantId }
     );
@@ -293,7 +293,7 @@ export default class Socket extends EventEmitter {
         this.updateActiveParticipants();
       }, PRESENCE_TIMEOUT);
     });
-
+*/
     // If this participant is one of the first generation, there should be no need to wait on any results.
     if (this.generation === 1) {
       this.iteratedState = states.READY;
