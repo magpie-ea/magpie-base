@@ -5,12 +5,22 @@ on:
     branches:
       - main
       - master
+
 jobs:
   build-and-deploy:
+
+    strategy:
+      matrix:
+        folder:
+            - ./
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1
+
+      - name: Change directory
+        run: cd ${{ matrix.folder }}
 
       - name: Read package.json node and npm engines version
         uses: skjnldsv/read-package-engines-version-actions@v1.1
@@ -58,4 +68,5 @@ jobs:
         with:
           branch: gh-pages
           folder: dist
+          target-folder: ${{ matrix.folder }}
           token: ${{ secrets.GITHUB_TOKEN }}
