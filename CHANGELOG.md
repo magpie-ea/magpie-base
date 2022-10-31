@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.5.0
+
+### New
+
+- Templates: Setup templates to allow for multi-experiment repos
+
 ## 3.4.0
 
 ### New
