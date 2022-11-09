@@ -105,7 +105,7 @@
     "url": "git+https://github.com/magpie-ea/magpie-base.git"
   },
   "engines": {
-    "node": ">=14.0.0",
+    "node": "14.x || 16.x",
     "npm": ">=7.0.0"
   }
 }

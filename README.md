@@ -4,7 +4,7 @@ Base components in Vue for magpie-powered experiments.
 
 ## Installation
 
-First, ensure you have [Node.js](https://nodejs.org/en/) installed.
+First, ensure you have [Node.js](https://nodejs.org/en/) v16 installed.
 
 To install this package, run `npm install -g magpie-base`.
 
