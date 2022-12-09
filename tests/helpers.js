@@ -17,36 +17,22 @@ async function getCsrfToken() {
 }
 
 exports.createInteractiveExperiment = async (players = 1) => {
-    let {cookie, csrfToken} = await getCsrfToken();
-    const body = new FormData()
-    body.append('_csrf_token', csrfToken)
-    body.append('experiment[active]', 'true')
-    body.append('experiment[name]', 'name')
-    body.append('experiment[author]', 'author')
-    body.append('experiment[is_interactive]', 'true')
-    body.append('experiment[num_players]', ''+players)
-    const res = await fetch('http://' + process.env.MAGPIE_BACKEND_HOST + '/experiments', {
-        method: 'POST',
-        body,
-        headers: {
-            Cookie: cookie
-        }
-    })
-    const experimentId = res.url.match(/\/experiments\/([0-9]+)\/edit/)[1]
-    return experimentId
+    return exports.createDynamicExperiment(1,1,1, players)
 }
 
-exports.createDynamicExperiment = async (variants = 1, chains = 1, generations = 1) => {
+exports.createDynamicExperiment = async (variants = 1, chains = 1, generations = 1, players = 1) => {
     let {cookie, csrfToken} = await getCsrfToken();
     const body = new FormData()
     body.append('_csrf_token', csrfToken)
     body.append('experiment[active]', 'true')
     body.append('experiment[name]', 'name')
     body.append('experiment[author]', 'author')
-    body.append('experiment[is_dynamic]', 'true')
-    body.append('experiment[num_variants]', ''+variants)
-    body.append('experiment[num_chains]', ''+chains)
-    body.append('experiment[num_generations]', ''+generations)
+    body.append('experiment[is_ulc]', 'true')
+    body.append('experiment[ulc_num_variants]', ''+variants)
+    body.append('experiment[ulc_num_chains]', ''+chains)
+    body.append('experiment[ulc_num_generations]', ''+generations)
+    body.append('experiment[ulc_num_players]', ''+players)
+    body.append('experiment[expansion_strategy]', 'expansive')
     const res = await fetch('http://' + process.env.MAGPIE_BACKEND_HOST + '/experiments', {
         method: 'POST',
         body,
@@ -54,6 +40,6 @@ exports.createDynamicExperiment = async (variants = 1, chains = 1, generations =
             Cookie: cookie
         }
     })
-    const experimentId = res.url.match(/\/experiments\/([0-9]+)\/edit/)[1]
+    const experimentId = res.url.match(/\/experiments\/([0-9a-zA-Z-]+)/)[1]
     return experimentId
 }

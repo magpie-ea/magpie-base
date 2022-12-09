@@ -203,6 +203,7 @@ export default class Socket extends EventEmitter {
 
       if (!match) {
         this.errorHandler(new Error('slot_identifier could not be parsed'));
+        return;
       }
 
       this.copyCount = parseInt(match[1]);
