@@ -4,12 +4,12 @@ import Experiment from "@/components/Experiment";
 import {states } from '../../../src/Socket'
 import {createDynamicExperiment, createInteractiveExperiment, magpieConfig} from "../../helpers";
 
-jest.setTimeout(10000);
+jest.setTimeout(25000)
 
 test = process.env.MAGPIE_INTEGRATION_TESTS === 'true'? test : test.skip
 
 test('AwaitIteratedResultScreen with two clients', async () => {
-    const experimentId = await createDynamicExperiment(1,1, 2)
+    const experimentId = await createDynamicExperiment(1,1, 2, 1)
 
     const experiment1 = mount(Experiment, {
         slots: {

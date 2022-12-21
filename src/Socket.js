@@ -217,7 +217,7 @@ export default class Socket extends EventEmitter {
       this.participantChannel
         .push('take_free_slot', { slot_identifier })
         .receive('ok', (payload) => {
-          this.join();
+          this.join(slot_identifier);
         });
     });
 
@@ -240,15 +240,14 @@ export default class Socket extends EventEmitter {
     }, 30000);
   }
 
-  join() {
+  join(slot_identifier) {
     if (!this.chain || !this.generation) {
       return;
     }
-    this.state = states.READY;
 
     this.roomChannel = this.phoenix.channel(
       `interactive_room:${this.experimentId}:${this.chain}:${this.variant}:${this.generation}`,
-      { participant_id: this.participantId }
+      { participant_id: this.participantId, slot_identifier }
     );
 
     this.roomChannel

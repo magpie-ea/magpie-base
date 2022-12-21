@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueKonva from 'vue-konva';
 import VueMagpie from '@/index';
 
+jest.setTimeout(15000);
+
 Vue.config.productionTip = false;
 
 // Load Konva components
