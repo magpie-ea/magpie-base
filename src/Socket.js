@@ -296,32 +296,21 @@ export default class Socket extends EventEmitter {
       }, PRESENCE_TIMEOUT);
     });
 
-    // If this participant is one of the first generation, there should be no need to wait on any results.
     if (this.generation === 1) {
       this.iteratedState = states.READY;
     } else {
-      // generation - 1 because we're waiting on the results of the last iteration.
-      // by specifying a different experimentID we can also wait on results from other experiments.
-      this.lobbyChannel = this.phoenix.channel(
-        `iterated_lobby:${this.experimentId}:${this.chain}:${this.variant}:${
-          this.generation - 1
-        }:${this.player}`,
-        { participant_id: this.participantId }
-      );
-
-      // Whenever the waited-on results are submitted (i.e. assignment finished) on the server, this participant will get the results.
-      this.lobbyChannel.on('finished', (payload) => {
-        this.lastIterationResults = payload.results;
-        // We're no longer waiting on that assignment if we already got its results.
-        this.lobbyChannel.leave();
-        this.iteratedState = states.READY;
-      });
-
-      // Check whether the interactive experiment can be started.
-      this.lobbyChannel
-        .join()
-        .receive('error', this.errorHandler)
-        .receive('timeout', this.errorHandler);
+      this.iteratedState = states.WAITING;
+      this.participantChannel
+        .push('get_submission_for_slot', {
+          experiment_id: this.experimentId,
+          slot_identifier: `${this.copyCount}_${this.chain}:${this.variant}:${
+            this.generation - 1
+          }_${this.player}`
+        })
+        .receive('ok', ({ results }) => {
+          this.lastIterationResults = results;
+          this.iteratedState = states.READY;
+        });
     }
   }
 
