@@ -33,6 +33,17 @@ test('AwaitIteratedResultScreen with two clients', async () => {
 
     expect(experiment1.text()).toBe('Connected')
 
+    expect(experiment1.text()).toBe('Connected')
+
+    experiment1.vm.$magpie.measurements.response = 'foobar'
+    experiment1.vm.$magpie.saveAndNextScreen()
+
+    while(experiment1.vm.$magpie.currentSlideIndex !== 1) {
+        await new Promise(resolve => setTimeout(resolve, 200))
+    }
+
+    expect(experiment1.text()).toContain('All done')
+
     const experiment2 = mount(Experiment, {
         slots: {
             default: [
@@ -48,25 +59,9 @@ test('AwaitIteratedResultScreen with two clients', async () => {
 
     expect(experiment2.text()).toBe('Connecting')
 
-    while(experiment2.vm.$magpie.socket.state !== states.READY) {
-        await new Promise(resolve => setTimeout(resolve, 200))
-    }
-
     expect(experiment1.vm.$magpie.socket.generation).not.toBe(experiment2.vm.$magpie.socket.generation)
 
-    expect(experiment1.text()).toBe('Connected')
-    expect(experiment2.text()).toBe('Connecting')
-
-    experiment1.vm.$magpie.measurements.response = 'foobar'
-    experiment1.vm.$magpie.saveAndNextScreen()
-
-    while(experiment1.vm.$magpie.currentSlideIndex !== 1) {
-        await new Promise(resolve => setTimeout(resolve, 200))
-    }
-
-    expect(experiment1.text()).toContain('All done')
-
-    while(experiment2.vm.$magpie.socket.iteratedState !== states.READY) {
+    while(experiment2.vm.$magpie.socket.state !== states.READY) {
         await new Promise(resolve => setTimeout(resolve, 200))
     }
 

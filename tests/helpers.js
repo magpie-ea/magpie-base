@@ -20,7 +20,7 @@ exports.createInteractiveExperiment = async (players = 1) => {
     return exports.createDynamicExperiment(1,1,1, players)
 }
 
-exports.createDynamicExperiment = async (variants = 1, chains = 1, generations = 1, players = 1) => {
+exports.createDynamicExperiment = async (variants = 1, chains = 1, generations = 1, players = 1, expansion_strategy='expansive') => {
     let {cookie, csrfToken} = await getCsrfToken();
     const body = new FormData()
     body.append('_csrf_token', csrfToken)
@@ -32,7 +32,7 @@ exports.createDynamicExperiment = async (variants = 1, chains = 1, generations =
     body.append('experiment[ulc_num_chains]', ''+chains)
     body.append('experiment[ulc_num_generations]', ''+generations)
     body.append('experiment[ulc_num_players]', ''+players)
-    body.append('experiment[expansion_strategy]', 'expansive')
+    body.append('experiment[expansion_strategy]', expansion_strategy)
     const res = await fetch('http://' + process.env.MAGPIE_BACKEND_HOST + '/experiments', {
         method: 'POST',
         body,
