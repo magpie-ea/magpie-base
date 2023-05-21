@@ -41,15 +41,15 @@ for (const randomize of [null, true, false]) {
         }
 
 
-        await inputs.at(5 * questions[0] + 0).trigger('click')
+        await inputs.at(5 * questions[0] + 0).trigger('input')
         expect(experiment.vm.$magpie.measurements.responses).toStrictEqual(['Not enjoyable'])
-        await inputs.at(5 * questions[1] + 1).trigger('click')
+        await inputs.at(5 * questions[1] + 1).trigger('input')
         expect(experiment.vm.$magpie.measurements.responses).toStrictEqual(['Not enjoyable', 'Rather not enjoyable'])
-        await inputs.at(5 * questions[2] + 2).trigger('click')
+        await inputs.at(5 * questions[2] + 2).trigger('input')
         expect(experiment.vm.$magpie.measurements.responses).toStrictEqual(['Not enjoyable', 'Rather not enjoyable', 'OK'])
-        await inputs.at(5 * questions[3] + 3).trigger('click')
+        await inputs.at(5 * questions[3] + 3).trigger('input')
         expect(experiment.vm.$magpie.measurements.responses).toStrictEqual(['Not enjoyable', 'Rather not enjoyable', 'OK', 'Rather enjoyable'])
-        await inputs.at(5 * questions[4] + 4).trigger('click')
+        await inputs.at(5 * questions[4] + 4).trigger('input')
         expect(experiment.vm.$magpie.measurements.responses).toStrictEqual(['Not enjoyable', 'Rather not enjoyable', 'OK', 'Rather enjoyable', 'Really enjoyable'])
 
 

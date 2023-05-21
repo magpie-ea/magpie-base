@@ -21,9 +21,9 @@ test('RatingInput', async () => {
 
     expect(inputs).toHaveLength(7)
 
-    await inputs.at(0).trigger('click')
+    await inputs.at(0).trigger('input')
     expect(experiment.vm.$magpie.measurements.input).toBe(1)
-    await inputs.at(1).trigger('click')
+    await inputs.at(1).trigger('input')
     expect(experiment.vm.$magpie.measurements.input).toBe(2)
 
     experiment.vm.$magpie.saveAndNextScreen()

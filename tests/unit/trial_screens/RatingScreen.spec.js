@@ -26,7 +26,7 @@ test('RatingScreen', async () => {
 
     expect(experiment.find('button').exists()).toBe(false)
 
-    inputs.at(2).trigger('click')
+    inputs.at(2).trigger('input')
 
     await Vue.nextTick()
 

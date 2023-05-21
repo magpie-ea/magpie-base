@@ -21,8 +21,6 @@ module.exports = {
     'plugin:prettier/recommended',
     // usage with Prettier, provided by 'eslint-config-prettier'.
     'prettier',
-
-    'prettier/vue'
   ],
   plugins: [
     // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-file

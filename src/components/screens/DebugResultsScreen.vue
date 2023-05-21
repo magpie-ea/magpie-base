@@ -28,7 +28,6 @@ Once you are gaoing live with your experiment, you can use the SubmitResultsScre
 
 <script>
 import Screen from '../Screen';
-import stringify from 'csv-stringify/lib/sync';
 import Slide from '../Slide';
 
 export default {
@@ -43,10 +42,16 @@ export default {
   },
   mounted() {
     this.results = this.$magpie.getAllData();
-    this.csv = stringify(this.results, {
-      columns: Object.keys(this.results[0]),
-      header: true
-    });
+    const columns = Object.keys(this.results[0])
+    this.csv = [columns.join('; ')].concat(
+      this.results.map(entry =>
+          columns
+              .map(col => String(entry[col])
+              .map(val => val.replace('"', '\"')))
+              .map(val => val.includes('";')? `"${val}"` : val)
+              .join('; ')
+      )
+    ).join('\n')
   },
   methods: {
     downloadCsv() {

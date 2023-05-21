@@ -25,9 +25,9 @@ for (const labels of [null, true, false]) {
 
             expect(inputs).toHaveLength(5)
 
-            await inputs.at(0).trigger('click')
+            await inputs.at(0).trigger('input')
             expect(experiment.vm.$magpie.measurements.breakfast).toBe('Not enjoyable')
-            await inputs.at(1).trigger('click')
+            await inputs.at(1).trigger('input')
             expect(experiment.vm.$magpie.measurements.breakfast).toBe('Rather not enjoyable')
 
             experiment.vm.$magpie.saveAndNextScreen()
@@ -69,9 +69,9 @@ for (const labels of [null, true, false]) {
 
             expect(inputs).toHaveLength(5)
 
-            await inputs.at(0).trigger('click')
+            await inputs.at(0).trigger('input')
             expect(experiment.vm.$magpie.measurements.breakfast).toBe('Not enjoyable')
-            await inputs.at(1).trigger('click')
+            await inputs.at(1).trigger('input')
             expect(experiment.vm.$magpie.measurements.breakfast).toBe('Rather not enjoyable')
 
             experiment.vm.$magpie.saveAndNextScreen()
