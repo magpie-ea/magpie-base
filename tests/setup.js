@@ -24,7 +24,6 @@ window.crypto = {
     }
 };
 
-global.self = window
 global.WebSocket = window.WebSocket = require('websocket').w3cwebsocket
 
 window.scrollTo = () => {}
