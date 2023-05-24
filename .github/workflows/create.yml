@@ -1,4 +1,4 @@
-name: Test
+name: Test create command
 
 on:
   pull_request:
@@ -54,6 +54,7 @@ jobs:
           magpie new my-project --template=${{matrix.template}}
           cd my-project
           npm install
+          npm uninstall magpie-base
           npm install ../magpie-base/magpie-base-*.tgz
           npm run build
         # Reason for npm pack: https://stackoverflow.com/questions/50010438/install-npm-local-module-directory-without-symlinks
