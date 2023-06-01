@@ -1,6 +1,6 @@
 {
   "name": "magpie-base",
-  "version": "3.5.0",
+  "version": "3.6.0-beta.1",
   "description": "Provides base components for magpie frontend projects",
   "author": "magpie project",
   "scripts": {
