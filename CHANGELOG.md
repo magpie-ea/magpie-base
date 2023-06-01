@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.6.0] - 2023-06-01
+
+### New
+- Upgrade to webpack v5 and support Node v18
+
+### How to update existing projects
+
+```sh
+$ cd your-project
+$ npm uninstall babel-eslint eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-vue prettier stylelint @samhammer/vue-cli-plugin-stylelint @vue/cli-plugin-eslint stylelint-config-standard
+$ sed -i 's#"node": ".*"#"node": "14.x || 16.x || 18.x"#' package.json # Or if this doesn't work, replace the engines -> node value in your package.json with "14.x || 16.x || 18.x"
+$ rm -rf node_modules # Or remove the node_modules folder by hand
+$ rm package-lock.json # Or remove the package-lock.json file by hand
+$ npm install magpie-base@3.6.x
+```
+
+Read more on [maintaining npm dependencies](https://www.carlrippon.com/upgrading-npm-dependencies/).
+
 ## 3.5.0
 
 ### New
