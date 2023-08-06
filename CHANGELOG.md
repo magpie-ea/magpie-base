@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.6.1] - 2023-08-06
+
+### Fixed
+
+- Pin prettier dependency to v2.x for now to avoid build errors
+
+### How to update existing projects
+
+```sh
+$ cd your-project
+$ rm -rf node_modules # Or remove the node_modules folder by hand
+$ rm package-lock.json # Or remove the package-lock.json file by hand
+$ npm install magpie-base@3.6.x
+```
+
 ## [3.6.0] - 2023-06-01
 
 ### New
