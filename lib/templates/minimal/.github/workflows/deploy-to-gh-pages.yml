@@ -10,6 +10,7 @@ jobs:
   build-and-deploy:
 
     strategy:
+      max-parallel: 1
       matrix:
         folder:
           - ./
