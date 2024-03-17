@@ -1,5 +1,23 @@
 # Changelog
 
+
+## [3.6.2] - 2024-03-17
+
+### Fixed
+
+- fix(deploy-to-gh-pages.yml): Add max-parallel declaration to strategy
+
+### How to update existing projects
+
+```sh
+$ cd your-project
+$ rm -rf node_modules # Or remove the node_modules folder by hand
+$ rm package-lock.json # Or remove the package-lock.json file by hand
+$ npm install magpie-base@3.6.x
+```
+
+ - Also make sure to update the Github Actions workflow file at `.github/workflows/deploy-to-gh-pages.yml` with this change: https://github.com/magpie-ea/magpie-base/commit/c785e5e05f132f3fccc1fa766eab48b797d5cdf2
+
 ## [3.6.1] - 2023-08-06
 
 ### Fixed
