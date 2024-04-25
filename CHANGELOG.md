@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.6.7] - 2024-04-25
+
+### Fixed
+
+- fix(linting): Make linting work again
+
+### How to update existing projects
+
+```sh
+$ cd your-project
+$ rm -rf node_modules # Or remove the node_modules folder by hand
+$ rm package-lock.json # Or remove the package-lock.json file by hand
+$ npm install magpie-base@3.6.x
+$ npm install --save-dev @samhammer/vue-cli-plugin-stylelint@5.x
+$ npm install --save-dev @vue/cli-plugin-eslint@5.x
+```
+
+- In your `eslintrc.js` remove all lines that mention `vue` or `babel-eslint`
+- In your `stylelint.config.js` replace `'stylelint-config-standard'` with `'stylelint-config-recommended-vue'`
+- Add `eslintrc.js` as the last line to the file `.eslintignore`
 
 ## [3.6.2] - 2024-03-17
 
