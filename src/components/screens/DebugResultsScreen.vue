@@ -27,8 +27,8 @@ Once you are gaoing live with your experiment, you can use the SubmitResultsScre
 </template>
 
 <script>
-import Screen from '../Screen';
-import Slide from '../Slide';
+import Screen from '../Screen.vue';
+import Slide from '../Slide.vue';
 
 export default {
   name: 'DebugResultsScreen',
@@ -41,18 +41,20 @@ export default {
     };
   },
   mounted() {
-    this.results = this.$magpie.getAllData();
-    const columns = Object.keys(this.results[0])
-    this.csv = [columns.join('; ')].concat(
-      this.results.map(entry =>
-          columns
-              .map(col => String(entry[col])
-              .map(val => val.replace('"', '\"')))
-              .map(val => val.includes('";')? `"${val}"` : val)
-              .join('; ')
-      )
-    ).join('\n')
-  },
+      this.results = this.$magpie.getAllData();
+      const columns = Object.keys(this.results[0])
+      this.csv = [columns.join('; ')].concat(
+    this.results.map(entry =>
+      columns
+        .map(col => {
+          const val = String(entry[col]).replace(/"/g, '""');
+          return val.includes(';') ? `"${val}"` : val;
+        })
+        .join('; ')
+    )
+  ).join('\n');
+  
+    },
   methods: {
     downloadCsv() {
       let blob = new Blob([this.csv], {
