@@ -44,14 +44,14 @@ export default {
       this.results = this.$magpie.getAllData();
       const columns = Object.keys(this.results[0])
       this.csv = [columns.join('; ')].concat(
-    this.results.map(entry =>
-      columns
-        .map(col => {
-          const val = String(entry[col]).replace(/"/g, '""');
-          return val.includes(';') ? `"${val}"` : val;
-        })
-        .join('; ')
-    )
+        this.results.map(entry =>
+          columns
+            .map(col => {
+              const val = String(entry[col]).replace(/"/g, '""');
+              return val.includes(';') ? `"${val}"` : val;
+            })
+            .join('; ')
+        )
   ).join('\n');
   
     },
