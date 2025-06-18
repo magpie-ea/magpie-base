@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.6.2] - 2025-06-18
+
+### Fixed
+
+- Fix DebugResultsScreen: Code was broken and CSV generation was non-standard in some cases
 
 ## [3.6.2] - 2024-03-17
 
