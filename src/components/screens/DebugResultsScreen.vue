@@ -42,19 +42,20 @@ export default {
   },
   mounted() {
     this.results = this.$magpie.getAllData();
-    const columns = Object.keys(this.results[0])
-    this.csv = [columns.join('; ')].concat(
-      this.results.map(entry =>
-        columns
-          .map(col => {
-            const val = String(entry[col]).replace(/"/g, '""');
-            return val.includes(';') || val.includes('"') ? `"${val}"` : val;
-          })
-          .join('; ')
+    const columns = Object.keys(this.results[0]);
+    this.csv = [columns.join('; ')]
+      .concat(
+        this.results.map((entry) =>
+          columns
+            .map((col) => {
+              const val = String(entry[col]).replace(/"/g, '""');
+              return val.includes(';') || val.includes('"') ? `"${val}"` : val;
+            })
+            .join('; ')
+        )
       )
-    ).join('\n');
-  
-    },
+      .join('\n');
+  },
   methods: {
     downloadCsv() {
       let blob = new Blob([this.csv], {

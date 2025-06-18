@@ -68,8 +68,8 @@
             name="options"
             @input="$emit('update:response', options[i])" />
           <template v-if="labels"
-            ><span v-if="!optionsHtml.length">{{ options[i] }}</span
-            ><span v-else v-html="optionsHtml[i]" /></template
+            ><span v-if="!optionsHtml.length">{{ options[i] }}</span>
+            <span v-else v-html="optionsHtml[i]" /></template
         ></label>
       </div>
     </form>
