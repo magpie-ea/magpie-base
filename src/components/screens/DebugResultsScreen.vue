@@ -1,7 +1,7 @@
 <docs>
 This will display all data that has been entered into the experiment up to this point in a table.
 This is useful for debugging.
-Once you are gaoing live with your experiment, you can use the SubmitResultsScreen instead of this one to submit the data to the server and say thank you to the user.
+Once you are going live with your experiment, you can use the SubmitResultsScreen instead of this one to submit the data to the server and say thank you to the user.
 </docs>
 
 <template>
@@ -48,7 +48,7 @@ export default {
         columns
           .map(col => {
             const val = String(entry[col]).replace(/"/g, '""');
-            return val.includes(';') ? `"${val}"` : val;
+            return val.includes(';') || val.includes('"') ? `"${val}"` : val;
           })
           .join('; ')
       )
