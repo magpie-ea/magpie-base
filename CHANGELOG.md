@@ -1,10 +1,25 @@
 # Changelog
 
-## [3.6.2] - 2025-06-18
+## [3.6.8] - 2024-12-11
+
+
+## [3.6.7] - 2024-04-25
 
 ### Fixed
 
-- Fix DebugResultsScreen: Code was broken and CSV generation was non-standard in some cases
+- fix(deploy-workflows): Update actions/cache to v4
+- fix(deploy-workflows): Update peterjgrainger/action-create-branch to v3.0.0
+
+### How to update existing projects
+
+```sh
+$ cd your-project
+$ rm -rf node_modules # Or remove the node_modules folder by hand
+$ rm package-lock.json # Or remove the package-lock.json file by hand
+$ npm install magpie-base@3.6.x
+```
+
+- Change `.github/workflows/deploy-to-gh-pages.yml` according to adf5a8d11819479c71fa272bbeedbe4c8dd80c01
 
 ## [3.6.2] - 2024-03-17
 
