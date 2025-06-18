@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.9] - 2025-06-18
+
+### Fixed
+
+- Fixed DebugResultsScreen
+
 ## [3.6.8] - 2024-12-11
 
 
